@@ -1,0 +1,18 @@
+body{
+    margin: 0px;
+}
+
+/* ヘッダー */
+header{
+    height: 70px;
+    background: #b1df6c;
+}
+
+/* コンテンツ */
+.contents{
+}
+
+.top{
+    height: 500px;
+    background: #8591ca;
+}
