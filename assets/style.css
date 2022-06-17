@@ -16,3 +16,31 @@ header{
     height: 500px;
     background: #8591ca;
 }
+.main{
+    height: 600px;
+    background: #a03191;
+}
+
+/* 登録フォーム */
+.register{
+    width: 400px;
+    border-radius: 10px;
+    background: #fff;
+    padding: 20px;
+}
+.register p{
+    margin: 5px 0 5px 0;
+}
+.register input{
+    margin-bottom: 15px;
+}
+.register button{
+    display: block;
+    margin: 0 auto;
+}
+
+/* フッター */
+footer{
+    height: 100px;
+    background: #353535;
+}
