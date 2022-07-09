@@ -3,16 +3,14 @@ body{
 }
 
 /* ヘッダー */
-header{
-    height: 70px;
-    background: #b1df6c;
-}
+
 
 /* コンテンツ */
 .contents{
 }
 
 .top{
+    position: relative;
     height: 500px;
     background: #8591ca;
 }
@@ -23,6 +21,9 @@ header{
 
 /* 登録フォーム */
 .register{
+    position: absolute;
+    top: 10%;
+    right: 5%;
     width: 400px;
     border-radius: 10px;
     background: #fff;
