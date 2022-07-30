@@ -1,23 +1,25 @@
 <html !DOCTYPE>
   <head>
-    <title>IPUTサークルHP</title>
+    <title>IPUT学生団体</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/style.css" rel="stylesheet" type="text/css" />
-    <!-- css Bootstrap V5.0.2 -->
+    <!-- css Bootstrap v5.0.2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- CSS Bootstrap Icons v1.8.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
   </head>
 
   <body>
     <!-- ヘッダー -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #99CD00;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">IPUTER</a>
+        <a class="navbar-brand" href="#">IPUT学生団体</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">FAQ</a>
             </li>
@@ -30,6 +32,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">お問い合わせ</a>
             </li>
+            <button type="button" class="btn btn-success">ログイン</button>
         </div>
       </div>
     </nav>
@@ -37,19 +40,43 @@
     <div class="contents">
       <!-- ファーストビュー -->
       <div class="top">
-        <!-- 登録フォーム -->
+        <!--
+          登録フォーム v2022.07.30
+
+          入力フォームにはFormsのInputGroupのコンポーネントを使用した。
+          Bootstrap純正のアイコンを使用した。
+          bi-person-circle - ユーザー名
+          bi-envelope-fill - メールアドレス
+          bi-key-full      - パスワード
+        -->
         <div class="register">
-          <p>ユーザー名</p>
-          <!-- Bootstrap 入力フォーム -->
-          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <h2>サインアップ</h2>
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-person-circle"></i>
+            </span>
+            <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping">
+          </div>
 
-          <p>学籍番号</p>
-          <!-- Bootstrap 入力フォーム -->
-          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-envelope-fill"></i>
+            </span>
+            <input type="text" class="form-control mb-0" placeholder="メールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping">
+          </div>
 
-          <p>パスワード</p>
-          <!-- Bootstrap 入力フォーム -->
-          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-key-fill"></i>
+            </span>
+            <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
+          </div>
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-key-fill"></i>
+            </span>
+            <input type="text" class="form-control mb-0" placeholder="もう一度パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
+          </div>
 
           <!-- Bootstrap 登録ボタン -->
           <button type="button" class="btn btn-success">登録する</button>
@@ -58,8 +85,30 @@
       
       <!-- メイン -->
       <div class="main">
-        
+
+        <div class="contents_circle_all">
+          <div class="contents_circle">
+            <div class="picture">
+              <img src="https://cdn.pixabay.com/photo/2016/11/19/12/21/man-1838991_960_720.jpg" alt="sport">
+            </div>
+            <div class="picture-type">運動</div>
+          </div>
+
+          <div class="contents_circle">
+            <div class="picture">
+              <img src="https://cdn.pixabay.com/photo/2019/06/21/05/16/girl-4288526_960_720.jpg" alt="culture">
+            </div>
+            <div class="picture-type">文化・学術</div>
+          </div>
+
+          <div class="contents_circle">
+            <div class="picture">
+              <img src="https://cdn.pixabay.com/photo/2020/04/08/16/32/keyboard-5017973_640.jpg" alt="creation">
+            </div>
+            <div class="picture-type">創造</div>
+          </div>
       </div>
+
     </div>
 
     <!-- フッター -->
