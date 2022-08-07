@@ -1,21 +1,29 @@
-<html !DOCTYPE>
-  <head>
-    <title>IPUT学生団体</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/style.css" rel="stylesheet" type="text/css" />
-    <!-- css Bootstrap v5.0.2 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- CSS Bootstrap Icons v1.8.0 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-  </head>
+<!DOCTYPE html>
+<html lang="ja">
 
-  <body>
-    <!-- ヘッダー -->
+<head>
+  <title>IPUT学生団体</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="assets/style.css" rel="stylesheet" type="text/css">
+  <!-- css Bootstrap v5.0.2 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- CSS Bootstrap Icons v1.8.0 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+  <!-- Google Fonts icon -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">IPUT学生団体</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -39,11 +47,13 @@
         </div>
       </div>
     </nav>
+  </header>
 
-    <div class="contents">
-      <!-- ファーストビュー -->
-      <div class="top">
-        <!--
+  <!-- レスポンシブ class="(class)-lg-(class)" (>=992px) -->
+  <main class="contents">
+    <!-- ファーストビュー -->
+    <div class="top">
+      <!--
           登録フォーム v2022.07.30
 
           入力フォームにはFormsのInputGroupのコンポーネントを使用した。
@@ -51,44 +61,51 @@
           bi-person-circle - ユーザー名
           bi-envelope-fill - メールアドレス
           bi-key-full      - パスワード
-        -->
-        <div class="register">
-          <h2>サインアップ</h2>
-          <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text" id="addon-wrapping">
-              <i class="bi bi-person-circle"></i>
-            </span>
-            <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping">
-          </div>
-
-          <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text" id="addon-wrapping">
-              <i class="bi bi-envelope-fill"></i>
-            </span>
-            <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping">
-          </div>
-
-          <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text" id="addon-wrapping">
-              <i class="bi bi-key-fill"></i>
-            </span>
-            <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
-          </div>
-          <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text" id="addon-wrapping">
-              <i class="bi bi-key-fill"></i>
-            </span>
-            <input type="text" class="form-control mb-0" placeholder="もう一度パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
-          </div>
-
-          <!-- Bootstrap 登録ボタン -->
-          <button type="button" class="btn btn-success">登録する</button>
+      -->
+      <div class="register">
+        <h2>サインアップ</h2>
+        <div class="input-group flex-nowrap mb-3">
+          <span class="input-group-text" id="addon-wrapping">
+            <i class="bi bi-person-circle"></i>
+          </span>
+          <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid"
+            aria-describedby="addon-wrapping">
         </div>
-      </div>
-      
-      <!-- メイン -->
-      <div class="main">
 
+        <div class="input-group flex-nowrap mb-3">
+          <span class="input-group-text" id="addon-wrapping">
+            <i class="bi bi-envelope-fill"></i>
+          </span>
+          <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email"
+            aria-describedby="addon-wrapping">
+        </div>
+
+        <div class="input-group flex-nowrap mb-3">
+          <span class="input-group-text" id="addon-wrapping">
+            <i class="bi bi-key-fill"></i>
+          </span>
+          <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password"
+            aria-describedby="addon-wrapping">
+        </div>
+        <div class="input-group flex-nowrap mb-3">
+          <span class="input-group-text" id="addon-wrapping">
+            <i class="bi bi-key-fill"></i>
+          </span>
+          <input type="text" class="form-control mb-0" placeholder="もう一度パスワードを入力してください" aria-label="password"
+            aria-describedby="addon-wrapping">
+        </div>
+
+        <!-- Bootstrap 登録ボタン -->
+        <button type="button" class="btn btn-success">登録する</button>
+      </div>
+    </div>
+
+    <!-- メイン -->
+    <div class="main">
+
+      <!-- サークル -->
+      <h3 class="container w-75 p-0">サークル</h3>
+      <!--
         <div class="contents_circle_all">
           <div class="contents_circle">
             <div class="picture">
@@ -110,18 +127,203 @@
             </div>
             <div class="picture-type">創造</div>
           </div>
+        </div>
+      -->
+      
+      <!-- サークルカテゴリ一覧 wider than -lg -->
+      <div class="container w-75 d-none d-lg-block">
+        <div class="row row-cols-3 g-4">
+          <div class="col">
+            <img class="img-fluid" style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+              src="assets/img/man.png" alt="sport">
+            <p class="text-center underline-right-up">運動</p>
+          </div>
+          <div class="col">
+            <img class="img-fluid" style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+              src="assets/img/girl.png" alt="culture">
+            <p class="text-center underline-right-up">文化・学術</p>
+          </div>
+          <div class="col">
+            <img class="img-fluid" style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+              src="assets/img/keybord.png" alt="creation">
+            <p class="text-center underline-right-up">創造</p>
+          </div>
+        </div>
+      </div>
+      <!-- サークルカテゴリ一覧 smaller than -lg -->
+      <div class="container w-75 d-lg-none">
+        <div class="row row-cols-1 g-2">
+          <div class="col thumbnail">
+            <img class="img-fluid"
+              style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center -32px;"
+              src="assets/img/man.png" alt="sport">
+            <div class="caption">運動</div>
+          </div>
+          <div class="col thumbnail">
+            <img class="img-fluid"
+              style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center center"
+              src="assets/img/girl.png" alt="culture">
+            <div class="caption">文化・学術</div>
+          </div>
+          <div class="col thumbnail">
+            <img class="img-fluid"
+              style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center bottom"
+              src="assets/img/keybord.png" alt="creation">
+            <div class="caption">創造</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- カテゴリ別サークル一覧 -->
+      <div class="container w-75">
+        <!-- 運動 -->
+        <div class="cards-wrap">
+          <div class="cards-head"><span class="sport-icon">運動</span></div>
+          <div class="row row-cols-1 row-cols-lg-3 g-4">
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 文化・学術 -->
+        <div class="cards-wrap">
+          <div class="cards-head"><span class="culture-icon">文化・学術</span></div>
+          <div class="row row-cols-1 row-cols-lg-3 g-4">
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 創造 -->
+        <div class="cards-wrap">
+          <div class="cards-head"><span class="creation-icon">創造</span></div>
+          <div class="row row-cols-1 row-cols-lg-3 g-4">
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">サークル</h5>
+                  <ul class="list-unstyled">
+                    <li class="card-text">場所</li>
+                    <li class="card-text">人数</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
+  </main>
 
-    <!-- フッター -->
-    <footer></footer>
-    <script type="text/javascript" src="assets/base.js"></script>
-    <!-- JavaScript Bootstrap v5.0.2 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- jQuery Slim v3.3.1 -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-  </body>
+  <!-- フッター -->
+  <footer></footer>
+  <script type="text/javascript" src="assets/base.js"></script>
+  <!-- JavaScript Bootstrap v5.0.2 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <!-- jQuery Slim v3.3.1 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+    integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
