@@ -12,6 +12,10 @@
 | padding-bottom: 0 | .pb-0 |
 | padding-left: 0   | .ps-0 |
 | padding-right: 0  | .pe-0 |
+|                   |       |
+| justify-content: start  | justify-content-start  |
+| justify-content: center | justify-content-center |
+| justify-content: end    | justify-content-end    |
 
 ## Bootstrap レスポンシブ
 lg(≥992px)に統一

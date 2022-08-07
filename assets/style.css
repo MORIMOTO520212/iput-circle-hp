@@ -12,22 +12,20 @@ body{
     display: inline-flex !important;
 }
 
-
 /* ヘッダー */
 
 
-
 /* コンテンツ */
+.contents{
+}
+
 .top{
     position: relative;
     height: 500px;
     background: #8591ca;
 }
 .main{
-    /* height: 800px; */
-    padding-top: 48px;
-    padding-bottom: 48px;
-    background: #f0ece5;
+    background: #F0ECE5;
 }
 
 /* 登録フォーム */
@@ -48,14 +46,80 @@ body{
     margin: 0 auto;
 }
 
-
 /* -------- メイン --------- */
 h3{
     color: #5D6163;
 }
 
-/* サークルカテゴリ一覧 wider than -lg */
-/* .contents_circle_all{
+.container{
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+/* カスタムアンダーライン */
+.underline-right-up{
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDMuOTE3IiBoZWlnaHQ9IjI4Ljc3NiIgdmlld0JveD0iMCAwIDIwMy45MTcgMjguNzc2Ij4NCiAgPGcgaWQ9Ikdyb3VwXzExNjQiIGRhdGEtbmFtZT0iR3JvdXAgMTE2NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTU0NC41IC0yMzQyLjIyNCkiPg0KICAgIDxsaW5lIGlkPSJMaW5lXzMiIGRhdGEtbmFtZT0iTGluZSAzIiB4Mj0iMjAzLjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NC41IDIzNzAuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogICAgPGxpbmUgaWQ9IkxpbmVfNCIgZGF0YS1uYW1lPSJMaW5lIDQiIHgxPSIxOC41IiB5MT0iMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyOS41IDIzNDIuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: contain;
+    margin-top: 6px;
+    padding-bottom: 3px;
+}
+
+/* メインカテゴリ */
+.category-wrapper{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    width: 1000px;
+    height: 200px;
+    margin: -40px auto 0 auto;
+}
+.category-textbox{
+    background-color: #9ac629;
+    border-radius: 10%;
+    width: 210px;
+    height: 165px;
+    padding: 20px;
+    float: left;
+
+}
+.textbox-title{
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.textbox-content{
+    color: #fff;
+    margin-top: 10px;
+}
+.category-wrapper h3{
+    color: #fff;
+}
+
+/* インフォメーション */
+.information{
+    max-width: 700px;
+    margin: 40px auto;
+}
+.information .header{
+    display: flex;
+}
+.information .contents{
+    width: 100%;
+    padding: 5px;
+}
+.information .contents p{
+    display: -webkit-box;
+    text-align: start;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* 行数指定 */
+}
+
+/* サークルカテゴリ */
+/*
+.contents_circle_all{
     display: flex;
     width: 500px;
     margin: auto;
@@ -73,6 +137,7 @@ h3{
     border-radius: 10%;
     margin-bottom: 5px;
 }
+
 .picture-type{
     position: relative;
     z-index: 1;
@@ -82,6 +147,7 @@ h3{
     border-width: 1px;
     border-color: #707070;
 }
+
 .picture-type::before{
     z-index: -1;
     transform: skewX(45deg);
@@ -91,21 +157,9 @@ h3{
     border-right-style: solid;
     border-color: #707070;
     border-width: 1px;
-} */
+}
+*/
 
-.container{
-    padding-top: 24px;
-    padding-bottom: 24px;
-}
-/* カスタムアンダーライン */
-.underline-right-up{
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDMuOTE3IiBoZWlnaHQ9IjI4Ljc3NiIgdmlld0JveD0iMCAwIDIwMy45MTcgMjguNzc2Ij4NCiAgPGcgaWQ9Ikdyb3VwXzExNjQiIGRhdGEtbmFtZT0iR3JvdXAgMTE2NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTU0NC41IC0yMzQyLjIyNCkiPg0KICAgIDxsaW5lIGlkPSJMaW5lXzMiIGRhdGEtbmFtZT0iTGluZSAzIiB4Mj0iMjAzLjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NC41IDIzNzAuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogICAgPGxpbmUgaWQ9IkxpbmVfNCIgZGF0YS1uYW1lPSJMaW5lIDQiIHgxPSIxOC41IiB5MT0iMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyOS41IDIzNDIuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: contain;
-    margin-top: 6px;
-    padding-bottom: 3px;
-}
 
 /* サークルカテゴリ一覧 smaller than -lg */
 .thumbnail{
@@ -182,7 +236,6 @@ h3{
     border: none;
     background: #868e96;
 }
-
 
 /* フッター */
 footer{
