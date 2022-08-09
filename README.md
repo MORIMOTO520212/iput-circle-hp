@@ -7,18 +7,23 @@
 | margin-bottom: 0  | mb-0 |
 | margin-left: 0    | ms-0 |
 | margin-right: 0   | me-0 |
-|                   |       |
+| --- | --- |
 | padding-top: 0    | pt-0 |
 | padding-bottom: 0 | pb-0 |
 | padding-left: 0   | ps-0 |
 | padding-right: 0  | pe-0 |
-|                   |       |
+| --- | --- |
 | justify-content: start  | justify-content-start  |
 | justify-content: center | justify-content-center |
 | justify-content: end    | justify-content-end    |
-|                   |       |
+| --- | --- |
 | width: 100, 75, 50, 25%  | w-100<br>w-75<br>w-50<br>w-25 |
 | height: 100, 75, 50, 25% | h-100<br>h-75<br>h-50<br>h-25 |
+| --- | --- |
+| display: inline-block | d-inline |
+| display: block        | d-block  |
+| display: none         | d-none   |
+
 
 ## Bootstrap 基本色
 - [Color (カラー)](https://getbootstrap.jp/docs/5.0/utilities/colors/)
