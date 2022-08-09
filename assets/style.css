@@ -50,13 +50,14 @@ body{
     margin: 0 auto;
 }
 
-/* トップカテゴリ */
+/* トップ カテゴリ */
 #top-category{
     position: absolute;
     top: 625px;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+    max-width: 960px;
 }
 #top-category div div{
     background: #9ac629;
@@ -71,7 +72,7 @@ body{
 }
 
 /* -------- メイン --------- */
-/* トップカテゴリ名 */
+/* トップ カテゴリ名 */
 h4{
     color: #5d6163;
 }
@@ -87,6 +88,7 @@ h4{
 
 /* インフォメーション */
 /* https://getbootstrap.jp/docs/5.0/components/navs-tabs/ */
+/* https://getbootstrap.jp/docs/5.0/components/list-group/ */
 #info-tab.nav.nav-tabs{
     background: #eee;
     border-bottom: 1px solid #ccc;
@@ -111,7 +113,7 @@ h4{
     overflow: hidden;
 }
 
-/* サークルカテゴリ smaller than -lg */
+/* サークル カテゴリ smaller than -lg */
 .mask-parent{
     position: relative;
 }
@@ -139,8 +141,8 @@ h4{
     right: 12.5%;
 }
 
-/* カテゴリ別サークル */
-/* カテゴリ別サークル アイコン */
+/* サークル カテゴリ別 */
+/* サークル カテゴリ別 アイコン */
 .sport-icon::before{
     font-family: "Material Icons Outlined";
     content: "\e566";
@@ -153,7 +155,7 @@ h4{
     font-family: "Material Icons Outlined";
     content: "\e574";
 }
-/* カテゴリ別サークル カテゴリ */
+/* サークル カテゴリ別 カテゴリ名 */
 .cards-head{
     position: relative;
 }
@@ -173,7 +175,7 @@ h4{
     line-height: 100%;
     left: 0.625rem;
 }
-/* カテゴリ別サークル カードサムネイル */
+/* サークル カテゴリ別 カードサムネイル */
 /* https://getbootstrap.jp/docs/5.0/components/card/ */
 .card a{
     color: #000;
