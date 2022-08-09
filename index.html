@@ -106,21 +106,21 @@
     </div>
 
     <!-- トップ カテゴリ wider than -lg -->
-    <div class="container d-none d-lg-block pb-5" id="top-category">
+    <div class="container d-none d-lg-block p-0 pb-5" id="top-category">
       <div class="d-flex justify-content-evenly">
-        <div class="w-25 p-4 pb-5 ms-0 me-3">
+        <div class="w-25 p-4 pb-5 ms-0 me-4">
           <h3>活動</h3>
           <span>サークル・ゼミの活動状況を報告します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-3">
+        <div class="w-25 p-4 pb-5 ms-4 me-4">
           <h3>ブログ</h3>
           <span>不定期で学校に関した自由な投稿を期待します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-3">
+        <div class="w-25 p-4 pb-5 ms-4 me-4">
           <h3>サークル</h3>
           <span>IPUTで活動しているサークルを紹介します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-0">
+        <div class="w-25 p-4 pb-5 ms-4 me-0">
           <h3>FAQ</h3>
           <span>学生が気になる学校に関する質問をまとめています。</span>
         </div>
@@ -140,7 +140,7 @@
         (https://getbootstrap.jp/docs/5.0/components/badge/)
       -->
       <!-- タブ -->
-      <div class="container w-75 rounded bg-white p-0">
+      <div class="container w-75 rounded bg-white p-0 max-width-md">
         <ul class="nav nav-tabs p-3 pb-0" id="info-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button"
@@ -314,10 +314,10 @@
       </div>
 
       <!-- サークル -->
-      <h4 class="container w-75 p-0 mt-5">サークル</h4>
+      <h4 class="container w-75 p-0 mt-5 max-width-lg">サークル</h4>
 
       <!-- サークル カテゴリ wider than -lg -->
-      <div class="container w-75 d-none d-lg-block pt-4">
+      <div class="container w-75 d-none d-lg-block pt-4 max-width-lg">
         <div class="row row-cols-3 g-4">
           <div class="col">
             <a href="#" style="color: #000; text-decoration: none;">
@@ -344,7 +344,7 @@
       </div>
 
       <!-- サークル カテゴリ smaller than -lg -->
-      <div class="container w-75 d-lg-none pt-4">
+      <div class="container w-75 d-lg-none pt-4 max-width-lg">
         <div class="row row-cols-1 g-2">
           <div class="col mask-parent">
             <a href="#" style="color: #000; text-decoration: none;">
@@ -371,7 +371,7 @@
       </div>
 
       <!-- サークル カテゴリ別 -->
-      <div class="container w-75">
+      <div class="container w-75 max-width-lg">
         <!-- 運動 -->
         <div class="pt-5">
           <div class="cards-head pt-2 pb-4 mb-2"><span class="sport-icon">運動</span></div>

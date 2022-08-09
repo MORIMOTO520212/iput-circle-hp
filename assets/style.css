@@ -10,6 +10,19 @@ body{
     min-height: 100vh;
 }
 
+/* 最大幅をmdに合わせる 汎用クラス */
+.max-width-md{
+    max-width: 768px !important;
+}
+/* 最大幅をlgに合わせる 汎用クラス */
+.max-width-lg{
+    max-width: 992px !important;
+}
+/* 最大幅をxlに合わせる 汎用クラス */
+.max-width-xl{
+    max-width: 1200px !important;
+}
+
 /* ヘッダー */
 /* https://getbootstrap.jp/docs/5.0/components/navbar/ */
 .navbar-toggler{
@@ -21,7 +34,7 @@ body{
 
 /* コンテンツ */
 .contents{
-
+    
 }
 .top{
     position: relative;
@@ -57,7 +70,7 @@ body{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    max-width: 960px;
+    max-width: 1024px;
 }
 #top-category div div{
     background: #9ac629;
