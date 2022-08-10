@@ -105,22 +105,22 @@
       </div>
     </div>
 
-    <!-- トップカテゴリ wider than -lg -->
-    <div class="container d-none d-lg-block pb-5" id="top-category">
+    <!-- トップ カテゴリ wider than -lg -->
+    <div class="container d-none d-lg-block p-0 pb-5" id="top-category">
       <div class="d-flex justify-content-evenly">
-        <div class="w-25 p-4 pb-5 ms-0 me-3">
+        <div class="w-25 p-4 pb-5 ms-0 me-4">
           <h3>活動</h3>
           <span>サークル・ゼミの活動状況を報告します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-3">
+        <div class="w-25 p-4 pb-5 ms-4 me-4">
           <h3>ブログ</h3>
           <span>不定期で学校に関した自由な投稿を期待します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-3">
+        <div class="w-25 p-4 pb-5 ms-4 me-4">
           <h3>サークル</h3>
           <span>IPUTで活動しているサークルを紹介します。</span>
         </div>
-        <div class="w-25 p-4 pb-5 ms-3 me-0">
+        <div class="w-25 p-4 pb-5 ms-4 me-0">
           <h3>FAQ</h3>
           <span>学生が気になる学校に関する質問をまとめています。</span>
         </div>
@@ -140,7 +140,7 @@
         (https://getbootstrap.jp/docs/5.0/components/badge/)
       -->
       <!-- タブ -->
-      <div class="container w-75 rounded bg-white p-0">
+      <div class="container w-75 rounded bg-white p-0 max-width-md">
         <ul class="nav nav-tabs p-3 pb-0" id="info-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button"
@@ -148,12 +148,14 @@
               新規情報
             </button>
           </li>
+          <!-- wider than -sm -->
           <li class="nav-item d-none d-sm-block" role="presentation">
             <button class="nav-link" id="notice-tab" data-bs-toggle="tab" data-bs-target="#notice" type="button"
               role="tab" aria-controls="notice" aria-selected="false">
               お知らせ
             </button>
           </li>
+          <!-- wider than -sm -->
           <li class="nav-item d-none d-sm-block" role="presentation">
             <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button"
               role="tab" aria-controls="event" aria-selected="false">
@@ -312,10 +314,10 @@
       </div>
 
       <!-- サークル -->
-      <h4 class="container w-75 p-0 mt-5">サークル</h4>
+      <h4 class="container w-75 p-0 mt-5 max-width-lg">サークル</h4>
 
-      <!-- サークルカテゴリ wider than -lg -->
-      <div class="container w-75 d-none d-lg-block pt-4">
+      <!-- サークル カテゴリ wider than -lg -->
+      <div class="container w-75 d-none d-lg-block pt-4 max-width-lg">
         <div class="row row-cols-3 g-4">
           <div class="col">
             <a href="#" style="color: #000; text-decoration: none;">
@@ -327,22 +329,22 @@
           <div class="col">
             <a href="#" style="color: #000; text-decoration: none;">
               <img class="img-fluid" style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
-                src="src/girl.png" alt="sport">
+                src="src/girl.png" alt="culture">
               <p class="text-center underline-right-up">文化・学術</p>
             </a>
           </div>
           <div class="col">
             <a href="#" style="color: #000; text-decoration: none;">
               <img class="img-fluid" style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
-                src="src/keybord.png" alt="sport">
+                src="src/keybord.png" alt="creation">
               <p class="text-center underline-right-up">創造</p>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- サークルカテゴリ smaller than -lg -->
-      <div class="container w-75 d-lg-none pt-4">
+      <!-- サークル カテゴリ smaller than -lg -->
+      <div class="container w-75 d-lg-none pt-4 max-width-lg">
         <div class="row row-cols-1 g-2">
           <div class="col mask-parent">
             <a href="#" style="color: #000; text-decoration: none;">
@@ -354,22 +356,22 @@
           <div class="col mask-parent">
             <a href="#" style="color: #000; text-decoration: none;">
               <img class="img-fluid rounded" style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center center"
-                src="src/girl.png" alt="sport">
+                src="src/girl.png" alt="culture">
               <p class="expand">文化・学術</p>
             </a>
           </div>
           <div class="col mask-parent">
             <a href="#" style="color: #000; text-decoration: none;">
               <img class="img-fluid rounded" style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center bottom"
-                src="src/keybord.png" alt="sport">
+                src="src/keybord.png" alt="creation">
               <p class="expand">創造</p>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- カテゴリ別サークル -->
-      <div class="container w-75">
+      <!-- サークル カテゴリ別 -->
+      <div class="container w-75 max-width-lg">
         <!-- 運動 -->
         <div class="pt-5">
           <div class="cards-head pt-2 pb-4 mb-2"><span class="sport-icon">運動</span></div>
