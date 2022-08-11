@@ -2,7 +2,7 @@
 
 ## CSS Bootstrap互換表
 | CSS | Bootstrap Class |
-|-----------------|-----|
+| --- | --- |
 | margin-top: 0     | mt-0 |
 | margin-bottom: 0  | mb-0 |
 | margin-left: 0    | ms-0 |
@@ -42,11 +42,14 @@ lg(≥992px)に統一 (一部smを使用)
 ***
 
 ## ヘッダー (Navbar)
+[Bootstrap Navbar Icon](https://getbootstrap.jp/docs/5.0/components/navbar/#external-content)の透過度50%を無効にするため\
+[Bootstrap Listアイコン](https://icons.getbootstrap.jp/icons/list/)に`fill="#fff"`を指定し、CSSからBase64の`background-image`として`class="navbar-toggler-icon"`に適用
 ```html
 <header>
     <nav>...
 ```
 - [Navbar(ナビゲーションバー)](https://getbootstrap.jp/docs/5.0/components/navbar/)
+- [Bootstrap アイコン](https://icons.getbootstrap.jp/)
 - [Buttons (ボタン)](https://getbootstrap.jp/docs/5.0/components/buttons/)
 
 ***
@@ -62,7 +65,7 @@ lg(≥992px)に統一 (一部smを使用)
 
 ***
 
-## トップカテゴリ (ヘッダーNavbarより)
+## トップ カテゴリ
 ```html
 <main class="contents">
     <div id="top-category">...
@@ -89,17 +92,17 @@ lg(≥992px)に統一 (一部smを使用)
 - [Flex (フレックス)](https://getbootstrap.jp/docs/5.0/utilities/flex/)
 - [Buttons (ボタン)](https://getbootstrap.jp/docs/5.0/components/buttons/)
 
-***
 
-### __サークル__
-### サークル カテゴリ 一覧
+### サークル
+#### サークル カテゴリ 一覧
 - [Containers (コンテナ)](https://getbootstrap.jp/docs/5.0/layout/containers/)
 - [Display property (ディスプレイ)](https://getbootstrap.jp/docs/5.0/utilities/display/)
 - [Grid system (グリッドシステム)](https://getbootstrap.jp/docs/5.0/layout/grid/)
 - [Images (イメージ)](https://getbootstrap.jp/docs/5.0/content/images/#responsive-images)
 
-### サークル 一覧 (カテゴリ別)
+#### サークル 一覧 (カテゴリ別)
 - [Containers (コンテナ)](https://getbootstrap.jp/docs/5.0/layout/containers/)
 - [Grid system (グリッドシステム)](https://getbootstrap.jp/docs/5.0/layout/grid/)
 - [Cards (カード)](https://getbootstrap.jp/docs/5.0/components/card/)
 - [Lists Unstyled](https://getbootstrap.jp/docs/5.0/content/typography/#lists)
+- [Google Fonts Icons](https://fonts.google.com/icons)
