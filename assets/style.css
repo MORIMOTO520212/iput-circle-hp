@@ -1,5 +1,5 @@
 /* トップページ スタイルシート */
-body{
+body {
     margin: 0px;
     padding-top: 54px;
     /* ダブルタップズーム無効 */
@@ -12,42 +12,47 @@ body{
 }
 
 /* 最大幅をmdに合わせる 汎用クラス */
-.max-width-md{
+.max-width-md {
     max-width: 768px !important;
 }
+
 /* 最大幅をlgに合わせる 汎用クラス */
-.max-width-lg{
+.max-width-lg {
     max-width: 992px !important;
 }
+
 /* 最大幅をxlに合わせる 汎用クラス */
-.max-width-xl{
+.max-width-xl {
     max-width: 1200px !important;
 }
 
 /* ヘッダー */
 /* https://getbootstrap.jp/docs/5.0/components/navbar/ */
-.navbar-toggler{
+.navbar-toggler {
     border: none !important;
 }
-.navbar-toggler-icon{
+
+.navbar-toggler-icon {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4NCiAgPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTIuNSAxMmEuNS41IDAgMCAxIC41LS41aDEwYS41LjUgMCAwIDEgMCAxSDNhLjUuNSAwIDAgMS0uNS0uNXptMC00YS41LjUgMCAwIDEgLjUtLjVoMTBhLjUuNSAwIDAgMSAwIDFIM2EuNS41IDAgMCAxLS41LS41em0wLTRhLjUuNSAwIDAgMSAuNS0uNWgxMGEuNS41IDAgMCAxIDAgMUgzYS41LjUgMCAwIDEtLjUtLjV6Ii8+DQo8L3N2Zz4=) !important;
 }
 
 /* コンテンツ */
-.contents{
-    
+.contents {
+
 }
-.top{
+
+.top {
     position: relative;
     height: 500px;
     background: #8591ca;
 }
-.main{
+
+.main {
     background: #f0ece5;
 }
 
 /* 登録フォーム */
-.register{
+.register {
     position: absolute;
     top: 10%;
     right: 5%;
@@ -56,16 +61,18 @@ body{
     background: #fff;
     padding: 20px;
 }
-.register p{
+
+.register p {
     margin: 5px 0 5px 0;
 }
-.register button{
+
+.register button {
     display: block;
     margin: 0 auto;
 }
 
 /* トップ カテゴリ */
-#top-category{
+#top-category {
     position: absolute;
     top: 625px;
     left: 50%;
@@ -73,25 +80,29 @@ body{
     transform: translate(-50%, -50%);
     max-width: 1024px;
 }
-#top-category div div{
+
+#top-category div div {
     background: #9ac629;
     border-radius: 10%;
 }
-#top-category div div :nth-child(n){
+
+#top-category div div :nth-child(n) {
     color: #fff;
 }
-.spacing{
+
+.spacing {
     background: #f0ece5;
     padding-top: 10rem;
 }
 
 /* -------- メイン --------- */
 /* トップ カテゴリ名 */
-h4{
+h4 {
     color: #5d6163;
 }
+
 /* カスタムアンダーライン */
-.underline-right-up{
+.underline-right-up {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDMuOTE3IiBoZWlnaHQ9IjI4Ljc3NiIgdmlld0JveD0iMCAwIDIwMy45MTcgMjguNzc2Ij4NCiAgPGcgaWQ9Ikdyb3VwXzExNjQiIGRhdGEtbmFtZT0iR3JvdXAgMTE2NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTU0NC41IC0yMzQyLjIyNCkiPg0KICAgIDxsaW5lIGlkPSJMaW5lXzMiIGRhdGEtbmFtZT0iTGluZSAzIiB4Mj0iMjAzLjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NC41IDIzNzAuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogICAgPGxpbmUgaWQ9IkxpbmVfNCIgZGF0YS1uYW1lPSJMaW5lIDQiIHgxPSIxOC41IiB5MT0iMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyOS41IDIzNDIuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K);
     background-repeat: no-repeat;
     background-position: top center;
@@ -103,24 +114,29 @@ h4{
 /* インフォメーション */
 /* https://getbootstrap.jp/docs/5.0/components/navs-tabs/ */
 /* https://getbootstrap.jp/docs/5.0/components/list-group/ */
-#info-tab.nav.nav-tabs{
+#info-tab.nav.nav-tabs {
     background: #eee;
     border-bottom: 1px solid #ccc;
 }
-#info-tab .nav-link:not(.active){
+
+#info-tab .nav-link:not(.active) {
     color: #666 !important;
 }
-#info-tab .nav-link:not(.active):hover{
+
+#info-tab .nav-link:not(.active):hover {
     color: #fff !important;
     background: #aaa !important;
 }
-#info-tab .nav-link.active{
+
+#info-tab .nav-link.active {
     color: #000 !important;
 }
-#info-content .list-group-item{
+
+#info-content .list-group-item {
     border-bottom: solid 1px #ddd !important;
 }
-#info-content .list-group-item p{
+
+#info-content .list-group-item p {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -128,13 +144,15 @@ h4{
 }
 
 /* サークル カテゴリ smaller than -lg */
-.mask-parent{
+.mask-parent {
     position: relative;
 }
-.mask-parent img{
+
+.mask-parent img {
     filter: brightness(50%);
 }
-.mask-parent p{
+
+.mask-parent p {
     position: absolute;
     width: 91.475%;
     margin: 0;
@@ -145,7 +163,8 @@ h4{
     color: #fff;
     font-weight: 700;
 }
-.mask-parent p.expand::after{
+
+.mask-parent p.expand::after {
     font-family: "Material Icons Outlined";
     content: "\e5cf";
     position: absolute;
@@ -157,23 +176,27 @@ h4{
 
 /* サークル カテゴリ別 */
 /* サークル カテゴリ別 アイコン */
-.sport-icon::before{
+.sport-icon::before {
     font-family: "Material Icons Outlined";
     content: "\e566";
 }
-.culture-icon::before{
+
+.culture-icon::before {
     font-family: "Material Icons Outlined";
     content: "\e80c";
 }
-.creation-icon::before{
+
+.creation-icon::before {
     font-family: "Material Icons Outlined";
     content: "\e574";
 }
+
 /* サークル カテゴリ別 カテゴリ名 */
-.cards-head{
+.cards-head {
     position: relative;
 }
-.cards-head > span{
+
+.cards-head > span {
     padding: 0.625rem;
     padding-left: 2.5rem;
     padding-right: 2rem;
@@ -182,20 +205,23 @@ h4{
     color: #fff;
     font-weight: 700;
 }
-.cards-head > span::before{
+
+.cards-head > span::before {
     position: absolute;
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 100%;
     left: 0.625rem;
 }
+
 /* サークル カテゴリ別 カードサムネイル */
 /* https://getbootstrap.jp/docs/5.0/components/card/ */
-.card a{
+.card a {
     color: #000;
     text-decoration: none;
 }
-.card-img-top{
+
+.card-img-top {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
@@ -204,7 +230,32 @@ h4{
 }
 
 /* フッター */
-footer{
-    height: 100px;
+footer {
     background: #353535;
+    word-break: keep-all;
+}
+
+footer a {
+    color: #EEEEEE;
+    text-decoration: none;
+}
+
+footer a:before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>');
+}
+
+.footer-top {
+    padding: 60px;
+    text-align: left;
+    color: #aaa;
+}
+
+.footer-bottom h6 {
+    color: #828282;
+}
+
+.footer-links {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
