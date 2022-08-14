@@ -23,11 +23,14 @@
 | display: inline-block | d-inline |
 | display: block        | d-block  |
 | display: none         | d-none   |
+| --- | --- |
+| border: none | border-0 |
 
 
 ## Bootstrap 基本色
 - [Color (カラー)](https://getbootstrap.jp/docs/5.0/utilities/colors/)
 - [Background](https://getbootstrap.jp/docs/5.0/utilities/background/)
+- [Borders (ボーダー)](https://getbootstrap.jp/docs/5.0/utilities/borders/)
 
 ## Bootstrap レスポンシブ
 lg(≥992px)に統一 (一部smを使用)
@@ -53,6 +56,11 @@ lg(≥992px)に統一 (一部smを使用)
 - [Buttons (ボタン)](https://getbootstrap.jp/docs/5.0/components/buttons/)
 
 ***
+***
+
+# トップページ
+- `index.html`
+- `assets/sytle.css`
 
 ## トップ (登録フォーム)
 ```html
@@ -106,3 +114,30 @@ lg(≥992px)に統一 (一部smを使用)
 - [Cards (カード)](https://getbootstrap.jp/docs/5.0/components/card/)
 - [Lists Unstyled](https://getbootstrap.jp/docs/5.0/content/typography/#lists)
 - [Google Fonts Icons](https://fonts.google.com/icons)
+
+***
+***
+
+# ログインページ
+- `login.html`
+- `assets/sytle-login.css`
+
+## ログインフォーム
+```html
+<main class="contents">
+    <div id="form-login">...
+```
+- [Containers (コンテナ)](https://getbootstrap.jp/docs/5.0/layout/containers/)
+- [Grid system (グリッドシステム)](https://getbootstrap.jp/docs/5.0/layout/grid/)
+- [Flex (フレックス)](https://getbootstrap.jp/docs/5.0/utilities/flex/)
+- [Validation(バリデーション)](https://getbootstrap.jp/docs/5.0/forms/validation/#server-side)
+> **Warning**\
+> 背景画像にブラーをかける
+```html
+<main class="contents">
+    <div class="bg-blur"></div>
+```
+> は境界ボケのため、コメントアウト\
+> 加工済みの画像を背景画像とする
+
+***

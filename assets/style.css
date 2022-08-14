@@ -28,8 +28,8 @@ body {
 
 /* ヘッダー */
 /* https://getbootstrap.jp/docs/5.0/components/navbar/ */
-.navbar-toggler {
-    border: none !important;
+header {
+    z-index: 1000;
 }
 
 .navbar-toggler-icon {
@@ -225,12 +225,12 @@ h4 {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border: none;
     background: #868e96;
 }
 
 /* フッター */
 footer {
+    z-index: 1000;
     background: #353535;
     word-break: keep-all;
 }
