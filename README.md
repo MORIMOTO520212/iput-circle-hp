@@ -132,12 +132,10 @@ lg(≥992px)に統一 (一部smを使用)
 - [Flex (フレックス)](https://getbootstrap.jp/docs/5.0/utilities/flex/)
 - [Validation(バリデーション)](https://getbootstrap.jp/docs/5.0/forms/validation/#server-side)
 > **Warning**\
-> 背景画像にブラーをかける
+> 背景をブラー加工済みの画像にする際は、下記elementを削除またはコメントアウト
 ```html
-<main class="contents">
-    <div class="bg-blur"></div>
+<div class="bg-blur"></div>
 ```
-> は境界ボケのため、コメントアウト\
-> 加工済みの画像を背景画像とする
+> なお、ブラーのサイズは`9px`とする
 
 ***

@@ -43,32 +43,46 @@ header {
 
 /* コンテンツ */
 .contents {
-    background-image: url("../src/firstView_Image.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background: #f0ece5;
+}
+
+/* トップ バナー */
+.top-banner {
+    background: #fff;
+}
+
+.banner-img {
+    width: 100%;
+    aspect-ratio: 21 / 5;
+    object-fit: cover;
 }
 
 /* -------- メイン --------- */
-/* 背景画像にブラーをかける 汎用クラス */
-.bg-blur {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(9px);
+h3 {
+    color: #5d6163;
+    height: 2.5rem;
+    border-bottom: solid 2px #707070;
 }
 
-/* ログインフォーム */
-#form-login > form {
-    z-index: 100;
-    background-color: #fff;
-    border-radius: 24px;
-    box-shadow: 3px 6px 9px 0px rgba(31, 194, 255, 0.36);
+/* カード */
+/* https://getbootstrap.jp/docs/5.0/components/card/ */
+.card a {
+    color: #000;
+    text-decoration: none;
+}
+
+.card-img-top {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #868e96;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
 }
 
 /* フッター */
