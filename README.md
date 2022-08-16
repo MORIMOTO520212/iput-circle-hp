@@ -33,7 +33,7 @@
 - [Borders (ボーダー)](https://getbootstrap.jp/docs/5.0/utilities/borders/)
 
 ## Bootstrap レスポンシブ
-lg(≥992px)に統一 (一部smを使用)
+切り替えは`lg`(≥992px)に統一
 ```html
 <element class="...-lg(-...)">
 ```
@@ -41,6 +41,22 @@ lg(≥992px)に統一 (一部smを使用)
 - [Grid system (グリッドシステム)](https://getbootstrap.jp/docs/5.0/layout/grid/)
 - [Display property (ディスプレイ)](https://getbootstrap.jp/docs/5.0/utilities/display/)
 - [Flex (フレックス)](https://getbootstrap.jp/docs/5.0/utilities/flex/)
+> **Note**\
+> 最大幅を制限するため、各サイズ(xl, lg, md, sm)のmax-widthクラスを追加
+```css
+.max-width-sm {
+    max-width: 576px !important;
+}
+.max-width-md {
+    max-width: 768px !important;
+}
+.max-width-lg {
+    max-width: 992px !important;
+}
+.max-width-xl {
+    max-width: 1200px !important;
+}
+```
 
 ***
 
@@ -139,3 +155,28 @@ lg(≥992px)に統一 (一部smを使用)
 > なお、ブラーのサイズは`9px`とする
 
 ***
+***
+
+# ニュース一覧ページ
+- `news.html`
+- `assets/sytle-news.css`
+
+## トップ バナー
+```html
+<main class="contents">
+    <div class="top-banner">...
+```
+- [Containers (コンテナ)](https://getbootstrap.jp/docs/5.0/layout/containers/)
+
+***
+
+## メイン
+```html
+<main class="contents">
+    <div class="main">...
+```
+
+### ニュース一覧
+- [Containers (コンテナ)](https://getbootstrap.jp/docs/5.0/layout/containers/)
+- [Grid system (グリッドシステム)](https://getbootstrap.jp/docs/5.0/layout/grid/)
+- [Cards (カード)](https://getbootstrap.jp/docs/5.0/components/card/)
