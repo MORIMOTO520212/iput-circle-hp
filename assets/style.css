@@ -11,6 +11,11 @@ body {
     min-height: 100vh;
 }
 
+/* 最大幅をsmに合わせる 汎用クラス */
+.max-width-sm {
+    max-width: 576px !important;
+}
+
 /* 最大幅をmdに合わせる 汎用クラス */
 .max-width-md {
     max-width: 768px !important;
