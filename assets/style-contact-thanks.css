@@ -1,0 +1,82 @@
+body {
+    margin: 0px;
+    padding-top: 54px;
+    /* ダブルタップズーム無効 */
+    touch-action: manipulation;
+    /* フッター最下部固定 */
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+}
+
+/* ヘッダー */
+/* https://getbootstrap.jp/docs/5.0/components/navbar/ */
+header {
+    z-index: 1000;
+}
+
+
+/* コンテンツ */
+.contents{
+}
+
+.main{
+    background: #f0ece5;
+}
+
+.contact-message-container{
+    padding: 7%;
+}
+
+.contact-message-wrapper{
+    text-align:center;
+ 
+}
+
+.contact-main-message{
+    color: #899099;
+}
+
+.contact-body-message{
+    color: #899099;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+
+.contact-message-wrapper img{
+    height: 120px;
+    /* width: 100px; */
+}
+
+/* フッター */
+footer {
+    z-index: 1000;
+    background: #353535;
+    word-break: keep-all;
+}
+
+footer a {
+    color: #EEEEEE;
+    text-decoration: none;
+}
+
+footer a:before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>');
+}
+
+.footer-top {
+    padding: 60px;
+    text-align: left;
+    color: #aaa;
+}
+
+.footer-bottom h6 {
+    color: #828282;
+}
+
+.footer-links {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
