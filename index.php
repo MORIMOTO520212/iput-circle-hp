@@ -1,59 +1,13 @@
 <!-- トップページ -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <title>IPUT学生団体</title>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/style.css" rel="stylesheet" type="text/css"/>
-    <!-- CSS Bootstrap v5.0.2 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- CSS Bootstrap Icons v1.8.0 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-    <!-- Google Fonts Icon -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-</head>
+<?php
+require_once 'header.php';
+require_once 'footer.php';
+?>
 
-<body>
-<!-- ヘッダー -->
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">IPUT学生団体</a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
-                    aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="top-nav">
-                <ul class="navbar-nav">
-                    <li class="nav-item ms-2 me-2">
-                        <a class="nav-link active" aria-current="page" href="#">活動</a>
-                    </li>
-                    <li class="nav-item ms-2 me-2">
-                        <a class="nav-link active" aria-current="page" href="#">ブログ</a>
-                    </li>
-                    <li class="nav-item ms-2 me-2">
-                        <a class="nav-link active" aria-current="page" href="#">サークル</a>
-                    </li>
-                    <li class="nav-item ms-2 me-2">
-                        <a class="nav-link active" aria-current="page" href="#">FAQ</a>
-                    </li>
-                    <li class="nav-item ms-2 me-2">
-                        <a class="nav-link active" aria-current="page" href="#">お問い合わせ</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li class="nav-item ms-2 me-2 d-flex justify-content-end">
-                        <button type="button" class="btn btn-light" style="border-radius: 20px">ログイン</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+<?php
+/* header.php 読み込み */
+head('index', 'IPUT学生団体');
+?>
 
 <main class="contents">
     <!-- ファーストビュー -->
@@ -192,10 +146,13 @@
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
+                        <?php
+                        for($i=0; $i<3; $i++){
+                        ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
                                 <span class="badge bg-primary">New</span>
-                                <!-- <span class="badge bg-danger">重要</span> -->
+                                <span class="badge bg-danger">重要</span>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <h5>記事のタイトル</h5>
@@ -207,50 +164,26 @@
                                 省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
                             </p>
                         </a>
-                        <a href="#" class="list-group-item pt-3">
-                            <div class="mb-1">
-                                <span class="badge bg-primary">New</span>
-                                <span class="badge bg-danger">重要</span>
-                            </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5>記事のタイトル</h5>
-                                <small class="text-muted">1日前</small>
-                            </div>
-                            <p>
-                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                            </p>
-                        </a>
-                        <a href="#" class="list-group-item pt-3">
-                            <div class="mb-1">
-                                <!-- <span class="badge bg-primary">New</span>
-                                <span class="badge bg-danger">重要</span> -->
-                            </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5>記事のタイトル</h5>
-                                <small class="text-muted">3日前</small>
-                            </div>
-                            <p>
-                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                            </p>
-                        </a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- お知らせ -->
                 <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
+                        <?php
+                        for($i=0; $i<3; $i++){
+                        ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
                                 <span class="badge bg-primary">New</span>
-                                <!-- <span class="badge bg-danger">重要</span> -->
+                                <span class="badge bg-danger">重要</span>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <h5>記事のタイトル</h5>
-                                <small class="text-muted">1時間前</small>
+                                <small class="text-muted">5時間前</small>
                             </div>
                             <p>
                                 ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
@@ -258,35 +191,26 @@
                                 省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
                             </p>
                         </a>
-                        <a href="#" class="list-group-item pt-3">
-                            <div class="mb-1">
-                                <!-- <span class="badge bg-primary">New</span>
-                                <span class="badge bg-danger">重要</span> -->
-                            </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5>記事のタイトル</h5>
-                                <small class="text-muted">2日前</small>
-                            </div>
-                            <p>
-                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                            </p>
-                        </a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- イベント・行事 -->
                 <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
+                        <?php
+                        for($i=0; $i<3; $i++){
+                        ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
-                                <!-- <span class="badge bg-primary">New</span> -->
+                                <span class="badge bg-primary">New</span>
                                 <span class="badge bg-danger">重要</span>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <h5>記事のタイトル</h5>
-                                <small class="text-muted">10日前</small>
+                                <small class="text-muted">5時間前</small>
                             </div>
                             <p>
                                 ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
@@ -294,21 +218,9 @@
                                 省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
                             </p>
                         </a>
-                        <a href="#" class="list-group-item pt-3">
-                            <div class="mb-1">
-                                <!-- <span class="badge bg-primary">New</span> -->
-                                <span class="badge bg-danger">重要</span>
-                            </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5>記事のタイトル</h5>
-                                <small class="text-muted">6か月前</small>
-                            </div>
-                            <p>
-                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                            </p>
-                        </a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- ボタン 一覧を表示する -->
@@ -387,6 +299,9 @@
             <div class="pt-5">
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="sport-icon">運動</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
+                    <?php
+                    for($i=0; $i<3; $i++){
+                    ?>
                     <div class="col">
                         <div class="card h-100">
                             <a class="card-link" href="#">
@@ -401,40 +316,18 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <!-- 文化・学術 -->
             <div class="pt-5">
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="culture-icon">文化・学術</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
+                    <?php
+                    for($i=0; $i<3; $i++){
+                    ?>
                     <div class="col">
                         <div class="card h-100">
                             <a class="card-link" href="#">
@@ -449,40 +342,18 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <!-- 創造 -->
             <div class="pt-5">
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="creation-icon">創造</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
+                    <?php
+                    for($i=0; $i<3; $i++){
+                    ?>
                     <div class="col">
                         <div class="card h-100">
                             <a class="card-link" href="#">
@@ -497,34 +368,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -532,52 +378,4 @@
 </main>
 
 <!-- フッター -->
-<footer>
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 footer-links">
-                    <div class="row">
-                        <div class="col">
-                            <h6>リンク</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-1"><a href="#">活動一覧</a></p>
-                            <p class="mb-1"><a href="#">ニュース一覧</a></p>
-                            <p class="mb-1"><a href="#">FAQ</a></p>
-                            <p class="mb-1"><a href="#">お問い合わせ</a></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><a href="#">このサイトについて</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 offset-md-1">
-                    <h6>外部リンク</h6>
-                    <p><a href="#">東京国際工科専門職大学</a></p>
-                    <p><a href="#">IPUT days Tokyo - Twitter</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<script type="text/javascript" src="assets/base.js"></script>
-<!-- JavaScript Bootstrap v5.0.2 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
-  integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
-  crossorigin="anonymous"></script> -->
-<!-- jQuery Slim v3.3.1 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+<?php footer('index'); ?>
