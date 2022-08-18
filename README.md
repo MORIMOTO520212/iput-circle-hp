@@ -1,28 +1,5 @@
 # IPUT学生団体ホームページ
 
-**WordPress 6.0.1**
-
-## Contributors
-
-Thanks to all contributors 🎉
-
-<table>
-  <tr>
-    <td align="center">
-        <a href="https://github.com/Suzumebati">
-            <img src="https://avatars1.githubusercontent.com/u/51582636?s=460&v=4" width="100px;" alt="suzumebati"/><br />
-            <a href="https://github.com/Suzumebati" title="Code">:octocat: </a>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/ZhaoZuohong">
-            <img src="https://avatars2.githubusercontent.com/u/34163622?s=460&u=cb835ba504af76e5e3ecbc94d7f75cb5540c916e&v=4" width="100px;" alt="Zhao Zuohong"/><br />
-            <a href="https://github.com/ZhaoZuohong" title="Code">:octocat: </a>
-        </a>
-    </td>
-  </tr>
-</table>
-
 ## CSS Bootstrap互換表
 | CSS | Bootstrap Class |
 | --- | --- |
