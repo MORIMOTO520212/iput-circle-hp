@@ -10,7 +10,6 @@ head('login', 'ログイン | IPUT学生団体');
 ?>
 
 <main class="contents">
-    <div class="bg-blur"></div>
     <!-- ログインフォーム -->
     <div class="container w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
         <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md">
