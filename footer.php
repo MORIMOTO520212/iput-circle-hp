@@ -7,6 +7,7 @@ function footer($page_name) {
         <footer>
             <div class="footer-top">
                 <div class="container">
+                    <h2 class="mb-3">IPUT学生団体</h2>
                     <div class="row">
                         <div class="col-md-4 footer-links">
                             <div class="row">
