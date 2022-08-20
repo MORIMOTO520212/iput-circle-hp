@@ -4,7 +4,6 @@
 */
 function footer($page_name) {
 ?>
-
         <footer>
             <div class="footer-top">
                 <div class="container">
