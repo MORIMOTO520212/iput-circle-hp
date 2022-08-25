@@ -1,45 +1,5 @@
 /* ログインページ スタイルシート */
-body {
-    margin: 0px;
-    padding-top: 54px;
-    /* ダブルタップズーム無効 */
-    touch-action: manipulation;
-    /* フッター最下部固定 */
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: 100%;
-    min-height: 100vh;
-}
 
-/* 最大幅をsmに合わせる 汎用クラス */
-.max-width-sm {
-    max-width: 576px !important;
-}
-
-/* 最大幅をmdに合わせる 汎用クラス */
-.max-width-md {
-    max-width: 768px !important;
-}
-
-/* 最大幅をlgに合わせる 汎用クラス */
-.max-width-lg {
-    max-width: 992px !important;
-}
-
-/* 最大幅をxlに合わせる 汎用クラス */
-.max-width-xl {
-    max-width: 1200px !important;
-}
-
-/* ヘッダー */
-/* https://getbootstrap.jp/docs/5.0/components/navbar/ */
-header {
-    z-index: 1000;
-}
-
-.navbar-toggler-icon {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4NCiAgPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTIuNSAxMmEuNS41IDAgMCAxIC41LS41aDEwYS41LjUgMCAwIDEgMCAxSDNhLjUuNSAwIDAgMS0uNS0uNXptMC00YS41LjUgMCAwIDEgLjUtLjVoMTBhLjUuNSAwIDAgMSAwIDFIM2EuNS41IDAgMCAxLS41LS41em0wLTRhLjUuNSAwIDAgMSAuNS0uNWgxMGEuNS41IDAgMCAxIDAgMUgzYS41LjUgMCAwIDEtLjUtLjV6Ii8+DQo8L3N2Zz4=) !important;
-}
 
 /* コンテンツ */
 .contents {
@@ -57,36 +17,4 @@ header {
     background-color: #fff;
     border-radius: 24px;
     box-shadow: 3px 6px 9px 0px rgba(31, 194, 255, 0.36);
-}
-
-/* フッター */
-footer {
-    z-index: 1000;
-    background: #353535;
-    word-break: keep-all;
-}
-
-footer a {
-    color: #EEEEEE;
-    text-decoration: none;
-}
-
-footer a:before {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>');
-}
-
-.footer-top {
-    padding: 60px;
-    text-align: left;
-    color: #aaa;
-}
-
-.footer-bottom h6 {
-    color: #828282;
-}
-
-.footer-links {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }

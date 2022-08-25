@@ -1,6 +1,7 @@
 <?php
 /*  * * * ヘッダー * * *
     $page_name - この引数にページの名前を指定するとそのページのCSSが読み込まれます.
+    WordPressではget_header関数を用いる
 */
 function head($page_name, $page_title) {
 ?>
@@ -9,10 +10,16 @@ function head($page_name, $page_title) {
 <html lang="ja">
     <head>
         <title><?php echo $page_title ?></title>
-        <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="content-script-type" content="text/javascript" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Keywords" content="東京国際工科専門職大学,専門職大学,iput" />
+        <meta name="Description" content="" />
+        <!-- CSS -->
         <link href="assets/style-<?php echo $page_name ?>.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/style-header.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/style-footer.css" rel="stylesheet" type="text/css"/>
 
         <!-- CSS Bootstrap v5.2.0 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
