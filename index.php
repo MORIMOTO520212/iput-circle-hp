@@ -80,6 +80,7 @@ head('index', 'IPUT学生団体');
             </div>
         </div>
     </div>
+
     <!-- トップ & メイン余白 wider than -lg -->
     <div class="spacing d-none d-lg-block"></div>
 
@@ -94,7 +95,7 @@ head('index', 'IPUT学生団体');
           (https://getbootstrap.jp/docs/5.0/components/badge/)
         -->
         <!-- タブ -->
-        <div class="container w-75 rounded bg-white p-0 max-width-md">
+        <div class="container w-100 rounded bg-white p-0 max-width-md">
             <ul class="nav nav-tabs p-3 pb-0" id="info-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#new"
@@ -229,6 +230,79 @@ head('index', 'IPUT学生団体');
                 </div>
             </div>
         </div>
+
+        <div class="container w-75 p-0 mt-5 max-width-lg">
+            <div class="row row-cols-1 row-cols-lg-2 g-5">
+                <!-- 活動 -->
+                <div class="col">
+                    <h4 class="">活動</h4>
+                    <div class="pt-4">
+                        <div class="row row-cols-1 row-cols-lg-2 g-3">
+                            <?php
+                            for($i=0; $i<4; $i++){
+                            ?>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <a class="card-link" href="#">
+                                        <img src="src/no_image.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">記事タイトル</h5>
+                                            <p class="card-text">
+                                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
+                                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
+                                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <!-- ボタン もっと見る -->
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- ニュース -->
+                <div class="col">
+                    <h4 class="">ニュース</h4>
+                    <div class="pt-4">
+                        <div class="row row-cols-1 row-cols-lg-2 g-3">
+                            <?php
+                            for($i=0; $i<4; $i++){
+                            ?>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <a class="card-link" href="#">
+                                        <img src="src/no_image.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">記事タイトル</h5>
+                                            <p class="card-text">
+                                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
+                                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
+                                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <!-- ボタン もっと見る -->
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
 
         <!-- サークル -->
         <h4 class="container w-75 p-0 mt-5 max-width-lg">サークル</h4>

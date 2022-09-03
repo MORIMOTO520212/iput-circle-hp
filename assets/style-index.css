@@ -66,6 +66,15 @@ h4 {
     color: #5d6163;
 }
 
+/* Bootstrap Cards */
+/* https://getbootstrap.jp/docs/5.1/components/card/ */
+.card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
 /* カスタムアンダーライン */
 .underline-right-up {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDMuOTE3IiBoZWlnaHQ9IjI4Ljc3NiIgdmlld0JveD0iMCAwIDIwMy45MTcgMjguNzc2Ij4NCiAgPGcgaWQ9Ikdyb3VwXzExNjQiIGRhdGEtbmFtZT0iR3JvdXAgMTE2NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTU0NC41IC0yMzQyLjIyNCkiPg0KICAgIDxsaW5lIGlkPSJMaW5lXzMiIGRhdGEtbmFtZT0iTGluZSAzIiB4Mj0iMjAzLjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NC41IDIzNzAuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogICAgPGxpbmUgaWQ9IkxpbmVfNCIgZGF0YS1uYW1lPSJMaW5lIDQiIHgxPSIxOC41IiB5MT0iMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyOS41IDIzNDIuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K);
