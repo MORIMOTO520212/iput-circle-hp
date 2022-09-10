@@ -1,19 +1,9 @@
 /* トップページ スタイルシート */
 
-
-/* コンテンツ */
-.contents {
-
-}
-
 .top {
     position: relative;
     height: 500px;
     background: #8591ca;
-}
-
-.main {
-    background: #f0ece5;
 }
 
 /* 登録フォーム */
@@ -56,7 +46,6 @@
 }
 
 .spacing {
-    background: #f0ece5;
     padding-top: 10rem;
 }
 
@@ -68,7 +57,13 @@ h4 {
 
 /* Bootstrap Cards */
 /* https://getbootstrap.jp/docs/5.1/components/card/ */
-.card-text {
+.card-title{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.place-text, .members-text, .card-text {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -86,8 +81,10 @@ h4 {
 }
 
 /* インフォメーション */
-/* https://getbootstrap.jp/docs/5.0/components/navs-tabs/ */
-/* https://getbootstrap.jp/docs/5.0/components/list-group/ */
+.parent-tab {
+    border: solid 1px #dee2e6;
+}
+
 #info-tab.nav.nav-tabs {
     background: #eee;
     border-bottom: 1px solid #ccc;
@@ -197,7 +194,18 @@ h4 {
 
 .card-img-top {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     background: #868e96;
+}
+
+/* サークル カード */
+.place-text::before{
+    font-family: "bootstrap-icons";
+    content: "\F3E7";
+}
+
+.members-text::before{
+    font-family: "Material Icons Outlined";
+    content: "\e7ef";
 }

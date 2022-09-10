@@ -12,15 +12,7 @@ head('index', 'IPUT学生団体');
 <main class="contents">
     <!-- ファーストビュー -->
     <div class="top">
-        <!--
-            登録フォーム v2022.07.30
-
-            入力フォームにはFormsのInputGroupのコンポーネントを使用した。
-            < アイコン(Bootstrap) >
-            bi-person-circle - ユーザー名
-            bi-envelope-fill - メールアドレス
-            bi-key-full      - パスワード
-        -->
+        <!-- 登録フォーム -->
         <div class="register">
             <h2>サインアップ</h2>
             <div class="input-group flex-nowrap mb-3">
@@ -67,7 +59,7 @@ head('index', 'IPUT学生団体');
                 <span>サークル・ゼミの活動状況を報告します。</span>
             </div>
             <div class="w-25 p-4 pb-5 ms-4 me-4">
-                <h3>ブログ</h3>
+                <h3>ニュース</h3>
                 <span>不定期で学校に関した自由な投稿を期待します。</span>
             </div>
             <div class="w-25 p-4 pb-5 ms-4 me-4">
@@ -87,15 +79,9 @@ head('index', 'IPUT学生団体');
     <!-- メイン -->
     <div class="main pt-5 pb-5">
 
-        <!--
-          インフォメーション v2022.08.06
-          [ナビゲーションコンポーネント：Navs and tabs]
-          (https://getbootstrap.jp/docs/5.0/components/navs-tabs/)
-          [Newラベルの表示：Badge]
-          (https://getbootstrap.jp/docs/5.0/components/badge/)
-        -->
+        <!-- インフォメーション -->
         <!-- タブ -->
-        <div class="container w-100 rounded bg-white p-0 max-width-md">
+        <div class="parent-tab container w-100 rounded bg-white p-0 max-width-md">
             <ul class="nav nav-tabs p-3 pb-0" id="info-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#new"
@@ -143,12 +129,13 @@ head('index', 'IPUT学生団体');
             </ul>
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
+
                 <!-- 新規情報 -->
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
                         <?php
-                        for($i=0; $i<3; $i++){
+                        for($i=0; $i<3; $i++):
                         ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
@@ -166,16 +153,17 @@ head('index', 'IPUT学生団体');
                             </p>
                         </a>
                         <?php
-                        }
+                        endfor;
                         ?>
                     </div>
                 </div>
+
                 <!-- お知らせ -->
                 <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
                         <?php
-                        for($i=0; $i<3; $i++){
+                        for($i=0; $i<3; $i++):
                         ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
@@ -193,16 +181,17 @@ head('index', 'IPUT学生団体');
                             </p>
                         </a>
                         <?php
-                        }
+                        endfor;
                         ?>
                     </div>
                 </div>
+
                 <!-- イベント・行事 -->
                 <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
                     <!-- リストグループ -->
                     <div class="list-group list-group-flush">
                         <?php
-                        for($i=0; $i<3; $i++){
+                        for($i=0; $i<3; $i++):
                         ?>
                         <a href="#" class="list-group-item pt-3">
                             <div class="mb-1">
@@ -220,14 +209,16 @@ head('index', 'IPUT学生団体');
                             </p>
                         </a>
                         <?php
-                        }
+                        endfor;
                         ?>
                     </div>
                 </div>
+
                 <!-- ボタン 一覧を表示する -->
                 <div class="d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-success">一覧を表示する</button>
                 </div>
+
             </div>
         </div>
 
@@ -239,7 +230,7 @@ head('index', 'IPUT学生団体');
                     <div class="pt-4">
                         <div class="row row-cols-1 row-cols-lg-2 g-3">
                             <?php
-                            for($i=0; $i<4; $i++){
+                            for($i=0; $i<4; $i++):
                             ?>
                             <div class="col">
                                 <div class="card h-100">
@@ -257,7 +248,7 @@ head('index', 'IPUT学生団体');
                                 </div>
                             </div>
                             <?php
-                            }
+                            endfor;
                             ?>
                         </div>
                         <!-- ボタン もっと見る -->
@@ -272,7 +263,7 @@ head('index', 'IPUT学生団体');
                     <div class="pt-4">
                         <div class="row row-cols-1 row-cols-lg-2 g-3">
                             <?php
-                            for($i=0; $i<4; $i++){
+                            for($i=0; $i<4; $i++):
                             ?>
                             <div class="col">
                                 <div class="card h-100">
@@ -290,7 +281,7 @@ head('index', 'IPUT学生団体');
                                 </div>
                             </div>
                             <?php
-                            }
+                            endfor;
                             ?>
                         </div>
                         <!-- ボタン もっと見る -->
@@ -367,6 +358,26 @@ head('index', 'IPUT学生団体');
             </div>
         </div>
 
+        <?php
+        /* サークル カードのテンプレート */
+        function circle_card($circle_name, $thumbnail_image, $place_text, $members_text) {
+        ?>
+        <div class="col">
+            <div class="card h-100">
+                <a class="card-link" href="#">
+                    <img src="src/no_image.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $circle_name; ?></h5>
+                        <ul class="list-unstyled">
+                            <li class="place-text">場所</li>
+                            <li class="members-text">人数</li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
+
         <!-- サークル カテゴリ別 -->
         <div class="container w-75 max-width-lg">
             <!-- 運動 -->
@@ -374,23 +385,8 @@ head('index', 'IPUT学生団体');
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="sport-icon">運動</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
                     <?php
-                    for($i=0; $i<3; $i++){
-                    ?>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <?php
+                    for($i=0; $i<3; $i++) {
+                        circle_card('サークル名', '', '', '');
                     }
                     ?>
                 </div>
@@ -400,23 +396,8 @@ head('index', 'IPUT学生団体');
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="culture-icon">文化・学術</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
                     <?php
-                    for($i=0; $i<3; $i++){
-                    ?>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <?php
+                    for($i=0; $i<3; $i++) {
+                        circle_card('サークル名', '', '', '');
                     }
                     ?>
                 </div>
@@ -426,23 +407,8 @@ head('index', 'IPUT学生団体');
                 <div class="cards-head pt-2 pb-4 mb-2"><span class="creation-icon">創造</span></div>
                 <div class="row row-cols-1 row-cols-lg-3 g-4">
                     <?php
-                    for($i=0; $i<3; $i++){
-                    ?>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a class="card-link" href="#">
-                                <img src="src/no_image.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">サークル</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="card-text">場所</li>
-                                        <li class="card-text">人数</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <?php
+                    for($i=0; $i<3; $i++) {
+                        circle_card('サークル名', '', '', '');
                     }
                     ?>
                 </div>

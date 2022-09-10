@@ -1,0 +1,140 @@
+.main{
+    max-width: 830px !important;
+    margin-top: 5vw;
+}
+
+.main h2{
+    font-weight: normal;
+    text-align: center;
+}
+
+.main p{
+    text-align: center;
+}
+
+.main-first, .main-second{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1vw 0;
+}
+
+/* 記事の投稿数 */
+.posts-number{
+    width: 270px;
+    height: 105px;
+    border-radius: 12px;
+    filter: drop-shadow(0 3px 3px #B1B0B0);
+    background: #F3F0EA;
+}
+
+.posts-number p{
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.number{
+    color: #0088FF;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+/* サークルを作成する */
+.create-circle{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 295px;
+    height: 105px;
+    border-radius: 12px;
+    filter: drop-shadow(0 3px 3px #B1B0B0);
+    background: #F3F0EA;
+}
+
+.create-circle h4,
+.management-card h4{
+    font-weight: normal;
+}
+
+.create-circle .icon{
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #DC963A;
+    text-align: center;
+    padding: 3% 0;
+}
+
+.create-circle .icon span::before{
+    font-family: "Material Icons Outlined";
+    content: "\f233";
+    font-size: 2.4rem;
+    color: #f2f0ea;
+}
+
+/* 項目 */
+.management-card{
+    display: flex;
+    justify-content: space-around;
+    width: 380px;
+    height: 223px;
+    border-radius: 12px;
+    filter: drop-shadow(0 3px 3px #B1B0B0);
+    background: #F3F0EA;
+    padding: 30px 20px;
+    margin: 10px 0;
+}
+
+.management-card:hover{
+    filter: drop-shadow(0 3px 6px #B1B0B0);
+}
+
+.management-card .main-icon{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.management-card .title p{
+    color: #5D6163;
+    text-align: left;
+    padding: 0 10px;
+}
+
+.icon-activity,
+.icon-news,
+.icon-circle,
+.icon-article{
+    grid-row: 2 / 3;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #DC963A;
+    text-align: center;
+    padding: 20% 0;
+}
+
+.icon-activity span::before,
+.icon-news span::before,
+.icon-circle span::before,
+.icon-article span::before{
+    font-family: "Material Icons Outlined";
+    font-size: 2.5rem;
+    color: #f2f0ea;
+}
+
+.icon-activity span::before{
+    content: "\e865";
+}
+
+.icon-news span::before{
+    content: "\ef42";
+}
+
+.icon-circle span::before{
+    content: "\f02e";
+}
+
+.icon-article span::before{
+    content: "\e02f";
+}
