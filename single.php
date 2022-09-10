@@ -6,7 +6,7 @@ require_once 'footer.php';
 
 <?php
 /* header.php 読み込み */
-head('story', '記事 | IPUT学生団体');
+head('single', '記事 | IPUT学生団体');
 ?>
 
 <div class="container pt-3 max-width-lg">
@@ -80,4 +80,4 @@ head('story', '記事 | IPUT学生団体');
 </div>
 
 <!-- フッター -->
-<?php footer('story'); ?>
+<?php footer('single'); ?>
