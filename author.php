@@ -14,14 +14,14 @@ head('author', 'マイページ');
     <h2>ようこそ、@user_nameさん</h2>
     <p>ここはマイページです。記事の投稿や、サークルの管理をすることができます。</p>
     <div class="main-first">
-        <div class="posts-number p-3">
+        <div class="posts-number p-3 mb-3">
             <p class="m-0">記事の投稿数</p>
             <div class="number">
                 <span style="font-size:2rem;">5</span>
                 件
             </div>
         </div>
-        <div class="create-circle">
+        <div class="create-circle mb-3">
             <div><h4>サークルを作成する</h4></div>
             <div class="icon">
                 <span></span>
@@ -76,6 +76,13 @@ head('author', 'マイページ');
                     <span></span>
                 </div>
             </div>
+        </div>
+
+        <div class="management-card settings">
+            <div class="title">
+                <h4 class="mb-0">基本情報を編集する</h4>
+            </div>
+            <i class="bi bi-arrow-right fs-4"></i>
         </div>
 
     </div>
