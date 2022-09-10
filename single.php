@@ -41,9 +41,11 @@ head('single', '記事 | IPUT学生団体');
                     <span class="badge bg-secondary">ニュース</span>
                     <span class="badge bg-secondary">調査</span>
                 </div>
-                <div>
-                    <span class="badge bi bi-twitter" style="background: #38AFFF;">ツイート</span>
-                </div>
+                <!--<div class="ps-2" style="flex:1;"></div>-->
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                class="twitter-share-button" data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                
                 <div class="title-color">
                     <div>@username</div>
                     <div>2022/08/20</div>

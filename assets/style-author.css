@@ -1,6 +1,6 @@
 .main{
     max-width: 830px !important;
-    margin-top: 5vw;
+    margin-top: 4vw;
 }
 
 .main h2{
@@ -12,11 +12,19 @@
     text-align: center;
 }
 
+.management-card:hover,
+.create-circle:hover{
+    filter: drop-shadow(0 3px 6px #B1B0B0);
+}
+
 .main-first, .main-second{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 1vw 0;
+}
+
+.main-second{
+    padding: 1vw 0 50px 0;
 }
 
 /* 記事の投稿数 */
@@ -63,7 +71,7 @@
     border-radius: 50%;
     background: #DC963A;
     text-align: center;
-    padding: 3% 0;
+    padding: 7px 0;
 }
 
 .create-circle .icon span::before{
@@ -84,10 +92,6 @@
     background: #F3F0EA;
     padding: 30px 20px;
     margin: 10px 0;
-}
-
-.management-card:hover{
-    filter: drop-shadow(0 3px 6px #B1B0B0);
 }
 
 .management-card .main-icon{
@@ -137,4 +141,39 @@
 
 .icon-article span::before{
     content: "\e02f";
+}
+
+.management-card.settings{
+    width: 100%;
+    height: unset;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media screen and (max-width:800px){
+    .management-card{
+        width: 100%;
+        height: 130px;
+        justify-content: space-between;
+        padding: 20px 20px;
+    }
+
+    .icon-activity,
+    .icon-news,
+    .icon-circle,
+    .icon-article{
+        width: 72px;
+        height: 72px;
+        padding: 7px 0;
+    }
+}
+
+@media screen and (max-width:500px){
+    .posts-number{
+        width: 100%;
+    }
+
+    .create-circle{
+        width: 100%;
+    }
 }
