@@ -77,7 +77,7 @@ head('index', 'IPUT学生団体');
     <div class="spacing d-none d-lg-block"></div>
 
     <!-- メイン -->
-    <div class="main pt-5 pb-5">
+    <div class="main container pt-5 pb-5">
 
         <!-- インフォメーション -->
         <!-- タブ -->
@@ -129,7 +129,6 @@ head('index', 'IPUT学生団体');
             </ul>
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
-
                 <!-- 新規情報 -->
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <!-- リストグループ -->
@@ -218,15 +217,15 @@ head('index', 'IPUT学生団体');
                 <div class="d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-success">一覧を表示する</button>
                 </div>
-
             </div>
         </div>
 
-        <div class="container w-75 p-0 mt-5 max-width-lg">
+        <!-- 活動・ニュース -->
+        <div class="container w-100 mt-5 max-width-lg">
             <div class="row row-cols-1 row-cols-lg-2 g-5">
                 <!-- 活動 -->
                 <div class="col">
-                    <h4 class="">活動</h4>
+                    <h4>活動</h4>
                     <div class="pt-4">
                         <div class="row row-cols-1 row-cols-lg-2 g-3">
                             <?php
@@ -234,17 +233,36 @@ head('index', 'IPUT学生団体');
                             ?>
                             <div class="col">
                                 <div class="card h-100">
-                                    <a class="card-link" href="#">
-                                        <img src="src/no_image.png" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">記事タイトル</h5>
-                                            <p class="card-text">
-                                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                                            </p>
+                                    <div class="row g-0">
+                                        <div class="col-4 col-lg-12">
+                                            <img src="src/no_image.png" class="h-100 ratio-3x2" alt="...">
                                         </div>
-                                    </a>
+                                        <div class="col-8 col-lg-12">
+                                            <div class="card-body">
+                                                <h5 class="card-title line-clamp-2">
+                                                    <a class="card-link" href="#">
+                                                        記事タイトルタイトルタイトルタイトルタイトル
+                                                    </a>
+                                                </h5>
+                                                <div class="d-none d-lg-block">
+                                                    <p class="line-clamp-3">
+                                                        ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
+                                                        最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
+                                                        省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <div class="line-clamp-1">
+                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle" alt="..." style="height: 1.8rem; aspect-ratio: 1 / 1; object-fit: cover;">
+                                                        <small>ぽちゃぽちゃままま</small>
+                                                    </div>
+                                                    <div class="text-nowrap">
+                                                        <small class="text-muted">3時間前</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <?php
@@ -259,25 +277,44 @@ head('index', 'IPUT学生団体');
                 </div>
                 <!-- ニュース -->
                 <div class="col">
-                    <h4 class="">ニュース</h4>
+                    <h4>ニュース</h4>
                     <div class="pt-4">
-                        <div class="row row-cols-1 row-cols-lg-2 g-3">
+                    <div class="row row-cols-1 row-cols-lg-2 g-3">
                             <?php
                             for($i=0; $i<4; $i++):
                             ?>
                             <div class="col">
                                 <div class="card h-100">
-                                    <a class="card-link" href="#">
-                                        <img src="src/no_image.png" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">記事タイトル</h5>
-                                            <p class="card-text">
-                                                ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                                最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                                省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                                            </p>
+                                    <div class="row g-0">
+                                        <div class="col-4 col-lg-12">
+                                            <img src="src/no_image.png" class="h-100 ratio-3x2" alt="...">
                                         </div>
-                                    </a>
+                                        <div class="col-8 col-lg-12">
+                                            <div class="card-body">
+                                                <h5 class="card-title line-clamp-2">
+                                                    <a class="card-link" href="#">
+                                                        記事タイトルタイトルタイトルタイトルタイトル
+                                                    </a>
+                                                </h5>
+                                                <div class="d-none d-lg-block">
+                                                    <p class="line-clamp-3">
+                                                        ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
+                                                        最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
+                                                        省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <div class="line-clamp-1">
+                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle" alt="..." style="height: 1.8rem; aspect-ratio: 1 / 1; object-fit: cover;">
+                                                        <small>ぽちゃぽちゃままま</small>
+                                                    </div>
+                                                    <div class="text-nowrap">
+                                                        <small class="text-muted">3時間前</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <?php
@@ -303,24 +340,24 @@ head('index', 'IPUT学生団体');
             <div class="row row-cols-3 g-4">
                 <div class="col">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid"
-                             style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+                        <img class="img-fluid ratio-16x10"
+                             style="border-radius: 10%;"
                              src="src/man.png" alt="sport">
                         <p class="text-center underline-right-up">運動</p>
                     </a>
                 </div>
                 <div class="col">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid"
-                             style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+                        <img class="img-fluid ratio-16x10"
+                             style="border-radius: 10%;"
                              src="src/girl.png" alt="culture">
                         <p class="text-center underline-right-up">文化・学術</p>
                     </a>
                 </div>
                 <div class="col">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid"
-                             style="border-radius: 10%; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;"
+                        <img class="img-fluid ratio-16x10"
+                             style="border-radius: 10%;"
                              src="src/keyboard.png" alt="creation">
                         <p class="text-center underline-right-up">創造</p>
                     </a>
@@ -333,24 +370,24 @@ head('index', 'IPUT学生団体');
             <div class="row row-cols-1 g-2">
                 <div class="col mask-parent">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid rounded"
-                             style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center -32px;"
+                        <img class="img-fluid rounded ratio-16x5"
+                             style="object-position: center -32px;"
                              src="src/man.png" alt="sport">
                         <p class="expand">運動</p>
                     </a>
                 </div>
                 <div class="col mask-parent">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid rounded"
-                             style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center center"
+                        <img class="img-fluid rounded ratio-16x5"
+                             style="object-position: center center"
                              src="src/girl.png" alt="culture">
                         <p class="expand">文化・学術</p>
                     </a>
                 </div>
                 <div class="col mask-parent">
                     <a href="#" style="color: #000; text-decoration: none;">
-                        <img class="img-fluid rounded"
-                             style="width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center bottom"
+                        <img class="img-fluid rounded ratio-16x5"
+                             style="object-position: center bottom"
                              src="src/keyboard.png" alt="creation">
                         <p class="expand">創造</p>
                     </a>
@@ -367,10 +404,10 @@ head('index', 'IPUT学生団体');
                 <a class="card-link" href="#">
                     <img src="src/no_image.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $circle_name; ?></h5>
+                        <h5 class="card-title line-clamp-2"><?php echo $circle_name; ?></h5>
                         <ul class="list-unstyled">
-                            <li class="place-text">場所</li>
-                            <li class="members-text">人数</li>
+                            <li class="place-text line-clamp-3">場所</li>
+                            <li class="members-text line-clamp-3">人数</li>
                         </ul>
                     </div>
                 </a>
