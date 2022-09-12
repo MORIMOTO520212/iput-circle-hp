@@ -10,53 +10,57 @@ head('faq', 'FAQ | IPUT学生団体');
 ?>
 
 
-<main class="contents">
     <!-- faq -->
+<main class="contents">
+
     <!-- top -->
-    <div class="faq-top">
-        <!-- 背景にイメージ
-        <img src="src/faq-top-img.jpg" class="faq-top-img"> 
-        -->
-        <figure>
-            <img src="src/faq-top-img.jpg">
-            <figcaption>
-                <div class="faq-top-message">
-                    <!-- よくあるご質問 -->
-                    <h1>よくあるご質問</h1>
-                    <!-- FAQ -->
-                    <h3>FAQ</h3>
-                </div>
-            </figcaption>
-        </figure>
+    <!-- 大まか指示通りできているはず -->
+    <div class="position-relative" id="faq-top">
+        <img src="src/faq-top-img.jpg" class="w-100">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="text-center text-white">
+                <!-- よくあるご質問 -->
+                <h1>よくあるご質問</h1>
+                <!-- FAQ -->
+                <h3>FAQ</h3>
+            </div>
+        </div>
     </div>
 
-    <!-- contents -->
-    <div class="faq-contents">
+    <!-- main -->
+    <div class="main d-flex w-100 " id="faq-contents">
         <!-- side bar ... ? -->
-        <div class="shadow p-3 mb-5 bg-body rounded" id="faq-side-contents">
+        <!-- 影はできているが、形が定まらない。また、サイドバー？の幅が不明 -->
+        <div class="shadow rounded h-50 w-25" id="faq-side-contents">
             <!-- sub contents -->
-            <div class="faq-side-category">
+            <!-- paddingが16*3 = 48px -->
+            <div class="text-start" id="faq-side-category">
+                <!-- リスト内のアイコンが未実装 -->
                 <p>項目から探す</p>
-                <ul>
-                    <li><a href="#"> カテゴリ1</a></li>
-                    <li><a href="#"> カテゴリ2</a></li>
-                    <li><a href="#"> カテゴリ3</a></li>
-                    <li><a href="#"> カテゴリ4</a></li>
-                    <li><a href="#"> カテゴリ5</a></li>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ1</a></li>
+                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ2</a></li>
+                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ3</a></li>
+                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ4</a></li>
+                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ5</a></li>
                 </ul>
             </div>
         </div>
 
         <!-- main contents -->
-        <div class="faq-main-contents">
+        <div class="container ml-0 " id="faq-main-contents">
             <!-- faq contents -->
-            <div class="faq">
+            <!-- カテゴリ間はmargin48pxで仮置き -->
+            <div class="mb-5">
                 <!-- category-1 -->
-                <h1>カテゴリ1</h1>
-                <div class="faq-category">
+                <h1 class="fw-bold">カテゴリ1</h1>
+                <!-- 各質問の間隔は32pxで仮置き -->
+                <div class="justify-content-around row row-cols-2 g-4">
+                    <!-- d-flex -->
                     <!-- Q 1-1 -->
-                    <div class="accordion" id="faq-accordion-1-1">
+                    <div class="accordion col" id="faq-accordion-1-1">
                         <!-- Accordion items -->
+                        <!-- 中身は適当。 -->
                         <!-- quiestions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
@@ -65,7 +69,7 @@ head('faq', 'FAQ | IPUT学生団体');
                                     Q 1-1. Quiestion Text
                                 </button>
                             </h2>
-                            <div id="faq-questions-detail-1-1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faq-accordion-1-1">
+                            <div id="faq-questions-detail-1-1" class="accordion-collapse collapse" aria-labelledby="faq-questions-1-1"> <!-- data-bs-parent="#faq-accordion-1-1 -->
                                 <div class="accordion-body">
                                     <strong>Sample Text</strong>
                                 </div>
@@ -79,7 +83,7 @@ head('faq', 'FAQ | IPUT学生団体');
                                     A 1-1. Answer Text
                                 </button>
                             </h2>
-                            <div id="faq-answers-detail-1-1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faq-accordion-1-1">
+                            <div id="faq-answers-detail-1-1" class="accordion-collapse collapse" aria-labelledby="faq-answers-1-1"> <!-- data-bs-parent="#faq-accordion-1-1 -->
                                 <div class="accordion-body">
                                     <strong>Sample Text</strong>
                                 </div>
@@ -88,7 +92,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 1-2 -->
-                    <div class="accordion" id="faq-accordion-1-2">
+                    <div class="accordion col" id="faq-accordion-1-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -98,7 +102,7 @@ head('faq', 'FAQ | IPUT学生団体');
                                     Q 1-2. Quiestion Text
                                 </button>
                             </h2>
-                            <div id="faq-questions-detail-1-2" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faq-accordion-1-2">
+                            <div id="faq-questions-detail-1-2" class="accordion-collapse collapse" aria-labelledby="faq-questions-1-2"> <!-- data-bs-parent="#faq-accordion-1-2 -->
                                 <div class="accordion-body">
                                     <strong>Sample Text</strong>
                                 </div>
@@ -112,7 +116,7 @@ head('faq', 'FAQ | IPUT学生団体');
                                     A 1-2. Answer Text
                                 </button>
                             </h2>
-                            <div id="faq-answers-detail-1-2" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faq-accordion-1-2">
+                            <div id="faq-answers-detail-1-2" class="accordion-collapse collapse" aria-labelledby="faq-answers-1-2"> <!-- data-bs-parent="#faq-accordion-1-2 -->
                                 <div class="accordion-body">
                                     <strong>Sample Text</strong>
                                 </div>
@@ -123,12 +127,12 @@ head('faq', 'FAQ | IPUT学生団体');
                 
             </div>
 
-            <div class="faq">
+            <div class="mb-5">
                 <!-- category-2 -->
-                <h1>カテゴリ2</h1>
-                <div class="faq-category">
+                <h1 class="fw-bold">カテゴリ2</h1>
+                <div class="justify-content-around row row-cols-2 g-4">
                     <!-- Q 2-1 -->
-                    <div class="accordion" id="faq-accordion-2-1">
+                    <div class="accordion col" id="faq-accordion-2-1">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -161,7 +165,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-2 -->
-                    <div class="accordion" id="faq-accordion-2-2">
+                    <div class="accordion col" id="faq-accordion-2-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -193,8 +197,10 @@ head('faq', 'FAQ | IPUT学生団体');
                         </div>
                     </div>
 
+                    <!-- 改行 -->
+
                     <!-- Q 2-3 -->
-                    <div class="accordion" id="faq-accordion-2-3">
+                    <div class="accordion col" id="faq-accordion-2-3">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -227,7 +233,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-4 -->
-                    <div class="accordion" id="faq-accordion-2-4">
+                    <div class="accordion col" id="faq-accordion-2-4">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
