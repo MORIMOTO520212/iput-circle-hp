@@ -24,10 +24,10 @@ function head($page_name, $page_title) {
         <!-- CSS Bootstrap v5.2.0 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-        <!-- CSS Bootstrap Icons v1.8.0 -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-        <!-- Google Fonts Icon -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+        <!-- CSS Bootstrap Icons v1.9.1 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!-- Google Fonts Icons | Rounded & Variable -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
     <body>
         <!-- ヘッダー -->
@@ -57,10 +57,10 @@ function head($page_name, $page_title) {
                                 <a class="nav-link active" aria-current="page" href="#">お問い合わせ</a>
                             </li>
                             <li>
-                                <hr class="dropdown-divider">
+                                <hr class="border-top">
                             </li>
                             <li class="nav-item ms-2 me-2 d-flex justify-content-end">
-                                <button type="button" class="btn btn-light" style="border-radius: 20px">ログイン</button>
+                                <button type="button" class="btn btn-light rounded-pill">ログイン</button>
                             </li>
                         </ul>
                     </div>

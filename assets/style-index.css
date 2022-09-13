@@ -1,4 +1,6 @@
 /* トップページ スタイルシート */
+/* https://fonts.google.com/specimen/Fugaz+One */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
 
 .top {
     position: relative;
@@ -36,12 +38,12 @@
     max-width: 1024px;
 }
 
-#top-category div div {
+#top-category > div > div {
     background: #9ac629;
     border-radius: 10%;
 }
 
-#top-category div div :nth-child(n) {
+#top-category > div > div :nth-child(n) {
     color: #fff;
 }
 
@@ -55,14 +57,20 @@ h4 {
     color: #5d6163;
 }
 
-/* カスタムアンダーライン */
-.underline-right-up {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDMuOTE3IiBoZWlnaHQ9IjI4Ljc3NiIgdmlld0JveD0iMCAwIDIwMy45MTcgMjguNzc2Ij4NCiAgPGcgaWQ9Ikdyb3VwXzExNjQiIGRhdGEtbmFtZT0iR3JvdXAgMTE2NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTU0NC41IC0yMzQyLjIyNCkiPg0KICAgIDxsaW5lIGlkPSJMaW5lXzMiIGRhdGEtbmFtZT0iTGluZSAzIiB4Mj0iMjAzLjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NC41IDIzNzAuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogICAgPGxpbmUgaWQ9IkxpbmVfNCIgZGF0YS1uYW1lPSJMaW5lIDQiIHgxPSIxOC41IiB5MT0iMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyOS41IDIzNDIuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwNzA3MCIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: contain;
-    margin-top: 6px;
-    padding-bottom: 3px;
+/* 著者アイコン */
+.author-icon {
+    height: 1.75rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+/* Google Fonts Icons 初期設定 */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
 }
 
 /* インフォメーション */
@@ -99,84 +107,158 @@ h4 {
     overflow: hidden;
 }
 
-/* サークル カテゴリ smaller than -lg */
-.mask-parent {
-    position: relative;
-}
-
-.mask-parent img {
-    filter: brightness(50%);
-}
-
-.mask-parent p {
-    position: absolute;
-    width: 91.475%;
-    margin: 0;
-    top: 50%;
-    left: 55.5%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-weight: 700;
-}
-
-.mask-parent p.expand::after {
-    font-family: "Material Icons Outlined";
-    content: "\e5cf";
-    position: absolute;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 100%;
-    right: 12.5%;
-}
-
-/* サークル カテゴリ別 */
-/* サークル カテゴリ別 アイコン */
+/* サークル */
+/* アイコン */
+/* 運動 */
 .sport-icon::before {
-    font-family: "Material Icons Outlined";
+    font-family: "Material Symbols Rounded";
     content: "\e566";
 }
 
+/* 文化・学術 */
 .culture-icon::before {
-    font-family: "Material Icons Outlined";
+    font-family: "Material Symbols Rounded";
     content: "\e80c";
 }
 
+/* 創造 */
 .creation-icon::before {
-    font-family: "Material Icons Outlined";
+    font-family: "Material Symbols Rounded";
     content: "\e574";
 }
 
-/* サークル カテゴリ別 カテゴリ名 */
-.cards-head {
-    position: relative;
+/* サークル カテゴリ wider than -lg */
+.circle-category {
+    text-decoration: none;
 }
 
-.cards-head > span {
-    padding: 0.625rem;
-    padding-left: 2.5rem;
-    padding-right: 2rem;
-    border-radius: 8px;
-    background: #ffbc00;
+.circle-category > div {
     color: #fff;
-    font-weight: 700;
+    /* background: #ffbc00; */
+    background: linear-gradient(45deg, rgb(255, 215, 0), rgb(255, 155, 0));
+    position: relative;
+    overflow: hidden;
 }
 
-.cards-head > span::before {
-    position: absolute;
-    font-size: 1.5rem;
+.circle-category > div :nth-child(n) {
+    display: inline-flex;
+    align-items: center;
+}
+
+.circle-category > div > :nth-child(1) {
+    font-family: 'Zen Maru Gothic', sans-serif;
     font-weight: 400;
-    line-height: 100%;
-    left: 0.625rem;
+    font-size: 3rem;
 }
 
-/* サークル カード */
-.place-text::before{
+.circle-category > div > :nth-child(2)::before {
+    font-size: 6rem;
+    opacity: 0.75;
+}
+
+/* 斜線 */
+.circle-category > div::before {
+    position: absolute;
+    bottom: 6rem;
+    content: '';
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    transform: skewY(60deg);
+    opacity: 0.5;
+}
+
+/* サークル カテゴリ smaller than -lg */
+.circle-category-s {
+    text-decoration: none;
+}
+
+.circle-category-s > div {
+    color: #fff;
+    /* background: #ffbc00; */
+    background: linear-gradient(45deg, rgb(255, 215, 0), rgb(255, 155, 0));
+}
+
+.circle-category-s > div :nth-child(n) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-category-s > div > :nth-child(1) {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.circle-category-s > div > :nth-child(2) :nth-child(1)::before {
+    font-size: 3rem;
+    opacity: 0.75;
+}
+
+.circle-category-s > div > :nth-child(2) :nth-child(2)::before {
+    font-family: "bootstrap-icons";
+    content: "\F229";
+    font-size: 1.25rem;
+    transform: translateY(3px);
+}
+
+/* サークル カテゴリ見出し */
+.circle-category-title {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    font-size: 1.15rem;
+    background: #ffbc00;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+}
+
+.circle-category-title::before {
+    font-size: 1.75rem;
+    margin-right: 0.5rem;
+    opacity: 0.8;
+}
+
+/* サークル 名前 */
+.circle-title {
+    display: inline-flex;
+    align-items: center;
+}
+
+.circle-title::before {
+    font-family: "bootstrap-icons";
+    content: "\F518";
+    color: #FF8000;
+    margin-right: 0.4rem;
+}
+
+/* サークル 場所 */
+.circle-info :nth-child(1) {
+    display: inline-flex;
+    align-items: center;
+}
+
+.circle-info :nth-child(1)::before {
     font-family: "bootstrap-icons";
     content: "\F3E7";
+    font-size: 1.1rem;
+    margin-left: 0.1rem;
+    margin-right: 0.5rem;
 }
 
-.members-text::before{
-    font-family: "Material Icons Outlined";
-    content: "\e7ef";
+/* サークル 人数 */
+.circle-info :nth-child(2) {
+    display: inline-flex;
+    align-items: center;
+}
+
+.circle-info :nth-child(2)::before {
+    font-family: "bootstrap-icons";
+    content: "\F4CF";
+    font-size: 1.1rem;
+    margin-left: 0.1rem;
+    margin-right: 0.5rem;
 }
