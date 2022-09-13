@@ -379,7 +379,7 @@ head('index', 'IPUT学生団体');
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークル' . ($i + 1) ** ($i * 20), null, '会館' . ($i + 1) * 10, ($i + 2) ** ($i + 1));
+                        circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館' . $i + 1, ($i + 2) ** ($i + 1));
                     }
                     ?>
                 </div>
@@ -390,18 +390,18 @@ head('index', 'IPUT学生団体');
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークルサークルサークルサークル', null, 'Discord', ($i + 10) * ($i + 1 * 2));
+                        circle_card('Nectgrams', 'nectgrams.jpg', 'Discord', ($i + 10) * ($i + 1 * 2));
                     }
                     ?>
                 </div>
             </div>
-            <!-- 創造-->
+            <!-- 創造 -->
             <div class="pt-5">
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークル' . ($i + 1) ** ($i * 10), null, null, ($i + 5) ** ($i + 1));
+                        circle_card('映像研', null, '291 MIRAI STUDIO', ($i + 3) ** ($i + 2));
                     }
                     ?>
                 </div>
@@ -418,15 +418,13 @@ head('index', 'IPUT学生団体');
                 <div class="card h-100">
                     <div class="row g-0">
                         <div class="col-4 col-lg-12">
-                            <img src="src/no_image.png" class="card-img-top ratio-3x2 h-100" alt="...">
+                            <img src="src/<?php echo $thumbnail_image ?? 'no_image.png'; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
                         </div>
                         <div class="col-8 col-lg-12">
                             <div class="card-body h-100 d-flex flex-column">
                                 <h5 class="card-title">
                                     <a class="card-link circle-title" href="#">
-                                        <span class="line-clamp-1">
-                                            <?php echo $circle_name; ?>
-                                        </span>
+                                        <span class="line-clamp-1"><?php echo $circle_name; ?></span>
                                     </a>
                                 </h5>
                                 <div class="card-text mt-auto">
