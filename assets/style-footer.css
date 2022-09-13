@@ -7,14 +7,20 @@ footer {
     word-break: keep-all;
 }
 
+footer p {
+    display: inline-flex;
+    align-items: center;
+}
+
+footer p:before {
+    font-family: "bootstrap-icons";
+    content: "\F231";
+    margin-right: 3px;
+}
+
 footer a {
     color: #EEEEEE;
     text-decoration: none;
-}
-
-footer a:before {
-    font-family: "bootstrap-icons";
-    content: "\F231";
 }
 
 .footer-top {

@@ -16,7 +16,7 @@ function footer($page_name) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-flex flex-column">
                                 <p class="mb-1"><a href="#">活動一覧</a></p>
                                 <p class="mb-1"><a href="#">ニュース一覧</a></p>
                                 <p class="mb-1"><a href="#">FAQ</a></p>
@@ -28,10 +28,10 @@ function footer($page_name) {
                         </div>
                     </div>
 
-                    <div class="col-md-6 offset-md-1">
+                    <div class="col-md-6 offset-md-1 d-flex flex-column">
                         <h6>外部リンク</h6>
-                        <p><a href="#">東京国際工科専門職大学</a></p>
-                        <p><a href="#">IPUT days Tokyo - Twitter</a></p>
+                        <p class="mb-1"><a href="#">東京国際工科専門職大学</a></p>
+                        <p class="mb-1"><a href="#">IPUT days Tokyo - Twitter</a></p>
                     </div>
                 </div>
             </div>

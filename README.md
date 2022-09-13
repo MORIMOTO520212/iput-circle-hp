@@ -150,7 +150,20 @@
 
 ## その他
 - [Lists Unstyled](https://getbootstrap.jp/docs/5.0/content/typography/#lists)
-- [Google Fonts Icons](https://fonts.google.com/icons)
+- [Google Fonts Icons](https://fonts.google.com/icons?icon.style=Rounded)
+> **Note**\
+> `Google Fonts Icons`は`Rounded & Variable`のstyle-sheetを使用\
+> 以下のCSS(例)を定義後に使用すること
+```css
+/* デフォルト */
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+```
 
 ***
 
