@@ -100,13 +100,6 @@ h4 {
     border-bottom: solid 1px #ddd !important;
 }
 
-#info-content .list-group-item p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-}
-
 /* サークル */
 /* アイコン */
 /* 運動 */

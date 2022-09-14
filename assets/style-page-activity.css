@@ -71,6 +71,14 @@ label.tag{
     height: 100%;
 }
 
+/* 三点リーダーで文字省略 */
+.text-overflow{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
 /* ページネーション */
 .page{
     width: 100%;
