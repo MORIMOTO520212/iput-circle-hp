@@ -114,20 +114,20 @@ head('index', 'IPUT学生団体');
             <div class="tab-content p-4 pt-0" id="info-content">
                 <!-- 新規情報 -->
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
-                    <div class="list-group list-group-flush pt-3">
+                    <div class="list-group list-group-flush mt-2">
                         <?php
                         for ($i = 0; $i < 3; $i++) :
                         ?>
-                            <a class="list-group-item pt-2" href="#">
+                            <a class="list-group-item mt-1" href="#">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
                                     <span class="badge bg-danger">重要</span>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5>記事のタイトル</h5>
+                                    <h5 class="line-clamp-1">記事のタイトル</h5>
                                     <small class="text-muted">5時間前</small>
                                 </div>
-                                <p>
+                                <p class="line-clamp-2">
                                     ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
                                     最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
                                     省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
@@ -140,20 +140,20 @@ head('index', 'IPUT学生団体');
                 </div>
                 <!-- お知らせ -->
                 <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-                    <div class="list-group list-group-flush">
+                    <div class="list-group list-group-flush mt-2">
                         <?php
                         for ($i = 0; $i < 3; $i++) :
                         ?>
-                            <a class="list-group-item pt-3" href="#">
+                            <a class="list-group-item mt-1" href="#">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
                                     <span class="badge bg-danger">重要</span>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5>記事のタイトル</h5>
+                                    <h5 class="line-clamp-1">記事のタイトル</h5>
                                     <small class="text-muted">5時間前</small>
                                 </div>
-                                <p>
+                                <p class="line-clamp-2">
                                     ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
                                     最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
                                     省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
@@ -166,20 +166,20 @@ head('index', 'IPUT学生団体');
                 </div>
                 <!-- イベント・行事 -->
                 <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
-                    <div class="list-group list-group-flush">
+                    <div class="list-group list-group-flush mt-2">
                         <?php
                         for ($i = 0; $i < 3; $i++) :
                         ?>
-                            <a class="list-group-item pt-3" href="#">
+                            <a class="list-group-item mt-1" href="#">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
                                     <span class="badge bg-danger">重要</span>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5>記事のタイトル</h5>
+                                    <h5 class="line-clamp-1">記事のタイトル</h5>
                                     <small class="text-muted">5時間前</small>
                                 </div>
-                                <p>
+                                <p class="line-clamp-2">
                                     ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
                                     最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
                                     省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
@@ -221,7 +221,7 @@ head('index', 'IPUT学生団体');
                                                     </a>
                                                 </h5>
                                                 <div class="card-text d-none d-lg-block">
-                                                    <p class="line-clamp-3">
+                                                    <p class="line-clamp-2">
                                                         ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
                                                         最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
                                                         省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
@@ -271,7 +271,7 @@ head('index', 'IPUT学生団体');
                                                     </a>
                                                 </h5>
                                                 <div class="card-text d-none d-lg-block">
-                                                    <p class="line-clamp-3">
+                                                    <p class="line-clamp-2">
                                                         ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
                                                         最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
                                                         省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
@@ -376,7 +376,7 @@ head('index', 'IPUT学生団体');
             <!-- 運動 -->
             <div class="pt-5">
                 <h4 class="rounded circle-category-title sport-icon">運動</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
+                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
                         circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館' . $i + 1, ($i + 2) ** ($i + 1));
@@ -387,7 +387,7 @@ head('index', 'IPUT学生団体');
             <!-- 文化・学術 -->
             <div class="pt-5">
                 <h4 class="rounded circle-category-title culture-icon">文化・学術</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
+                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
                         circle_card('Nectgrams', 'nectgrams.jpg', 'Discord', ($i + 10) * ($i + 1 * 2));
@@ -398,7 +398,7 @@ head('index', 'IPUT学生団体');
             <!-- 創造 -->
             <div class="pt-5">
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-3">
+                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
                         circle_card('映像研', null, '291 MIRAI STUDIO', ($i + 3) ** ($i + 2));

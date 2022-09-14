@@ -51,7 +51,7 @@ head('page-activity', '活動一覧');
         <div class="row g-0 content">
             <img src="https://via.placeholder.com/468x200?text=Sample+Image">
             <div class="card-body" style="flex:1;">
-                <h5 class="card-title line-clamp-3">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</h5>
+                <h5 class="card-title text-overflow">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</h5>
                 <span class="badge bg-secondary">地元活性化サークル</span>
                 <p class="card-text"><small class="text-muted">2022.09.05</small></p>
             </div>
