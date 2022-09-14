@@ -114,11 +114,11 @@ head('index', 'IPUT学生団体');
             <div class="tab-content p-4 pt-0" id="info-content">
                 <!-- 新規情報 -->
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
-                    <div class="list-group list-group-flush">
+                    <div class="list-group list-group-flush pt-3">
                         <?php
                         for ($i = 0; $i < 3; $i++) :
                         ?>
-                            <a class="list-group-item pt-3" href="#">
+                            <a class="list-group-item pt-2" href="#">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
                                     <span class="badge bg-danger">重要</span>
