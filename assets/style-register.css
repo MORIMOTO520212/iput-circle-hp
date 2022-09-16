@@ -1,0 +1,42 @@
+/* コンテンツ */
+.contents{
+}
+
+.main{
+    position: relative;
+}
+
+/* 登録フォーム */
+.img-background{
+    position: relative;
+    width: 100%;
+    height: 753px;
+    object-fit: cover;
+}
+
+.top{
+    width: 40%;
+    background: #fff;
+    border-radius: 10px;
+    margin:  auto;
+    position: relative;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+}
+
+.register{
+    width: 300px;
+    padding: 20px;
+    margin:  auto;
+}
+.register p{
+    margin: 5px 0 5px 0;
+}
+.register input{
+    margin-bottom: 15px;
+}
+.register button{
+    display: block;
+    margin: 0 auto;
+}
