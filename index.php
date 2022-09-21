@@ -19,7 +19,7 @@ head('index', 'IPUT学生団体');
                 <span class="input-group-text" id="addon-wrapping-userid">
                     <span class="bi bi-person-circle"></span>
                 </span>
-                <input type="text" class="form-control mb-0" placeholder="@ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mb-3">
                 <span class="input-group-text" id="addon-wrapping-email">

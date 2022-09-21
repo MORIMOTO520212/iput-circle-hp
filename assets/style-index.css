@@ -35,12 +35,13 @@
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    max-width: 1024px;
+    max-width: 1120px;
 }
 
 #top-category > div > div {
     background: #9ac629;
     border-radius: 10%;
+    height: 180px;
 }
 
 #top-category > div > div :nth-child(n) {
