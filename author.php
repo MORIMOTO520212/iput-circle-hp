@@ -22,6 +22,7 @@ head('author', 'マイページ');
             </div>
         </div>
         <div class="create-circle mb-3">
+            <a class="button" href="#"></a>
             <div><h4>サークルを作成する</h4></div>
             <div class="icon">
                 <span></span>
@@ -31,6 +32,7 @@ head('author', 'マイページ');
 
     <div class="main-second">
         <div class="management-card">
+            <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="pb-2">活動記録を書く</h4>
                 <p>サークルの活動や、その他の課外活動に関する活動状況</p>
@@ -43,6 +45,7 @@ head('author', 'マイページ');
         </div>
 
         <div class="management-card">
+            <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="pb-2">ニュースを書く</h4>
                 <p>イベントや行事など、学生に知らせたいことについて</p>
@@ -55,6 +58,7 @@ head('author', 'マイページ');
         </div>
 
         <div class="management-card">
+            <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="pb-2">サークルを管理する</h4>
                 <p>サークルのダッシュボード</p>
@@ -67,6 +71,7 @@ head('author', 'マイページ');
         </div>
 
         <div class="management-card">
+            <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="pb-2">記事を管理する</h4>
                 <p>活動記録とニュースのダッシュボード</p>
@@ -79,6 +84,7 @@ head('author', 'マイページ');
         </div>
 
         <div class="management-card settings">
+            <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="mb-0">基本情報を編集する</h4>
             </div>

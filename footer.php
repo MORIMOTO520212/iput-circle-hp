@@ -45,10 +45,11 @@ function footer($page_name) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
      crossorigin="anonymous"></script>
-    <!-- jQuery Slim v3.3.1 -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <!-- jQuery uncompressed v3.6.1 -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+     integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
      crossorigin="anonymous"></script>
+     <!-- base.js -->
      <script type="text/javascript" src="assets/base.js"></script>
     </body>
 </html>
