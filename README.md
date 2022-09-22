@@ -42,7 +42,7 @@
 ## カスタムスタイル
 - `style-header.css`
 
-### 各サイズ(xl, lg, md, sm)に対応するmax-widthクラス
+### 各サイズ(xl, lg, md, sm)に最大幅を合わせる
 ```css
 .max-width-sm {
     max-width: 576px !important;
@@ -58,9 +58,15 @@
 }
 ```
 
-### アスペクト比固定クラス
+### アスペクト比固定
 > **Warning**\
 > `height: 100%`を基準にする際は使わないこと！
+
+> **Warning**\
+> レスポンシブ等を考慮して基準を変えたい際は`Bootstrap`のクラスと併用することで対応できる\
+> その際、**ブラウザにより優先度が異なるので注意すること**\
+> `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`の順でクラスを適用する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
+> 特に`Safari`はクラスの順序に影響されやすいため注意すること！
 ```css
 .ratio-1x1 {
     width: 100%;
@@ -117,8 +123,7 @@
 ```
 
 ### Bootstrap Cards リンクのスタイルを無効化
-> **Note**\
-> [Bootstrap Cards](https://getbootstrap.jp/docs/5.0/components/card/)
+- [Bootstrap Cards](https://getbootstrap.jp/docs/5.0/components/card/)
 ```css
 .card a {
     color: #000;
@@ -129,14 +134,12 @@
 ***
 
 ## ヘッダー (Navbar)
-[Bootstrap Navbar Icon](https://getbootstrap.jp/docs/5.0/components/navbar/#external-content)の透過度50%を無効にするため\
-[Bootstrap Listアイコン](https://icons.getbootstrap.jp/icons/list/)に`fill="#fff"`を指定し、CSSからBase64の`background-image`として`class="navbar-toggler-icon"`に適用
+[Bootstrap Navbar Icon](https://getbootstrap.jp/docs/5.0/components/navbar/#external-content)の透過度50%を無効にするため、[Bootstrap Listアイコン](https://icons.getbootstrap.jp/icons/list/)に`fill="#fff"`を指定し、CSSからBase64の`background-image`として`class="navbar-toggler-icon"`に適用
 ```html
 <header>
     <nav>...
 ```
 - [Navbar(ナビゲーションバー)](https://getbootstrap.jp/docs/5.0/components/navbar/)
-- [Bootstrap アイコン](https://icons.getbootstrap.jp/)
 - [Buttons (ボタン)](https://getbootstrap.jp/docs/5.0/components/buttons/)
 
 ***
@@ -150,10 +153,21 @@
 
 ## その他
 - [Lists Unstyled](https://getbootstrap.jp/docs/5.0/content/typography/#lists)
+- [Bootstrap Icons](https://icons.getbootstrap.jp/)
 - [Google Fonts Icons](https://fonts.google.com/icons?icon.style=Rounded)
+### Bootstrap Icons
+> **Note**\
+> `Bootstrap Icons`の使用例は以下
+```css
+element {
+    font-family: "bootstrap-icons";
+    content: "\F229";
+}
+```
+### Google Fonts Icons
 > **Note**\
 > `Google Fonts Icons`は`Rounded & Variable`のstyle-sheetを使用\
-> 以下のCSS(例)を定義後に使用すること
+> 以下のCSS(例)にて初期スタイルを定義後に使用すること
 ```css
 /* デフォルト */
 .material-symbols-rounded {
@@ -164,6 +178,17 @@
   'opsz' 48
 }
 ```
+> なお、公式にて[各パラメータの変更を視覚的に確認できる](https://fonts.google.com/icons?icon.style=Rounded)\
+
+> **Note**\
+> `Google Fonts Icons(Rounded)`の使用例は以下
+> 
+```css
+element {
+    font-family: "Material Symbols Rounded";
+    content: "\e566";
+}
+```
 
 ***
 
@@ -172,7 +197,7 @@
 <main class="contents">
     <div id="form-login">...
 ```
-- [Validation(バリデーション)](https://getbootstrap.jp/docs/5.0/forms/validation/#server-side)
+- [Validation(バリデーション)](https://getbootstrap.jp/docs/5.0/forms/validation/#server-side) / 検討中
 > **Warning**\
 > 背景をブラー加工済みの画像にする際は、下記elementを削除またはコメントアウト
 ```html
