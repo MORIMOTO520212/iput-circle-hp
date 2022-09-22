@@ -1,13 +1,8 @@
-<!-- ログインページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: ログイン */
 ?>
 
-<?php
-/* header.php 読み込み */
-head('login', 'ログイン | IPUT学生団体');
-?>
+<?=get_header()?>
 
 <main class="contents" style="background-image: url('src/firstView_Image.jpg')">
     <!-- ログインフォーム -->
@@ -42,5 +37,4 @@ head('login', 'ログイン | IPUT学生団体');
     </div>
 </main>
 
-<!-- フッター -->
-<?php footer('index'); ?>
+<?=get_footer()?>

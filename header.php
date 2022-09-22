@@ -1,25 +1,31 @@
 <?php
-/*  * * * ヘッダー * * *
-    $page_name - この引数にページの名前を指定するとそのページのCSSが読み込まれます.
-    WordPressではget_header関数を用いる
-*/
-function head($page_name, $page_title) {
+if(is_author()){
+    $title = "マイページ";
+    $slug = "author";
+} else {
+    $title = get_the_title();
+    $slug = get_post(get_the_ID())->post_name;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <title><?php echo $page_title ?></title>
+        <title><?=$title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="content-script-type" content="text/javascript" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="Keywords" content="東京国際工科専門職大学,専門職大学,iput" />
         <meta name="Description" content="" />
+        <!-- Icon -->
+        <link rel="shortcut icon" href="<?=get_theme_file_uri('/src/icon.png')?>" />
+        <!-- OGP Settings -->
         <!-- CSS -->
-        <link href="assets/style-<?php echo $page_name ?>.css" rel="stylesheet" type="text/css"/>
-        <link href="assets/style-header.css" rel="stylesheet" type="text/css"/>
-        <link href="assets/style-footer.css" rel="stylesheet" type="text/css"/>
+        <link href="<?=get_theme_file_uri("assets/style-$slug.css")?>" rel="stylesheet" type="text/css"/>
+        <link href="<?=get_theme_file_uri("assets/style-header.css")?>" rel="stylesheet" type="text/css"/>
+        <link href="<?=get_theme_file_uri("assets/style-footer.css")?>" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="<?=get_stylesheet_uri()?>"/>
 
         <!-- CSS Bootstrap v5.2.0 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -28,6 +34,7 @@ function head($page_name, $page_title) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <!-- Google Fonts Icons | Rounded & Variable -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <?=wp_head()?>
     </head>
     <body>
         <!-- ヘッダー -->
@@ -67,7 +74,3 @@ function head($page_name, $page_title) {
                 </div>
             </nav>
         </header>
-
-<?php
-}
-?>

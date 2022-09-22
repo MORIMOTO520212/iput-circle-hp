@@ -1,0 +1,22 @@
+# 運用環境ではこのファイルはWordPressディレクトリの直下に置く
+
+<files wp-config.php>
+order allow,deny
+deny from all
+</files>
+
+<files wp-comments-post.php>
+order allow,deny
+deny from all
+</files>
+
+<files xmlrpc.php>
+order deny,allow
+deny from all
+</files>
+
+#<FilesMatch "wp-json">
+#Order deny,allow
+#Deny from all
+#Allow from 127.0.0.1
+#</FilesMatch>

@@ -1,5 +1,24 @@
 # IPUT学生団体ホームページ
 
+## Directory Configuration
+```
+.
+├── assets/
+    ├── style-footer.css
+    ├── style-header.css
+    ├── style-index.css
+    ├── style-login.css
+    ├── style-news.css
+├── images/
+├── js/
+    ├── author.js
+├── .htaccess - サイト設定ファイル
+├── screenshot.png - テーマのヘッダー画像
+├── style.css - テーマのCSS
+├── author.php
+├── post.php - 記事投稿プログラム
+```
+
 ## CSS Bootstrap互換表
 | CSS | Bootstrap Class |
 | --- | --- |

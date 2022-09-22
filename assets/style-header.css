@@ -11,6 +11,8 @@ body {
     grid-template-columns: 100%;
     min-height: 100vh;
     background-color: #F0ECE5 !important;
+    /* Bootstrap Font */
+    font-family: var(--bs-body-font-family) !important;
 }
 
 /* 最大幅をsmに合わせる 汎用クラス */

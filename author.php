@@ -1,14 +1,11 @@
-<!-- 活動一覧ページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: マイページ */
+
+// マイページは固定ページに登録する必要はありません。
+// index.php/author/<username> でアクセスできます。
 ?>
 
-<?php
-/* header.php 読み込み */
-head('author', 'マイページ');
-?>
-
+<?=get_header()?>
 
 <div class="main container">
     <h2>ようこそ、@user_nameさん</h2>
@@ -94,5 +91,4 @@ head('author', 'マイページ');
     </div>
 </div>
 
-<!-- フッター -->
-<?php footer('index'); ?>
+<?=get_footer()?>

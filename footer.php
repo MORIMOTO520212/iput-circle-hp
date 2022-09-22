@@ -1,9 +1,3 @@
-<?php
-/*  * * * フッター * * *
-    $page_name - この引数にページの名前を指定するとそのページのCSSが読み込まれます.
-*/
-function footer($page_name) {
-?>
     <footer>
         <div class="footer-top">
             <div class="container">
@@ -50,10 +44,7 @@ function footer($page_name) {
      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
      crossorigin="anonymous"></script>
      <!-- base.js -->
-     <script type="text/javascript" src="assets/base.js"></script>
+     <script type="text/javascript" src="<?=get_theme_file_uri("assets/base.js")?>"></script>
+     <?=wp_footer()?>
     </body>
 </html>
-
-<?php
-}
-?>

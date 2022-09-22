@@ -1,13 +1,8 @@
-<!-- 活動一覧ページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: 活動一覧 */
 ?>
 
-<?php
-/* header.php 読み込み */
-head('page-activity', '活動一覧');
-?>
+<?=get_header()?>
 
 <div class="top">
     <div class="title">
@@ -38,7 +33,7 @@ head('page-activity', '活動一覧');
             <input type="checkbox" class="btn-check" id="btn-check3" autocomplete="off">
             <label class="tag btn btn-outline-secondary" for="btn-check3">重要連絡</label>
         </div>
-        <div class="search-button">
+        <div class="w-100 d-flex justify-content-center">
             <button type="button" class="btn btn-primary">この条件で検索する</button>
         </div>
     </div>
@@ -87,5 +82,4 @@ head('page-activity', '活動一覧');
     </nav>
 </div>
 
-<!-- フッター -->
-<?php footer('index'); ?>
+<?=get_footer()?>

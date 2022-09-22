@@ -1,14 +1,9 @@
 <!-- トップページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: FAQ */
 ?>
 
-<?php
-/* header.php 読み込み */
-head('faq', 'FAQ | IPUT学生団体');
-?>
-
+<?=get_header()?>
 
     <!-- faq -->
 <main class="contents">
@@ -272,5 +267,4 @@ head('faq', 'FAQ | IPUT学生団体');
 
 </main>
 
-<!-- フッター -->
-<?php footer('index'); ?>
+<?=get_footer()?>
