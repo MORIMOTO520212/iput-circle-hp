@@ -41,7 +41,7 @@ if(is_author()){
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">IPUT学生団体</a>
+                    <a class="navbar-brand" href="<?=home_url()?>">IPUT学生団体</a>
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
                             aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -49,25 +49,27 @@ if(is_author()){
                     <div class="collapse navbar-collapse justify-content-end" id="top-nav">
                         <ul class="navbar-nav">
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">活動</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/activity')?>">活動</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">ブログ</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/news')?>">ニュース</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">サークル</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url()?>">サークル</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">FAQ</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/faq')?>">FAQ</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">お問い合わせ</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url()?>">お問い合わせ</a>
                             </li>
                             <li>
                                 <hr class="border-top">
                             </li>
                             <li class="nav-item ms-2 me-2 d-flex justify-content-end">
-                                <button type="button" class="btn btn-light rounded-pill">ログイン</button>
+                                <a href="/login/">
+                                    <button type="button" class="btn btn-light rounded-pill">ログイン</button>
+                                </a>
                             </li>
                         </ul>
                     </div>

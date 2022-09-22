@@ -11,7 +11,7 @@
     <!-- top -->
     <!-- 大まか指示通りできているはず -->
     <div class="position-relative" id="faq-top">
-        <img src="src/faq-top-img.jpg" class="w-100">
+        <img src="<?=get_theme_file_uri('src/faq-top-img.jpg')?>" class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="text-center text-white">
                 <!-- よくあるご質問 -->

@@ -1,15 +1,10 @@
-<!-- お問い合わせ完了ページ -->
+<!-- トップページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: お問い合わせ完了 */
 ?>
 
-<?php
-/* header.php 読み込み */
-head('contact-thanks', 'お問い合わせ完了 | IPUT学生団体');
-?>
+<?=get_header()?>
 
-<!-- コンテンツ -->
 <div class="main">
     <div class="contact-message-container">
     <div class="contact-message-wrapper">
@@ -26,5 +21,4 @@ head('contact-thanks', 'お問い合わせ完了 | IPUT学生団体');
     </div>
 </div>
 
-<!-- フッター -->
-<?php footer('index'); ?>
+<?=get_footer()?>
