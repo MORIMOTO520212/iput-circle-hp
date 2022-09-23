@@ -60,13 +60,14 @@
 
 ### アスペクト比固定
 > **Warning**\
-> `height: 100%`を基準にする際は使わないこと！
+> すべて`width: 100%`基準\
+> `height: 100%`を基準にする際は**使わないことを推奨**
 
 > **Warning**\
 > レスポンシブ等を考慮して基準を変えたい際は`Bootstrap`のクラスと併用することで対応できる\
 > その際、**ブラウザにより優先度が異なるので注意すること**\
-> `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`の順でクラスを適用する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
-> 特に`Safari`はクラスの順序に影響されやすいため注意すること！
+> `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`(例)の順でクラスを記述する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
+> 特に`Safari`はクラスの順序に影響されやすいため注意！
 ```css
 .ratio-1x1 {
     width: 100%;
@@ -156,8 +157,7 @@
 - [Bootstrap Icons](https://icons.getbootstrap.jp/)
 - [Google Fonts Icons](https://fonts.google.com/icons?icon.style=Rounded)
 ### Bootstrap Icons
-> **Note**\
-> `Bootstrap Icons`の使用例は以下
+`Bootstrap Icons`の使用例は以下
 ```css
 element {
     font-family: "bootstrap-icons";
@@ -165,6 +165,13 @@ element {
 }
 ```
 ### Google Fonts Icons
+`Google Fonts Icons(Rounded)`の使用例は以下
+```css
+element {
+    font-family: "Material Symbols Rounded";
+    content: "\e566";
+}
+```
 > **Note**\
 > `Google Fonts Icons`は`Rounded & Variable`のstyle-sheetを使用\
 > 以下のCSS(例)にて初期スタイルを定義後に使用すること
@@ -178,17 +185,7 @@ element {
   'opsz' 48
 }
 ```
-> なお、公式にて[各パラメータの変更を視覚的に確認できる](https://fonts.google.com/icons?icon.style=Rounded)\
-
-> **Note**\
-> `Google Fonts Icons(Rounded)`の使用例は以下
-> 
-```css
-element {
-    font-family: "Material Symbols Rounded";
-    content: "\e566";
-}
-```
+> なお、公式にて[各パラメータの変更を視覚的に確認できる](https://fonts.google.com/icons?icon.style=Rounded)
 
 ***
 
