@@ -6,7 +6,7 @@
 
 <main class="contents" style="background-image: url('<?=get_theme_file_uri('src/firstView_Image.jpg')?>')">
     <!-- ログインフォーム -->
-    <div class="container w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
+    <div class="container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
         <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md">
             <div class="container col col-md-8">
                 <label class="form-label" for="email-input">メールアドレス</label>

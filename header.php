@@ -1,11 +1,16 @@
 <?php
-if(is_author()){
+if( is_author() ) { # ユーザーページの場合
     $title = "マイページ";
     $slug = "author";
-} else {
+
+} else if( is_single() ) { # 投稿ページの場合
+    $slug = "single";
+
+} else { # 固定ページの場合
     $title = get_the_title();
     $slug = get_post(get_the_ID())->post_name;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -61,13 +66,13 @@ if(is_author()){
                                 <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/faq')?>">FAQ</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url()?>">お問い合わせ</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/contact')?>">お問い合わせ</a>
                             </li>
                             <li>
                                 <hr class="border-top">
                             </li>
                             <li class="nav-item ms-2 me-2 d-flex justify-content-end">
-                                <a href="/login/">
+                                <a href="<?=home_url('index.php/login')?>">
                                     <button type="button" class="btn btn-light rounded-pill">ログイン</button>
                                 </a>
                             </li>

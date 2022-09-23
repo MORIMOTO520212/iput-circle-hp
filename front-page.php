@@ -1,5 +1,5 @@
 <?php
-/* Template Name: トップページ */
+/* Template Name: トップ */
 ?>
 
 <?=get_header()?>
@@ -242,7 +242,9 @@
                     </div>
                     <!-- ボタン もっと見る -->
                     <div class="d-flex justify-content-end mt-3">
-                        <button type="button" class="btn btn-success">もっと見る</button>
+                        <a href="<?=home_url('index.php/activity')?>">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </a>
                     </div>
                 </div>
                 <!-- ニュース -->
@@ -292,7 +294,9 @@
                     </div>
                     <!-- ボタン もっと見る -->
                     <div class="d-flex justify-content-end mt-3">
-                        <button type="button" class="btn btn-success">もっと見る</button>
+                        <a href="<?=home_url('index.php/news')?>">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </a>
                     </div>
                 </div>
             </div>

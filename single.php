@@ -1,13 +1,8 @@
-<!-- 記事ページ -->
 <?php
-require_once 'header.php';
-require_once 'footer.php';
+/* Template Name: 記事 */
 ?>
 
-<?php
-/* header.php 読み込み */
-head('single', '記事 | IPUT学生団体');
-?>
+<?=get_header()?>
 
 <div class="container pt-3 max-width-lg">
     <!-- ぱんくずリスト -->
@@ -81,5 +76,4 @@ head('single', '記事 | IPUT学生団体');
     </div>
 </div>
 
-<!-- フッター -->
-<?php footer('single'); ?>
+<?=get_footer()?>
