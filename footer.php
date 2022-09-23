@@ -38,14 +38,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
      crossorigin="anonymous"></script>
-    <!-- JavaScript Bootstrap v5.2.0 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-     integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-     crossorigin="anonymous"></script>
-    <!-- jQuery uncompressed v3.6.1 -->
-    <script src="https://code.jquery.com/jquery-3.6.1.js"
-     integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-     crossorigin="anonymous"></script>
      <!-- base.js -->
      <script type="text/javascript" src="<?=get_theme_file_uri("assets/base.js")?>"></script>
      <?=wp_footer()?>
