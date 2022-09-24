@@ -63,7 +63,7 @@
 > すべて`width: 100%`基準\
 > `height: 100%`を基準にする際は**使わないことを推奨**
 
-> **Info**\
+> **Note**\
 > レスポンシブ等を考慮して基準を変えたい際は`Bootstrap`のクラスと併用することで対応できる\
 > その際、**ブラウザにより優先度が異なるので注意すること**\
 > `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`(例)の順でクラスを記述する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
