@@ -98,8 +98,25 @@ body {
     overflow: hidden;
 }
 
-/* Bootstrap Cards リンク */
-.card a {
+/* Add drop-shadow when cursor hovered (Bootstrap Cards & Custom) */
+.card:hover, .shadow-hover:hover {
+    filter: drop-shadow(0 3px 6px #B1B0B0);
+}
+
+/* Anchor link scale to .card[parent] (Bootstrap Cards & Custom) */
+.card, .card-link-parent {
+   position: relative; 
+}
+.card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Bootstrap Cards link none-style */
+.card-link {
     color: #000;
     text-decoration: none;
 }

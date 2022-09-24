@@ -63,7 +63,7 @@
 > すべて`width: 100%`基準\
 > `height: 100%`を基準にする際は**使わないことを推奨**
 
-> **Warning**\
+> **Info**\
 > レスポンシブ等を考慮して基準を変えたい際は`Bootstrap`のクラスと併用することで対応できる\
 > その際、**ブラウザにより優先度が異なるので注意すること**\
 > `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`(例)の順でクラスを記述する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
@@ -123,12 +123,29 @@
 }
 ```
 
-### Bootstrap Cards リンクのスタイルを無効化
-- [Bootstrap Cards](https://getbootstrap.jp/docs/5.0/components/card/)
+### Bootstrap Cards 関連
+[Bootstrap Cards](https://getbootstrap.jp/docs/5.0/components/card/) のコンポーネントクラスは以下
+- `card`
+- `card-link`
+
+その他以下のクラスはカスタムスタイルとして使う
+- `shadow-hover`
+- `card-link-parent`
 ```css
-.card a {
-    color: #000;
-    text-decoration: none;
+/* Add drop-shadow when cursor hovered (Bootstrap Cards & Custom) */
+.card:hover, .shadow-hover:hover {
+    filter: drop-shadow(0 3px 6px #B1B0B0);
+}
+/* Anchor link scale to .card[parent] (Bootstrap Cards & Custom) */
+.card, .card-link-parent {
+   position: relative; 
+}
+.card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 ```
 
