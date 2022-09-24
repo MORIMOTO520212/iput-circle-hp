@@ -15,8 +15,7 @@ head('page-news', 'ニュース一覧');
     </div>
     <div class="filter">
         <!-- 検索フォーム -->
-        <input type="text" class="search-input form-control" placeholder="検索する文字を入力してください"
-        aria-label="search" aria-describedby="basic-addon1">
+        <input type="text" class="search-input form-control" placeholder="検索する文字を入力してください" aria-label="search" aria-describedby="basic-addon1">
         <!-- Flex -->
         <div class="search-settings">
             <input type="checkbox" class="btn-check" id="btn-check1" autocomplete="off">
@@ -37,31 +36,28 @@ head('page-news', 'ニュース一覧');
 </div>
 
 <div class="container pt-4 pb-4" style="max-width: 750px !important;">
-    <div class="row row-cols-1  row-cols-lg-3 g-2 g-lg-3">
-
-        <?php for($i = 0; $i < 6; $i++): ?>
-        <div class="col h-100 card-link">
-            <a href="#"></a>
-            <div class="card h-100">
-                <div class="row g-0">
-                    <div class="col-4  col-lg-12">
-                        <img src="https://via.placeholder.com/468x200?text=Sample+Image"
-                        class="card-img-top ratio h-100" alt="...">
-                    </div>
-                    <div class="col-8  col-lg-12">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="line-clamp-3">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</span>
-                            </h5>
-                            <span class="badge bg-secondary">地元活性化サークル</span>
-                            <p class="card-text"><small class="text-muted">2022.09.05</small></p>
+    <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
+        <?php for ($i = 0; $i < 6; $i++) : ?>
+            <div class="col">
+                <div class="card h-100">
+                    <a class="card-link" href="#"></a>
+                    <div class="row g-0">
+                        <div class="col-4 col-lg-12">
+                            <img src="https://via.placeholder.com/468x200?text=Sample+Image" class="card-img-top h-100" alt="...">
+                        </div>
+                        <div class="col-8 col-lg-12">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span class="line-clamp-3">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</span>
+                                </h5>
+                                <span class="badge bg-secondary">地元活性化サークル</span>
+                                <p class="card-text"><small class="text-muted">2022.09.05</small></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         <?php endfor; ?>
-
     </div>
 </div>
 

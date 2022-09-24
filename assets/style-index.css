@@ -65,15 +65,6 @@ h4 {
     object-fit: cover;
 }
 
-/* Google Fonts Icons 初期設定 */
-.material-symbols-rounded {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 48
-}
-
 /* インフォメーション */
 .parent-tab {
     border: solid 1px #dee2e6;
@@ -255,4 +246,11 @@ h4 {
     font-size: 1.1rem;
     margin-left: 0.1rem;
     margin-right: 0.5rem;
+}
+
+/* -lg */
+@media only screen and (max-width: 991px) {
+    .card-img-top {
+        border-radius: .25rem 0 0 .25rem !important;
+    }
 }
