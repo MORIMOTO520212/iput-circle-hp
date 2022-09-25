@@ -1,23 +1,49 @@
 <?php
 /* Template Name: ログイン */
 
-session_start();
+// ユーザー認証
+if ( $_SERVER['REQUEST_METHOD'] == "POST" ) {
+    $creds = array();
+    $creds['user_login'] = $_POST['email'];
+    $creds['user_password'] = $_POST['password'];
+    if( isset($_POST['keep_loggedin']) ) {
+        $creds['remember'] = true;
+    }
+    $user = wp_signon($creds);
 
-/* トークンの生成（login.phpの検証） */
-$token = bin2hex(random_bytes(32));
-$_SESSION['token'] = $token;
-
-/* login.phpからリダイレクトするときに使う */
-$_SESSION['referrer'] = get_the_permalink();
-
-/* ログインエラー処理 */
-$error_title    = "";
-$error_contents = "";
-if ( isset($_GET['errorcode']) ) {
-    $errorcode = $_GET['errorcode'];
-    if ( 1 == $errorcode ) {
-        $error_title = "ログインに失敗しました。";
-        $error_contents = "トークンが異なるためログインに失敗しました。<br>ページを更新してから再度試してください。";
+    if( is_wp_error($user) ) {
+        // ログイン失敗時
+?>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header alert alert-warning">
+                    <h5 class="modal-title" id="exampleModalLabel">ログインに失敗しました。</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php echo $user->get_error_message(); ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            window.onload = () => {
+                var elem = $('#myModal');
+                var options = "keyboard";
+                elem.removeClass('display'); // display:none解除
+                var myModal = new bootstrap.Modal(elem, options);
+                myModal.show();
+            }
+        </script>
+<?php
+    } else {
+        // ログイン成功時 トップページに遷移
+        wp_redirect( home_url() );
     }
 }
 
@@ -28,7 +54,7 @@ get_header();
 <main class="contents" style="background-image: url('<?=get_theme_file_uri('src/firstView_Image.jpg')?>')">
     <!-- LOGIN FORM -->
     <div class="container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
-        <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md" id="form" action="#">
+        <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md" id="form" action="#" method="post">
 
             <div class="container col col-md-8">
                 <label class="form-label" for="email-input">ユーザー名またはメールアドレス</label>
@@ -48,14 +74,12 @@ get_header();
 
             <div class="container col col-md-8 d-flex justify-content-center">
                 <div class="form-check">
-                    <input class="form-check-input" id="keep-input" name="keep_loggedin" type="checkbox" value="1" aria-label="ログイン状態の維持"
+                    <input class="form-check-input" id="keep-input" name="keep_loggedin" type="checkbox" value="forever" aria-label="ログイン状態の維持"
                         aria-describedby="keep-help">
                     <label class="form-check-label" for="keep-input">ログイン状態を維持しますか？</label>
                     <div class="form-text" id="keep-help">共有のパソコンではチェックを外す</div>
                 </div>
             </div>
-
-            <input type="hidden" name="token" value="<?php echo $token; ?>">
 
             <div class="container col col-md-8 d-flex justify-content-center">
                 <button class="btn btn-success submitBtn" type="submit">ログイン</button>
@@ -64,39 +88,11 @@ get_header();
     </div>
 </main>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header alert alert-warning">
-            <h5 class="modal-title" id="exampleModalLabel"><?php echo $error_title; ?></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <?php echo $error_contents; ?>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">わかりました</button>
-        </div>
-        </div>
-    </div>
-</div>
-
 <script>
     // Insert post url into the form before POST.
     $('#form').submit(function() {
-        $(this).attr('action', '<?php echo get_theme_file_uri('login.php'); ?>')
+        $(this).attr('action', '<?php echo get_the_permalink(); ?>')
     });
-
-    // Alert
-    var options = "keyboard";
-    var myModal = new bootstrap.Modal(document.getElementById('myModal'), options);
-    <?php
-    if ( isset($_GET['errorcode']) ) :
-    ?>
-    myModal.show();
-    <?php endif; ?>
-
 </script>
 
 <?=get_footer()?>
