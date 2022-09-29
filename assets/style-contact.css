@@ -1,0 +1,25 @@
+/* お問い合わせページ スタイルシート */
+
+/* コンテンツ */
+.contents {
+    background: #f0ece5;
+}
+
+#contact-top img {
+    height: 200px;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+.required_box{
+    float:left;
+}
+
+.top_button{
+    float: left;
+}
+
+.send_button{
+    float:right;
+    
+}
