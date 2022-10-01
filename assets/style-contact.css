@@ -11,8 +11,28 @@
     filter: brightness(0.5);
 }
 
+.ONE{
+    position:relative;
+}
+
+.TWO{
+    position:absolute;
+  top:50px;
+  translate:middle;
+}
+
+.THREE{
+    text-align:center;
+   margin: 0 auto;
+   color:white;
+}
+
+.FOUR{
+    margin: 0 0 0 10px;
+}
+
 .required_box{
-    float:left;
+    display: flex;
 }
 
 .top_button{

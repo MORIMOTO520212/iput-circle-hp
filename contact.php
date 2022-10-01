@@ -12,10 +12,10 @@ head('contact', 'お問い合わせ | IPUT学生団体');
 <main class="contents">
 
     <!-- top -->
-    <div class="position-relative" id="contact-top">
+    <div class="ONE" id="contact-top">
         <img src="src/contact-top-img.jpg" class="w-100">
-        <div class="position-absolute top-50 start-50 translate-middle">
-            <div class="text-center text-white">
+        <div class="TWO">
+            <div class="THREE">
                 <!-- お問い合わせ -->
                 <h1>お問い合わせ</h1>
                 <!-- CONTACT -->
@@ -38,8 +38,11 @@ head('contact', 'お問い合わせ | IPUT学生団体');
         </div>
         <!-- 必須 お名前 -->
         <div class="required_box">
+
             <h5><span class="badge bg-secondary">必須</span></h5>
-            <h3><b>お名前</b></h3>
+            <div class="FOUR">
+                <h3><b>お名前</b></h3>
+            </div>
         </div>
         <!-- from input text large -->
         <div class="input-group input-group-lg">
@@ -49,7 +52,9 @@ head('contact', 'お問い合わせ | IPUT学生団体');
         <!-- 必須 メールアドレス -->
         <div class="required_box">
             <h5><span class="badge bg-secondary">必須</span></h5>
-            <h3><b>メールアドレス</b></h3>
+            <div class="FOUR">
+                <h3><b>メールアドレス</b></h3>
+            </div>
         </div>
         <!-- from input text large -->
         <div class="input-group input-group-lg">
@@ -59,7 +64,9 @@ head('contact', 'お問い合わせ | IPUT学生団体');
         <!-- 必須 お問い合わせ内容 -->
         <div class="required_box">
             <h5><span class="badge bg-secondary">必須</span></h5>
-            <h3><b>お問い合わせ内容</b></h3>
+            <div class="FOUR">
+                <h3><b>お問い合わせ内容</b></h3>
+            </div>
         </div>
         <!-- from input Textarea -->
         <div class="form-floating">
@@ -72,10 +79,10 @@ head('contact', 'お問い合わせ | IPUT学生団体');
         </div>
         <div class="send_button">
             <button type="button" class="btn btn-primary btn-lg">送信する</button>
-    </div>
-    
+        </div>
 
 
 
-    <!-- フッター -->
-    <?php footer('index'); ?>
+
+        <!-- フッター -->
+        <?php footer('index'); ?>
