@@ -28,7 +28,23 @@
 }
 
 .FOUR{
-    margin: 0 0 0 10px;
+    margin:0 auto;
+    max-width: 920px;
+}
+
+.FIVE{
+    margin-left:10px;
+}
+
+.SIX_QUE{
+    margin:0 auto;
+    padding-top: 85px;
+    padding-bottom: 95px;
+}
+
+.SEVEN_mail{
+    padding-top: 64px;
+    padding-bottom: 64px;
 }
 
 .required_box{

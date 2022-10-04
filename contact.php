@@ -1,12 +1,12 @@
-<!-- ‚¨–â‚¢‡‚í‚¹ƒy[ƒW -->
+<!-- ãŠå•ã„åˆã‚ã›ãƒšãƒ¼ã‚¸ -->
 <?php
 require_once 'header.php';
 require_once 'footer.php';
 ?>
 
 <?php
-/* header.php “Ç‚Ýž‚Ý */
-head('contact', '‚¨–â‚¢‡‚í‚¹ | IPUTŠw¶’c‘Ì');
+/* header.php èª­ã¿è¾¼ã¿ */
+head('contact', 'ãŠå•ã„åˆã‚ã› | IPUTå­¦ç”Ÿå›£ä½“');
 ?>
 
 <main class="contents">
@@ -16,8 +16,8 @@ head('contact', '‚¨–â‚¢‡‚í‚¹ | IPUTŠw¶’c‘Ì');
         <img src="src/contact-top-img.jpg" class="w-100">
         <div class="TWO">
             <div class="THREE">
-                <!-- ‚¨–â‚¢‡‚í‚¹ -->
-                <h1>‚¨–â‚¢‡‚í‚¹</h1>
+                <!-- ãŠå•ã„åˆã‚ã› -->
+                <h1>ãŠå•ã„åˆã‚ã›</h1>
                 <!-- CONTACT -->
                 <h3>CONTACT</h3>
             </div>
@@ -25,47 +25,48 @@ head('contact', '‚¨–â‚¢‡‚í‚¹ | IPUTŠw¶’c‘Ì');
     </div>
 
     <!-- main -->
-    <div class="">
-        <div class="">
-            <p>“–ƒTƒCƒg–”‚ÍAIPUTŠw¶’c‘Ì‚ÉŠÖ‚·‚é‚¨–â‚¢‡‚í‚¹‚ÍA‰º‹L‚Ì‚¨–â‚¢‡‚í‚¹ƒtƒH[ƒ€‚æ‚è‚²˜A—‚­‚¾‚³‚¢B<br>
-                ‚¨–â‚¢‡‚í‚¹‚ð‚·‚é‘O‚ÉA‚æ‚­‚ ‚éŽ¿–âiFAQj‚É“¯‚¶Ž¿–â‚ª‚È‚¢‚©‚²Šm”F‚­‚¾‚³‚¢B<br>
-                ®A“–ƒTƒCƒg–”‚ÍAIPUTŠw¶’c‘ÌˆÈŠO‚Ì‚¨–â‚¢‡‚í‚¹‚É‚Â‚«‚Ü‚µ‚Ä‚Í‚¨“š‚¦‚·‚é‚±‚Æ‚ªo—ˆ‚Ü‚¹‚ñ‚Ì‚Å‚ ‚ç‚©‚¶‚ß‚²—¹³‚­‚¾‚³‚¢B</p>
+    <div class="FOUR">
+        <p>å½“ã‚µã‚¤ãƒˆåˆã¯ã€IPUTå­¦ç”Ÿå›£ä½“ã«é–¢ã™ã‚‹ãŠå•ã„åˆã‚ã›ã¯ã€ä¸‹è¨˜ã®ãŠå•ã„åˆã‚ã›ãƒ•ã‚©ãƒ¼ãƒ ã‚ˆã‚Šã”é€£çµ¡ãã ã•ã„ã€‚<br>
+            ãŠå•ã„åˆã‚ã›ã‚’ã™ã‚‹å‰ã«ã€ã‚ˆãã‚ã‚‹è³ªå•ï¼ˆFAQï¼‰ã«åŒã˜è³ªå•ãŒãªã„ã‹ã”ç¢ºèªãã ã•ã„ã€‚<br>
+            å°šã€å½“ã‚µã‚¤ãƒˆåˆã¯ã€IPUTå­¦ç”Ÿå›£ä½“ä»¥å¤–ã®ãŠå•ã„åˆã‚ã›ã«ã¤ãã¾ã—ã¦ã¯ãŠç­”ãˆã™ã‚‹ã“ã¨ãŒå‡ºæ¥ã¾ã›ã‚“ã®ã§ã‚ã‚‰ã‹ã˜ã‚ã”äº†æ‰¿ãã ã•ã„ã€‚
+        </p>
+        
+        <!-- Bootstrap ã‚ˆãã‚ã‚‹è³ªå•ã¯ã“ã¡ã‚‰ã‹ã‚‰ -->
+        <div class="SIX_QUE">
+            <button type="button" class="btn btn-secondary btn-lg">ã‚ˆãã‚ã‚‹è³ªå•ã¯ã“ã¡ã‚‰ã‹ã‚‰</button>
         </div>
-
-        <!-- Bootstrap ‚æ‚­‚ ‚éŽ¿–â‚±‚¿‚ç‚©‚ç -->
-        <div class="">
-            <button type="button" class="btn btn-secondary btn-lg">ƒgƒbƒvƒy[ƒW‚Ö–ß‚é</button>
-        </div>
-        <!-- •K{ ‚¨–¼‘O -->
+        <!-- å¿…é ˆ ãŠåå‰ -->
         <div class="required_box">
 
-            <h5><span class="badge bg-secondary">•K{</span></h5>
-            <div class="FOUR">
-                <h3><b>‚¨–¼‘O</b></h3>
+            <h5><span class="badge bg-secondary">å¿…é ˆ</span></h5>
+            <div class="FIVE">
+                <h3><b>ãŠåå‰</b></h3>
             </div>
         </div>
         <!-- from input text large -->
         <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg">‚¨–¼‘O‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢</span>
+            <span class="input-group-text" id="inputGroup-sizing-lg">ãŠåå‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„</span>
             <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
         </div>
-        <!-- •K{ ƒ[ƒ‹ƒAƒhƒŒƒX -->
-        <div class="required_box">
-            <h5><span class="badge bg-secondary">•K{</span></h5>
-            <div class="FOUR">
-                <h3><b>ƒ[ƒ‹ƒAƒhƒŒƒX</b></h3>
+        <!-- å¿…é ˆ ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ -->
+        <div class="SEVEN_mail">
+            <div class="required_box">
+                <h5><span class="badge bg-secondary">å¿…é ˆ</span></h5>
+                <div class="FIVE">
+                    <h3><b>ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹</b></h3>
+                </div>
             </div>
         </div>
         <!-- from input text large -->
         <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg">ƒ[ƒ‹ƒAƒhƒŒƒX‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢</span>
+            <span class="input-group-text" id="inputGroup-sizing-lg">ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„</span>
             <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
         </div>
-        <!-- •K{ ‚¨–â‚¢‡‚í‚¹“à—e -->
+        <!-- å¿…é ˆ ãŠå•ã„åˆã‚ã›å†…å®¹ -->
         <div class="required_box">
-            <h5><span class="badge bg-secondary">•K{</span></h5>
-            <div class="FOUR">
-                <h3><b>‚¨–â‚¢‡‚í‚¹“à—e</b></h3>
+            <h5><span class="badge bg-secondary">å¿…é ˆ</span></h5>
+            <div class="FIVE">
+                <h3><b>ãŠå•ã„åˆã‚ã›å†…å®¹</b></h3>
             </div>
         </div>
         <!-- from input Textarea -->
@@ -73,16 +74,16 @@ head('contact', '‚¨–â‚¢‡‚í‚¹ | IPUTŠw¶’c‘Ì');
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
             <label for="floatingTextarea2">Comments</label>
         </div>
-        <!-- ¶‚Éƒgƒbƒvƒy[ƒW‚É–ß‚é(Bootstrap Button@Large Secondary) ‰E‘—M‚·‚é -->
+        <!-- å·¦ã«ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸ã«æˆ»ã‚‹(Bootstrap Buttonã€€Large Secondary) å³é€ä¿¡ã™ã‚‹ -->
         <div class="top_button">
-            <button type="button" class="btn btn-secondary btn-lg">ƒgƒbƒvƒy[ƒW‚Ö–ß‚é</button>
+            <button type="button" class="btn btn-secondary btn-lg">ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸ã¸æˆ»ã‚‹</button>
         </div>
         <div class="send_button">
-            <button type="button" class="btn btn-primary btn-lg">‘—M‚·‚é</button>
+            <button type="button" class="btn btn-primary btn-lg">é€ä¿¡ã™ã‚‹</button>
         </div>
 
 
 
 
-        <!-- ƒtƒbƒ^[ -->
+        <!-- ãƒ•ãƒƒã‚¿ãƒ¼ -->
         <?php footer('index'); ?>
