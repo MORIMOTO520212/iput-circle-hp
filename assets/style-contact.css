@@ -11,6 +11,7 @@
     filter: brightness(0.5);
 }
 
+<<<<<<< Updated upstream
 .ONE{
     position:relative;
 }
@@ -38,11 +39,41 @@
 
 .SIX_QUE{
     margin:0 auto;
+=======
+.description_p{
+    color: #707070;
+}
+
+
+
+
+
+
+
+.contact_main{
+    padding: 110px;
+    margin:0 auto;
+    padding-bottom: 0px;
+    max-width: 920px;
+}
+
+.contact_item{
+    margin-left:10px;
+    color: black;
+}
+
+.que_btn{
+    text-align:center;
+>>>>>>> Stashed changes
     padding-top: 85px;
     padding-bottom: 95px;
 }
 
+<<<<<<< Updated upstream
 .SEVEN_mail{
+=======
+.contact_mail{
+>>>>>>> Stashed changes
     padding-top: 64px;
     padding-bottom: 64px;
 }
@@ -51,11 +82,15 @@
     display: flex;
 }
 
-.top_button{
-    float: left;
+.top_send_button{
+    padding-top: 110px;
+    padding-bottom: 200px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.send_button{
-    float:right;
-    
+
+
+.contact_sum{
+    width: 50%;
 }
