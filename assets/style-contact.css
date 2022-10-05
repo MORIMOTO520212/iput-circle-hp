@@ -11,35 +11,6 @@
     filter: brightness(0.5);
 }
 
-<<<<<<< Updated upstream
-.ONE{
-    position:relative;
-}
-
-.TWO{
-    position:absolute;
-  top:50px;
-  translate:middle;
-}
-
-.THREE{
-    text-align:center;
-   margin: 0 auto;
-   color:white;
-}
-
-.FOUR{
-    margin:0 auto;
-    max-width: 920px;
-}
-
-.FIVE{
-    margin-left:10px;
-}
-
-.SIX_QUE{
-    margin:0 auto;
-=======
 .description_p{
     color: #707070;
 }
@@ -64,16 +35,11 @@
 
 .que_btn{
     text-align:center;
->>>>>>> Stashed changes
     padding-top: 85px;
     padding-bottom: 95px;
 }
 
-<<<<<<< Updated upstream
-.SEVEN_mail{
-=======
 .contact_mail{
->>>>>>> Stashed changes
     padding-top: 64px;
     padding-bottom: 64px;
 }
