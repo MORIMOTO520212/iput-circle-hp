@@ -28,8 +28,8 @@
                         <p class="mb-1"><a href="https://twitter.com/IputTokyo">IPUT days Tokyo - Twitter</a></p>
                     </div>
                 </div>
-                <div class="copyright d-flex justify-content-center">
-                    <h6>&copy;2022 Nectgrams - このサイトは学生によって運営されています</h6>
+                <div class="d-flex justify-content-center">
+                    <span>&copy;2022 Nectgrams 学生によって運営されています</span>
                 </div>
             </div>
         </div>
