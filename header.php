@@ -53,7 +53,7 @@ function head($page_name, $page_title) {
                                 <a class="nav-link active" aria-current="page" href="#">活動</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">ブログ</a>
+                                <a class="nav-link active" aria-current="page" href="#">ニュース</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
                                 <a class="nav-link active" aria-current="page" href="#">サークル</a>

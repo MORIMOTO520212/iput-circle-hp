@@ -34,6 +34,9 @@ function footer($page_name) {
                         <p class="mb-1"><a href="#">IPUT days Tokyo - Twitter</a></p>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <span>&copy;2022 Nectgrams 学生によって運営されています</span>
+                </div>
             </div>
         </div>
     </footer>
