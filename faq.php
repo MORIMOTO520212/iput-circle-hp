@@ -32,7 +32,7 @@ head('faq', 'FAQ | IPUT学生団体');
         <!-- side bar ... ? -->
         <!-- 影はできているが、大きさが定まらない。また、サイドバー？の幅が不明 -->
         <!-- 影のroundedをもっと深くする。 -->
-        <div class="shadow bg-body col-xxl-2 rounded ml-xxl-5" id="faq-side-contents">
+        <div class="shadow bg-body col-lg-2 rounded ml-lg-5" id="faq-side-contents">
             <!-- sub contents -->
             <!-- paddingが16*3 = 48px -->
             <div class="text-start" id="faq-side-category">
@@ -50,7 +50,7 @@ head('faq', 'FAQ | IPUT学生団体');
 
         <!-- main contents -->
         <!-- div -->
-        <div class=" ml-0 col-xxl-6 " id="faq-main-contents">
+        <div class=" ml-0 col-lg-6 " id="faq-main-contents">
             <!-- faq contents -->
             <!-- カテゴリ間はmargin48pxで仮置き -->
             <div class="mb-5">
@@ -60,7 +60,7 @@ head('faq', 'FAQ | IPUT学生団体');
                 <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- d-flex -->
                     <!-- Q 1-1 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-1-1">
+                    <div class="accordion col-lg-6" id="faq-accordion-1-1">
                         <!-- Accordion items -->
                         <!-- 中身は適当。 -->
                         <!-- quiestions -->
@@ -94,7 +94,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 1-2 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-1-2">
+                    <div class="accordion col-lg-6" id="faq-accordion-1-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -134,7 +134,7 @@ head('faq', 'FAQ | IPUT学生団体');
                 <h1 class="fw-bold">カテゴリ2</h1>
                 <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- Q 2-1 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-2-1">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-1">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -167,7 +167,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-2 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-2-2">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -202,7 +202,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- 改行 -->
 
                     <!-- Q 2-3 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-2-3">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-3">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -235,7 +235,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-4 -->
-                    <div class="accordion col-xl-6" id="faq-accordion-2-4">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-4">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
