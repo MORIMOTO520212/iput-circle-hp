@@ -2,8 +2,13 @@
     max-width: 590px;
     min-height: 50px;
     background-color: #FBF6EC;
-    padding: 25px;
+    padding: 25px 30px;
     margin: 0 20px;
     border-radius: 10px;
     filter: drop-shadow(0 3px 3px #d5d5d5);
+}
+
+/* trix.js */
+trix-toolbar .trix-button--icon{
+    width: 1.9em !important;
 }

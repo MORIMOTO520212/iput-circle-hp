@@ -11,7 +11,8 @@ $(window).on('scroll', function(){
     startPos = winScrollTop;
 });
 
-/** 入力フォームチェック
+/**
+ * Bootstrap 入力チェック
  * submitされたら入力チェックを行う
 */
 var form = document.querySelector('.needs-validation');
@@ -22,5 +23,5 @@ if (form) {
             event.stopPropagation();
         }
         form.classList.add('was-validated');
-    }, false);
+    });
 }

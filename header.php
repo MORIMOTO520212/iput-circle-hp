@@ -20,7 +20,7 @@ if( is_author() ) { # is user page
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <title><?=$title?></title>
+        <title><?php echo $title; ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="content-script-type" content="text/javascript" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,6 +51,9 @@ if( is_author() ) { # is user page
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
+        <!-- trix.js v1.3.1 -->
+        <link rel="stylesheet" type="text/css" href="<?=get_theme_file_uri("assets/trix1.3.1.css")?>" />
+        <script src="<?=get_theme_file_uri("assets/trix1.3.1.js")?>"></script>
         <?=wp_head()?>
     </head>
     <body>
