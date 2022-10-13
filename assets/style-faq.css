@@ -15,80 +15,13 @@
     filter: brightness(0.5);
 }
 
-/* main */
-#faq-contents {
-    margin-top: 110px;
-}
-
-/* side-bar */
-#faq-side-contents {
-    /* margin: 0 0 0 55px !important; */
-    background-color: #f0ece5 !important;
-}
-
-#faq-side-category {
-    padding: 30px !important;
-}
-
-#faq-side-category ul {
-    line-height: 35.5px;
-}
-
-#faq-side-category p {
-    font-size: 20px !important;
-}
-
-#faq-side-category a {
-    color: #707070 !important;
-}
-
 /* questions and answers */
 #faq-main-contents {
-    width: 1024px;
+    max-width: 1024px;
 }
 
 /* category h1 */
 #faq-main-contents div h1 {
-    font-size: 30px !important;
+    /* font-size: 30px !important; */
     color :#8BB61E !important;
-
-}
-
-
-@media screen and (max-width: 959px) {
-	/* 959px以下に適用されるCSS（タブレット用） */
-    #faq-contents {
-        margin-top: 30px !important;
-    }
-    /* side-bar */
-    #faq-side-contents {
-        margin: 0px !important;
-    }
-}
-
-
-/* accordion color*/
-.accordion .accordion-item .accordion-header .accordion-button {
-    --bs-accordion-color: #000;
-    --bs-accordion-bg: #fff;
-    --bs-accordion-transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out,border-radius 0.15s ease;
-    --bs-accordion-border-color: var(--bs-border-color);
-    --bs-accordion-border-width: 1px;
-    --bs-accordion-border-radius: 0.375rem;
-    --bs-accordion-inner-border-radius: calc(0.375rem - 1px);
-    --bs-accordion-btn-padding-x: 1.25rem;
-    --bs-accordion-btn-padding-y: 1rem;
-    --bs-accordion-btn-color: var(--bs-body-color);
-    --bs-accordion-btn-bg: var(--bs-accordion-bg);
-    --bs-accordion-btn-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--bs-body-color%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
-    --bs-accordion-btn-icon-width: 1.25rem;
-    /* --bs-accordion-btn-icon-transform: rotate(-180deg); */
-    /* --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out; */
-    /* --bs-accordion-btn-active-icon: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e); */
-    --bs-accordion-btn-focus-border-color: #fe8686 !important;
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem#dc3545 !important; 
-    --bs-accordion-body-padding-x: 1.25rem;
-    --bs-accordion-body-padding-y: 1rem;
-    --bs-accordion-active-color: black;
-    --bs-accordion-active-bg: #e7f1ff;
 }
