@@ -11,7 +11,7 @@ head('faq', 'FAQ | IPUT学生団体');
 
 
     <!-- faq -->
-<main class="contents">
+<main class="container-fluid p-0 m-0 w-100" id="contents">
 
     <!-- top -->
     <!-- 大まか指示通りできているはず -->
@@ -28,10 +28,11 @@ head('faq', 'FAQ | IPUT学生団体');
     </div>
 
     <!-- main -->
-    <div class="main d-flex w-100 " id="faq-contents">
+    <div class="row w-100 mx-0" id="faq-contents">
         <!-- side bar ... ? -->
-        <!-- 影はできているが、形が定まらない。また、サイドバー？の幅が不明 -->
-        <div class="shadow rounded h-50 w-25" id="faq-side-contents">
+        <!-- 影はできているが、大きさが定まらない。また、サイドバー？の幅が不明 -->
+        <!-- 影のroundedをもっと深くする。 -->
+        <div class="shadow bg-body col-lg-2 rounded ml-lg-5" id="faq-side-contents">
             <!-- sub contents -->
             <!-- paddingが16*3 = 48px -->
             <div class="text-start" id="faq-side-category">
@@ -48,17 +49,18 @@ head('faq', 'FAQ | IPUT学生団体');
         </div>
 
         <!-- main contents -->
-        <div class="container ml-0 " id="faq-main-contents">
+        <!-- div -->
+        <div class=" ml-0 col-lg-6 " id="faq-main-contents">
             <!-- faq contents -->
             <!-- カテゴリ間はmargin48pxで仮置き -->
             <div class="mb-5">
                 <!-- category-1 -->
                 <h1 class="fw-bold">カテゴリ1</h1>
                 <!-- 各質問の間隔は32pxで仮置き -->
-                <div class="justify-content-around row row-cols-2 g-4">
+                <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- d-flex -->
                     <!-- Q 1-1 -->
-                    <div class="accordion col" id="faq-accordion-1-1">
+                    <div class="accordion col-lg-6" id="faq-accordion-1-1">
                         <!-- Accordion items -->
                         <!-- 中身は適当。 -->
                         <!-- quiestions -->
@@ -92,7 +94,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 1-2 -->
-                    <div class="accordion col" id="faq-accordion-1-2">
+                    <div class="accordion col-lg-6" id="faq-accordion-1-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -130,9 +132,9 @@ head('faq', 'FAQ | IPUT学生団体');
             <div class="mb-5">
                 <!-- category-2 -->
                 <h1 class="fw-bold">カテゴリ2</h1>
-                <div class="justify-content-around row row-cols-2 g-4">
+                <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- Q 2-1 -->
-                    <div class="accordion col" id="faq-accordion-2-1">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-1">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -165,7 +167,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-2 -->
-                    <div class="accordion col" id="faq-accordion-2-2">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-2">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -200,7 +202,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- 改行 -->
 
                     <!-- Q 2-3 -->
-                    <div class="accordion col" id="faq-accordion-2-3">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-3">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
@@ -233,7 +235,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
 
                     <!-- Q 2-4 -->
-                    <div class="accordion col" id="faq-accordion-2-4">
+                    <div class="accordion col-lg-6" id="faq-accordion-2-4">
                         <!-- Accordion items -->
                         <!-- quiestions -->
                         <div class="accordion-item">
