@@ -11,8 +11,7 @@ head('faq', 'FAQ | IPUT学生団体');
 
 
     <!-- faq -->
-<main class="container-fluid p-0 m-0 w-100" id="contents">
-
+<main class="container-fluid p-0" id="contents">
     <!-- top -->
     <!-- 大まか指示通りできているはず -->
     <div class="position-relative" id="faq-top">
@@ -26,16 +25,17 @@ head('faq', 'FAQ | IPUT学生団体');
             </div>
         </div>
     </div>
-
-    <!-- main -->
-    <div class="row w-100 mx-0" id="faq-contents">
+    <!-- contents -->
+    <div class="row mt-5 mx-0 px-4" id="faq-contents">
+        <!-- 高さの調整用 -->
+        <div class="mt-lg-5"></div>
         <!-- side bar ... ? -->
         <!-- 影はできているが、大きさが定まらない。また、サイドバー？の幅が不明 -->
         <!-- 影のroundedをもっと深くする。 -->
-        <div class="shadow bg-body col-lg-2 rounded ml-lg-5" id="faq-side-contents">
-            <!-- sub contents -->
-            <!-- paddingが16*3 = 48px -->
-            <div class="text-start" id="faq-side-category">
+        <div class="shadow rounded-3 col-lg-2 h-50 mb-4 ms-lg-4" id="faq-side-contents">
+        <!-- sub contents -->
+        <!-- paddingが16*3 = 48px -->
+            <div class="p-4">
                 <!-- リスト内のアイコンが未実装 -->
                 <p>項目から探す</p>
                 <ul class="list-unstyled">
@@ -48,13 +48,12 @@ head('faq', 'FAQ | IPUT学生団体');
             </div>
         </div>
 
-        <!-- main contents -->
-        <!-- div -->
-        <div class=" ml-0 col-lg-6 " id="faq-main-contents">
+        <!-- faq -->
+        <div class=" mx-0 ms-lg-5 col-lg p-0" id="faq-main-contents">
             <!-- faq contents -->
             <!-- カテゴリ間はmargin48pxで仮置き -->
+            <!-- category-1 -->
             <div class="mb-5">
-                <!-- category-1 -->
                 <h1 class="fw-bold">カテゴリ1</h1>
                 <!-- 各質問の間隔は32pxで仮置き -->
                 <div class="justify-content-around row row-cols-lg-2 g-4">
@@ -67,11 +66,11 @@ head('faq', 'FAQ | IPUT学生団体');
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-1-1">
-                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-1-1" aria-expanded="false" aria-controls="faq-questions-detail-1-1">
+                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-1-1" aria-expanded="false" aria-controls="faq-questions-detail-1-1">
                                     Q 1-1. Quiestion Text
                                 </button>
                             </h2>
-                            <div id="faq-questions-detail-1-1" class="accordion-collapse collapse" aria-labelledby="faq-questions-1-1"> <!-- data-bs-parent="#faq-accordion-1-1 -->
+                            <div id="faq-questions-detail-1-1" class="accordion-collapse collapse bg-content" aria-labelledby="faq-questions-1-1"> <!-- data-bs-parent="#faq-accordion-1-1 -->
                                 <div class="accordion-body">
                                     <strong>Sample Text</strong>
                                 </div>
@@ -126,11 +125,9 @@ head('faq', 'FAQ | IPUT学生団体');
                         </div>
                     </div>
                 </div>
-                
             </div>
-
+            <!-- category-2 -->
             <div class="mb-5">
-                <!-- category-2 -->
                 <h1 class="fw-bold">カテゴリ2</h1>
                 <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- Q 2-1 -->
@@ -268,10 +265,9 @@ head('faq', 'FAQ | IPUT学生団体');
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-
-
 </main>
 
 <!-- フッター -->
