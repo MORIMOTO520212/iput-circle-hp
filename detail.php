@@ -36,6 +36,39 @@ head('detail', 'サークル詳細ページ | IPUT学生団体');
 <div class="container mt-5">
     <div class="row">
         <div class="col-xl-9">
+            <div class="mobile-nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="#">
+                                <div class="mobile-menu-link">
+                                    <i class="bi bi-journal-bookmark-fill"></i>活動一覧
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="mobile-menu-link mt-3">
+                                    <i class="bi bi-twitter"></i>公式Twitter
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#">
+                                <div class="mobile-menu-link">
+                                    <i class="bi bi-person-fill"></i>参加申請
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="mobile-menu-link mt-3">
+                                    <i class="bi bi-envelope-fill"></i>お問い合わせ
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-nav">
+                <div class="mt-5"></div>
+            </div>
             <div class="overview">
                 <h2>サークル概要</h2>
                 <hr />
