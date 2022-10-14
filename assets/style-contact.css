@@ -1,0 +1,62 @@
+/* お問い合わせページ スタイルシート */
+
+/* コンテンツ */
+.contents {
+    background: #f0ece5;
+}
+
+#contact-top img {
+    height: 200px;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+.description_p{
+    color: #707070;
+}
+
+
+
+
+
+
+
+.contact_main{
+    padding: 110px;
+    margin:0 auto;
+    padding-bottom: 0px;
+    max-width: 920px;
+}
+
+.contact_item{
+    margin-left:10px;
+    color: black;
+}
+
+.que_btn{
+    text-align:center;
+    padding-top: 85px;
+    padding-bottom: 95px;
+}
+
+.contact_mail{
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+.required_box{
+    display: flex;
+}
+
+.top_send_button{
+    padding-top: 110px;
+    padding-bottom: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.contact_sum{
+    width: 50%;
+}

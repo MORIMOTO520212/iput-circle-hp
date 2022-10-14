@@ -11,36 +11,9 @@
     background: #fff;
 }
 
-.banner-img {
-    width: 100%;
-    aspect-ratio: 21 / 5;
-    object-fit: cover;
-}
-
 /* -------- メイン --------- */
 h3 {
     color: #5d6163;
     height: 2.5rem;
     border-bottom: solid 2px #707070;
-}
-
-/* カード */
-/* https://getbootstrap.jp/docs/5.0/components/card/ */
-.card a {
-    color: #000;
-    text-decoration: none;
-}
-
-.card-img-top {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    background: #868e96;
-}
-
-.card-text {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
 }

@@ -1,7 +1,7 @@
 /* ヘッダー スタイルシート */
 
-
 body {
+    background-color: #F0ECE5 !important;
     margin: 0px;
     padding-top: 54px;
     /* ダブルタップズーム無効 */
@@ -33,9 +33,106 @@ body {
     max-width: 1200px !important;
 }
 
+/* アスペクト比 1:1 */
+.ratio-1x1 {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+/* アスペクト比 3:2 */
+.ratio-3x2 {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+/* アスペクト比 16:9 */
+.ratio-16x9 {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* アスペクト比 16:10 */
+.ratio-16x10 {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+/* アスペクト比 16:5 */
+.ratio-16x5 {
+    width: 100%;
+    aspect-ratio: 16 / 5;
+    object-fit: cover;
+}
+
+/* アスペクト比 21:5 */
+.ratio-21x5 {
+    width: 100%;
+    aspect-ratio: 21 / 5;
+    object-fit: cover;
+}
+
+/* 3点リーダー省略 (クランプ) */
+/* line clamp 1 */
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+/* line clamp 2 */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+/* line clamp 3 */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+/* Add drop-shadow when cursor hovered (Bootstrap Cards & Custom) */
+.card:hover, .shadow-hover:hover {
+    filter: drop-shadow(0 3px 6px #B1B0B0);
+}
+
+/* Anchor link scale to .card[parent] (Bootstrap Cards & Custom) */
+.card, .card-link-parent {
+   position: relative; 
+}
+.card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Bootstrap Cards link none-style */
+.card-link {
+    color: #000;
+    text-decoration: none;
+}
+
 /* ヘッダー */
-header {
-    z-index: 1000;
+.navbar {
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    transition: .5s;
+    width: 100%;
+    z-index: 999;
+}
+
+.navbar.hide{
+    transform: translateY(-100%);
 }
 
 .navbar-toggler-icon {

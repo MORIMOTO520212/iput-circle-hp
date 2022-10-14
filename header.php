@@ -16,18 +16,30 @@ function head($page_name, $page_title) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="Keywords" content="東京国際工科専門職大学,専門職大学,iput" />
         <meta name="Description" content="" />
+
         <!-- CSS -->
         <link href="assets/style-<?php echo $page_name ?>.css" rel="stylesheet" type="text/css"/>
         <link href="assets/style-header.css" rel="stylesheet" type="text/css"/>
         <link href="assets/style-footer.css" rel="stylesheet" type="text/css"/>
 
-        <!-- CSS Bootstrap v5.2.0 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-        <!-- CSS Bootstrap Icons v1.8.0 -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-        <!-- Google Fonts Icon -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+        <!-- CSS Bootstrap v5.2.2 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css"
+            integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- CSS Bootstrap Icons v1.9.1 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+            integrity="sha512-5PV92qsds/16vyYIJo3T/As4m2d8b6oWYfoqV+vtizRB6KhF1F9kYzWzQmsO6T3z3QG2Xdhrx7FQ+5R1LiQdUA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Google Fonts Icons | Rounded & Variable -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <!-- jQuery v3.6.1 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- JavaScript Bootstrap Bundle v5.2.2 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.bundle.min.js"
+            integrity="sha512-BOsvKbLb0dB1IVplOL9ptU1EYA+LuCKEluZWRUYG73hxqNBU85JBIBhPGwhQl7O633KtkjMv8lvxZcWP+N3V3w=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
         <!-- ヘッダー -->
@@ -45,7 +57,7 @@ function head($page_name, $page_title) {
                                 <a class="nav-link active" aria-current="page" href="#">活動</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="#">ブログ</a>
+                                <a class="nav-link active" aria-current="page" href="#">ニュース</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
                                 <a class="nav-link active" aria-current="page" href="#">サークル</a>
@@ -57,10 +69,10 @@ function head($page_name, $page_title) {
                                 <a class="nav-link active" aria-current="page" href="#">お問い合わせ</a>
                             </li>
                             <li>
-                                <hr class="dropdown-divider">
+                                <hr class="border-top">
                             </li>
                             <li class="nav-item ms-2 me-2 d-flex justify-content-end">
-                                <button type="button" class="btn btn-light" style="border-radius: 20px">ログイン</button>
+                                <button type="button" class="btn btn-light rounded-pill">ログイン</button>
                             </li>
                         </ul>
                     </div>

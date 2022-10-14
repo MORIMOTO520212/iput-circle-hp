@@ -1,0 +1,42 @@
+.title-color {
+    color: #5C9905;
+}
+
+.title {
+    width: 100%;
+    height: 200px;
+    background: #FCFAE3;
+}
+
+.thumb {
+    height: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.summary {
+    line-height: 2rem;
+    border-left: solid 3px #9AC629;
+    border-bottom: solid 1px #9AC629;
+    padding-left: 10px;
+}
+
+.detail {
+    padding-top: 30px;
+}
+
+.post-img {
+    width: 100%;
+    max-width: 400px;
+}
+
+.twitter-tweet-button {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.foot {
+    width: 100%;
+    height: 110px;
+    background: #ECDDC1;
+}
