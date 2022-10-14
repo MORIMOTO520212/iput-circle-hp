@@ -30,31 +30,27 @@ head('faq', 'FAQ | IPUT学生団体');
         <!-- 高さの調整用 -->
         <div class="mt-lg-5"></div>
         <!-- side bar ... ? -->
-        <!-- 影はできているが、大きさが定まらない。また、サイドバー？の幅が不明 -->
-        <!-- 影のroundedをもっと深くする。 -->
         <div class="shadow rounded-3 col-lg-2 h-50 mb-4 ms-lg-4" id="faq-side-contents">
         <!-- sub contents -->
-        <!-- paddingが16*3 = 48px -->
             <div class="p-4">
                 <!-- リスト内のアイコンが未実装 -->
-                <p>項目から探す</p>
+                <p class="fs-4">項目から探す</p>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ1</a></li>
-                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ2</a></li>
-                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ3</a></li>
-                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ4</a></li>
-                    <li><a href="#" class="text-decoration-none fs-6"> カテゴリ5</a></li>
+                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1"><a href="#category-1" class="text-decoration-none text-black fs-6"> カテゴリ1</a></li>
+                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1"><a href="#category-2" class="text-decoration-none text-black fs-6"> カテゴリ2</a></li>
+                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1"><a href="#category-3" class="text-decoration-none text-black fs-6"> カテゴリ3</a></li>
+                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1"><a href="#category-4" class="text-decoration-none text-black fs-6"> カテゴリ4</a></li>
+                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1"><a href="#category-5" class="text-decoration-none text-black fs-6"> カテゴリ5</a></li>
                 </ul>
             </div>
         </div>
 
         <!-- faq -->
-        <div class=" mx-0 ms-lg-5 col-lg p-0" id="faq-main-contents">
+        <div class=" mx-0 ms-lg-5 me-lg-3 col-lg p-0 ps-lg-3" id="faq-main-contents">
             <!-- faq contents -->
-            <!-- カテゴリ間はmargin48pxで仮置き -->
             <!-- category-1 -->
             <div class="mb-5">
-                <h1 class="fw-bold">カテゴリ1</h1>
+                <h1 class="fw-bold" id="category-1">カテゴリ1</h1>
                 <!-- 各質問の間隔は32pxで仮置き -->
                 <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- d-flex -->
@@ -128,7 +124,7 @@ head('faq', 'FAQ | IPUT学生団体');
             </div>
             <!-- category-2 -->
             <div class="mb-5">
-                <h1 class="fw-bold">カテゴリ2</h1>
+                <h1 class="fw-bold" id="category-2">カテゴリ2</h1>
                 <div class="justify-content-around row row-cols-lg-2 g-4">
                     <!-- Q 2-1 -->
                     <div class="accordion col-lg-6" id="faq-accordion-2-1">
