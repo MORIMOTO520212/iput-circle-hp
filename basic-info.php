@@ -41,18 +41,19 @@ head('basic-info', '基本情報 | IPUT学生団体');
             <button id="edit" class="btn btn-success" type="submit">編集する</button>
         </div>
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal">アカウントを削除する</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#accountDel">アカウントを削除する</button>
             <button type="button" class="btn btn-warning">ログアウトする</button>
         </div>
         <p>一度削除すると元に戻せません</p>
 
     </form>
 
-    <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal fade" id="accountDel" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title" id="myModalLabel">本当にアカウントを削除しますか？</div>
+                    <div class="modal-title">本当にアカウントを削除しますか？</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-dismiss="modal" style="font-size: 10px;"></button>
                 </div>
                 <div class="modal-body">
                     <label>一度削除したアカウントはもとに戻すことができません。</label>
