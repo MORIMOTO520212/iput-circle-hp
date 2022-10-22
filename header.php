@@ -21,6 +21,8 @@ function head($page_name, $page_title) {
         <link href="assets/style-<?php echo $page_name ?>.css" rel="stylesheet" type="text/css"/>
         <link href="assets/style-header.css" rel="stylesheet" type="text/css"/>
         <link href="assets/style-footer.css" rel="stylesheet" type="text/css"/>
+        <!-- WordPressでは自動的に読み込まれる -->
+        <link href="style.css" rel="stylesheet" type="text/css"/>
 
         <!-- CSS Bootstrap v5.2.2 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css"
