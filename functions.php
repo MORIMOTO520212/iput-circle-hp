@@ -99,3 +99,80 @@ function my_login_failed_args() {
     return $args;
 }
 add_filter( 'wpmem_login_failed_args', 'my_login_failed_args' );
+
+
+/**
+ * アカウント作成
+ */
+function user_signup() {
+    $user_name  = isset( $_POST['username'] ) ? sanitize_text_field( $_POST['username'] ) : '';
+    $user_pass  = isset( $_POST['password'] ) ? sanitize_text_field( $_POST['password'] ) : '';
+    $user_email = isset( $_POST['email'] ) ? sanitize_text_field( $_POST['email'] ) : '';
+    $user_first_name = isset( $_POST['firstname'] ) ? sanitize_text_field( $_POST['firstname'] ) : '';
+    $user_last_name = isset( $_POST['lastname'] ) ? sanitize_text_field( $_POST['lastname'] ) : '';
+
+    //空じゃないかチェック
+    if ( empty( $user_name ) || empty( $user_pass ) || empty( $user_email ) || empty( $user_first_name ) || empty( $user_last_name ) ) {
+        echo '空欄を埋めてください';
+        exit;
+    }
+    //すでにユーザー名が使われていないかチェック
+    $user_id = username_exists( $user_name );
+    if ( $user_id !== false ) {
+        echo 'すでにユーザー名「'. $user_name .'」は登録されています';
+        exit;
+    }
+    //すでにメールアドレスが使われていないかチェック
+    $user_id = email_exists( $user_email );
+    if ( $user_id !== false ) {
+        echo 'すでにメールアドレス「'. $user_email .'」は登録されています';
+        exit;
+    }
+    //メールの文字列確認
+    // ドメイン - 大文字小文字区別なしの数字以外
+    if ( !(preg_match("/^([a-z0-9+_-]+)(.[a-z0-9+_-]+)*@([a-z0-9-]+.)+[a-z]{2,6}$/iD", $user_email)) ) {
+        echo '正しいメールアドレスを入力してください';
+        exit;
+    }
+    // パスワードの確認
+    // 8-16文字かつ大文字と小文字と数字を含む
+    if ( !(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,16}$/", $user_pass)) ) {
+        echo '正しいパスワードを入力してください';
+        exit;
+    }
+    //問題がなければユーザーを登録する処理を開始
+    $userdata = array(
+        'user_login' => $user_name,       //  ログイン名
+        'user_pass'  => $user_pass,       //  パスワード
+        'user_email' => $user_email,      //  メールアドレス
+        'first_name' => $user_first_name,   // 名
+        'last_name' => $user_last_name      // 姓
+    );
+    $user_id = wp_insert_user( $userdata );
+    // ユーザーの作成に失敗
+    if ( is_wp_error( $user_id ) ) {
+        echo $user_id -> get_error_code(); // WP_Error() の第一引数
+        echo $user_id -> get_error_message(); // WP_Error() の第二引数
+        exit;
+    }
+    //登録完了後、そのままログインさせる（ 任意 ）
+    wp_set_auth_cookie( $user_id, false, is_ssl() );
+    // リダイレクト
+    wp_redirect( home_url('/') );
+    exit;
+    return;
+}
+
+
+/**
+ * after_setup_theme に処理をフック
+ */
+add_action('after_setup_theme', function() {
+    //アカウント作成フォームからの送信か
+    if ( isset( $_POST['signup'] ) && $_POST['signup'] === 'signup') {
+        // nonceチェック
+        if ( !isset( $_POST['signup_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return;
+        user_signup();
+    }
+});
