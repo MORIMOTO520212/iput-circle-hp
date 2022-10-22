@@ -7,13 +7,14 @@ require_once 'footer.php';
 head('detail', 'サークル詳細ページ | IPUT学生団体');
 ?>
 
-<div class="top-image">
-    <img src="src/detail-top.png" />
+<div class="top-image" style="background-image: url('src/girl.png');">
+    <img src="src/girl.png" />
     <p class="top-text">Nectgramsプログラミングサークル</p>
 </div>
 
-<div class="top-sub-text">
-    <ul>
+<!-- サークル基本情報 -->
+<div class="container p-md-3 g-0 mt-4 top-sub-text">
+    <ul class="p-0">
         <li class="line">
             <h2>所属人数</h2>
             <p>40</p>
@@ -33,33 +34,36 @@ head('detail', 'サークル詳細ページ | IPUT学生団体');
     </ul>
 </div>
 
-<div class="container mt-5">
+<!-- メイン -->
+<div class="container mt-3 mt-md-5">
     <div class="row">
-        <div class="col-xl-9">
+        <!-- main contents -->
+        <div class="col-lg-8">
             <div class="mobile-nav">
                 <div class="container">
+                    <!-- mobile navigation -->
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 g-2">
                             <a href="#">
-                                <div class="mobile-menu-link">
-                                    <i class="bi bi-journal-bookmark-fill"></i>活動一覧
+                                <div class="mobile-menu-link icon journal-bookmark-fill">
+                                    活動一覧
                                 </div>
                             </a>
                             <a href="#">
-                                <div class="mobile-menu-link mt-3">
-                                    <i class="bi bi-twitter"></i>公式Twitter
+                                <div class="mobile-menu-link mt-3 icon twitter">
+                                    公式Twitter
                                 </div>
                             </a>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 g-2">
                             <a href="#">
-                                <div class="mobile-menu-link">
-                                    <i class="bi bi-person-fill"></i>参加申請
+                                <div class="mobile-menu-link icon person-fill">
+                                    参加申請
                                 </div>
                             </a>
                             <a href="#">
-                                <div class="mobile-menu-link mt-3">
-                                    <i class="bi bi-envelope-fill"></i>お問い合わせ
+                                <div class="mobile-menu-link mt-3 icon envelope-fill">
+                                    お問い合わせ
                                 </div>
                             </a>
                         </div>
@@ -77,6 +81,7 @@ head('detail', 'サークル詳細ページ | IPUT学生団体');
                 </p>
             </div>
 
+            <!-- 基本情報テーブル -->
             <div class="information mt-5">
                 <h2>サークル情報</h2>
                 <hr />
@@ -142,70 +147,41 @@ head('detail', 'サークル詳細ページ | IPUT学生団体');
             <div class="activity-posts mt-5">
                 <h2>活動記録</h2>
                 <hr />
+                <?php
+                for($i = 0; $i < 5; $i++):
+                ?>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="img-thumbnail" src="./src/no_image.png" />
+                    <div class="row act-card">
+                        <div class="col-4 col-sm-3 h-100 ps-0">
+                            <img src="./src/girl.png" />
                         </div>
-                        <div class="col-6">
+                        <div class="col-8 col-sm-9">
                             <p>2022年08月15日</p>
-                            <p>記事タイトルをここへ</p>
+                            <p class="card-text line-clamp-2">記事タイトルをここへ</p>
                         </div>
                     </div>
                     <hr />
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="img-thumbnail" src="./src/no_image.png" />
-                        </div>
-                        <div class="col-6">
-                            <p>2022年08月15日</p>
-                            <p>記事タイトルをここへ</p>
-                        </div>
-                    </div>
-                    <hr />
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="img-thumbnail" src="./src/no_image.png" />
-                        </div>
-                        <div class="col-6">
-                            <p>2022年08月15日</p>
-                            <p>記事タイトルをここへ</p>
-                        </div>
-                    </div>
-                    <hr />
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="img-thumbnail" src="./src/no_image.png" />
-                        </div>
-                        <div class="col-6">
-                            <p>2022年08月15日</p>
-                            <p>記事タイトルをここへ</p>
-                        </div>
-                    </div>
-                    <hr />
-                </div>
+                <?php
+                endfor;
+                ?>
             </div>
         </div>
-        <div class="col-xl-3 mt-5">
-            <nav class="toc">
-                <div class="menu-link mt-4">
-                    <i class="bi bi-journal-bookmark-fill"></i>活動一覧
-                </div>
-                <div class="menu-link mt-4">
-                    <i class="bi bi-person-fill"></i>参加申請
-                </div>
-                <div class="menu-link mt-4">
-                    <i class="bi bi-twitter"></i>公式Twitter
-                </div>
-                <div class="menu-link mt-4">
-                    <i class="bi bi-envelope-fill"></i>お問い合わせ
-                </div>
+        <!-- desktop navigation -->
+        <div class="col-xl-4 mt-5">
+            <nav class="toc mx-4">
+                <a href="#">
+                    <div class="menu-link mt-4 icon journal-bookmark-fill">活動一覧</div>
+                </a>
+                <a href="#">
+                    <div class="menu-link mt-4 icon person-fill">参加申請</div>
+                </a>
+                <a href="#">
+                    <div class="menu-link mt-4 icon twitter">公式Twitter</div>
+                </a>
+                <a href="#">
+                    <div class="menu-link mt-4 icon envelope-fill">お問い合わせ</div>
+                </a>
                 <p class="mt-4">最終更新日: 2022/08/16</p>
             </nav>
         </div>
