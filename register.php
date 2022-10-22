@@ -9,38 +9,41 @@ require_once 'footer.php';
 head('register', '登録 | IPUT学生団体');
 ?>
 
-    <!-- コンテンツ -->
-    <div class="main">
-        <img class="img-background" src="src/register-background.png" alt="">
-        <div class="top">
-            <!-- ファーストビュー -->
-            <div class="register">
-                <h4>新規ユーザー登録</h4>
-                <p>ユーザー名*</p>
-                <!-- Bootstrap 入力フォーム -->
-                <input type="text" class="form-control" placeholder="ユーザー名を入力してください" aria-label="Recipient's username" aria-describedby="basic-addon2">
+<main class="contents" style="background-image: url('src/register_bg_img.png')">
+    <!-- 登録フォーム -->
+    <div class="container w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
+        <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md">
 
-                <p>名*</p>
-                <!-- Bootstrap 入力フォーム -->
-                <input type="text" class="form-control" placeholder="名を入力してください" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                <p>姓*</p>
-                <!-- Bootstrap 入力フォーム -->
-                <input type="text" class="form-control" placeholder="姓を入力してください" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                <p>メール*</p>
-                <!-- Bootstrap 入力フォーム -->
-                <input type="text" class="form-control" placeholder="メールアドレスを入力してください" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                <p>パスワード*</p>
-                <!-- Bootstrap 入力フォーム -->
-                <input type="text" class="form-control" placeholder="パスワードを入力してください" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                <!-- Bootstrap 登録ボタン -->
-                <button type="button" class="btn btn-success" style="width: 100px;">登録</button>
+            <div class="container col col-md-8">
+                <label class="form-label" for="user-input">ユーザー名</label>
+                <input type="user" class="form-control" id="user-input" value="" placeholder="ユーザー名を入力してください"
+                    aria-label="ユーザー名" aria-describedby="user-help" required>
+                <div class="form-text" id="user-help"></div>
+                <div class="invalid-feedback">正しいメールアドレスを入力してください</div>
             </div>
-        </div>
+
+            <div class="container col col-md-8">
+                <label class="form-label" for="password-input">パスワード</label>
+                <input type="password" class="form-control" id="password-input" value=""
+                    placeholder="パスワードを入力してください" aria-label="パスワード" aria-describedby="password-help" required>
+                <div class="form-text" id="password-help"></div>
+                <div class="invalid-feedback">正しいパスワードを入力してください</div>
+            </div>
+            
+            <div class="container col col-md-8 d-flex justify-content-center">
+                <div class="form-check">
+                    <input class="form-check-input" id="keep-input" type="checkbox" value="" aria-label="ログイン状態の維持"
+                        aria-describedby="keep-help">
+                    <label class="form-check-label" for="keep-input">ログイン状態を維持しますか？</label>
+                    <div class="form-text" id="keep-help">共有のパソコンではチェックを外す</div>
+                </div>
+            </div>
+            <div class="container col col-md-8 d-flex justify-content-center">
+                <button class="btn btn-success" type="submit">ログイン</button>
+            </div>
+        </form>
     </div>
+</main>
 
 <!-- フッター -->
 <?php footer('index'); ?>
