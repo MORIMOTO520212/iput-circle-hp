@@ -6,7 +6,7 @@ require_once 'footer.php';
 
 <?php
 /* header.php 読み込み */
-head('basic-info', '基本情報 | IPUT学生団体');
+head('profile', '基本情報 | IPUT学生団体');
 ?>
 
 <!-- コンテンツ -->
