@@ -9,9 +9,87 @@ require_once 'footer.php';
 head('contact', 'お問い合わせ | IPUT学生団体');
 ?>
 
+<?php
+var_dump($_POST);
+
+$page_flag = 0;
+if( !empty($_POST['btn_sub']) ) {
+
+	$page_flag = 1;
 
 
-<main "contents">
+
+
+    $header = null;
+	$auto_reply_subject = null;
+	$auto_reply_text = null;
+	$admin_reply_subject = null;
+	$admin_reply_text = null;
+	date_default_timezone_set('Asia/Tokyo');
+
+	// ヘッダー情報を設定
+	$header = "MIME-Version: 1.0\n";
+	$header .= "From: GRAYCODE <noreply@gray-code.com>\n";
+	$header .= "Reply-To: GRAYCODE <noreply@gray-code.com>\n";
+
+	// 件名を設定
+	$auto_reply_subject = 'お問い合わせありがとうございます。';
+
+	// 本文を設定
+	$auto_reply_text = "この度は、お問い合わせ頂き誠にありがとうございます。
+下記の内容でお問い合わせを受け付けました。\n\n";
+	$auto_reply_text .= "お問い合わせ日時：" . date("Y-m-d H:i") . "\n";
+	$auto_reply_text .= "氏名：" . $_POST['your_name'] . "\n";
+	$auto_reply_text .= "メールアドレス：" . $_POST['Email'] . "\n\n";
+	$auto_reply_text .= "GRAYCODE 事務局";
+
+	// メール送信
+	mb_send_mail( $_POST['Email'], $auto_reply_subject, $auto_reply_text, $header);
+
+	// 運営側へ送るメールの件名
+	$admin_reply_subject = "お問い合わせを受け付けました";
+	
+	// 本文を設定
+	$admin_reply_text = "下記の内容でお問い合わせがありました。\n\n";
+	$admin_reply_text .= "お問い合わせ日時：" . date("Y-m-d H:i") . "\n";
+	$admin_reply_text .= "氏名：" . $_POST['your_name'] . "\n";
+	$admin_reply_text .= "メールアドレス：" . $_POST['Email'] . "\n\n";
+
+	// 運営側へメール送信
+	mb_send_mail( 'iputone.staff@gmail.com', $admin_reply_subject, $admin_reply_text, $header);
+
+
+
+}
+?>
+
+
+
+<main class="contents">
+
+
+
+
+
+<?php if( $page_flag === 1 ): ?>
+
+
+    <form method="post" action="">
+	<div class="element_wrap">
+		<label>氏名</label>
+		<input type="text" name="your_name" value="">
+	</div>
+	<div class="element_wrap">
+		<label>メールアドレス</label>
+		<input type="text" name="Email" value="">
+	</div>
+	<input type="submit" name="btn_confirm" value="入力内容を確認する">
+</form>
+
+
+
+<?php else: ?>
+
 
     <!-- top -->
     <div class="position-relative" id="contact-top">
@@ -45,7 +123,7 @@ head('contact', 'お問い合わせ | IPUT学生団体');
                 </a>
             </div>
             <!-- 必須 お名前 -->
-            <form class="row g-3 needs-validation" novalidate>
+            <form class="row g-3 needs-validation" method="post" action="" novalidate>
                 <div class="required_box">
                     <h5><span class="badge bg-danger">必須</span></h5>
 
@@ -57,12 +135,14 @@ head('contact', 'お問い合わせ | IPUT学生団体');
                 <!-- from input text large -->
                 <div class="col-lg-6">
                     <div class="input-group input-group-lg">
-                        <input type="text" class="form-control" placeholder="お名前を入力してください" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required>
+                        <input type="text" class="form-control" name="your_name" placeholder="お名前を入力してください" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" value="" required>
+                        <div class="invalid-feedback">
+                            入力をお願いします。
+                        </div>
                     </div>
-                    <div class="valid-feedback">
-                        入力完了!
-                    </div>
+
                 </div>
+
                 <!-- 必須 メールアドレス -->
                 <div class="contact_mail">
                 </div>
@@ -77,11 +157,12 @@ head('contact', 'お問い合わせ | IPUT学生団体');
                 </div>
                 <div class="col-lg-6">
                     <div class="input-group input-group-lg">
-                        <input type="text" class="form-control" placeholder="メールアドレスを入力してください" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required>
+                        <input type="email" class="form-control" placeholder="メールアドレスを入力してください" name="Email" aria-label="Sizing example input" aria-describedby="email-help" value="" required>
+                        <div class="invalid-feedback">
+                            正しいメールアドレスを入力してください。
+                        </div>
                     </div>
-                    <div class="valid-feedback">
-                        入力完了!
-                    </div>
+
                 </div>
                 <div class="contact_mail"></div>
 
@@ -100,27 +181,36 @@ head('contact', 'お問い合わせ | IPUT学生団体');
                 <!-- from input Textarea -->
                 <div class="col-lg-6">
                     <div class="form-floating">
-                        <textarea class="form-control" id="floatingTextarea2" style="height: 150px" required></textarea>
-                        <label for="floatingTextarea2"></label>
+                        <textarea class="form-control" name="contact" id="floatingTextarea2" style="height: 150px"  required></textarea>
+
+                    </div>
+                </div>
+
+                <!-- 左にトップページに戻る(Bootstrap Button　Large Secondary) 右送信する -->
+                <div class="top_send_button">
+                    <div class="col-3">
+                        <a href="http://localhost/iput-circle-hp/index.php">
+                            <button type="button" class="btn btn-secondary btn-lg">トップページへ戻る(local)</button>
+                        </a>
+                    </div>
+
+
+                    <div class="col-3">
+                        <input type="submit" name="btn_sub"  class="btn btn-primary btn-lg" value="送信する" require>
+
+                        
                     </div>
                 </div>
             </form>
-
-            <!-- 左にトップページに戻る(Bootstrap Button　Large Secondary) 右送信する -->
-            <div class="top_send_button">
-                <div class="col-3">
-                    <a href="http://localhost/iput-circle-hp/index.php">
-                        <button type="button" class="btn btn-secondary btn-lg">トップページへ戻る(local)</button>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="http://localhost/iput-circle-hp/contact-thanks.php">
-                        <button type="submit" class="btn btn-primary btn-lg" require>送信する(local)</button>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
+
+
+
+
+
+    <?php endif; ?>
+
 </main>
 
 
@@ -128,3 +218,5 @@ head('contact', 'お問い合わせ | IPUT学生団体');
 
 <!-- フッター -->
 <?php footer('index'); ?>
+
+<script src="assets/contact.js"></script>

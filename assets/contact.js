@@ -1,11 +1,10 @@
-<script>
 (() => {
   'use strict'
 
-  // BootstrapƒJƒXƒ^ƒ€ŒŸØƒXƒ^ƒCƒ‹‚ð“K—p‚µ‚Ä‚·‚×‚Ä‚ÌƒtƒH[ƒ€‚ðŽæ“¾
+  // Bootstrapã‚«ã‚¹ã‚¿ãƒ æ¤œè¨¼ã‚¹ã‚¿ã‚¤ãƒ«ã‚’é©ç”¨ã—ã¦ã™ã¹ã¦ã®ãƒ•ã‚©ãƒ¼ãƒ ã‚’å–å¾—
   const forms = document.querySelectorAll('.needs-validation')
 
-  // ƒ‹[ƒv‚µ‚Ä‹A‡‚ð–h‚®
+  // ãƒ«ãƒ¼ãƒ—ã—ã¦å¸°é †ã‚’é˜²ã
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
@@ -17,4 +16,3 @@
     }, false)
   })
 })()
-</script>
