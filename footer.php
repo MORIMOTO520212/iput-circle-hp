@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <span>&copy;2022 Nectgrams 学生によって運営されています</span>
+                    <span>&copy;2022 IPUT ONE 学生によって運営されています</span>
                 </div>
             </div>
         </div>

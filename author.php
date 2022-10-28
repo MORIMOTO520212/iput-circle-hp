@@ -8,7 +8,7 @@
 <?=get_header()?>
 
 <div class="main container">
-    <h2>ようこそ、@user_nameさん</h2>
+    <h2>ようこそ、<?php the_author(); ?>さん</h2>
     <p>ここはマイページです。記事の投稿や、サークルの管理をすることができます。</p>
     <div class="main-first">
         <div class="posts-number p-3 mb-3">

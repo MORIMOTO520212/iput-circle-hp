@@ -24,16 +24,29 @@
 |--|--|--|
 |トップ|index|front-page.php|
 |ログイン|login|page-login.php|
-|登録|register|register.php|
+|登録|register|page-register.php|
 |活動一覧|activity|page-activity.php|
 |ニュース一覧|news|page-news.php|
 |FAQ|faq|page-faq.php|
 |記事テンプレート|ID|single.php|
-|サークル作成&編集|circle-edit|page-circle-edit.php|
+|サークル作成&編集|circle-post|page-circle-post.php|
 |メディアアップロード|media-upload|media_upload.php|
 
 > **Note**\
 > Wordpressのホームページは`設定 > 表示設定 > ホームページの表示 > 固定ページ`からドロップダウンで選択して変更できる
+
+
+## functions.php
+### モーダルを使う
+```php
+modal($title, $message);
+``` 
+> 引数  
+> $title - モーダルのタイトル  
+> $message - モーダルの本文  
+
+> 戻り値
+> htmlのモーダルを出力する
 
 
 ## サークル作成&編集ページ
