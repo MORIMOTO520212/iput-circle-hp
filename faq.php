@@ -58,12 +58,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <div class="accordion col-lg-6" id="faq-accordion-1-1">
                         <!-- Accordion items -->
                         <!-- 中身は適当。 -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-1-1">
                                 <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-1-1" aria-expanded="false" aria-controls="faq-questions-detail-1-1">
-                                    Q 1-1. Quiestion Text
+                                    Q 1-1. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-1-1" class="accordion-collapse collapse bg-content" aria-labelledby="faq-questions-1-1"> <!-- data-bs-parent="#faq-accordion-1-1 -->
@@ -91,12 +91,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- Q 1-2 -->
                     <div class="accordion col-lg-6" id="faq-accordion-1-2">
                         <!-- Accordion items -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-1-2">
                                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-1-2" aria-expanded="false" aria-controls="faq-questions-detail-1-2">
-                                    Q 1-2. Quiestion Text
+                                    Q 1-2. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-1-2" class="accordion-collapse collapse" aria-labelledby="faq-questions-1-2"> <!-- data-bs-parent="#faq-accordion-1-2 -->
@@ -129,12 +129,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- Q 2-1 -->
                     <div class="accordion col-lg-6" id="faq-accordion-2-1">
                         <!-- Accordion items -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-2-1">
                                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-2-1" aria-expanded="false" aria-controls="faq-questions-detail-2-1">
-                                    Q 2-1. Quiestion Text
+                                    Q 2-1. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-2-1" class="accordion-collapse collapse" aria-labelledby="faq-questions-2-1"> <!-- data-bs-parent="#faq-accordion-2-1" -->
@@ -162,12 +162,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- Q 2-2 -->
                     <div class="accordion col-lg-6" id="faq-accordion-2-2">
                         <!-- Accordion items -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-2-2">
                                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-2-2" aria-expanded="false" aria-controls="faq-questions-detail-2-2">
-                                    Q 2-2. Quiestion Text
+                                    Q 2-2. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-2-2" class="accordion-collapse collapse" aria-labelledby="faq-questions-2-2"> <!-- data-bs-parent="#faq-accordion-2-2" -->
@@ -197,12 +197,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- Q 2-3 -->
                     <div class="accordion col-lg-6" id="faq-accordion-2-3">
                         <!-- Accordion items -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-2-3">
                                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-2-3" aria-expanded="false" aria-controls="faq-questions-detail-2-3">
-                                    Q 2-3. Quiestion Text
+                                    Q 2-3. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-2-3" class="accordion-collapse collapse" aria-labelledby="faq-questions-2-3"> <!-- data-bs-parent="#faq-accordion-2-3" -->
@@ -230,12 +230,12 @@ head('faq', 'FAQ | IPUT学生団体');
                     <!-- Q 2-4 -->
                     <div class="accordion col-lg-6" id="faq-accordion-2-4">
                         <!-- Accordion items -->
-                        <!-- quiestions -->
+                        <!-- questions -->
                         <div class="accordion-item">
                             <!-- Accordion -->
                             <h2 class="accordion-header" id="faq-questions-2-4">
                                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-questions-detail-2-4" aria-expanded="false" aria-controls="faq-questions-detail-2-4">
-                                    Q 2-4. Quiestion Text
+                                    Q 2-4. Question Text
                                 </button>
                             </h2>
                             <div id="faq-questions-detail-2-4" class="accordion-collapse collapse" aria-labelledby="faq-questions-2-4"> <!-- data-bs-parent="#faq-accordion-2-4" -->
