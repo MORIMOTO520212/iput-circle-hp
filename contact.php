@@ -95,8 +95,8 @@ head('contact', 'お問い合わせ | IPUT学生団体');
         <div class="top_send_button">
             <button type="button" class="btn btn-secondary btn-lg">トップページへ戻る</button>
             <button type="button" class="btn btn-primary btn-lg">送信する</button>
-
         </div>
+    </div>
 </main>
 
 
