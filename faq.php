@@ -36,11 +36,11 @@ head('faq', 'FAQ | IPUT学生団体');
                 <!-- リスト内のアイコンが未実装 -->
                 <p class="fs-5">項目から探す</p>
                 <ul class="list-unstyled">
-                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-1" class="text-decoration-none text-black fs-6">カテゴリ1</a></li>
-                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-2" class="text-decoration-none text-black fs-6">カテゴリ2</a></li>
-                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-3" class="text-decoration-none text-black fs-6">カテゴリ3</a></li>
-                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-4" class="text-decoration-none text-black fs-6">カテゴリ4</a></li>
-                    <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-5" class="text-decoration-none text-black fs-6">カテゴリ5</a></li>
+                    <li class="pt-3"><img src="./src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-1" class="text-decoration-none text-black fs-6">カテゴリ1</a></li>
+                    <li class="pt-3"><img src="./src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-2" class="text-decoration-none text-black fs-6">カテゴリ2</a></li>
+                    <li class="pt-3"><img src="./src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-3" class="text-decoration-none text-black fs-6">カテゴリ3</a></li>
+                    <li class="pt-3"><img src="./src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-4" class="text-decoration-none text-black fs-6">カテゴリ4</a></li>
+                    <li class="pt-3"><img src="./src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href="#category-5" class="text-decoration-none text-black fs-6">カテゴリ5</a></li>
                 </ul>
             </div>
         </div>
