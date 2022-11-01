@@ -75,7 +75,7 @@ head('faq', 'FAQ | IPUT学生団体');
                     // answer
                         echo("<div class=\"accordion-item\">");
                             echo("<h2 class=\"accordion-header\" id=\"faq-answers-$i-$j\">");
-                                echo("<button type=\"button\" class=\"accordion-button collapsed bg-content\" data-bs-toggle=\"collapse\" data-bs-target=\"#faq-questions-detail-$i-$j\" aria-expanded=\"false\" aria-controls=\"faq-answers-detail-$i-$j\">");
+                                echo("<button type=\"button\" class=\"accordion-button collapsed bg-content\" data-bs-toggle=\"collapse\" data-bs-target=\"#faq-answers-detail-$i-$j\" aria-expanded=\"false\" aria-controls=\"faq-answers-detail-$i-$j\">");
                                     echo("A $i-$j. Answer Text");
                                 echo('</button>');
                             echo('</h2>');
