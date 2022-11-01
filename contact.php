@@ -10,7 +10,7 @@ head('contact', 'お問い合わせ | IPUT学生団体');
 ?>
 
 <?php
-var_dump($_POST);
+//var_dump($_POST);
 
 $page_flag = 0;
 if( !empty($_POST['btn_sub']) ) {
@@ -70,20 +70,23 @@ if( !empty($_POST['btn_sub']) ) {
 
 
 
-
+<!--ここから>
 <?php if( $page_flag === 1 ): ?>
 
 
-    <form method="post" action="">
-	<div class="element_wrap">
-		<label>氏名</label>
-		<input type="text" name="your_name" value="">
-	</div>
-	<div class="element_wrap">
-		<label>メールアドレス</label>
-		<input type="text" name="Email" value="">
-	</div>
-	<input type="submit" name="btn_confirm" value="入力内容を確認する">
+    <div class="contact-message-container">
+    <div class="contact-message-wrapper">
+        <h1 class="contact-main-message">お問い合わせありがとうございました！</h1>
+        <h4 class="contact-body-message">
+            <span>
+                この度は、IPUTに関するお問い合わせをいただき<br>
+                誠にありがとうございます。<br>
+                3日以内に、担当者よりご連絡いたします。                    
+            </span>
+        </h4>
+        <img src="src/thanks.png" alt="Thank You!!">
+    </div>
+    </div>
 </form>
 
 
