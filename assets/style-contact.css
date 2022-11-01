@@ -1,6 +1,6 @@
 /* お問い合わせページ スタイルシート */
-
 /* コンテンツ */
+
 .contents {
     background: #f0ece5;
 }
@@ -30,7 +30,7 @@
 
 .contact_item{
     margin-left:10px;
-    color: black;
+    color: black; 
 }
 
 .que_btn{
@@ -41,7 +41,6 @@
 
 .contact_mail{
     padding-top: 64px;
-    padding-bottom: 64px;
 }
 
 .required_box{
@@ -57,6 +56,3 @@
 
 
 
-.contact_sum{
-    width: 50%;
-}
