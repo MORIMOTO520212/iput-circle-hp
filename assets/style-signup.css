@@ -1,0 +1,7 @@
+/* アカウント作成ページ スタイルシート */
+.bg {
+    background: url("../src/register_bg_img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
