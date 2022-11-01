@@ -1,6 +1,11 @@
-/* ヘッダー スタイルシート */
+/*
+Theme Name: IPUT ONE
+Version:    1.0.0
+Author:     IPUT ONE制作チーム
+*/
 
 body {
+    background-color: #F0ECE5 !important;
     margin: 0px;
     padding-top: 54px;
     /* ダブルタップズーム無効 */
@@ -10,7 +15,6 @@ body {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 100%;
     min-height: 100vh;
-    background-color: #F0ECE5 !important;
 }
 
 /* 最大幅をsmに合わせる 汎用クラス */

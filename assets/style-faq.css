@@ -1,12 +1,8 @@
 /* faqページ スタイルシート */
 
 /* contents */
-.contents {
+#contents {
     background: #f0ece5;
-}
-
-.main {
-
 }
 
 
@@ -19,40 +15,12 @@
     filter: brightness(0.5);
 }
 
-/* main */
-#faq-contents {
-    margin-top: 110px;
-}
-
-/* side-bar */
-#faq-side-contents {
-    margin: 0 55px 0 55px !important;
-}
-
-#faq-side-category {
-    padding: 30px !important;
-}
-
-#faq-side-category ul {
-    line-height: 35.5px;
-}
-
-#faq-side-category p {
-    font-size: 20px !important;
-}
-
-#faq-side-category a {
-    color: #707070 !important;
-}
-
 /* questions and answers */
 #faq-main-contents {
-    width: 1024px;
+    max-width: 1024px;
 }
 
 /* category h1 */
 #faq-main-contents div h1 {
-    font-size: 30px !important;
     color :#8BB61E !important;
-
 }

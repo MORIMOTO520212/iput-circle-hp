@@ -66,7 +66,7 @@
 > **Note**\
 > レスポンシブ等を考慮して基準を変えたい際は`Bootstrap`のクラスと併用することで対応できる\
 > その際、**ブラウザにより優先度が異なるので注意すること**\
-> `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`(例)の順でクラスを記述する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/master/index.php#L214)\
+> `Chrome`, `Firefox`, `Safari`に対応させるには[`ratio-3x2 h-100`(例)の順でクラスを記述する](https://github.com/MORIMOTO520212/iput-circle-hp/blob/90ee2bd29a6036ce171dcea9736b77b6fb1fbc07/index.php#L219)\
 > 特に`Safari`はクラスの順序に影響されやすいため注意！
 ```css
 .ratio-1x1 {

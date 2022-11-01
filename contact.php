@@ -207,13 +207,7 @@ if( !empty($_POST['btn_sub']) ) {
             </form>
         </div>
     </div>
-
-
-
-
-
     <?php endif; ?>
-
 </main>
 
 
