@@ -39,8 +39,11 @@ head('faq', 'FAQ | IPUT学生団体');
                     <ul class="list-unstyled">
                         <?php
                         for ($i=1; $i < 6; $i++) { 
-                            echo("<li class=\"pt-3\"><img src=\"../src/chevron_right_white_24dp.svg\" class=\"pb-1 me-2\"><a href=\"#category-$i\" class=\"text-decoration-none text-black fs-6\">カテゴリ$i</a></li>");
-                        }?>
+                        ?>
+                            <li class="pt-3"><img src="../src/chevron_right_white_24dp.svg" class="pb-1 me-2"><a href=" <?php echo"#category-{$i}" ?> " class="text-decoration-none text-black fs-6"> <?php echo"カテゴリ{$i}" ?> </a></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -53,41 +56,47 @@ head('faq', 'FAQ | IPUT学生団体');
             <div class="mb-5">
             <?php
             for($i=1; $i<6; $i++){
-                echo("<h1 class=\"fw-bold\" id=\"category-$i\">カテゴリ$i</h1>");
-                //<!-- 各質問の間隔は32pxで仮置き -->
-                echo('<div class="justify-content-around row row-cols-lg-2 g-4 pb-5">');
-                for($j=1; $j<5; $j++){
-                    echo("<div class=\"accordion col-lg-6\" id=\"faq-accordion-$i-$j\">");
-                    // <!-- Accordion items -->
-                    // <!-- quiestions -->
-                        echo("<div class=\"accordion-item\">");
-                            echo("<h2 class=\"accordion-header\" id=\"faq-questions-$i-$j\">");
-                                echo("<button type=\"button\" class=\"accordion-button collapsed bg-content\" data-bs-toggle=\"collapse\" data-bs-target=\"#faq-questions-detail-$i-$j\" aria-expanded=\"false\" aria-controls=\"faq-questions-detail-$i-$j\">");
-                                    echo("Q $i-$j. Quiestion Text");
-                                echo('</button>');
-                            echo('</h2>');
-                            echo("<div id=\"faq-questions-detail-$i-$j\" class=\"accordion-collapse collapse bg-content\" aria-labelledby=\"faq-questions-$i-$j\">");
-                                echo("<div class=\"accordion-body\">");
-                                    echo('<strong>Sample Text</strong>');
-                                echo('</div>');
-                            echo('</div>');
-                        echo('</div>');
-                    // answer
-                        echo("<div class=\"accordion-item\">");
-                            echo("<h2 class=\"accordion-header\" id=\"faq-answers-$i-$j\">");
-                                echo("<button type=\"button\" class=\"accordion-button collapsed bg-content\" data-bs-toggle=\"collapse\" data-bs-target=\"#faq-answers-detail-$i-$j\" aria-expanded=\"false\" aria-controls=\"faq-answers-detail-$i-$j\">");
-                                    echo("A $i-$j. Answer Text");
-                                echo('</button>');
-                            echo('</h2>');
-                            echo("<div id=\"faq-answers-detail-$i-$j\" class=\"accordion-collapse collapse bg-content\" aria-labelledby=\"faq-answers-$i-$j\">");
-                                echo("<div class=\"accordion-body\">");
-                                    echo('<strong>Sample Text</strong>');
-                                echo('</div>');
-                            echo('</div>');
-                        echo('</div>');
-                    echo('</div>');
+            ?>
+                <h1 class="fw-bold" id="<?php echo "category-{$i}" ?>"><?php echo"カテゴリ{$i}" ?></h1>
+                <!-- 各質問の間隔は32pxで仮置き -->
+                <div class="justify-content-start row row-cols-lg-2 g-4 pb-5">
+                <?php
+                for($j=1; $j<($i*3 ) ; $j++){
+                ?>
+                    <div class="accordion col-lg-6" id="<?php echo"faq-accordion-{$i}-{$j}" ?>">
+                    <!-- Accordion items -->
+                    <!-- quiestions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="<?php echo"faq-questions-{$i}-{$j}" ?>">
+                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target=" <?php echo"#faq-questions-detail-{$i}-{$j}" ?>" aria-expanded="false" aria-controls=" <?php echo"faq-questions-detail-{$i}-{$j}" ?>">
+                                    Q <?php echo"{$i}-{$j}" ?>. Quiestion Text
+                                </button>
+                            </h2>
+                            <div id="<?php echo"faq-questions-detail-{$i}-{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby=" <?php echo"faq-questions-{$i}-{$j}" ?>">
+                                <div class="accordion-body">
+                                    <strong>Sample Text</strong>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- answers -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="<?php echo"faq-answers-{$i}-{$j}" ?>">
+                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target=" <?php echo"#faq-answers-detail-{$i}-{$j}" ?>" aria-expanded="false" aria-controls=" <?php echo"faq-answers-detail-{$i}-{$j}" ?>">
+                                    A <?php echo"{$i}-{$j}" ?>. Answer Text
+                                </button>
+                            </h2>
+                            <div id="<?php echo"faq-answers-detail-{$i}-{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby=" <?php echo"faq-answers-{$i}-{$j}" ?>">
+                                <div class="accordion-body">
+                                    <strong>Sample Text</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
                 }
-                echo('</div>');
+                ?>
+                </div>
+            <?php
             }
             ?>
         </div>
