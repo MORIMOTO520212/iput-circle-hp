@@ -34,18 +34,21 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
                 <?php
                 for($i = 1; $i < 300; $i++){
                     //<!-- 記事一覧 -->
-                    echo("<form id=\"article-$i\" class=\"row py-3 px-lg-3 border-bottom border-2 border-secondary\">"); //  <!-- １つのページに表示する分だけループさせたい -->
-                        // <!-- 記事タイトル -->
-                        echo('<a href="" class="col-lg-10 col-7 text-decoration-none text-black text-start overflow-hidden fs-6 text-truncate">事務局よりご連絡・会員情報の変更は事務局までご連絡ください。</a>');
-                        // <!-- オプションアイコン -->
-                        echo('<div class="col-lg-2 col-5 row mx-auto justify-content-center">');
-                            // <!-- 記事編集ボタン bootstrap icons pencil -->
-                            echo('<button class="col-6 p-0 me-lg-3 me-2 btn btn-secondary"><a href="https://www.youtube.com/watch?v=Cg2kLDbltIw"><img src="./src/pencil.svg" class="align-middle"></a></button>');
-                            // <!-- 記事削除ボタン bootstrap icons trash -->
-                            echo('<button class="col-6 p-0 ms-1 btn btn-danger"><a href="https://www.youtube.com/watch?v=dbGCrX_zPfs"><img src="./src/trash.svg" class=""></a></button>');
-                        echo('</div>');
-                    echo('</form>');
-                }?>
+                ?>
+                    <form id="<?php echo "article-{$i}" ?>" class="row py-3 px-lg-3 border-bottom border-2 border-secondary"> <!-- １つのページに表示する分だけループさせたい -->
+                        <!-- 記事タイトル -->
+                        <a href="" class="col-lg-10 col-7 text-decoration-none text-black text-start overflow-hidden fs-6 text-truncate">事務局よりご連絡・会員情報の変更は事務局までご連絡ください。</a>
+                        <!-- オプションアイコン -->
+                        <div class="col-lg-2 col-5 row mx-auto justify-content-center">
+                            <!-- 記事編集ボタン bootstrap icons pencil -->
+                            <button class="col-6 p-0 me-lg-3 me-2 btn btn-secondary"><a href="https://www.youtube.com/watch?v=Cg2kLDbltIw"><img src="./src/pencil.svg" class="align-middle"></a></button>
+                            <!-- 記事削除ボタン bootstrap icons trash -->
+                            <button class="col-6 p-0 ms-1 btn btn-danger"><a href="https://www.youtube.com/watch?v=dbGCrX_zPfs"><img src="./src/trash.svg" class=""></a></button>
+                        </div>
+                   </form>
+                <?php
+                }
+                ?>
             </div>
         </div>
         <!-- ページバー bootstrap pagination -->
@@ -153,7 +156,7 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
     if (page < 1 ){ 
         mainPage.className = "d-none";
         url.searchParams.set('page', '1'); //クエリパラメータを設定
-        location.href = url.toString(); // 遷移
+        // location.href = url.toString(); // 遷移
     }
     else
         console.log("クエリパラメータ: " + url.searchParams.get('page') + "| 現在のページ: " + page + "| 最大ページ数: " + maxPage);
