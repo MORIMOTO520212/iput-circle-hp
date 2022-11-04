@@ -1,10 +1,14 @@
 <?php
 
-/* 管理者以外はアドミンバーを非表示 */
+/**
+ * 管理者以外はアドミンバーを非表示
+ */
 show_admin_bar(false);
 
-/* 投稿時スラッグ自動生成 */
-// 投稿ページのみ生成する
+/**
+ * 投稿時スラッグ自動生成
+ * 投稿ページのみ生成する
+ */
 function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
     if($post_type == 'post' or $post_type == 'circle'){
         $slug = md5(time()); // UNIX時間をmd5でハッシュ化したものをスラッグ名に使う
@@ -14,7 +18,9 @@ function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
 }
 add_filter('wp_unique_post_slug', 'custom_auto_post_slug', 10, 4);
 
-/* カスタム投稿タイプ サークル */
+/**
+ * カスタム投稿タイプ サークル
+ */
 function post_type_circle() {
     register_post_type('circle', // 投稿タイプ名
     array(
@@ -30,81 +36,17 @@ function post_type_circle() {
 add_action('init', 'post_type_circle');
 
 
-/* WP-Members Membership カスタマイズ */
-// reference:https://syuntech.net/wordpress/wp-members_fooklist/
-
-// 登録後のリダイレクト先
-function the_reg_redirect() {
-    wp_redirect(home_url('/index.php/verification'));
-    exit();
+/**
+ * フォーム　メディアアップロード時の処理関数
+ * フォームからメディアが送られてきた場合、WordPress側のメディアにアップロードする処理を行う。
+*/
+function media_verify($nonce, $post_id) {
+    return "media_verify($nonce, $post_id)";
 }
-add_action('wpmem_register_redirect','the_reg_redirect' );
-
-// ログイン後のリダイレクト先
-function my_login_redirect($redirect_to, $user_id) {
-    return home_url('/');
-}
-add_filter('wpmem_login_redirect', 'my_login_redirect', 10, 2);
-
-// ログインフォーム div設置
-function my_login_form_row_wrapper($args, $action) {
-    $args['row_before'] = '<div class="my-row-wrapper">';
-    $args['row_after']  = '</div>';
-    return $args;
-}
-add_filter('wpmem_login_form_args', 'my_login_form_row_wrapper', 10, 2);
-
-// 登録フォーム div設置
-function my_register_form_row_wrapper($args, $tag) {
-    $args = array(
-        'row_before' => '<div class="my-row-wrapper">',
-        'row_after'  => '</div>',
-    );
-  
-    return $args;
-}
-add_filter('wpmem_register_form_args', 'my_register_form_row_wrapper', 10, 2);
-
-
-// ログインフォームの編集
-function my_login_inputs( $default_inputs ) {
-    // user name
-    $default_inputs[0]['name'] = 'ユーザ名またはメールアドレス';
-    $default_inputs[0]['class'] = 'form-control';
-    // password
-    $default_inputs[1]['name'] = 'パスワード';
-    $default_inputs[1]['class'] = 'form-control';
-    return $default_inputs;
-}
-add_filter( 'wpmem_inc_login_inputs', 'my_login_inputs' );
-
-// ログイン失敗時のテキストの編集
-function my_login_failed_args() {
-    /**
-     * This example changes the login error message, removing the
-     * heading tags and text, changing the message. Note the 
-     * tags that are not being changed need not be included.
-     */
-    $args = array( 
-        'div_before'     => '<div align="center" id="wpmem_msg">',
-        'div_after'      => '</div>', 
-        'heading_before' => '<h3>',
-        'heading'        => __( 'Login Failed!', 'wp-members' ),
-        'heading_after'  => '</h3>',
-        'p_before'       => '<p>',
-        'message'        => __( 'You entered an invalid username or password.', 'wp-members' ),
-        'p_after'        => '</p>',
-    );
- 
-    return $args;
-}
-add_filter( 'wpmem_login_failed_args', 'my_login_failed_args' );
 
 /**
  * Bootstrap モーダル テンプレート関数
- * 引数
- * $title - モーダルのタイトル
- * $message - モーダルの本文
+ * modal(モーダルのタイトル, モーダルの本文)
  */
 function modal($title, $message) {
 ?>
@@ -137,60 +79,173 @@ function modal($title, $message) {
 }
 
 /**
- * アカウント作成
+ * ログインページ
+*/
+function user_login() {
+    $user_login    = isset( $_POST['login'] )    ? sanitize_text_field( $_POST['login'] )    : '';
+    $user_password = isset( $_POST['password'] ) ? sanitize_text_field( $_POST['password'] ) : '';
+
+    if ( $user_login === '' )    return;
+    if ( $user_password === '' ) return;
+
+    $creds = array();
+    $creds += array( 'user_login'    => $user_login    );
+    $creds += array( 'user_password' => $user_password );
+    if( isset( $_POST['keep_loggedin'] ) ) {
+        $creds += array( 'remember', true );
+    }
+    var_dump( $creds );
+
+    // ログイン処理
+    $user = wp_signon($creds);
+    if( is_wp_error($user) ) {
+        modal( 'ログインに失敗しました', $user->get_error_message() );
+        return;
+    }
+
+    // マイページへリダイレクト
+    echo "ログイン成功";
+    wp_redirect( home_url( "index.php/author/{$user_login}" ) );
+    exit;
+    return 1;
+}
+
+/**
+ * サインアップページ アカウント作成
  */
 function user_signup() {
-    $user_name  = isset( $_POST['username'] ) ? sanitize_text_field( $_POST['username'] ) : '';
-    $user_pass  = isset( $_POST['password'] ) ? sanitize_text_field( $_POST['password'] ) : '';
-    $user_email = isset( $_POST['email'] ) ? sanitize_text_field( $_POST['email'] ) : '';
+    $user_name       = isset( $_POST['username'] )  ? sanitize_text_field( $_POST['username'] )  : '';
+    $user_pass       = isset( $_POST['password'] )  ? sanitize_text_field( $_POST['password'] )  : '';
+    $user_email      = isset( $_POST['email'] )     ? sanitize_text_field( $_POST['email'] )     : '';
     $user_first_name = isset( $_POST['firstname'] ) ? sanitize_text_field( $_POST['firstname'] ) : '';
-    $user_last_name = isset( $_POST['lastname'] ) ? sanitize_text_field( $_POST['lastname'] ) : '';
+    $user_last_name  = isset( $_POST['lastname'] )  ? sanitize_text_field( $_POST['lastname'] )  : '';
 
     //すでにユーザー名が使われていないかチェック
     if ( username_exists( $user_name ) !== false ) {
-        modal('登録できません', 'すでにユーザー名「'. $user_name .'」は登録されています。');
+        modal('登録できません', 'すでにユーザー名「'. $user_name .'」は登録されています。<br>他の名前を入力してください。');
+        return;
     }
-    //すでにメールアドレスが使われていないかチェック
-    elseif ( email_exists( $user_email ) !== false ) {
+    // メールチェック
+    if ( email_exists( $user_email ) !== false ) {
         modal('登録できません', 'すでにメールアドレス「'. $user_email .'」は登録されています。');
+        return;
     }
     //メールの文字列確認
-    // ドメイン - 大文字小文字区別なしの数字以外
-    elseif ( !(preg_match("/^([a-z0-9+_-]+)(.[a-z0-9+_-]+)*@([a-z0-9-]+.)+[a-z]{2,6}$/iD", $user_email)) ) {
-        modal('登録できません', '正しいメールアドレスを入力してください。');
+    // ユーザー名 - 半角英数字+プラス記号+マイナス記号+アンダーパス2~16文字
+    // ドメイン名 - tokyo.iput.ac.jpまたはtks.iput.ac.jp
+    if ( !(preg_match("/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD", $user_email)) ) {
+        modal('登録できません', '正しいメールアドレスを入力してください。使用できるドメインはtokyo.iput.ac.jpまたはtks.iput.ac.jpです。');
+        return;
     }
     // パスワードの確認
-    // 8-16文字かつ大文字と小文字と数字を含む
-    elseif ( !(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,16}$/", $user_pass)) ) {
-        modal('登録できません', '大文字、小文字、数字を組み合わせて 8 文字以上で入力してください。');
+    // 半角英数字+記号を6文字以上16文字以下
+    if ( !(preg_match("/^[ -~]{6,16}$/iD", $user_pass)) ) {
+        modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
+        return;
     }
-    //問題がなければユーザーを登録する処理を開始
-    else {
-        $userdata = array(
-            'user_login' => $user_name,       //  ログイン名
-            'user_pass'  => $user_pass,       //  パスワード
-            'user_email' => $user_email,      //  メールアドレス
-            'first_name' => $user_first_name,   // 名
-            'last_name' => $user_last_name      // 姓
-        );
-        $user_id = wp_insert_user( $userdata );
+    if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_first_name)) ) {
+        modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
+        return;
+    }
+    if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_last_name)) ) {
+        modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
+        return;
+    }
 
-        // ユーザーの作成に失敗
-        if ( is_wp_error( $user_id ) ) {
-            echo $user_id -> get_error_code(); // WP_Error() の第一引数
-            echo $user_id -> get_error_message(); // WP_Error() の第二引数
-            modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
-        }
-        // 登録完了後、そのままログインさせる（ 任意 ）
-        else {
-            wp_set_auth_cookie( $user_id, false, is_ssl() );
+    // 問題がなければユーザーを登録する処理を開始
+    $userdata = array(
+        'user_login'   => $user_name,       //  ログイン名
+        'user_pass'    => $user_pass,       //  パスワード
+        'user_email'   => $user_email,      //  メールアドレス
+        'first_name'   => $user_first_name, //  名
+        'last_name'    => $user_last_name,  //  姓
+        'display_name' => $user_name,       //  ブログ上の表示名
+    );
 
-            // リダイレクト
-            wp_redirect( home_url('/') );
-            exit;
+    // ユーザー作成処理
+    $user_id = wp_insert_user( $userdata );
+    if ( is_wp_error( $user_id ) ) {
+        modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+        return;
+    }
+
+    // 登録完了後、そのままログインさせる（ 任意 ）
+    wp_set_auth_cookie( $user_id, false, is_ssl() );
+    wp_redirect( home_url('/') );
+    exit;
+    return 1;
+}
+
+/**
+ * 基本情報ページ　ユーザープロフィール更新
+*/
+function profile_update() {
+    $user_id       = isset( $_POST['userid'] )      ? sanitize_text_field( $_POST['userid'] )      : null;
+    $display_name  = isset( $_POST['displayname'] ) ? sanitize_text_field( $_POST['displayname'] ) : null;
+    $user_pass     = isset( $_POST['password'] )    ? sanitize_text_field( $_POST['password'] )    : null;
+    $first_name    = isset( $_POST['firstname'] )   ? sanitize_text_field( $_POST['firstname'] )   : null;
+    $last_name     = isset( $_POST['lastname'] )    ? sanitize_text_field( $_POST['lastname'] )    : null;
+    // userdata初期化
+    $userdata = array(
+        'ID' => $user_id // ユーザーID
+    );
+
+    // user id チェック
+    if ( $user_id == null ) {
+        modal('更新できませんでした', 'もう一度試してください。E01');
+        return;
+    }
+    // 表示名チェック
+    if ( $display_name ) {
+        // 半角英数字+アンダースコア4～12文字で入力されているか
+        if ( preg_match("/^[a-z0-9_]{4,12}$/iD", $display_name) ) {
+            $userdata += array('display_name' => $display_name);
+        } else {
+            modal('表示名の入力', '表示名は半角英数字+アンダースコア4～12文字で入力してください。');
             return;
         }
     }
+    // パスワードチェック
+    if ( $user_pass ) {
+        // 半角英数字+記号を6文字以上16文字以下で入力されているか
+        if ( preg_match("/^[ -~]{6,16}$/iD", $user_pass) ) {
+            $userdata += array('user_pass' => $user_pass);
+        } else {
+            modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
+            return;
+        }
+    }
+    // 名チェック
+    if ( $first_name ) {
+        if ( preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $first_name) ) {
+            $userdata += array('first_name' => $first_name);
+        } else {
+            modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
+            return;
+        }
+    }
+    // 姓チェック
+    if ( $last_name ) {
+        if ( preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $last_name) ) {
+            $userdata += array('last_name' => $last_name);
+        } else {
+            modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
+            return;
+        }
+    }
+
+    // ユーザー情報を更新
+    $user_id = wp_update_user( $userdata );
+
+    // ユーザーの作成に失敗
+    if ( is_wp_error( $user_id ) ) {
+        echo $user_id -> get_error_code(); // WP_Error() の第一引数
+        echo $user_id -> get_error_message(); // WP_Error() の第二引数
+        modal('ユーザーの更新に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+    } else {
+        modal('更新が完了しました', 'ユーザープロフィールの更新が正常に完了しました。');
+    }
+    return 1;
 }
 
 
@@ -198,11 +253,22 @@ function user_signup() {
  * after_setup_theme に処理をフック
  */
 add_action('after_setup_theme', function() {
-    //アカウント作成フォームからの送信か
-    if ( isset( $_POST['signup'] ) && $_POST['signup'] === 'signup') {
-        // nonceチェック
+    /* フォームの判定 */
+    if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'login' ) {
+        if ( !isset( $_POST['login_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['login_nonce'], 'login_nonce_action' ) ) return;
+        user_login();
+    }
+    // サインアップページ
+    elseif ( isset( $_POST['signup'] ) && $_POST['signup'] === 'signup') {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return;
+        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return; // wp nonceチェック
         user_signup();
+    }
+    // 基本情報ページ
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
+        if ( !isset( $_POST['profile_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['profile_nonce'], 'profile_nonce_action' ) ) return;
+        profile_update();
     }
 });

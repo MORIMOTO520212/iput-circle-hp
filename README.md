@@ -31,22 +31,31 @@
 |記事テンプレート|ID|single.php|
 |サークル作成&編集|circle-post|page-circle-post.php|
 |メディアアップロード|media-upload|media_upload.php|
+|サークル&記事管理ページ|dashboard|dashboard.php|
 
 > **Note**\
 > Wordpressのホームページは`設定 > 表示設定 > ホームページの表示 > 固定ページ`からドロップダウンで選択して変更できる
 
+## 使用する関数一覧
+`the_author()`  
+ユーザー名を取得する。  
+`wp_get_current_user()`  
+WP_Userオブジェクトを返す。ログインしているユーザー情報を取得する。  
+`media_handle_upload()`  
+添付ファイルをデータベースへアップロードする。  
+`count_user_posts()`  
+ユーザーの投稿数を取得する。
 
 ## functions.php
 ### モーダルを使う
 ```php
 modal($title, $message);
 ``` 
-> 引数  
-> $title - モーダルのタイトル  
-> $message - モーダルの本文  
-
-> 戻り値
-> htmlのモーダルを出力する
+**引数**  
+$title - モーダルのタイトル  
+$message - モーダルの本文  
+**戻り値**  
+html形式でモーダルを出力する
 
 
 ## サークル作成&編集ページ
