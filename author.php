@@ -14,12 +14,12 @@
         <div class="posts-number p-3 mb-3">
             <p class="m-0">記事の投稿数</p>
             <div class="number">
-                <span style="font-size:2rem;">5</span>
+                <span style="font-size:2rem;"><?php echo count_user_posts( wp_get_current_user()->id ); ?></span>
                 件
             </div>
         </div>
         <div class="create-circle mb-3">
-            <a class="button" href="#"></a>
+            <a class="button" href="<?php echo home_url("index.php/circle-post"); ?>"></a>
             <div><h4>サークルを作成する</h4></div>
             <div class="icon">
                 <span></span>
@@ -81,7 +81,7 @@
         </div>
 
         <div class="management-card settings">
-            <a class="button" href="#"></a>
+            <a class="button" href="<?php echo home_url("index.php/profile"); ?>"></a>
             <div class="title">
                 <h4 class="mb-0">基本情報を編集する</h4>
             </div>
