@@ -2,59 +2,78 @@
 /* Template Name: トップ */
 ?>
 
-<?=get_header()?>
+<?php get_header() ?>
 
 <main class="contents">
     <!-- ファーストビュー -->
-    <div class="top">
+    <div class="top" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower.webp'); ?>');">
         <!-- 登録フォーム -->
-        <div class="register">
-            <h2>サインアップ</h2>
+        <form action="" method="post" class="register needs-validation" novalidate>
+            <h3>新規ユーザーの登録</h3>
             <div class="input-group flex-nowrap mb-3">
                 <span class="input-group-text" id="addon-wrapping-userid">
                     <span class="bi bi-person-circle"></span>
                 </span>
-                <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping" required>
+                <div class="invalid-feedback">入力必須です</div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mb-3">
+                <div class="col">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text">姓</span>
+                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="姓" aria-label="姓" aria-describedby="lastname-help" required>
+                    </div>
+                    <div class="invalid-feedback">入力必須です</div>
+                </div>
+                <div class="col">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text">名</span>
+                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="名" aria-label="名" aria-describedby="firstname-help" required>
+                    </div>
+                    <div class="invalid-feedback">入力必須です</div>
+                </div>
             </div>
             <div class="input-group flex-nowrap mb-3">
                 <span class="input-group-text" id="addon-wrapping-email">
                     <span class="bi bi-envelope-fill"></span>
                 </span>
-                <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping" required>
+                <div class="invalid-feedback">メールアドレスの形式が違います</div>
             </div>
             <div class="input-group flex-nowrap mb-3">
                 <span class="input-group-text" id="addon-wrapping-password">
                     <span class="bi bi-key-fill"></span>
                 </span>
-                <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
-            </div>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-password-confirm">
-                    <span class="bi bi-key-fill"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="もう一度パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping" required>
+                <div class="invalid-feedback">入力必須です</div>
             </div>
             <!-- Bootstrap 登録ボタン -->
-            <button type="button" class="btn btn-success">登録する</button>
-        </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button type="submit" name="signup" class="btn btn-success" value="signup">アカウントを作成する</button>
+            </div>
+        </form>
     </div>
 
     <!-- トップ カテゴリ only wider than -lg -->
     <div class="container d-none d-lg-block p-0 pb-5" id="top-category">
         <div class="d-flex justify-content-evenly">
-            <div class="w-25 p-4 pb-5 ms-4 me-4">
+            <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
+                <a class="card-link" href="#activity"></a>
                 <h3>活動</h3>
                 <span>サークル・ゼミの活動状況を報告します。</span>
             </div>
-            <div class="w-25 p-4 pb-5 ms-4 me-4">
+            <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
+                <a class="card-link" href="#news"></a>
                 <h3>ニュース</h3>
                 <span>不定期で学校に関した自由な投稿を期待します。</span>
             </div>
-            <div class="w-25 p-4 pb-5 ms-4 me-4">
+            <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
+                <a class="card-link" href="#circle"></a>
                 <h3>サークル</h3>
                 <span>IPUTで活動しているサークルを紹介します。</span>
             </div>
-            <div class="w-25 p-4 pb-5 ms-4 me-4">
+            <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
+                <a class="card-link" href="#"></a>
                 <h3>FAQ</h3>
                 <span>学生が気になる学校に関する質問をまとめています。</span>
             </div>
@@ -196,7 +215,7 @@
         <div class="container w-100 mt-5 max-width-lg">
             <div class="row row-cols-1 row-cols-lg-2 g-5">
                 <!-- 活動 -->
-                <div class="col">
+                <div class="col" id="activity">
                     <h4>活動</h4>
                     <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
                         <?php
@@ -204,6 +223,7 @@
                         ?>
                             <div class="col">
                                 <div class="card h-100">
+                                    <a class="card-link" href="#"></a>
                                     <div class="row g-0">
                                         <div class="col-4 col-lg-12">
                                             <img src="<?=get_theme_file_uri('src/no_image.png')?>" class="card-img-top ratio-3x2 h-100" alt="...">
@@ -211,9 +231,7 @@
                                         <div class="col-8 col-lg-12">
                                             <div class="card-body h-100 d-flex flex-column">
                                                 <h5 class="card-title">
-                                                    <a class="card-link line-clamp-2" href="#">
-                                                        記事タイトルタイトルタイトルタイトルタイトル
-                                                    </a>
+                                                    記事タイトルタイトルタイトルタイトルタイトル
                                                 </h5>
                                                 <div class="card-text d-none d-lg-block">
                                                     <p class="line-clamp-2">
@@ -248,7 +266,7 @@
                     </div>
                 </div>
                 <!-- ニュース -->
-                <div class="col">
+                <div class="col" id="news">
                     <h4>ニュース</h4>
                     <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
                         <?php
@@ -256,6 +274,7 @@
                         ?>
                             <div class="col">
                                 <div class="card h-100">
+                                    <a class="card-link" href="#"></a>
                                     <div class="row g-0">
                                         <div class="col-4 col-lg-12">
                                             <img src="<?=get_theme_file_uri('src/no_image.png')?>" class="card-img-top ratio-3x2 h-100" alt="...">
@@ -263,9 +282,7 @@
                                         <div class="col-8 col-lg-12">
                                             <div class="card-body h-100 d-flex flex-column">
                                                 <h5 class="card-title">
-                                                    <a class="card-link line-clamp-2" href="#">
-                                                        記事タイトルタイトルタイトルタイトルタイトル
-                                                    </a>
+                                                    記事タイトルタイトルタイトルタイトルタイトル
                                                 </h5>
                                                 <div class="card-text d-none d-lg-block">
                                                     <p class="line-clamp-2">
@@ -303,13 +320,13 @@
         </div>
 
         <!-- サークル -->
-        <div class="container w-100 mt-5 max-width-lg">
+        <div class="container w-100 mt-5 max-width-lg" id="circle">
             <h4>サークル</h4>
             <!-- サークル カテゴリ wider than -lg -->
             <div class="d-none d-lg-block pt-3">
                 <div class="row row-cols-3 g-3">
                     <div class="col">
-                        <a class="circle-category" href="#">
+                        <a class="circle-category shadow-hover" href="#circle-sport">
                             <div class="d-flex justify-content-around rounded ratio-16x9">
                                 <h5>運動</h5>
                                 <span class="sport-icon"></span>
@@ -317,7 +334,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a class="circle-category" href="#">
+                        <a class="circle-category shadow-hover" href="#circle-culture">
                             <div class="d-flex justify-content-around rounded ratio-16x9">
                                 <h5>文化<br>学術</h5>
                                 <span class="culture-icon"></span>
@@ -325,7 +342,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a class="circle-category" href="#">
+                        <a class="circle-category shadow-hover" href="#circle-creation">
                             <div class="d-flex justify-content-around rounded ratio-16x9">
                                 <h5>創造</h5>
                                 <span class="creation-icon"></span>
@@ -338,7 +355,7 @@
             <div class="d-lg-none pt-3">
                 <div class="row row-cols-1 g-1">
                     <div class="col">
-                        <a class="circle-category-s" href="#">
+                        <a class="circle-category-s" href="#circle-sport">
                             <div class="row g-0 rounded ratio-21x5">
                                 <div class="col">運動</div>
                                 <div class="col-5 d-flex justify-content-evenly">
@@ -349,7 +366,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a class="circle-category-s" href="#">
+                        <a class="circle-category-s" href="#circle-culture">
                             <div class="row g-0 rounded ratio-21x5">
                                 <div class="col">文化・学術</div>
                                 <div class="col-5 d-flex justify-content-evenly">
@@ -360,7 +377,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a class="circle-category-s" href="#">
+                        <a class="circle-category-s" href="#circle-creation">
                             <div class="row g-0 rounded ratio-21x5">
                                 <div class="col">創造</div>
                                 <div class="col-5 d-flex justify-content-evenly">
@@ -373,7 +390,7 @@
                 </div>
             </div>
             <!-- 運動 -->
-            <div class="pt-5">
+            <div class="pt-5" id="circle-sport">
                 <h4 class="rounded circle-category-title sport-icon">運動</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
@@ -384,7 +401,7 @@
                 </div>
             </div>
             <!-- 文化・学術 -->
-            <div class="pt-5">
+            <div class="pt-5" id="circle-culture">
                 <h4 class="rounded circle-category-title culture-icon">文化・学術</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
@@ -395,7 +412,7 @@
                 </div>
             </div>
             <!-- 創造 -->
-            <div class="pt-5">
+            <div class="pt-5" id="circle-creation">
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
@@ -415,6 +432,7 @@
         ?>
             <div class="col">
                 <div class="card h-100">
+                    <a class="card-link" href="#"></a>
                     <div class="row g-0">
                         <div class="col-4 col-lg-12">
                             <img src="<?=get_theme_file_uri( 'src/' . ($thumbnail_image ?? 'no_image.png') )?>"
@@ -422,10 +440,8 @@
                         </div>
                         <div class="col-8 col-lg-12">
                             <div class="card-body h-100 d-flex flex-column">
-                                <h5 class="card-title">
-                                    <a class="card-link circle-title" href="#">
-                                        <span class="line-clamp-1"><?php echo $circle_name; ?></span>
-                                    </a>
+                                <h5 class="card-title circle-title">
+                                    <span class="line-clamp-1"><?php echo $circle_name; ?></span>
                                 </h5>
                                 <div class="card-text mt-auto">
                                     <div class="row row-cols-1 mb-0 circle-info">

@@ -10,7 +10,7 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package WordPress
- * @subpackage IPUT学生団体
+ * @subpackage IPUT ONE制作チーム
  * @since 1.0.0
  */
 ?>
