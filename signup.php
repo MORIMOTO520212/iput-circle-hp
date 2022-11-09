@@ -19,9 +19,10 @@
             </style>
 
             <?php
-            /* 登録ページ */
-            if( isset($_GET['t']) == false ):
+            /* 登録画面 */
+            if( isset($_GET['t']) === false ):
             ?>
+
                 <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation" novalidate>
                     <h3>ようこそ！</h3>
                     <div class="mt-0">
@@ -47,7 +48,7 @@
                     <div>
                         <label for="email">メールアドレス</label>
                         <input type="email" name="email" id="email" class="form-control" placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="email-help" required>
-                        <div class="form-text" id="email-help">大学のメールアドレス</div>
+                        <div class="form-text" id="email-help">大学のメールアドレスのみ</div>
                         <div class="invalid-feedback">メールアドレスの形式が違います</div>
                     </div>
                     <div>
@@ -62,17 +63,18 @@
                     <a class="text-center" href="<?php echo home_url('index.php/login'); ?>">ログインする</a>
                     <?php wp_nonce_field( 'signup_nonce_action', 'signup_nonce' ); ?>
                 </form>
+
             <?php
-            /* 確認ページ */
-            elseif( $_GET['t'] == "confirm" ):
+            /* 確認画面 */
+            elseif ( $_GET['t'] == "confirm" ):
             ?>
+
                 <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation">
                     <h3>確認メールを送信しました。</h3>
                     <p>メールをご確認いただき、メールに記載されたURLをクリックして、IPUT ONEへの登録を完了してください。</p>
                 </form>
-            <?php
-            endif;
-            ?>
+
+            <?php endif; ?>
 
         </div>
     </div>

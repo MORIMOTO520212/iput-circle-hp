@@ -1,7 +1,7 @@
 /*
-Theme Name: IPUT ONE制作団体
+Theme Name: IPUTONE制作チーム
 Version:    1.0.0
-Author:     IPUT ONE制作団体
+Author:     IPUTONE制作チーム
 */
 
 body {
@@ -142,4 +142,16 @@ body {
 
 .navbar-toggler-icon {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4NCiAgPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTIuNSAxMmEuNS41IDAgMCAxIC41LS41aDEwYS41LjUgMCAwIDEgMCAxSDNhLjUuNSAwIDAgMS0uNS0uNXptMC00YS41LjUgMCAwIDEgLjUtLjVoMTBhLjUuNSAwIDAgMSAwIDFIM2EuNS41IDAgMCAxLS41LS41em0wLTRhLjUuNSAwIDAgMSAuNS0uNWgxMGEuNS41IDAgMCAxIDAgMUgzYS41LjUgMCAwIDEtLjUtLjV6Ii8+DQo8L3N2Zz4=) !important;
+}
+
+
+@media screen and (min-width: 1200px) {
+    .nav-padding {
+        width: 70% !important;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .nav-padding {
+        width: 100% !important;
+    }
 }

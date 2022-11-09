@@ -3,7 +3,7 @@
     min-height: 50px;
     background-color: #FBF6EC;
     padding: 25px 30px;
-    margin: 0 20px;
+    margin: 0 auto;
     border-radius: 10px;
     filter: drop-shadow(0 3px 3px #d5d5d5);
 }

@@ -5,9 +5,8 @@
 
 // WordPress Nonceチェック
 if ( 
-	isset( $_POST['my_image_upload_nonce'], $_POST['post_id'] )
+	isset( $_POST['my_image_upload_nonce'] )
 	&& wp_verify_nonce( $_POST['my_image_upload_nonce'], 'my_image_upload' )
-	&& current_user_can( 'edit_post', $_POST['post_id'] )
 ) {
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
@@ -15,7 +14,7 @@ if (
 	
 	// WordPress にアップロードを処理させる
 	// 注意: 'my_image_upload' は上のフォームで file input 要素の name 属性
-	$attachment_id = media_handle_upload( 'my_image_upload', $_POST['post_id'] );
+	$attachment_id = media_handle_upload( 'my_image_upload', 0 );
 	
 	if ( is_wp_error( $attachment_id ) ) {
 		// アップロード中にエラー

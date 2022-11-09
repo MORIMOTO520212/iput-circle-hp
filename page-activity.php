@@ -1,8 +1,10 @@
 <?php
-/* Template Name: 活動一覧 */
+/**
+ * Template Name: 活動一覧
+ */
 ?>
 
-<?=get_header()?>
+<?php get_header(); ?>
 
 <div class="top">
     <div class="title">

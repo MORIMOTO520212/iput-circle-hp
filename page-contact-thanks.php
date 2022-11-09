@@ -1,9 +1,11 @@
 <!-- トップページ -->
 <?php
-/* Template Name: お問い合わせ完了 */
+/**
+ * Template Name: お問い合わせ完了
+ */
 ?>
 
-<?=get_header()?>
+<?php get_header(); ?>
 
 <div class="main">
     <div class="contact-message-container">

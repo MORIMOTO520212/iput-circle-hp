@@ -64,8 +64,8 @@ if( is_author() ) { # is user page
         <!-- ヘッダー -->
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="<?=home_url()?>">IPUT ONE ベータ版</a>
+                <div class="container-fluid nav-padding">
+                    <a class="navbar-brand" href="<?=home_url()?>">IPUTONE ベータ版</a>
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
                             aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>

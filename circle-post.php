@@ -30,65 +30,27 @@ $features = [
     "設立1年未満",
 ];
 
-/*
-サークル名 circleName
-トップ画像 
-所属人数 belongName
-活動日程 schedule
-活動場所 place
-サークルカテゴリ categoryRadio
-設立日 establishmentDate
-活動頻度 activityFrequency
-会費 membershipFree
-特色 features
-サークル概要 activitySummary
-活動内容 activityDetail
-連絡先 contactMailAddress
-代表者氏名 representative
-*/
-
 /* 投稿の初期化 */
 if( isset( $_GET['edit'] ) ){
     /* 投稿編集 */
-
 } else {
 
-    if( $_SERVER['REQUEST_METHOD'] == "POST" ) {
-        /* 投稿処理 */
-        var_dump($_POST);
-        // if トップ画像があるかどうか
-        //    トップ画像アップロード処理
-        if ( 
-            isset( $_POST['my_image_upload_nonce'], $_POST['post_id'] ) 
-            && wp_verify_nonce( $_POST['my_image_upload_nonce'], 'my_image_upload' )
-            && current_user_can( 'edit_post', $_POST['post_id'] )
-        ) {}
-        
-
-
-        // if アルバムがあるかどうか
-        //    アルバムアップロード処理
-
-    } else {
-        /* ドラフト作成 */
-        /*
-        $post = array(
-            'post_title'     => '', // 投稿のタイトル。
-            'post_content'   => '', // 投稿の全文。
-            'post_status'    => 'draft', // 公開ステータス。デフォルトは 'draft'。
-            'post_type'      => 'circle', // 投稿タイプ。デフォルトは 'post'。
-            'post_author'    => '', // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
-            'post_category'  => array(), // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
-        );
-        $post_id = wp_insert_post()
-        */
-        echo media_verify(0, 0);
-    }
+/* ドラフト作成 */
+/*
+$post = array(
+    'post_title'     => '', // 投稿のタイトル。
+    'post_content'   => '', // 投稿の全文。
+    'post_status'    => 'draft', // 公開ステータス。デフォルトは 'draft'。
+    'post_type'      => 'circle', // 投稿タイプ。デフォルトは 'post'。
+    'post_author'    => '', // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
+    'post_category'  => array(), // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
+);
+$post_id = wp_insert_post()
+*/
 }
-
 ?>
 
-<form class="container mt-4 mb-4 needs-validation" id="form" enctype="multipart/form-data" method="post" novalidate>
+<form class="container mt-4 pb-4 mb-4 needs-validation" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
     <div class="row">
         <div class="col-lg-6">
             <div class="mt-5">
@@ -107,13 +69,12 @@ if( isset( $_GET['edit'] ) ){
                     <div class="mb-3">
                         <p>トップ画像</p>
                         <input type="file" class="form-control" id="top_image" name="topImage" aria-label="file example">
-                        <?php wp_nonce_field( 'top_image', 'top_image_nonce' ); ?>
                     </div>
 
                     <!-- 所属人数 -->
                     <div class="mb-3">
                         <label class="form-label" for="input-belongr">所属人数</label>
-                        <input type="number" class="form-control" id="input-belong" name="belongName"
+                        <input type="number" class="form-control" id="input-belong" name="belongNum"
                             value="" placeholder="10" aria-label="10" min="1" max="999" required>
                     </div>
 
@@ -144,7 +105,6 @@ if( isset( $_GET['edit'] ) ){
                             <input class="form-check-input" type="radio" name="categoryRadio" id="radio3" value="創造" required>
                             <label class="form-check-label" for="radio3">創造</label>
                         </div>
-
                     </div>
 
                     <div class="mb-3">
@@ -174,10 +134,10 @@ if( isset( $_GET['edit'] ) ){
                         </p>
                         <div class="d-flex justify-content-around flex-wrap">
                             <?php
-                            for($i = 0; $i < count($features); $i++){
+                            for( $i = 0; $i < count($features); $i++ ) {
                             ?>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="<?php echo "chkbox-$i"; ?>" name="features" value="<?php echo $features[$i]; ?>">
+                                <input class="form-check-input" type="checkbox" id="<?php echo "chkbox-$i"; ?>" name="features[]" value="<?php echo $features[$i]; ?>">
                                 <label class="form-check-label" for="<?php echo "chkbox-$i"; ?>"><?php echo $features[$i]; ?></label>
                             </div>
                             <?php
@@ -246,19 +206,18 @@ if( isset( $_GET['edit'] ) ){
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-around mt-5">
+                    <button type="submit" name="submit_type" value="circle_draft" class="btn btn-secondary btn-lg">下書き保存する</button>
+                    <button type="submit" name="submit_type" value="circle_post" class="btn btn-primary btn-lg">サークルを作成する</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- 投稿ID -->
-    <input type="hidden" name="postId" value="<?php echo $post_id; ?>" />
-
-    <div class="d-flex justify-content-center mt-5">
-        <button type="submit" class="btn btn-primary btn-lg">サークルを作成する</button>
-    </div>
+    <?php wp_nonce_field( 'circle_post_nonce_action', 'circle_post_nonce' ); ?>
 </form>
 
-<?php wp_nonce_field( 'my_image_upload', 'my_image_upload_nonce' ); ?>
 <!-- 活動記録 画像アップロード -->
+<?php wp_nonce_field( 'my_image_upload', 'my_image_upload_nonce' ); ?>
 <form enctype="multipart/form-data" method="post" name="imgUploadForm" id="imgUploadForm"></form>
 
 <script>
@@ -270,6 +229,10 @@ if( isset( $_GET['edit'] ) ){
 </script>
 
 <script>
+    /**
+     * 活動内容 画像アップロード処理
+    */
+
     // フィールドnonce取得
     var my_image_upload_nonce = document.getElementById('my_image_upload_nonce').value;
     var attachment;
@@ -280,7 +243,7 @@ if( isset( $_GET['edit'] ) ){
     /* upload media to WordPress */
     // trix-file-accept → trix-attachment-add の順で
     // イベントが実行されたとき、画像をアップロードする。
-    // これは、Redoのときに画像をアップロードさせないためである。
+    // これは、Redoのときに画像をアップロードさせないため。
     var file_upload_flag = 0;
     addEventListener('trix-file-accept', function(){
         console.log("trix-file-accept");
@@ -333,7 +296,6 @@ if( isset( $_GET['edit'] ) ){
             var imgUploadForm = document.getElementById('imgUploadForm');
             var formData = new FormData(imgUploadForm);
             formData.append('my_image_upload', file);
-            formData.append('post_id', '470');
             formData.append('my_image_upload_nonce', my_image_upload_nonce);
             formData.append('_wp_http_referer', '/wordpress/index.php/circle-edit/');
 
