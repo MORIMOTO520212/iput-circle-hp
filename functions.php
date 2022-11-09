@@ -5,18 +5,22 @@
  */
 show_admin_bar(false);
 
+
+
 /**
  * 投稿時スラッグ自動生成
  * 投稿ページのみ生成する
  */
 function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
-    if($post_type == 'post' or $post_type == 'circle'){
+    if($post_type == 'post'){
         $slug = md5(time()); // UNIX時間をmd5でハッシュ化したものをスラッグ名に使う
         return $slug;
     }
     return $slug;
 }
 add_filter('wp_unique_post_slug', 'custom_auto_post_slug', 10, 4);
+
+
 
 /**
  * カスタム投稿タイプ サークル
@@ -36,6 +40,71 @@ function post_type_circle() {
 add_action('init', 'post_type_circle');
 
 
+
+/**
+ * カスタム投稿タイプ　カスタムフィールドを設置
+*/
+function set_custom_fields() {
+    add_meta_box(
+        'cf_01',
+        'サークル基本情報',
+        'form_01_custom_fields', //フィールドを指定する関数
+        'circle',
+        'normal',
+        'default'
+    );
+    add_meta_box(
+        'cf_02',
+        'サークル説明', //タイトル
+        'form_02_custom_fields', //フィールドを指定する関数
+        'circle',
+        'normal',
+        'default'
+    );
+    add_meta_box(
+        'cf_03',
+        '管理者情報', //タイトル
+        'form_03_custom_fields', //フィールドを指定する関数
+        'circle',
+        'normal',
+        'default'
+    );
+}
+add_action( 'admin_menu', 'set_custom_fields' );
+
+function form_01_custom_fields() {
+    global $post;
+    ?>
+    <p>トップ画像 <input type="text" name="topImage" value="<?php echo get_post_meta($post->ID, 'topImage', true); ?>" size="30"></p>
+    <p>所属人数 <input type="text" name="belongNum" value="<?php echo get_post_meta($post->ID, 'belongNum', true); ?>" size="30"></p>
+    <p>活動日程 <input type="text" name="schedule" value="<?php echo get_post_meta($post->ID, 'schedule', true); ?>" size="30"></p>
+    <p>活動場所 <input type="text" name="place" value="<?php echo get_post_meta($post->ID, 'place', true); ?>" size="30"></p>
+    <p>サークルカテゴリ <input type="text" name="categoryRadio" value="<?php echo get_post_meta($post->ID, 'categoryRadio', true); ?>" size="30"></p>
+    <p>設立日 <input type="text" name="establishmentDate" value="<?php echo get_post_meta($post->ID, 'establishmentDate', true); ?>" size="30"></p>
+    <p>活動頻度 <input type="text" name="activityFrequency" value="<?php echo get_post_meta($post->ID, 'activityFrequency', true); ?>" size="30"></p>
+    <p>会費 <input type="text" name="membershipFree" value="<?php echo get_post_meta($post->ID, 'membershipFree', true); ?>" size="30"></p>
+    <?php
+}
+
+function form_02_custom_fields() {
+    global $post;
+    echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
+}
+
+function form_03_custom_fields() {
+    global $post;
+    echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
+}
+
+//カスタムフィールドの値を保存
+function save_custom_fields( $post_id ) {
+    update_post_meta($post_id, 'topImage', $_POST['topImage'] );
+    update_post_meta($post_id, 'belongNum', $_POST['belongNum'] );
+    update_post_meta($post_id, 'schedule', $_POST['schedule'] );
+}
+add_action( 'save_post', 'save_custom_fields' );
+
+
 /**
  * フォーム　メディアアップロード時の処理関数
  * フォームからメディアが送られてきた場合、WordPress側のメディアにアップロードする処理を行う。
@@ -43,6 +112,8 @@ add_action('init', 'post_type_circle');
 function media_verify($nonce, $post_id) {
     return "media_verify($nonce, $post_id)";
 }
+
+
 
 /**
  * Bootstrap モーダル テンプレート関数
@@ -78,6 +149,8 @@ function modal($title, $message) {
 <?php
 }
 
+
+
 /**
  * ログインページ
 */
@@ -109,6 +182,8 @@ function user_login() {
     exit;
     return 1;
 }
+
+
 
 /**
  * サインアップページ アカウント作成
@@ -175,6 +250,8 @@ function user_signup() {
     exit;
     return 1;
 }
+
+
 
 /**
  * 基本情報ページ　ユーザープロフィール更新
@@ -250,25 +327,131 @@ function profile_update() {
 
 
 /**
+ * サークル作成ページ サークル登録処理
+*/
+function create_circle() {
+    if ( isset(
+        $_POST['circleName'        ], // サークル名
+        $_POST['belongNum'         ], // 所属人数
+        $_POST['schedule'          ], // 活動日程
+        $_POST['place'             ], // 活動場所
+        $_POST['categoryRadio'     ], // サークルカテゴリ
+        $_POST['establishmentDate' ], // 設立日
+        $_POST['activityFrequency' ], // 活動頻度
+        $_POST['membershipFree'    ], // 会費
+        $_POST['features'          ], // 特色(array)
+        $_POST['activitySummary'   ], // サークル概要
+        $_POST['activityDetail'    ], // 活動内容
+        $_POST['contactMailAddress'], // 連絡先
+        $_POST['representative'    ], // 代表者氏名
+        $_POST['circle_post_nonce' ], // WordPressNonce
+        ) )
+    {
+        // 公開ステータス
+        $post_status = "publish"; // draft | publish
+        if ( isset( $_GET['post_status'] ) ) {
+            $post_status = $_GET['post_status'];
+        }
+
+        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+        // トップ画像をアップロード
+        $top_img_url = "";
+        if ( wp_verify_nonce( $_POST['circle_post_nonce'], 'circle_post_nonce_action' ) ) {
+            $attachment_id = media_handle_upload('topImage', 0);
+            // アップロードエラーチェック
+            if ( is_wp_error( $attachment_id ) ) {
+                modal('エラー', 'トップ画像がアップロードできませんでした。');
+            } else {
+                $top_img_url = wp_get_attachment_url( $attachment_id );
+            }
+        }
+        // アルバム画像
+        // ～ここへ処理～
+
+        // 投稿処理
+        $post_data = array(
+            'post_title'     => $_POST['circleName'],      // 投稿のタイトル
+            'post_name'      => md5(time()),               // スラッグ名（時間をmd5でハッシュ化したもの）
+            'post_type'      => 'circle',                  // 投稿タイプ
+            'post_status'    => $post_status,              // 公開ステータス
+            'post_content'   => $_POST['activitySummary'], // 投稿の全文
+            'post_author'    => wp_get_current_user()->ID, // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
+            'post_category'  => array(),                   // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
+        );
+        $post_id = wp_insert_post( $post_data, true );
+
+        if (  is_wp_error( $post_id ) ) {
+            modal('エラー', '投稿に失敗しました。E01');
+            return;
+        }
+
+        // 投稿にカスタムフィールドを追加
+        add_post_meta( $post_id, 'topImage',           $top_img_url                 ); // トップ画像
+        add_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
+        add_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
+        add_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
+        add_post_meta( $post_id, 'categoryRadio',      $_POST['categoryRadio']      ); // サークルカテゴリ
+        add_post_meta( $post_id, 'establishmentDate',  $_POST['establishmentDate']  ); // 設立日
+        add_post_meta( $post_id, 'activityFrequency',  $_POST['activityFrequency']  ); // 活動頻度
+        add_post_meta( $post_id, 'membershipFree',     $_POST['membershipFree']     ); // 会費
+        add_post_meta( $post_id, 'features',           $_POST['features']           ); // 特色
+        add_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
+        add_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
+        add_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
+
+    } else {
+        modal('エラー', '不正なリクエストです。E02');
+        return;
+    }
+
+    // サークルページへリダイレクト
+    wp_redirect( get_permalink( $post_id ) );
+    exit;
+    return 1;
+}
+
+
+
+/**
+ * フォームのPOSTリクエストを受け取る
  * after_setup_theme に処理をフック
  */
 add_action('after_setup_theme', function() {
-    /* フォームの判定 */
+    // ログインする
     if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'login' ) {
         if ( !isset( $_POST['login_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['login_nonce'], 'login_nonce_action' ) ) return;
         user_login();
     }
-    // サインアップページ
+    // サインアップ
     elseif ( isset( $_POST['signup'] ) && $_POST['signup'] === 'signup') {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return; // wp nonceチェック
+        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return;
         user_signup();
     }
-    // 基本情報ページ
+    // 基本情報の更新
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
         if ( !isset( $_POST['profile_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['profile_nonce'], 'profile_nonce_action' ) ) return;
         profile_update();
+    }
+    // サークルを作成する
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_post' ) {
+        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'circle_post_nonce_action' ) ) return;
+        create_circle();
+    }
+    // サークルをドラフト保存する
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_draft' ) {
+        if ( !isset( $_POST['circle_draft_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_edit_nonce'], 'circle_draft_nonce_action' ) ) return;
+    }
+    // サークルを編集する
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_edit' ) {
+        if ( !isset( $_POST['circle_edit_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_edit_nonce'], 'circle_edit_nonce_action' ) ) return;
     }
 });
