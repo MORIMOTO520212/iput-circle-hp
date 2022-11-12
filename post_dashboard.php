@@ -74,10 +74,10 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
         return pageArray;  // ページの最大数を返す
     }
     function createPage(page, pageArray){
-        if(page != 0){
+        if(page !== 0){
             for(let i=0; i<pageArray.length; i++){ 
                 for(let j=0; j<pageArray[i].length; j++){ // クエリの番号とページ番号の照合
-                    if(i != page - 1) // 不一致の場合
+                    if(i !== page - 1) // 不一致の場合
                         pageArray[i][j].className += " d-none";
                     else // 一致の場合
                         pageArray[i][j].className += " d-flex";
@@ -98,10 +98,10 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
         if (page > 2)
             html += `<li class="page-item"><a class="page-link" href="?page=1">1</a></li>`; 
         // page=1
-        if (page == 1){
+        if (page === 1){
             for (let i = page-1; i<page+3 && i<maxPageNum+1; i++){
                 if (i < 1) continue;
-                if (i == page) {
+                if (i === page) {
                     html += `<li class="page-item active"><a class="page-link" href="?page=${i}" >${i}</a></li>`;
                     continue;
                 }
@@ -109,10 +109,10 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
             }
         }
         // そのた
-        if (page != 1 && page != maxPageNum){
+        if (page !== 1 && page !== maxPageNum){
             for (let i = page-1; i<page+2 && i<maxPageNum+1; i++){
                 if (i < 1) continue;
-                if (i == page) {
+                if (i === page) {
                     html += `<li class="page-item active"><a class="page-link" href="?page=${i}" >${i}</a></li>`;
                     continue;
                 }
@@ -120,10 +120,10 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
                 }
         }
         // page = 最後
-        if (page == maxPageNum){
+        if (page === maxPageNum){
             for (let i = page-2; i<page+2 && i<maxPageNum+1; i++){
                 if (i < 1) continue;
-                if (i == page) {
+                if (i === page) {
                     html += `<li class="page-item active"><a class="page-link" href="?page=${i}" >${i}</a></li>`;
                     continue;
                 }
@@ -134,7 +134,7 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
         if(page < maxPageNum - 1)
             html += `<li class="page-item"><a class="page-link" href="?page=${maxPageNum}">${maxPageNum}</a></li>`;
         // 次へ
-        if (page != maxPageNum)
+        if (page !== maxPageNum)
             html += `<li class="page-item"><a class="page-link" href="?page=${page + 1}">次へ</a></li>`; //
 
         document.getElementById('pagination').innerHTML = html;
@@ -161,7 +161,7 @@ head('post_dashboard', '記事の管理 | IPUT学生団体');
     else
         console.log("クエリパラメータ: " + url.searchParams.get('page') + "| 現在のページ: " + page + "| 最大ページ数: " + maxPage);
         let canCreatPage = createPage(page, allArticleArray);
-        if(canCreatPage == true){
+        if(canCreatPage === true){
             pageBody.className = "d-block"; //pageBodyをd-blcokにする
             CreatePagination(page, maxPage);
         }
