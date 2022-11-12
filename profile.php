@@ -77,7 +77,7 @@ head('profile', '基本情報 | IPUT学生団体');
 <script>
     var flug = 0;
     $("form").submit(function(){
-        if(flug == 0){
+        if(flug === 0){
             $("#edit").text("更新する");
             $("#floatingInput1").prop("disabled", false);
             $("#floatingInput2").prop("disabled", false);
