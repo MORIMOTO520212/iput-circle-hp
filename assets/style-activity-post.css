@@ -1,0 +1,35 @@
+.txt-subject{
+    color: #7b7b7b;
+    font-size: 40px;
+    margin-top: 70px;
+    margin-bottom: 35px;
+}
+
+span{
+    color: #FB0D0D;
+}
+
+form{
+    margin:auto;
+    z-index: 100;
+    background-color: #fbf6ec;
+    border-radius: 10px;
+    filter: drop-shadow(0 3px 6px #6f6d68);
+}
+
+.wrapper-name{
+    display:flex;
+    justify-content: space-between;
+}
+
+.botton-edit{
+    margin-bottom: 130px;
+}
+
+p{
+    font-size: 16px;
+    color: #000000;
+}
+
+
+
