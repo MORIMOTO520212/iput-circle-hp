@@ -98,9 +98,9 @@ function form_03_custom_fields() {
 
 //カスタムフィールドの値を保存
 function save_custom_fields( $post_id ) {
-    update_post_meta($post_id, 'topImage', $_POST['topImage'] );
-    update_post_meta($post_id, 'belongNum', $_POST['belongNum'] );
-    update_post_meta($post_id, 'schedule', $_POST['schedule'] );
+    !empty( $_POST['topImage']  ) ? update_post_meta( $post_id, 'topImage', $_POST['topImage']   ) : '';
+    !empty( $_POST['belongNum'] ) ? update_post_meta( $post_id, 'belongNum', $_POST['belongNum'] ) : '';
+    !empty( $_POST['schedule']  ) ? update_post_meta( $post_id, 'schedule', $_POST['schedule']   ) : '';
 }
 add_action( 'save_post', 'save_custom_fields' );
 
@@ -359,15 +359,24 @@ function create_circle() {
 
         // トップ画像をアップロード
         $top_img_url = "";
-        if ( wp_verify_nonce( $_POST['circle_post_nonce'], 'circle_post_nonce_action' ) ) {
-            $attachment_id = media_handle_upload('topImage', 0);
-            // アップロードエラーチェック
-            if ( is_wp_error( $attachment_id ) ) {
-                modal('エラー', 'トップ画像がアップロードできませんでした。');
-            } else {
-                $top_img_url = wp_get_attachment_url( $attachment_id );
-            }
+        $attachment_id = media_handle_upload('topImage', 0);
+        // アップロードエラーチェック
+        if ( is_wp_error( $attachment_id ) ) {
+            // 何もしない
+        } else {
+            $top_img_url = wp_get_attachment_url( $attachment_id );
         }
+
+        // ヘッダー画像をアップロード
+        $header_img_url = "";
+        $attachment_id = media_handle_upload('headerImage', 0);
+        // アップロードエラーチェック
+        if ( is_wp_error( $attachment_id ) ) {
+            // 何もしない
+        } else {
+            $header_img_url = wp_get_attachment_url( $attachment_id );
+        }
+
         // アルバム画像
         // ～ここへ処理～
 
@@ -388,19 +397,22 @@ function create_circle() {
             return;
         }
 
-        // 投稿にカスタムフィールドを追加
-        add_post_meta( $post_id, 'topImage',           $top_img_url                 ); // トップ画像
-        add_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
-        add_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
-        add_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
-        add_post_meta( $post_id, 'categoryRadio',      $_POST['categoryRadio']      ); // サークルカテゴリ
-        add_post_meta( $post_id, 'establishmentDate',  $_POST['establishmentDate']  ); // 設立日
-        add_post_meta( $post_id, 'activityFrequency',  $_POST['activityFrequency']  ); // 活動頻度
-        add_post_meta( $post_id, 'membershipFree',     $_POST['membershipFree']     ); // 会費
-        add_post_meta( $post_id, 'features',           $_POST['features']           ); // 特色
-        add_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
-        add_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
-        add_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
+        // 投稿にカスタムフィールドを追加（add_post_meta関数は禁止）
+        update_post_meta( $post_id, 'topImage',           $top_img_url                 ); // トップ画像（URL）
+        update_post_meta( $post_id, 'headerImage',        $header_img_url              ); // ヘッダー画像（URL）
+        update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
+        update_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
+        update_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
+        update_post_meta( $post_id, 'categoryRadio',      $_POST['categoryRadio']      ); // サークルカテゴリ
+        update_post_meta( $post_id, 'establishmentDate',  $_POST['establishmentDate']  ); // 設立日
+        update_post_meta( $post_id, 'activityFrequency',  $_POST['activityFrequency']  ); // 活動頻度
+        update_post_meta( $post_id, 'membershipFree',     $_POST['membershipFree']     ); // 会費
+        update_post_meta( $post_id, 'features',           $_POST['features']           ); // 特色（配列をシリアル化して文字列で保存）
+        update_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
+        update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
+        update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
+
+        $category_result = wp_create_category( $_POST['circleName'] );
 
     } else {
         modal('エラー', '不正なリクエストです。E02');
