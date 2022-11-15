@@ -1,15 +1,22 @@
 var startPos = 0;
 var winScrollTop = 0;
 
-$(window).on('scroll', function(){
-    winScrollTop = $(this).scrollTop();
-    if(winScrollTop >= startPos){
-        $('nav').addClass('hide');
-    } else {
-        $('nav').removeClass('hide');
-    }
-    startPos = winScrollTop;
-});
+/**
+ * スクロールでヘッダーが隠れる
+ * navタグのclass属性にhideを追加すると表示、消すと非表示になる。
+ * モバイル版のみ有効化。
+*/
+if($('nav').width() < 500){
+    $(window).on('scroll', function(){
+        winScrollTop = $(this).scrollTop();
+        if(winScrollTop >= startPos){
+            $('nav').addClass('hide');
+        } else {
+            $('nav').removeClass('hide');
+        }
+        startPos = winScrollTop;
+    });
+}
 
 /**
  * Bootstrap 入力チェック
