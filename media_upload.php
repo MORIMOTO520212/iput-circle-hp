@@ -6,7 +6,7 @@
 // WordPress Nonceチェック
 if ( 
 	isset( $_POST['my_image_upload_nonce'] )
-	&& wp_verify_nonce( $_POST['my_image_upload_nonce'], 'my_image_upload' )
+	&& wp_verify_nonce( $_POST['my_image_upload_nonce'], 'P7chUSMY' )
 ) {
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
