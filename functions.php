@@ -1,5 +1,12 @@
 <?php
 
+// media_upload_hundle
+require_once( ABSPATH . 'wp-admin/includes/image.php' );
+require_once( ABSPATH . 'wp-admin/includes/file.php' );
+require_once( ABSPATH . 'wp-admin/includes/media.php' );
+// wp_create_category
+require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+
 /**
  * 管理者以外はアドミンバーを非表示
  */
@@ -39,6 +46,18 @@ function post_type_circle() {
 }
 add_action('init', 'post_type_circle');
 
+
+/**
+ * WordPressで管理する時間の文字列を、年、月、日で分割する。
+ * 例えば、引数に'2022-11-11 01:19:30'を渡すと'2022年11月11日'が返される
+ */
+function date_formatting( $date ) {
+    preg_match( '/(\d{4})-(\d{2})-(\d{2})/', $date, $matches );
+    $year  = $matches[1];
+    $month = $matches[2];
+    $day   = $matches[3];
+    return "{$year}年{$month}月{$day}日";
+}
 
 
 /**
@@ -105,15 +124,6 @@ function save_custom_fields( $post_id ) {
 add_action( 'save_post', 'save_custom_fields' );
 
 
-/**
- * フォーム　メディアアップロード時の処理関数
- * フォームからメディアが送られてきた場合、WordPress側のメディアにアップロードする処理を行う。
-*/
-function media_verify($nonce, $post_id) {
-    return "media_verify($nonce, $post_id)";
-}
-
-
 
 /**
  * Bootstrap モーダル テンプレート関数
@@ -139,10 +149,10 @@ function modal($title, $message) {
     </div>
     <script>
         window.onload = () => {
-            var elem = $('#myModal');
+            var myModalElm = $('#myModal');
             var options = "keyboard";
-            elem.removeClass('display'); // display:none解除
-            var myModal = new bootstrap.Modal(elem, options);
+            myModalElm.removeClass('display'); // display:none解除
+            var myModal = new bootstrap.Modal(myModalElm, options);
             myModal.show();
         }
     </script>
@@ -347,15 +357,29 @@ function create_circle() {
         $_POST['circle_post_nonce' ], // WordPressNonce
         ) )
     {
-        // 公開ステータス
+        // ページ公開ステータスの取得
         $post_status = "publish"; // draft | publish
         if ( isset( $_GET['post_status'] ) ) {
             $post_status = $_GET['post_status'];
         }
 
-        require_once( ABSPATH . 'wp-admin/includes/image.php' );
-        require_once( ABSPATH . 'wp-admin/includes/file.php' );
-        require_once( ABSPATH . 'wp-admin/includes/media.php' );
+        // 既存のサークル名ではないか
+        $args = array(
+            'posts_per_page' => -1,
+            'post_type'      => 'circle',
+        );
+        $circles = get_posts( $args );
+        foreach ( $circles as $circle ) {
+            if ( $circle->post_title === $_POST['circleName'] ) {
+                modal('エラー', '既に同じ名前のサークルが存在しています。');
+                return;
+            }
+        }
+
+        // 文字数チェック
+        if ( mb_strlen( $_POST['circleName'] ) > 20 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['belongNum']  ) > 3  ) input_value_error_exit();
+        if ( mb_strlen( $_POST['schedule']   ) > 15 ) input_value_error_exit();
 
         // トップ画像をアップロード
         $top_img_url = "";
@@ -364,7 +388,7 @@ function create_circle() {
         if ( is_wp_error( $attachment_id ) ) {
             // 何もしない
         } else {
-            $top_img_url = wp_get_attachment_url( $attachment_id );
+            $top_img_url = wp_get_attachment_url( $attachment_id ); // アップロードした画像リンク
         }
 
         // ヘッダー画像をアップロード
@@ -390,14 +414,22 @@ function create_circle() {
             'post_author'    => wp_get_current_user()->ID, // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
             'post_category'  => array(),                   // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
         );
-        $post_id = wp_insert_post( $post_data, true );
+        $post_id = wp_insert_post( $post_data, true ); // 投稿を作成　自動サニタイズ
 
         if (  is_wp_error( $post_id ) ) {
-            modal('エラー', '投稿に失敗しました。E01');
+            modal('エラー', '投稿に失敗しました。');
             return;
         }
 
-        // 投稿にカスタムフィールドを追加（add_post_meta関数は禁止）
+        // カテゴリ作成
+        $category_id = wp_create_category( $_POST['circleName'] );
+
+        if ( !($category_id) ) {
+            modal('エラー', '投稿に失敗しました。');
+            return;
+        }
+
+        // 投稿にカスタムフィールドを追加（自動サニタイズ、add_post_meta関数は禁止）
         update_post_meta( $post_id, 'topImage',           $top_img_url                 ); // トップ画像（URL）
         update_post_meta( $post_id, 'headerImage',        $header_img_url              ); // ヘッダー画像（URL）
         update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
@@ -411,11 +443,12 @@ function create_circle() {
         update_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
         update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
         update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
+        update_post_meta( $post_id, 'circleCategoryId',   $category_id                 ); // サークルカテゴリID
 
-        $category_result = wp_create_category( $_POST['circleName'] );
+        
 
     } else {
-        modal('エラー', '不正なリクエストです。E02');
+        modal('エラー', '不正なリクエストです。');
         return;
     }
 
@@ -424,7 +457,10 @@ function create_circle() {
     exit;
     return 1;
 }
-
+function input_value_error_exit( $error_code = "" ) {
+    modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
+    return;
+}
 
 
 /**
@@ -453,7 +489,7 @@ add_action('after_setup_theme', function() {
     // サークルを作成する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_post' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'circle_post_nonce_action' ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
         create_circle();
     }
     // サークルをドラフト保存する

@@ -154,25 +154,44 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                 <h2>活動記録</h2>
                 <hr />
                 <?php
-                for($i = 0; $i < 5; $i++):
+                // サークルカテゴリID
+                $circle_category_id = 99;
+
+                $args = array(
+                    'posts_per_page' => 5, // 読み込む記事数
+                    'category' => $circle_category_id
+                );
+
+                $posts = get_posts( $args );
+
+                if ( $posts ) {
+                foreach ( $posts as $post ):
+                // 内部公開判定
+                    if ( $post->internal_disclosure === false ):
                 ?>
-                <div class="card a-button mb-3">
-                    <a href=""></a>
-                    <div class="row act-card">
-                        <div class="col-4 col-sm-3 h-100 pe-0">
-                            <img src="<?php echo get_theme_file_uri('src/girl.png'); ?>" />
-                        </div>
-                        <div class="col-8 col-sm-9 p-0">
-                            <div class="card-body">
-                                <p>2022年08月15日</p>
-                                <p class="card-text line-clamp-2">記事タイトルをここへ</p>
+                    <div class="card a-button mb-3">
+                        <a href="<?php echo get_permalink( $post->ID ); ?>"></a>
+                        <div class="row act-card">
+                            <div class="col-4 col-sm-3 h-100 pe-0">
+                                <img src="<?php echo $post->thumbnail_image_url; ?>" />
+                            </div>
+                            <div class="col-8 col-sm-9 p-0">
+                                <div class="card-body">
+                                    <p><?php echo date_formatting( $post->post_date ); ?></p>
+                                    <p class="card-text line-clamp-2"><?php echo $post->post_title; ?></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
                 <?php
-                endfor;
+                    endif;
+                endforeach;
+                
+                } else {
+                ?>
+                    <p class="text-center">活動記録がまだありません。</p>
+                <?php
+                }
                 ?>
             </div>
         </div>

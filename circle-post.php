@@ -48,7 +48,32 @@ $post = array(
 $post_id = wp_insert_post()
 */
 }
+
 ?>
+
+<!-- 非対応のファイル添付時に表示 -->
+<div class="modal fade" id="fileTypeCaution" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header alert alert-warning">
+            <h5 class="modal-title" id="exampleModalLabel">非対応のファイルです</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            jpegまたはpng形式のファイルのみ添付できます。
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+    var fileTypeCautionElm = $('#fileTypeCaution');
+    var options = "keyboard";
+    fileTypeCautionElm.removeClass('display'); // display:none解除
+    fileTypeCaution = new bootstrap.Modal(fileTypeCautionElm, options);
+</script>
 
 <form class="container mt-4 pb-4 mb-4 needs-validation" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
     <div class="row">
@@ -60,35 +85,54 @@ $post_id = wp_insert_post()
                     <!-- サークル名 -->
                     <div class="mb-3">
                         <label class="form-label" for="email-input">サークル名</label>
-                        <input type="text" class="form-control" id="circle-name-input" name="circleName"
+                        <input type="text" maxlength="20" class="form-control" id="circle-name-input" name="circleName"
                             value="" placeholder="サークル名を入力してください"
                             aria-label="サークル名を入力してください" aria-describedby="circle-name-help" required>
+                        <div class="invalid-feedback">
+                            20文字以内で入力してください。
+                        </div>
                     </div>
 
                     <!-- トップ画像 -->
                     <div class="mb-3">
-                        <p>トップ画像</p>
-                        <input type="file" class="form-control" id="top_image" name="topImage" aria-label="file example">
+                        <label class="form-label" for="top-image">トップ画像</label>
+                        <input type="file" class="form-control" id="top-image" name="topImage" accept="image/png, image/jpeg">
+                    </div>
+
+                    <!-- ヘッダー画像 -->
+                    <div class="mb-3">
+                        <label class="form-label" for="header-image">ヘッダー画像</label>
+                        <input type="file" class="form-control" id="header-image" name="headerImage" accept="image/png, image/jpeg">
+                        <div class="form-text">
+                            推奨する画像サイズは1900x300です。
+                        </div>
                     </div>
 
                     <!-- 所属人数 -->
                     <div class="mb-3">
                         <label class="form-label" for="input-belongr">所属人数</label>
-                        <input type="number" class="form-control" id="input-belong" name="belongNum"
-                            value="" placeholder="10" aria-label="10" min="1" max="999" required>
+                        <input type="number" min="1" max="999" class="form-control" id="input-belong" name="belongNum"
+                            value="" placeholder="10" required>
                     </div>
 
                     <!-- 活動日程 -->
                     <div class="mb-3">
                         <label class="form-label" for="input">活動日程</label>
-                        <input type="text" class="form-control" id="schedule" name="schedule"
-                        value="" placeholder="例）月曜日、土曜日" aria-label="10" required>
+                        <input type="text" maxlength="15" class="form-control" id="schedule" name="schedule"
+                            value="" placeholder="例）月曜日、土曜日" required>
+                        <div class="invalid-feedback">
+                            15文字以内で入力してください。<br>詳しい活動日程は活動内容へ記入するようにしてください。
+                        </div>
                     </div>
 
+                    <!-- 活動場所 -->
                     <div class="mb-3">
                         <label class="form-label" for="input">活動場所</label>
-                        <input type="text" class="form-control" id="place" name="place"
-                        value="" placeholder="例）コクーンタワー、Discord、LINE" aria-label="place" required>
+                        <input type="text" maxlength="10" class="form-control" id="place" name="place"
+                            value="" placeholder="例）コクーンタワー、Discord、LINE" required>
+                        <div class="invalid-feedback">
+                            10文字以内で入力してください。<br>例えば、学校、カフェ、スタジオなど。詳しい活動日程は活動内容へ記入するようにしてください。
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -115,14 +159,20 @@ $post_id = wp_insert_post()
 
                     <div class="mb-3">
                         <label class="form-label" for="input">活動頻度</label>
-                        <input type="text" class="form-control" id="activity-frequency" name="activityFrequency"
+                        <input type="text" maxlength="10" class="form-control" id="activity-frequency" name="activityFrequency"
                         value="" placeholder="例）毎週、不定期" aria-label="activity-frequency" required>
+                        <div class="invalid-feedback">
+                            10文字以内で入力してください。<br>詳しい活動日程は活動内容へ記入するようにしてください。
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="input">会費</label>
-                        <input type="text" class="form-control" id="membership-free" name="membershipFree"
+                        <input type="text" maxlength="30" class="form-control" id="membership-free" name="membershipFree"
                         value="" placeholder="例）2000円/年、なし" aria-label="membership-free" required>
+                        <div class="invalid-feedback">
+                            30文字以内で入力してください。
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -156,8 +206,11 @@ $post_id = wp_insert_post()
                 <div class="mainarea">
                     <!-- サークル概要 -->
                     <div class="mb-3">
-                    <label for="activity-summary" class="form-label">サークル概要</label>
-                        <textarea class="form-control" id="activity-summary" name="activitySummary" rows="3" required></textarea>
+                        <label for="activity-summary" class="form-label">サークル概要</label>
+                        <textarea maxlength="100" class="form-control" id="activity-summary" name="activitySummary" rows="3" required></textarea>
+                        <div class="form-text">
+                            100文字以内で簡潔にサークルの概要を書いてください。
+                        </div>
                     </div>
                     
                     <!-- 活動内容 -->
@@ -174,7 +227,7 @@ $post_id = wp_insert_post()
                     <div class="mb-3">
                         <p>アルバム画像<br>
                             <small>
-                                この項目は必須ではありませんが、サークルの印象が伝わる部分です。
+                                必須ではありませんが、サークルの印象が伝わる部分です。
                                 お手元に画像がない場合でも、後に追加することは可能です。
                             </small>
                         </p>
@@ -190,8 +243,8 @@ $post_id = wp_insert_post()
                 <div class="mainarea">
                     <div class="mb-3">
                         <label class="form-label" for="input">連絡先メールアドレス</label>
-                        <input type="text" class="form-control" id="contact-mailaddress" name="contactMailAddress"
-                        value="<?php echo wp_get_current_user()->user_email; ?>" placeholder="taro.yamada@gmail.com" aria-label="contact-mailaddress" aria-describedby="help" required>
+                        <input type="text" maxlength="50" class="form-control" id="contact-mailaddress" name="contactMailAddress"
+                        value="<?php echo wp_get_current_user()->user_email; ?>" placeholder="taro.yamada@gmail.com" aria-describedby="help" required>
                         <div id="help" class="form-text">
                             指定されたメールアドレスへサークルの参加申請や、お問い合わせのメールを送信します。gmailにも対応しています。
                         </div>
@@ -199,10 +252,13 @@ $post_id = wp_insert_post()
 
                     <div class="mb-3">
                         <label class="form-label" for="input">代表者氏名</label>
-                        <input type="text" class="form-control" id="representative" name="representative"
-                        value="" placeholder="山田太郎" aria-label="representative" aria-describedby="help" required>
+                        <input type="text" maxlength="10" class="form-control" id="representative" name="representative"
+                        value="" placeholder="山田太郎" aria-describedby="help" required>
                         <div id="help" class="form-text">
                             本サイトへ登録していないユーザーには公開されません。
+                        </div>
+                        <div class="invalid-feedback">
+                            10文字以内で入力してください。
                         </div>
                     </div>
                 </div>
@@ -213,11 +269,11 @@ $post_id = wp_insert_post()
             </div>
         </div>
     </div>
-    <?php wp_nonce_field( 'circle_post_nonce_action', 'circle_post_nonce' ); ?>
+    <?php wp_nonce_field( 'n4Uyh98k', 'circle_post_nonce' ); ?>
 </form>
 
 <!-- 活動記録 画像アップロード -->
-<?php wp_nonce_field( 'my_image_upload', 'my_image_upload_nonce' ); ?>
+<?php wp_nonce_field( 'P7chUSMY', 'my_image_upload_nonce' ); ?>
 <form enctype="multipart/form-data" method="post" name="imgUploadForm" id="imgUploadForm"></form>
 
 <script>
@@ -245,10 +301,15 @@ $post_id = wp_insert_post()
     // イベントが実行されたとき、画像をアップロードする。
     // これは、Redoのときに画像をアップロードさせないため。
     var file_upload_flag = 0;
-    addEventListener('trix-file-accept', function(){
+    addEventListener('trix-file-accept', function(event) {
         console.log("trix-file-accept");
-        file_upload_flag = 1;
+        if( event['file']['type'] == "image/png" || event['file']['type'] == "image/jpeg" ) {
+            file_upload_flag = 1;
+        }else{
+            fileTypeCaution.show(); // ファイル形式の警告表示
+        }
     });
+    // Ajax通信でmedia_upload.phpを呼び出してアップロード
     addEventListener('trix-attachment-add', function(event) {
         console.log("trix-attachment-add");
 
@@ -281,7 +342,7 @@ $post_id = wp_insert_post()
                         // TrixEditorに画像をリンクする
                         attachment.setAttributes({
                             url: imgPath,  // img > src
-                            href: imgPath  // img > a
+                            href: imgPath,  // img > a
                         });
                     }
                 }
