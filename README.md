@@ -61,6 +61,9 @@ $message - モーダルの本文
 **戻り値**  
 html形式でモーダルを出力する
 
+## WordPress Nonce
+`wp_nonce_field`関数を使ってformに設置する。  
+IDは推測されないようにランダムな文字列にする。  
 
 ## サークル作成&編集ページ
 https://cly7796.net/blog/javascript/try-using-trix-of-wysiwyg-editor/
@@ -88,3 +91,9 @@ media_upload.php アップロード処理
 ↓
 TrixEditorへ画像をリンクする
 ```
+
+## エラーコード
+
+形式：`E_xxx`  
+プレフィックス：`E_`  
+例えば、`E_001`のようにゼロ埋めで3桁の一意な数値で表す。  
