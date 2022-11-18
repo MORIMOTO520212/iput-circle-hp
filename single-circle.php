@@ -98,7 +98,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                     </tr>
                     <tr>
                         <th scope="row">設立日</th>
-                        <td><?php echo $post_custom['establishmentDate'][0] ?></td>
+                        <td><?php echo date_formatting( $post_custom['establishmentDate'][0] ); ?></td>
                     </tr>
                     <tr>
                         <th scope="row">活動頻度</th>

@@ -97,6 +97,9 @@ $post_id = wp_insert_post()
                     <div class="mb-3">
                         <label class="form-label" for="top-image">トップ画像</label>
                         <input type="file" class="form-control" id="top-image" name="topImage" accept="image/png, image/jpeg">
+                        <div class="form-text">
+                            5MB以下のファイルをアップロードできます。
+                        </div>
                     </div>
 
                     <!-- ヘッダー画像 -->
@@ -104,7 +107,7 @@ $post_id = wp_insert_post()
                         <label class="form-label" for="header-image">ヘッダー画像</label>
                         <input type="file" class="form-control" id="header-image" name="headerImage" accept="image/png, image/jpeg">
                         <div class="form-text">
-                            推奨する画像サイズは1900x300です。
+                            5MB以下のファイルをアップロードできます。推奨する画像サイズは1900x300です。
                         </div>
                     </div>
 

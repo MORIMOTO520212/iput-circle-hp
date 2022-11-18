@@ -1,11 +1,21 @@
 <?php
-
 // media_upload_hundle
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 require_once( ABSPATH . 'wp-admin/includes/file.php' );
 require_once( ABSPATH . 'wp-admin/includes/media.php' );
 // wp_create_category
 require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+
+
+/**
+ * 変数の初期化
+*/
+// アップロード画像の最大ファイルサイズ（byte）
+$max_file_size = 5242880; //5MB
+// ファイルサイズ閾値
+$compression_file_size_threshold = 1048576;
+
+$upload_post_name = "";
 
 /**
  * 管理者以外はアドミンバーを非表示
@@ -47,6 +57,7 @@ function post_type_circle() {
 add_action('init', 'post_type_circle');
 
 
+
 /**
  * WordPressで管理する時間の文字列を、年、月、日で分割する。
  * 例えば、引数に'2022-11-11 01:19:30'を渡すと'2022年11月11日'が返される
@@ -58,6 +69,7 @@ function date_formatting( $date ) {
     $day   = $matches[3];
     return "{$year}年{$month}月{$day}日";
 }
+
 
 
 /**
@@ -129,7 +141,7 @@ add_action( 'save_post', 'save_custom_fields' );
  * Bootstrap モーダル テンプレート関数
  * modal(モーダルのタイトル, モーダルの本文)
  */
-function modal($title, $message) {
+function modal( $title, $message ) {
 ?>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;">
         <div class="modal-dialog">
@@ -157,6 +169,79 @@ function modal($title, $message) {
         }
     </script>
 <?php
+}
+
+
+
+// 画像を生成しない
+function not_create_image( $new_sizes, $image_meta ) {
+    unset( $new_sizes['thumbnail'] );
+    unset( $new_sizes['medium'] );
+    unset( $new_sizes['medium_large'] );
+    unset( $new_sizes['large'] );
+    unset( $new_sizes['1536x1536'] );
+    unset( $new_sizes['2048x2048'] );
+    return $new_sizes;
+}
+add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
+
+
+
+
+/**
+ * 容量が大きい画像の圧縮
+ * 指定ファイルサイズ以上なら横幅1200pxで圧縮
+*/
+function otocon_resize_at_upload( $file ) {
+    global $compression_file_size_threshold;
+	if ( $file['type'] == 'image/jpeg' || $file['type'] == 'image/gif' || $file['type'] == 'image/png') {
+
+        if ( $_FILES[$GLOBALS['upload_post_name']]['size'] > $compression_file_size_threshold ) {
+            $w = 1200;
+            $h = 0;
+            $image = wp_get_image_editor( $file['file'] );
+            if ( ! is_wp_error( $image ) ) {
+                $size = getimagesize( $file['file'] );
+                if ( $size[0] > $w || $size[1] > $h ){
+                    $image->resize( $w, $h, false );
+                    $final_image = $image->save( $file['file'] );
+                }
+            }
+        }
+
+	}
+	return $file;
+}
+add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
+
+
+
+/**
+ * 画像アップロード処理 関数
+ * 戻り値：array( attachment_id, img_url )
+*/
+function upload_image( $input_name ) {
+    global $max_file_size;
+
+    // ファイルサイズが5MB以上はアップロードしない
+    if ( $_FILES[$input_name]['size'] > $max_file_size ) {
+        return array( NULL, NULL );
+    }
+
+    // アップロード処理
+    $GLOBALS['upload_post_name'] = $input_name;
+    $attachment_id = media_handle_upload( $input_name, 0 );
+
+    // アップロードエラーチェック
+    if ( is_wp_error( $attachment_id ) ) {
+        // 何もしない
+        return array( NULL, NULL );
+    } else {
+        // アップロードした画像リンク
+        $img_url = wp_get_attachment_image_src( $attachment_id, 'full' )[0];
+    }
+
+    return array( $attachment_id, $img_url );
 }
 
 
@@ -336,6 +421,7 @@ function profile_update() {
 }
 
 
+
 /**
  * サークル作成ページ サークル登録処理
 */
@@ -382,24 +468,11 @@ function create_circle() {
         if ( mb_strlen( $_POST['schedule']   ) > 15 ) input_value_error_exit();
 
         // トップ画像をアップロード
-        $top_img_url = "";
-        $attachment_id = media_handle_upload('topImage', 0);
-        // アップロードエラーチェック
-        if ( is_wp_error( $attachment_id ) ) {
-            // 何もしない
-        } else {
-            $top_img_url = wp_get_attachment_url( $attachment_id ); // アップロードした画像リンク
-        }
+        $top_img_url = upload_image('topImage')[1] ?? '';
 
         // ヘッダー画像をアップロード
-        $header_img_url = "";
-        $attachment_id = media_handle_upload('headerImage', 0);
-        // アップロードエラーチェック
-        if ( is_wp_error( $attachment_id ) ) {
-            // 何もしない
-        } else {
-            $header_img_url = wp_get_attachment_url( $attachment_id );
-        }
+        $header_img_url = upload_image('headerImage')[1] ?? '';
+
 
         // アルバム画像
         // ～ここへ処理～
@@ -461,6 +534,7 @@ function input_value_error_exit( $error_code = "" ) {
     modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
     return;
 }
+
 
 
 /**
