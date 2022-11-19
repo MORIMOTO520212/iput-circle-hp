@@ -5,9 +5,7 @@
     margin-bottom: 35px;
 }
 
-span{
-    color: #FB0D0D;
-}
+
 
 form{
     margin:auto;
@@ -31,5 +29,7 @@ p{
     color: #000000;
 }
 
-
+trix-toolbar .trix-button--icon{
+    width: 1.9em !important;
+}
 
