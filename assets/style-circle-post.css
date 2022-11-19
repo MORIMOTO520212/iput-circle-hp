@@ -1,4 +1,4 @@
-.mainarea{
+.mainarea {
     max-width: 590px;
     min-height: 50px;
     background-color: #FBF6EC;
@@ -9,6 +9,11 @@
 }
 
 /* trix.js */
-trix-toolbar .trix-button--icon{
+trix-toolbar .trix-button--icon {
     width: 1.9em !important;
+}
+
+trix-editor h1 {
+    font-size: 23px;
+    color: var(--main-h1-font-color);
 }

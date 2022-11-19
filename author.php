@@ -5,7 +5,7 @@
 // index.php/author/<username> でアクセスできます。
 ?>
 
-<?=get_header()?>
+<?php get_header(); ?>
 
 <div class="main container">
     <h2>ようこそ、<?php the_author(); ?>さん</h2>

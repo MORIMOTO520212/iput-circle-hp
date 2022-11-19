@@ -2,15 +2,19 @@
 // Anti-Clickjacking Measures
 header('X-Frame-Options: DENY');
 
-if( is_author() ) { # is user page
+if ( is_author() ) { // is user page
     $title = "マイページ";
     $slug = "author";
 
-} else if( is_single() ) { # is post page
+}
+elseif ( is_singular('circle') ) { // is circle custom type
+    $slug = "single-circle";
+}
+elseif ( is_single() ) { // is post page
     $title = get_the_title();
     $slug = "single";
 
-} else { # other page
+} else { // other page
     $title = get_the_title();
     $slug = get_post(get_the_ID())->post_name;
 }

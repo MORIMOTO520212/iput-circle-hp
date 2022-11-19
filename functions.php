@@ -103,6 +103,7 @@ function set_custom_fields() {
 }
 add_action( 'admin_menu', 'set_custom_fields' );
 
+/* サークル基本情報フォームHTML */
 function form_01_custom_fields() {
     global $post;
     ?>
@@ -111,27 +112,36 @@ function form_01_custom_fields() {
     <p>活動日程 <input type="text" name="schedule" value="<?php echo get_post_meta($post->ID, 'schedule', true); ?>" size="30"></p>
     <p>活動場所 <input type="text" name="place" value="<?php echo get_post_meta($post->ID, 'place', true); ?>" size="30"></p>
     <p>サークルカテゴリ <input type="text" name="categoryRadio" value="<?php echo get_post_meta($post->ID, 'categoryRadio', true); ?>" size="30"></p>
-    <p>設立日 <input type="text" name="establishmentDate" value="<?php echo get_post_meta($post->ID, 'establishmentDate', true); ?>" size="30"></p>
+    <p>設立日 <input type="date" name="establishmentDate" value="<?php echo get_post_meta($post->ID, 'establishmentDate', true); ?>" size="30"></p>
     <p>活動頻度 <input type="text" name="activityFrequency" value="<?php echo get_post_meta($post->ID, 'activityFrequency', true); ?>" size="30"></p>
     <p>会費 <input type="text" name="membershipFree" value="<?php echo get_post_meta($post->ID, 'membershipFree', true); ?>" size="30"></p>
+    <p>公式Twitterユーザー名 <input type="text" name="twitterUserName" value="<?php echo get_post_meta($post->ID, 'twitterUserName', true); ?>" size="30"></p>
     <?php
 }
 
+/* サークル説明フォームHTML */
 function form_02_custom_fields() {
     global $post;
     echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
 }
 
+/* 管理者情報フォームHTML */
 function form_03_custom_fields() {
     global $post;
     echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
 }
 
-//カスタムフィールドの値を保存
+/* カスタムフィールドの値を保存 */
 function save_custom_fields( $post_id ) {
-    !empty( $_POST['topImage']  ) ? update_post_meta( $post_id, 'topImage', $_POST['topImage']   ) : '';
-    !empty( $_POST['belongNum'] ) ? update_post_meta( $post_id, 'belongNum', $_POST['belongNum'] ) : '';
-    !empty( $_POST['schedule']  ) ? update_post_meta( $post_id, 'schedule', $_POST['schedule']   ) : '';
+    !empty( $_POST['topImage']          ) ? update_post_meta( $post_id, 'topImage',          $_POST['topImage']          ) : '';
+    !empty( $_POST['belongNum']         ) ? update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         ) : '';
+    !empty( $_POST['schedule']          ) ? update_post_meta( $post_id, 'schedule',          $_POST['schedule']          ) : '';
+    !empty( $_POST['place']             ) ? update_post_meta( $post_id, 'place',             $_POST['place']             ) : '';
+    !empty( $_POST['categoryRadio']     ) ? update_post_meta( $post_id, 'categoryRadio',     $_POST['categoryRadio']     ) : '';
+    !empty( $_POST['establishmentDate'] ) ? update_post_meta( $post_id, 'establishmentDate', $_POST['establishmentDate'] ) : '';
+    !empty( $_POST['activityFrequency'] ) ? update_post_meta( $post_id, 'activityFrequency', $_POST['activityFrequency'] ) : '';
+    !empty( $_POST['membershipFree']    ) ? update_post_meta( $post_id, 'membershipFree',    $_POST['membershipFree']    ) : '';
+    !empty( $_POST['twitterUserName']    ) ? update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ) : '';
 }
 add_action( 'save_post', 'save_custom_fields' );
 
@@ -173,7 +183,7 @@ function modal( $title, $message ) {
 
 
 
-// 画像を生成しない
+// リサイズ画像を生成しない
 function not_create_image( $new_sizes, $image_meta ) {
     unset( $new_sizes['thumbnail'] );
     unset( $new_sizes['medium'] );
@@ -184,7 +194,6 @@ function not_create_image( $new_sizes, $image_meta ) {
     return $new_sizes;
 }
 add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
-
 
 
 

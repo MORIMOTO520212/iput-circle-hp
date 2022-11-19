@@ -131,7 +131,7 @@ $post_id = wp_insert_post()
                     <!-- 活動場所 -->
                     <div class="mb-3">
                         <label class="form-label" for="input">活動場所</label>
-                        <input type="text" maxlength="10" class="form-control" id="place" name="place"
+                        <input type="text" maxlength="13" class="form-control" id="place" name="place"
                             value="" placeholder="例）コクーンタワー、Discord、LINE" required>
                         <div class="invalid-feedback">
                             10文字以内で入力してください。<br>例えば、学校、カフェ、スタジオなど。詳しい活動日程は活動内容へ記入するようにしてください。
@@ -199,6 +199,18 @@ $post_id = wp_insert_post()
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label" for="input">公式Twitterユーザー名</label>
+                        <input type="text" maxlength="30" class="form-control" id="twitter-username" name="twitterUserName"
+                        value="" placeholder="ユーザー名" aria-label="twitter-username" required>
+                        <div class="form-text">
+                            サイドバーからTwitterにアクセスできるようになります。
+                        </div>
+                        <div class="invalid-feedback">
+                            30文字以内で入力してください。
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -210,7 +222,7 @@ $post_id = wp_insert_post()
                     <!-- サークル概要 -->
                     <div class="mb-3">
                         <label for="activity-summary" class="form-label">サークル概要</label>
-                        <textarea maxlength="100" class="form-control" id="activity-summary" name="activitySummary" rows="3" required></textarea>
+                        <textarea maxlength="200" class="form-control" id="activity-summary" name="activitySummary" rows="3" required></textarea>
                         <div class="form-text">
                             100文字以内で簡潔にサークルの概要を書いてください。
                         </div>

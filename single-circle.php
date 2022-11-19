@@ -11,8 +11,6 @@
 <?php
 global $post;
 $post_custom = get_post_custom( $post->ID );
-var_dump( $post );
-var_dump( $post_custom );
 
 $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['headerImage'][0] : get_theme_file_uri('src/no_image.png');
 ?>

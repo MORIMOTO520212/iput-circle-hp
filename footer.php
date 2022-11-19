@@ -1,7 +1,7 @@
     <footer>
         <div class="footer-top">
             <div class="container">
-                <h2 class="mb-3">IPUT学生団体</h2>
+                <h2 class="mb-3">IPUTONE</h2>
                 <div class="row pb-5">
                     <div class="col-md-4 footer-links">
                         <div class="row">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <span>&copy;2022 IPUT ONE 学生によって運営されています</span>
+                    <span>&copy;2022 IPUTONE 学生によって運営されています</span>
                 </div>
             </div>
         </div>
