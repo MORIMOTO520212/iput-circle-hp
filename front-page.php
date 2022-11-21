@@ -241,10 +241,6 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
-                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
-                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
@@ -292,10 +288,6 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
-                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
-                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
