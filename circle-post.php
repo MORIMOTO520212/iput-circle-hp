@@ -120,7 +120,7 @@ $post_id = wp_insert_post()
 
                     <!-- 活動日程 -->
                     <div class="mb-3">
-                        <label class="form-label" for="input">活動日程</label>
+                        <label class="form-label" for="schedule">活動日程</label>
                         <input type="text" maxlength="15" class="form-control" id="schedule" name="schedule"
                             value="" placeholder="例）月曜日、土曜日" required>
                         <div class="invalid-feedback">
@@ -201,13 +201,13 @@ $post_id = wp_insert_post()
 
                     <div class="mb-3">
                         <label class="form-label" for="input">公式Twitterユーザー名</label>
-                        <input type="text" maxlength="30" class="form-control" id="twitter-username" name="twitterUserName"
+                        <input type="text" maxlength="30" pattern="^[a-zA-Z0-9_]{1,40}$" class="form-control" id="twitter-username" name="twitterUserName"
                         value="" placeholder="ユーザー名" aria-label="twitter-username" required>
                         <div class="form-text">
                             サイドバーからTwitterにアクセスできるようになります。
                         </div>
                         <div class="invalid-feedback">
-                            30文字以内で入力してください。
+                            @などの記号は使えません。
                         </div>
                     </div>
 
@@ -267,13 +267,13 @@ $post_id = wp_insert_post()
 
                     <div class="mb-3">
                         <label class="form-label" for="input">代表者氏名</label>
-                        <input type="text" maxlength="10" class="form-control" id="representative" name="representative"
+                        <input type="text" maxlength="30" class="form-control" id="representative" name="representative"
                         value="" placeholder="山田太郎" aria-describedby="help" required>
                         <div id="help" class="form-text">
                             本サイトへ登録していないユーザーには公開されません。
                         </div>
                         <div class="invalid-feedback">
-                            10文字以内で入力してください。
+                            入力してください。
                         </div>
                     </div>
                 </div>

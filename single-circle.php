@@ -12,6 +12,8 @@
 global $post;
 $post_custom = get_post_custom( $post->ID );
 
+var_dump( $post );
+
 $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['headerImage'][0] : get_theme_file_uri('src/no_image.png');
 ?>
 
@@ -204,15 +206,21 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                     <a href="#"></a>
                     参加申請
                 </div>
+                <?php
+                if ( $post_custom['twitterUserName'][0] ):
+                ?>
                 <div class="menu-link a-button mt-4 icon twitter">
-                    <a href="#"></a>
+                    <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
                     公式Twitter
                 </div>
+                <?php
+                endif;
+                ?>
                 <div class="menu-link a-button mt-4 icon envelope-fill">
                     <a href="#"></a>
                     お問い合わせ
                 </div>
-                <p class="mt-4">最終更新日: 2022/08/16</p>
+                <p class="mt-4">更新日: <?php echo date_formatting( $post->post_modified ); ?></p>
             </nav>
         </div>
     </div>

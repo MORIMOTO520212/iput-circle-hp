@@ -26,6 +26,7 @@ show_admin_bar(false);
 
 /**
  * 投稿時スラッグ自動生成
+ * 
  * 投稿ページのみ生成する
  */
 function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
@@ -41,6 +42,7 @@ add_filter('wp_unique_post_slug', 'custom_auto_post_slug', 10, 4);
 
 /**
  * カスタム投稿タイプ サークル
+ * 
  */
 function post_type_circle() {
     register_post_type('circle', // 投稿タイプ名
@@ -60,6 +62,7 @@ add_action('init', 'post_type_circle');
 
 /**
  * WordPressで管理する時間の文字列を、年、月、日で分割する。
+ * 
  * 例えば、引数に'2022-11-11 01:19:30'を渡すと'2022年11月11日'が返される
  */
 function date_formatting( $date ) {
@@ -74,6 +77,7 @@ function date_formatting( $date ) {
 
 /**
  * カスタム投稿タイプ　カスタムフィールドを設置
+ * 
 */
 function set_custom_fields() {
     add_meta_box(
@@ -116,6 +120,7 @@ function form_01_custom_fields() {
     <p>活動頻度 <input type="text" name="activityFrequency" value="<?php echo get_post_meta($post->ID, 'activityFrequency', true); ?>" size="30"></p>
     <p>会費 <input type="text" name="membershipFree" value="<?php echo get_post_meta($post->ID, 'membershipFree', true); ?>" size="30"></p>
     <p>公式Twitterユーザー名 <input type="text" name="twitterUserName" value="<?php echo get_post_meta($post->ID, 'twitterUserName', true); ?>" size="30"></p>
+    <input type="hidden" name="is_post" value="">
     <?php
 }
 
@@ -133,15 +138,17 @@ function form_03_custom_fields() {
 
 /* カスタムフィールドの値を保存 */
 function save_custom_fields( $post_id ) {
-    !empty( $_POST['topImage']          ) ? update_post_meta( $post_id, 'topImage',          $_POST['topImage']          ) : '';
-    !empty( $_POST['belongNum']         ) ? update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         ) : '';
-    !empty( $_POST['schedule']          ) ? update_post_meta( $post_id, 'schedule',          $_POST['schedule']          ) : '';
-    !empty( $_POST['place']             ) ? update_post_meta( $post_id, 'place',             $_POST['place']             ) : '';
-    !empty( $_POST['categoryRadio']     ) ? update_post_meta( $post_id, 'categoryRadio',     $_POST['categoryRadio']     ) : '';
-    !empty( $_POST['establishmentDate'] ) ? update_post_meta( $post_id, 'establishmentDate', $_POST['establishmentDate'] ) : '';
-    !empty( $_POST['activityFrequency'] ) ? update_post_meta( $post_id, 'activityFrequency', $_POST['activityFrequency'] ) : '';
-    !empty( $_POST['membershipFree']    ) ? update_post_meta( $post_id, 'membershipFree',    $_POST['membershipFree']    ) : '';
-    !empty( $_POST['twitterUserName']    ) ? update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ) : '';
+    if ( isset( $_POST['is_post'] ) ) {
+        update_post_meta( $post_id, 'topImage',          $_POST['topImage']          );
+        update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         );
+        update_post_meta( $post_id, 'schedule',          $_POST['schedule']          );
+        update_post_meta( $post_id, 'place',             $_POST['place']             );
+        update_post_meta( $post_id, 'categoryRadio',     $_POST['categoryRadio']     );
+        update_post_meta( $post_id, 'establishmentDate', $_POST['establishmentDate'] );
+        update_post_meta( $post_id, 'activityFrequency', $_POST['activityFrequency'] );
+        update_post_meta( $post_id, 'membershipFree',    $_POST['membershipFree']    );
+        update_post_meta( $post_id, 'twitterUserName',   $_POST['twitterUserName']   );
+    }
 }
 add_action( 'save_post', 'save_custom_fields' );
 
@@ -149,6 +156,7 @@ add_action( 'save_post', 'save_custom_fields' );
 
 /**
  * Bootstrap モーダル テンプレート関数
+ * 
  * modal(モーダルのタイトル, モーダルの本文)
  */
 function modal( $title, $message ) {
@@ -183,22 +191,9 @@ function modal( $title, $message ) {
 
 
 
-// リサイズ画像を生成しない
-function not_create_image( $new_sizes, $image_meta ) {
-    unset( $new_sizes['thumbnail'] );
-    unset( $new_sizes['medium'] );
-    unset( $new_sizes['medium_large'] );
-    unset( $new_sizes['large'] );
-    unset( $new_sizes['1536x1536'] );
-    unset( $new_sizes['2048x2048'] );
-    return $new_sizes;
-}
-add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
-
-
-
 /**
  * 容量が大きい画像の圧縮
+ * 
  * 指定ファイルサイズ以上なら横幅1200pxで圧縮
 */
 function otocon_resize_at_upload( $file ) {
@@ -227,6 +222,7 @@ add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
 
 /**
  * 画像アップロード処理 関数
+ * 
  * 戻り値：array( attachment_id, img_url )
 */
 function upload_image( $input_name ) {
@@ -252,6 +248,22 @@ function upload_image( $input_name ) {
 
     return array( $attachment_id, $img_url );
 }
+
+
+
+/**
+ * リサイズ画像を生成しない
+*/
+function not_create_image( $new_sizes, $image_meta ) {
+    unset( $new_sizes['thumbnail']    );
+    unset( $new_sizes['medium']       );
+    unset( $new_sizes['medium_large'] );
+    unset( $new_sizes['large']        );
+    unset( $new_sizes['1536x1536']    );
+    unset( $new_sizes['2048x2048']    );
+    return $new_sizes;
+}
+add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
 
 
 
@@ -361,11 +373,11 @@ function user_signup() {
  * 基本情報ページ　ユーザープロフィール更新
 */
 function profile_update() {
-    $user_id       = isset( $_POST['userid'] )      ? sanitize_text_field( $_POST['userid'] )      : null;
+    $user_id       = isset( $_POST['userid'] )      ? sanitize_text_field( $_POST['userid']      ) : null;
     $display_name  = isset( $_POST['displayname'] ) ? sanitize_text_field( $_POST['displayname'] ) : null;
-    $user_pass     = isset( $_POST['password'] )    ? sanitize_text_field( $_POST['password'] )    : null;
-    $first_name    = isset( $_POST['firstname'] )   ? sanitize_text_field( $_POST['firstname'] )   : null;
-    $last_name     = isset( $_POST['lastname'] )    ? sanitize_text_field( $_POST['lastname'] )    : null;
+    $user_pass     = isset( $_POST['password'] )    ? sanitize_text_field( $_POST['password']    ) : null;
+    $first_name    = isset( $_POST['firstname'] )   ? sanitize_text_field( $_POST['firstname']   ) : null;
+    $last_name     = isset( $_POST['lastname'] )    ? sanitize_text_field( $_POST['lastname']    ) : null;
     // userdata初期化
     $userdata = array(
         'ID' => $user_id // ユーザーID
@@ -449,6 +461,7 @@ function create_circle() {
         $_POST['activityDetail'    ], // 活動内容
         $_POST['contactMailAddress'], // 連絡先
         $_POST['representative'    ], // 代表者氏名
+        $_POST['twitterUserName'   ], // 公式Twitterユーザー名
         $_POST['circle_post_nonce' ], // WordPressNonce
         ) )
     {
@@ -472,9 +485,10 @@ function create_circle() {
         }
 
         // 文字数チェック
-        if ( mb_strlen( $_POST['circleName'] ) > 20 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['belongNum']  ) > 3  ) input_value_error_exit();
-        if ( mb_strlen( $_POST['schedule']   ) > 15 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['circleName']      ) > 20 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
+        if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
 
         // トップ画像をアップロード
         $top_img_url = upload_image('topImage')[1] ?? '';
@@ -489,7 +503,7 @@ function create_circle() {
         // 投稿処理
         $post_data = array(
             'post_title'     => $_POST['circleName'],      // 投稿のタイトル
-            'post_name'      => md5(time()),               // スラッグ名（時間をmd5でハッシュ化したもの）
+            'post_name'      => md5( time() ),             // スラッグ名（時間をmd5でハッシュ化したもの）
             'post_type'      => 'circle',                  // 投稿タイプ
             'post_status'    => $post_status,              // 公開ステータス
             'post_content'   => $_POST['activitySummary'], // 投稿の全文
@@ -525,6 +539,7 @@ function create_circle() {
         update_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
         update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
         update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
+        update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ); // 公式Twitterユーザー名
         update_post_meta( $post_id, 'circleCategoryId',   $category_id                 ); // サークルカテゴリID
 
         
@@ -539,6 +554,25 @@ function create_circle() {
     exit;
     return 1;
 }
+
+
+
+/**
+ * サークル作成ページ　更新処理
+*/
+function update_circle() {
+    //  サークル名は変更不可
+    return false;
+}
+
+/**
+ * サークル作成ページ　サークル削除処理
+*/
+function delete_circle() {
+    // サークル名のタグを削除する
+    return false;
+}
+
 function input_value_error_exit( $error_code = "" ) {
     modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
     return;
@@ -547,7 +581,7 @@ function input_value_error_exit( $error_code = "" ) {
 
 
 /**
- * フォームのPOSTリクエストを受け取る
+ * POSTリクエストを受け取る
  * after_setup_theme に処理をフック
  */
 add_action('after_setup_theme', function() {
@@ -558,9 +592,9 @@ add_action('after_setup_theme', function() {
         user_login();
     }
     // サインアップ
-    elseif ( isset( $_POST['signup'] ) && $_POST['signup'] === 'signup') {
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'signup') {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'signup_nonce_action' ) ) return;
+        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'N9zxfbth' ) ) return;
         user_signup();
     }
     // 基本情報の更新
