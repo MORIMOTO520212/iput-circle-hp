@@ -126,88 +126,181 @@
             </ul>
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
-                <!-- 新規情報 -->
+            <?php
+            // 取得したい内容を配列に記載します（不要箇所は省略可）
+            $args = array(
+                'posts_per_page'   => -1, // 読み込みしたい記事数（全件取得時は-1）
+                'orderby'          => 'date', // 日付順でソート
+                'exclude'          => '', // 一覧に表示したくない記事のID（複数時は,区切）
+                'post_type'        => 'post', // 投稿記事の取り出す
+                'category_name' => 'news' // 表示したいカテゴリーのスラッグを指定
+            );
+            // 配列で指定した内容で、記事情報を取得
+            $datas = get_posts( $args );
+            // 取得した記事情報の表示
+            if ( $datas ): // 記事情報がある場合はforeachで記事情報を表示
+                $new_info_array = []; // 新規情報タグのある投稿を格納するリスト
+                $announcement_array = []; // お知らせタグのある投稿を格納するリスト
+                $event_array = []; // 行事・イベントタグのある投稿を格納するリスト
+                // ↓ ループ開始 ↓
+                foreach ( $datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
+                    setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                    $all_tags = get_the_tags(); // タグのリストを$tagsに代入
+                    if( $all_tags ): // タグが存在する場合
+                        $tagNameArray = array_column($all_tags, 'name'); // タグの配列からnameのカラムを抽出
+                        if(in_array('新規情報', $tagNameArray)): // 新規情報タグのある記事を表示
+                            $new_info_array[] = $post; // 配列に格納
+                        endif;
+                        if(in_array('お知らせ', $tagNameArray)): // お知らせタグのある記事を表示
+                            $announcement_array[] = $post; // 配列に格納
+                        endif;
+                        if(in_array('行事・イベント', $tagNameArray)): // 行事・イベントタグのある記事を表示
+                            $event_array[] = $post; // 配列に格納
+                        endif;
+                    else: // $all_tagsにタグが存在しない場合
+                    ?>
+                        <p><br>タグ付けされた記事がありません。</p>
+                    <?php
+                    endif;
+                endforeach; 
+                // ↑ ループ終了 ↑
+            else: // 記事情報がなかったら
+            ?>
+                <p><br>記事がありません。</p>
+            <?php
+            endif;
+            // 一覧情報取得に利用したループをリセットする
+            wp_reset_postdata();
+            // <!-- 新規情報 -->
+            if($new_info_array): // 記事情報がある場合はforeachで記事情報を表示
+            ?>
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <div class="list-group list-group-flush mt-2">
-                        <?php
-                        for ($i = 0; $i < 3; $i++) :
-                        ?>
-                            <a class="list-group-item mt-1" href="#">
+                        <?php 
+                        foreach($new_info_array as $post): // $new_info_array as $post の $new_info_array は設定した変数名、$postは変更不可
+                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                            $new_info_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
+                            $new_info_tags_name_array = array_column($new_info_tags_array, 'name'); // タグの配列からnameのカラムを抽出
+                            ?>
+                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
+                                    <?php if(in_array('重要', $new_info_tags_name_array)):// 重要タグの有無 ?>
                                     <span class="badge bg-danger">重要</span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1">記事のタイトル</h5>
-                                    <small class="text-muted">5時間前</small>
+                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
+                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
                                 </div>
                                 <p class="line-clamp-2">
-                                    ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                    最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                    省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                    <?php the_excerpt(); //本文抜粋 ?>
                                 </p>
                             </a>
                         <?php
-                        endfor;
+                        endforeach;
+                        // 一覧情報取得に利用したループをリセットする
+                        wp_reset_postdata();
                         ?>
                     </div>
+                    <!-- ボタン 一覧を表示する -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    </div>
                 </div>
-                <!-- お知らせ -->
+            <?php
+            else: // 記事情報がなかったら
+            ?>
+                <p><br>記事がありません。</p>
+            <?php
+            endif;
+            // <!-- お知らせ -->
+            if($announcement_array): // 記事情報がある場合はforeachで記事情報を表示
+            ?>
                 <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                     <div class="list-group list-group-flush mt-2">
-                        <?php
-                        for ($i = 0; $i < 3; $i++) :
-                        ?>
-                            <a class="list-group-item mt-1" href="#">
+                        <?php 
+                        foreach($announcement_array as $post): // $announcement_array as $post の $announcement_array は設定した変数名、$postは変更不可
+                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                            $announcement_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
+                            $announcement_tags_name_array = array_column($announcement_tags_array, 'name'); // タグの配列からnameのカラムを抽出
+                            ?>
+                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
+                                    <?php if(in_array('重要', $announcement_tags_name_array)):// 重要タグの有無 ?>
                                     <span class="badge bg-danger">重要</span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1">記事のタイトル</h5>
-                                    <small class="text-muted">5時間前</small>
+                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
+                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
                                 </div>
                                 <p class="line-clamp-2">
-                                    ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                    最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                    省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                    <?php the_excerpt(); //本文抜粋 ?>
                                 </p>
                             </a>
                         <?php
-                        endfor;
+                        endforeach;
+                        // 一覧情報取得に利用したループをリセットする
+                        wp_reset_postdata();
                         ?>
                     </div>
+                    <!-- ボタン 一覧を表示する -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    </div>
                 </div>
-                <!-- イベント・行事 -->
+            <?php
+            else: // 記事情報がなかったら
+            ?>
+                <p><br>記事がありません。</p>
+            <?php
+            endif;
+            // <!-- イベント・行事 -->
+            if($event_array): // 記事情報がある場合はforeachで記事情報を表示
+            ?>
                 <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
                     <div class="list-group list-group-flush mt-2">
                         <?php
-                        for ($i = 0; $i < 3; $i++) :
-                        ?>
-                            <a class="list-group-item mt-1" href="#">
+                        foreach($event_array as $post): // $event_array as $post の $event_array は設定した変数名、$postは変更不可
+                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                            $event_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
+                            $event_tags_name_array = array_column($event_tags_array, 'name'); // タグの配列からnameのカラムを抽出
+                            ?>
+                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
                                 <div class="mb-1">
                                     <span class="badge bg-primary">New</span>
+                                    <?php if(in_array('重要', $event_tags_name_array)):// 重要タグの有無 ?>
                                     <span class="badge bg-danger">重要</span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1">記事のタイトル</h5>
-                                    <small class="text-muted">5時間前</small>
+                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
+                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
                                 </div>
                                 <p class="line-clamp-2">
-                                    ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                    最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                    省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
+                                    <?php the_excerpt(); //本文抜粋 ?>
                                 </p>
                             </a>
                         <?php
-                        endfor;
+                        endforeach;
+                        // 一覧情報取得に利用したループをリセットする
+                        wp_reset_postdata();
                         ?>
                     </div>
+                    <!-- ボタン 一覧を表示する -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    </div>
                 </div>
-                <!-- ボタン 一覧を表示する -->
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-success">一覧を表示する</button>
-                </div>
+            <?php
+            else: // 記事情報がなかったら
+            ?>
+                <p><br>記事がありません。</p>
+            <?php
+            endif;
+            ?>
             </div>
         </div>
 
@@ -241,6 +334,10 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
+                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
+                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
@@ -288,6 +385,10 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
+                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
+                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
