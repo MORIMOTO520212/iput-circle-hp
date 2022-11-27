@@ -442,7 +442,7 @@
         {
             if($article_array == null): // 表示する記事がない場合
         ?>
-            <p>記事がありません。</p>
+            <p class="pt-4 text-align-center">記事がありません。</p>
         <?php
             else: // 表示する記事がある場合
                 foreach($article_array as $article):
