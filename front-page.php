@@ -127,6 +127,7 @@
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
             <?php
+            $aritcle_is_important = false;
             // 取得したい内容を配列に記載します（不要箇所は省略可）
             $args = array(
                 'posts_per_page'   => -1, // 読み込みしたい記事数（全件取得時は-1）
@@ -137,170 +138,57 @@
             );
             // 配列で指定した内容で、記事情報を取得
             $datas = get_posts( $args );
+            $new_info_array = null; // 新規情報タグのある投稿を格納するリスト
+            $announcement_array = null; // お知らせタグのある投稿を格納するリスト
+            $event_array = null; // 行事・イベントタグのある投稿を格納するリスト
             // 取得した記事情報の表示
             if ( $datas ): // 記事情報がある場合はforeachで記事情報を表示
-                $new_info_array = []; // 新規情報タグのある投稿を格納するリスト
-                $announcement_array = []; // お知らせタグのある投稿を格納するリスト
-                $event_array = []; // 行事・イベントタグのある投稿を格納するリスト
                 // ↓ ループ開始 ↓
                 foreach ( $datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                     setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
                     $all_tags = get_the_tags(); // タグのリストを$tagsに代入
                     if( $all_tags ): // タグが存在する場合
-                        $tagNameArray = array_column($all_tags, 'name'); // タグの配列からnameのカラムを抽出
-                        if(in_array('新規情報', $tagNameArray)): // 新規情報タグのある記事を表示
-                            $new_info_array[] = $post; // 配列に格納
+                        $article_tags_array = array_column($all_tags, 'name'); // タグの配列からnameのカラムを抽出
+                        if(in_array('新規情報', $article_tags_array)): // 新規情報タグのある記事を表示
+                            $new_info_array[] = create_article_datas($post, $article_tags_array, '新規情報');
                         endif;
-                        if(in_array('お知らせ', $tagNameArray)): // お知らせタグのある記事を表示
-                            $announcement_array[] = $post; // 配列に格納
+                        if(in_array('お知らせ', $article_tags_array)): // お知らせタグのある記事を表示
+                            $announcement_array[] = create_article_datas($post, $article_tags_array, 'お知らせ');
                         endif;
-                        if(in_array('行事・イベント', $tagNameArray)): // 行事・イベントタグのある記事を表示
-                            $event_array[] = $post; // 配列に格納
+                        if(in_array('行事・イベント', $article_tags_array)): // 行事・イベントタグのある記事を表示
+                            $event_array[] = create_article_datas($post, $article_tags_array, '行事・イベント');
                         endif;
                     else: // $all_tagsにタグが存在しない場合
-                    ?>
-                        <p><br>タグ付けされた記事がありません。</p>
-                    <?php
+                        continue;
+                        // 
                     endif;
                 endforeach; 
                 // ↑ ループ終了 ↑
             else: // 記事情報がなかったら
-            ?>
-                <p><br>記事がありません。</p>
-            <?php
+                // 
             endif;
+            
             // 一覧情報取得に利用したループをリセットする
             wp_reset_postdata();
-            // <!-- 新規情報 -->
-            if($new_info_array): // 記事情報がある場合はforeachで記事情報を表示
             ?>
+                <!-- 新規情報 -->
                 <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <div class="list-group list-group-flush mt-2">
-                        <?php 
-                        foreach($new_info_array as $post): // $new_info_array as $post の $new_info_array は設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            $new_info_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
-                            $new_info_tags_name_array = array_column($new_info_tags_array, 'name'); // タグの配列からnameのカラムを抽出
-                            ?>
-                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
-                                <div class="mb-1">
-                                    <span class="badge bg-primary">New</span>
-                                    <?php if(in_array('重要', $new_info_tags_name_array)):// 重要タグの有無 ?>
-                                    <span class="badge bg-danger">重要</span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
-                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
-                                </div>
-                                <p class="line-clamp-2">
-                                    <?php the_excerpt(); //本文抜粋 ?>
-                                </p>
-                            </a>
-                        <?php
-                        endforeach;
-                        // 一覧情報取得に利用したループをリセットする
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                    <!-- ボタン 一覧を表示する -->
-                    <div class="d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    <?php circle_news($new_info_array); //$new_info_arrayの記事一覧を表示 ?> 
                     </div>
                 </div>
-            <?php
-            else: // 記事情報がなかったら
-            ?>
-                <p><br>記事がありません。</p>
-            <?php
-            endif;
-            // <!-- お知らせ -->
-            if($announcement_array): // 記事情報がある場合はforeachで記事情報を表示
-            ?>
+                <!-- お知らせ -->
                 <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                     <div class="list-group list-group-flush mt-2">
-                        <?php 
-                        foreach($announcement_array as $post): // $announcement_array as $post の $announcement_array は設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            $announcement_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
-                            $announcement_tags_name_array = array_column($announcement_tags_array, 'name'); // タグの配列からnameのカラムを抽出
-                            ?>
-                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
-                                <div class="mb-1">
-                                    <span class="badge bg-primary">New</span>
-                                    <?php if(in_array('重要', $announcement_tags_name_array)):// 重要タグの有無 ?>
-                                    <span class="badge bg-danger">重要</span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
-                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
-                                </div>
-                                <p class="line-clamp-2">
-                                    <?php the_excerpt(); //本文抜粋 ?>
-                                </p>
-                            </a>
-                        <?php
-                        endforeach;
-                        // 一覧情報取得に利用したループをリセットする
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                    <!-- ボタン 一覧を表示する -->
-                    <div class="d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    <?php circle_news($announcement_array); //$announcement_arrayの記事一覧を表示 ?>
                     </div>
                 </div>
-            <?php
-            else: // 記事情報がなかったら
-            ?>
-                <p><br>記事がありません。</p>
-            <?php
-            endif;
-            // <!-- イベント・行事 -->
-            if($event_array): // 記事情報がある場合はforeachで記事情報を表示
-            ?>
+                <!-- イベント・行事 -->
                 <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
                     <div class="list-group list-group-flush mt-2">
-                        <?php
-                        foreach($event_array as $post): // $event_array as $post の $event_array は設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            $event_tags_array = get_the_tags(); // タグのリストを$new_info_tags_arrayに代入
-                            $event_tags_name_array = array_column($event_tags_array, 'name'); // タグの配列からnameのカラムを抽出
-                            ?>
-                            <a class="list-group-item mt-1" href="<?php the_permalink(); ?>">
-                                <div class="mb-1">
-                                    <span class="badge bg-primary">New</span>
-                                    <?php if(in_array('重要', $event_tags_name_array)):// 重要タグの有無 ?>
-                                    <span class="badge bg-danger">重要</span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="line-clamp-1"><?php the_title(); //タイトル ?></h5>
-                                    <small class="text-muted"><?php echo get_the_date(); ?></small>
-                                </div>
-                                <p class="line-clamp-2">
-                                    <?php the_excerpt(); //本文抜粋 ?>
-                                </p>
-                            </a>
-                        <?php
-                        endforeach;
-                        // 一覧情報取得に利用したループをリセットする
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                    <!-- ボタン 一覧を表示する -->
-                    <div class="d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-success">一覧を表示する</button>
+                    <?php circle_news($event_array); //$event_arrayの記事一覧を表示 ?>
                     </div>
                 </div>
-            <?php
-            else: // 記事情報がなかったら
-            ?>
-                <p><br>記事がありません。</p>
-            <?php
-            endif;
-            ?>
             </div>
         </div>
 
@@ -549,8 +437,63 @@
             </div>
         <?php
         }
+        /* 記事一覧の記事テンプレート*/
+        function circle_news($article_array)
+        {
+            if($article_array == null): // 表示する記事がない場合
+        ?>
+            <p class="pt-4 text-align-center">記事がありません。</p>
+        <?php
+            else: // 表示する記事がある場合
+                foreach($article_array as $article):
+        ?>
+                <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
+                    <div class="mb-1">
+                        <span class="badge bg-primary">New</span>
+                        <?php if($article -> is_important == 'true'):// 重要タグの有無 ?>
+                        <span class="badge bg-danger">重要</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="line-clamp-1"><?php echo $article -> title; //タイトル ?></h5>
+                        <small class="text-muted"><?php echo $article -> date; ?></small>
+                    </div>
+                    <p class="line-clamp-2">
+                        <?php echo $article -> excerpt; //本文抜粋 ?>
+                    </p>
+                </a>
+        <?php
+                endforeach;
+            endif;
+        }
+        //postデータから変数を作成
+        function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object{
+            $article_id = get_the_ID(); // 記事番号
+            $article_id = new article_data(); // 記事のID名でインスタンスを作成
+            $article_id -> title = get_the_title(); //タイトル
+            $article_id -> link = get_permalink(); // リンク
+            $article_id -> date = get_the_date(); // 投稿日
+            $article_id -> excerpt = get_the_excerpt(); // 本文
+            if(in_array('重要', $article_tags_array)): // 重要タグの有無
+                $article_id -> is_important = true;
+            else:
+                $article_id -> is_important = false;
+            endif;
+            return $article_id;
+        }
         ?>
 
+        <!-- php インスタンス -->
+        <?php
+        class article_data
+        {
+           public string $title = ' '; //タイトル
+           public string $link = ' '; // リンク
+           public string $date = ' '; // 投稿日
+           public string $excerpt = ' '; // 本文
+           public ?bool $is_important = false; // 重要タグの有無
+        }
+        ?>
     </div>
 </main>
 
