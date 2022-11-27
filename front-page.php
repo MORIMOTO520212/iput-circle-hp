@@ -164,9 +164,6 @@
                     endif;
                 endforeach; 
                 // ↑ ループ終了 ↑
-                // var_dump($new_info_array);
-                // var_dump($announcement_array);
-                // var_dump($event_array);
             else: // 記事情報がなかったら
                 // 
             endif;
@@ -174,6 +171,24 @@
             // 一覧情報取得に利用したループをリセットする
             wp_reset_postdata();
             ?>
+                <!-- 新規情報 -->
+                <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+                    <div class="list-group list-group-flush mt-2">
+                    <?php circle_news($new_info_array); //$new_info_arrayの記事一覧を表示 ?> 
+                    </div>
+                </div>
+                <!-- お知らせ -->
+                <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+                    <div class="list-group list-group-flush mt-2">
+                    <?php circle_news($announcement_array); //$announcement_arrayの記事一覧を表示 ?>
+                    </div>
+                </div>
+                <!-- イベント・行事 -->
+                <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
+                    <div class="list-group list-group-flush mt-2">
+                    <?php circle_news($event_array); //$event_arrayの記事一覧を表示 ?>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -423,25 +438,33 @@
         <?php
         }
         /* 記事一覧の記事テンプレート*/
-        function circle_news($article_title, $article_link, $article_date, $article_excerpt, $aritcle_is_important)
+        function circle_news($article_array)
         {
+            if($article_array == null):
         ?>
-        <a class="list-group-item mt-1" href="<?php echo $article_link; ?>">
-            <div class="mb-1">
-                <span class="badge bg-primary">New</span>
-                <?php if($aritcle_is_important == 'true'):// 重要タグの有無 ?>
-                <span class="badge bg-danger">重要</span>
-                <?php endif; ?>
-            </div>
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="line-clamp-1"><?php echo $article_title; //タイトル ?></h5>
-                <small class="text-muted"><?php echo $article_date; ?></small>
-            </div>
-            <p class="line-clamp-2">
-                <?php echo $article_excerpt; //本文抜粋 ?>
-            </p>
-        </a>
+            <p>記事がありません。</p>
         <?php
+            else:
+                foreach($article_array as $article):
+        ?>
+                <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
+                    <div class="mb-1">
+                        <span class="badge bg-primary">New</span>
+                        <?php if($article -> is_important == 'true'):// 重要タグの有無 ?>
+                        <span class="badge bg-danger">重要</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="line-clamp-1"><?php echo $article -> title; //タイトル ?></h5>
+                        <small class="text-muted"><?php echo $article -> date; ?></small>
+                    </div>
+                    <p class="line-clamp-2">
+                        <?php echo $article -> excerpt; //本文抜粋 ?>
+                    </p>
+                </a>
+        <?php
+                endforeach;
+            endif;
         }
         //postデータから変数を作成
         function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object{
@@ -470,30 +493,7 @@
            public string $excerpt = ' '; // 本文
            public ?bool $is_important = false; // 重要タグの有無
         }
-        
         ?>
-
-<?php/*
-                <!-- 新規情報 -->
-                <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
-                    <div class="list-group list-group-flush mt-2">
-                    <?php circle_news($new_info_array); //$new_info_arrayの記事一覧を表示 ?> 
-                    </div>
-                </div>
-                <!-- お知らせ -->
-                <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-                    <div class="list-group list-group-flush mt-2">
-                    <?php circle_news($announcement_array); //$announcement_arrayの記事一覧を表示 ?>
-                    </div>
-                </div>
-                <!-- イベント・行事 -->
-                <div class="tab-pane fade" id="event" role="tabpanel" aria-labelledby="event-tab">
-                    <div class="list-group list-group-flush mt-2">
-                    <?php circle_news($event_array); //$event_arrayの記事一覧を表示 ?>
-                    </div>
-                </div>
-*/
-?>
     </div>
 </main>
 
