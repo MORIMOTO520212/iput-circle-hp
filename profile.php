@@ -1,6 +1,6 @@
 <?php
 /**
- *  Template Name: 基本情報ページ
+ *  Template Name: アカウント情報
  */
 ?>
 
@@ -30,7 +30,7 @@ $email = get_user_option('user_email', $user_id);
     <form class="container row-cols-1 g-3 mb-5 max-width-sm" action="" method="post" novalidate style="padding: 30px 40px;">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="username" value="<?php echo $username; ?>" disabled>
-            <label for="username">ユーザー名（ユーザー名は変更できません）</label>
+            <label for="username">ユーザー名（変更できません）</label>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="displayname"
@@ -51,7 +51,7 @@ $email = get_user_option('user_email', $user_id);
         </div>
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="email" value="<?php echo $email; ?>" disabled>
-            <label for="email">メールアドレス（メールアドレスは変更できません）</label>
+            <label for="email">メールアドレス（変更できません）</label>
         </div>
         <div class="form-floating mb-3">
             <input type="password" class="form-control" id="password" placeholder="" name="password" value="" disabled>
