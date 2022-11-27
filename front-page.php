@@ -138,11 +138,11 @@
             );
             // 配列で指定した内容で、記事情報を取得
             $datas = get_posts( $args );
+            $new_info_array = null; // 新規情報タグのある投稿を格納するリスト
+            $announcement_array = null; // お知らせタグのある投稿を格納するリスト
+            $event_array = null; // 行事・イベントタグのある投稿を格納するリスト
             // 取得した記事情報の表示
             if ( $datas ): // 記事情報がある場合はforeachで記事情報を表示
-                $new_info_array = []; // 新規情報タグのある投稿を格納するリスト
-                $announcement_array = []; // お知らせタグのある投稿を格納するリスト
-                $event_array = []; // 行事・イベントタグのある投稿を格納するリスト
                 // ↓ ループ開始 ↓
                 foreach ( $datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                     setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
