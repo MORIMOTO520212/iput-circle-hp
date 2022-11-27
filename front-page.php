@@ -440,11 +440,11 @@
         /* 記事一覧の記事テンプレート*/
         function circle_news($article_array)
         {
-            if($article_array == null):
+            if($article_array == null): // 表示する記事がない場合
         ?>
             <p>記事がありません。</p>
         <?php
-            else:
+            else: // 表示する記事がある場合
                 foreach($article_array as $article):
         ?>
                 <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
@@ -469,7 +469,7 @@
         //postデータから変数を作成
         function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object{
             $article_id = get_the_ID(); // 記事番号
-            $article_id = new article_data();
+            $article_id = new article_data(); // 記事のID名でインスタンスを作成
             $article_id -> title = get_the_title(); //タイトル
             $article_id -> link = get_permalink(); // リンク
             $article_id -> date = get_the_date(); // 投稿日
