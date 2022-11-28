@@ -2,6 +2,8 @@
 
 ## Directory Configuration
 ```
+wp-content/
+ ├── db.php - 独自テーブルの指定
 .
 ├── assets/
     ├── style-footer.css
@@ -18,6 +20,9 @@
 ├── author.php
 ├── post.php - 記事投稿プログラム
 ```
+
+## データベース
+wp_wordpresssignupsテーブルを作成している。  
 
 ## 固定ページ
 |タイトル|スラッグ|ファイル|
