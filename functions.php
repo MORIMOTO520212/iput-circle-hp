@@ -1,11 +1,12 @@
 <?php
-// media_upload_hundle
+// media_upload_hundle()
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 require_once( ABSPATH . 'wp-admin/includes/file.php' );
 require_once( ABSPATH . 'wp-admin/includes/media.php' );
-// wp_create_category
+// wp_create_category()
 require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
-
+// wpmu_signup_user(), wpmu_signup_user_notification()
+require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 
 /**
  * 変数の初期化
@@ -25,14 +26,14 @@ show_admin_bar(false);
 
 
 /**
- * 投稿時スラッグ自動生成
+ * 投稿とサークルの投稿時スラッグ自動生成
  * 
- * 投稿ページのみ生成する
+ * postIDをmd5でハッシュ化したものをスラッグとして使う
+ * ※ランダム値をハッシュ化すると更新時にスラッグが変わるので、固定されたpostIDを採用
  */
 function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
-    if($post_type == 'post'){
-        $slug = md5(time()); // UNIX時間をmd5でハッシュ化したものをスラッグ名に使う
-        return $slug;
+    if ( $post_type === "post" || $post_type === "circle" ) {
+        $slug = md5($post_ID);
     }
     return $slug;
 }
@@ -223,7 +224,8 @@ add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
 /**
  * 画像アップロード処理 関数
  * 
- * 戻り値：array( attachment_id, img_url )
+ * @param string $input_name 画像が添付されたinputタグのname属性
+ * @return array $attachment_id, $img_url
 */
 function upload_image( $input_name ) {
     global $max_file_size;
@@ -303,6 +305,8 @@ function user_login() {
 
 /**
  * サインアップページ アカウント作成
+ * 
+ * @return true|false 完了, 中断
  */
 function user_signup() {
     $user_name       = isset( $_POST['username'] )  ? sanitize_text_field( $_POST['username'] )  : '';
@@ -343,30 +347,132 @@ function user_signup() {
         return;
     }
 
-    // 問題がなければユーザーを登録する処理を開始
-    $userdata = array(
-        'user_login'   => $user_name,       //  ログイン名
-        'user_pass'    => $user_pass,       //  パスワード
-        'user_email'   => $user_email,      //  メールアドレス
-        'first_name'   => $user_first_name, //  名
-        'last_name'    => $user_last_name,  //  姓
-        'display_name' => $user_name,       //  ブログ上の表示名
-    );
-
-    // ユーザー作成処理
-    $user_id = wp_insert_user( $userdata );
-    if ( is_wp_error( $user_id ) ) {
-        modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+    // ユーザー仮登録
+    [$activation_key, $user_approval_url] = signup_provisional( $user_name, $user_email, $user_pass, $user_first_name, $user_last_name );
+    if ( $user_approval_url ) {
+        // 認証メール送信
+        user_approval_sendmail( $user_email, $activation_key, $user_approval_url );
+    } else {
+        modal('エラー', 'ユーザーの仮登録に失敗しました');
         return;
     }
 
-    // 登録完了後、そのままログインさせる（ 任意 ）
-    wp_set_auth_cookie( $user_id, false, is_ssl() );
-    wp_redirect( home_url('/') );
-    exit;
     return 1;
 }
 
+/**
+ * ユーザーの仮登録
+ * @param string        $user_login
+ * @return array|false $activation_key, $user_approval_url
+*/
+function signup_provisional( $user_login, $user_email, $password, $first_name, $last_name ) {
+    global $wpdb;
+    // バリデーションチェック
+    // データベース書き込み
+	$user_login = preg_replace( '/\s+/', '', sanitize_user( $user_login, true ) );
+	$user_email = sanitize_email( $user_email );
+    /** @var string ユーザーの有効化キー（メール認証で使う） */
+	$activation_key = substr( md5( time() . wp_rand() . $user_email ), 0, 16 );
+
+	$res = $wpdb->insert(
+		$wpdb->signups,
+		array(
+			'user_login'     => $user_login,
+			'user_email'     => $user_email,
+            'password'       => $password,
+            'first_name'     => $first_name,
+            'last_name'      => $last_name,
+			'user_registered'     => current_time( 'mysql', true ),
+			'activation_key' => $activation_key,
+		)
+	);
+    if ( $res ) {
+        $user_approval_url = home_url( '/index.php/signup?t=auth&token=' . $activation_key );
+        return array($activation_key, $user_approval_url);
+    }
+    return false;
+}
+
+/**
+ * ユーザーにユーザー登録のメール認証を送信する
+ * @param string      $user_email
+ * @param string      $user_approval_url
+ * @return true|false 送信成功, 送信失敗
+*/
+function user_approval_sendmail( $user_email, $activation_key, $user_approval_url ) {
+    global $wpdb;
+    $res = $wpdb->get_results("SELECT first_name, last_name FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
+    $name = $res[0]->last_name . " " . $res[0]->first_name;
+
+    $to = $user_email;
+
+	$headers = "
+	From: IPUT ONE制作チーム <iputone.staff@gmail.com>\r\n
+	Reply-To: IPUT ONE制作チーム <iputone.staff@gmail.com>\r\n
+    cc: iputone.staff@gmail.com\r\n
+    ";
+
+    $subject = "【IPUT ONE】メールアドレス認証";
+    $message = "
+    {$name} 様
+
+    IPUT ONEにご登録いただき、ありがとうございます。
+    本メールは、ご登録いただいたメールアドレスの確認証メールです。
+    
+    下記のリンクにアクセスして、アカウント登録を完了してください。
+    {$user_approval_url}
+
+    ============================
+    IPUT ONE制作チーム
+    iputone.staff@gmail.com
+    ";
+
+    wp_mail( $to, $subject, $message, $headers );
+
+    return 1;
+}
+
+/**
+ * ユーザー承認
+ * 
+ * @param string $activation_key 有効化キー
+*/
+function user_activation( $activation_key ) {
+    // signupテーブルのレコードを削除する
+    // ユーザー側へメール
+    // 管理者側へメール
+    // 問題がなければユーザーを登録する処理を開始
+
+    $user = $wpdb->get_results("SELECT * FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
+
+    if ( $user ) {
+        $userdata = array(
+            'user_login'   => $user[0]->user_login,  // ログイン名
+            'user_pass'    => $user[0]->password,    // パスワード
+            'user_email'   => $user[0]->user_email,  // メールアドレス
+            'first_name'   => $user[0]->first_name,  // 名
+            'last_name'    => $user[0]->last_name,   // 姓
+            'display_name' => $user[0]->user_login,  // ブログ上の表示名
+            'role'         => 'author'
+        );
+    
+        // ユーザー作成処理
+        $user_id = wp_insert_user( $userdata );
+        if ( is_wp_error( $user_id ) ) {
+            modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+            return;
+        }
+    
+        // ユーザーの削除
+        $wpdb->get_results("DELETE FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
+    
+        // 登録完了後、そのままログインさせる（ 任意 ）
+        wp_set_auth_cookie( $user_id, false, is_ssl() );
+
+        return 1;
+    }
+    return 0;
+}
 
 
 /**
@@ -595,7 +701,10 @@ add_action('after_setup_theme', function() {
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'signup') {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['signup_nonce'], 'N9zxfbth' ) ) return;
-        user_signup();
+        $res = user_signup();
+        if ( $res ) {
+            wp_redirect( home_url('index.php/signup?t=confirm') );
+        }
     }
     // 基本情報の更新
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
