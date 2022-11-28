@@ -6,7 +6,7 @@
 
 <main class="contents">
     <!-- ファーストビュー -->
-    <div class="top" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower.webp'); ?>');">
+    <div class="top" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
         <!-- 登録フォーム -->
         <form action="" method="post" class="register needs-validation" novalidate>
             <h3>新規ユーザーの登録</h3>
@@ -128,22 +128,25 @@
             <div class="tab-content p-4 pt-0" id="info-content">
             <?php
             $aritcle_is_important = false;
+
             // 取得したい内容を配列に記載します（不要箇所は省略可）
             $args = array(
-                'posts_per_page'   => -1, // 読み込みしたい記事数（全件取得時は-1）
+                'posts_per_page'   => -1,     // 読み込みしたい記事数（全件取得時は-1）
                 'orderby'          => 'date', // 日付順でソート
-                'exclude'          => '', // 一覧に表示したくない記事のID（複数時は,区切）
+                'exclude'          => '',     // 一覧に表示したくない記事のID（複数時は,区切）
                 'post_type'        => 'post', // 投稿記事の取り出す
-                'category_name' => 'news' // 表示したいカテゴリーのスラッグを指定
+                'category_name'    => 'news'  // 表示したいカテゴリーのスラッグを指定
             );
+
             // 配列で指定した内容で、記事情報を取得
             $datas = get_posts( $args );
-            $new_info_array = null; // 新規情報タグのある投稿を格納するリスト
-            $announcement_array = null; // お知らせタグのある投稿を格納するリスト
-            $event_array = null; // 行事・イベントタグのある投稿を格納するリスト
+            $new_info_array     = null;  // 新規情報タグのある投稿を格納するリスト
+            $announcement_array = null;  // お知らせタグのある投稿を格納するリスト
+            $event_array        = null;  // 行事・イベントタグのある投稿を格納するリスト
+
             // 取得した記事情報の表示
-            if ( $datas ): // 記事情報がある場合はforeachで記事情報を表示
-                // ↓ ループ開始 ↓
+            if ( $datas ):
+                // 記事情報がある場合はforeachで記事情報を表示
                 foreach ( $datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                     setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
                     $all_tags = get_the_tags(); // タグのリストを$tagsに代入
@@ -222,10 +225,6 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
-                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
-                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
@@ -273,10 +272,6 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://pbs.twimg.com/tweet_video_thumb/FVn1kCxVUAAl5jv.jpg" class="rounded-circle author-icon" alt="...">
-                                                        <small class="ms-1 me-1 line-clamp-1">ぽちゃぽちゃままま</small>
-                                                    </div>
                                                     <div class="text-nowrap">
                                                         <small class="text-muted">3時間前</small>
                                                     </div>
@@ -404,97 +399,94 @@
                 </div>
             </div>
         </div>
+    </div>
+</main>
 
-        <!-- PHP関数 -->
-        <?php
-        /* サークル カードのテンプレート */
-        function circle_card($circle_name, $thumbnail_image, $place_text, $members_text)
-        {
-        ?>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link" href="#"></a>
-                    <div class="row g-0">
-                        <div class="col-4 col-lg-12">
-                            <img src="<?=get_theme_file_uri( 'src/' . ($thumbnail_image ?? 'no_image.png') )?>"
-                             class="card-img-top ratio-3x2 h-100" alt="...">
-                        </div>
-                        <div class="col-8 col-lg-12">
-                            <div class="card-body h-100 d-flex flex-column">
-                                <h5 class="card-title circle-title">
-                                    <span class="line-clamp-1"><?php echo $circle_name; ?></span>
-                                </h5>
-                                <div class="card-text mt-auto">
-                                    <div class="row row-cols-1 mb-0 circle-info">
-                                        <small class="col line-clamp-1"><?php echo $place_text ?? '不明'; ?></small>
-                                        <small class="col line-clamp-1"><?php echo $members_text ?? '不明'; ?></small>
-                                    </div>
-                                </div>
+<?php
+/* サークル カードのテンプレート */
+function circle_card($circle_name, $thumbnail_image, $place_text, $members_text) {
+?>
+    <div class="col">
+        <div class="card h-100">
+            <a class="card-link" href="#"></a>
+            <div class="row g-0">
+                <div class="col-4 col-lg-12">
+                    <img src="<?=get_theme_file_uri( 'src/' . ($thumbnail_image ?? 'no_image.png') )?>"
+                        class="card-img-top ratio-3x2 h-100" alt="...">
+                </div>
+                <div class="col-8 col-lg-12">
+                    <div class="card-body h-100 d-flex flex-column">
+                        <h5 class="card-title circle-title">
+                            <span class="line-clamp-1"><?php echo $circle_name; ?></span>
+                        </h5>
+                        <div class="card-text mt-auto">
+                            <div class="row row-cols-1 mb-0 circle-info">
+                                <small class="col line-clamp-1"><?php echo $place_text ?? '不明'; ?></small>
+                                <small class="col line-clamp-1"><?php echo $members_text ?? '不明'; ?></small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php
-        }
-        /* 記事一覧の記事テンプレート*/
-        function circle_news($article_array)
-        {
-            if($article_array == null): // 表示する記事がない場合
-        ?>
-            <p class="pt-4 text-align-center">記事がありません。</p>
-        <?php
-            else: // 表示する記事がある場合
-                foreach($article_array as $article):
-        ?>
-                <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
-                    <div class="mb-1">
-                        <span class="badge bg-primary">New</span>
-                        <?php if($article -> is_important == 'true'):// 重要タグの有無 ?>
-                        <span class="badge bg-danger">重要</span>
-                        <?php endif; ?>
-                    </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="line-clamp-1"><?php echo $article -> title; //タイトル ?></h5>
-                        <small class="text-muted"><?php echo $article -> date; ?></small>
-                    </div>
-                    <p class="line-clamp-2">
-                        <?php echo $article -> excerpt; //本文抜粋 ?>
-                    </p>
-                </a>
-        <?php
-                endforeach;
-            endif;
-        }
-        //postデータから変数を作成
-        function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object{
-            $article_id = get_the_ID(); // 記事番号
-            $article_id = new article_data(); // 記事のID名でインスタンスを作成
-            $article_id -> title = get_the_title(); //タイトル
-            $article_id -> link = get_permalink(); // リンク
-            $article_id -> date = get_the_date(); // 投稿日
-            $article_id -> excerpt = get_the_excerpt(); // 本文
-            if(in_array('重要', $article_tags_array)): // 重要タグの有無
-                $article_id -> is_important = true;
-            else:
-                $article_id -> is_important = false;
-            endif;
-            return $article_id;
-        }
-        ?>
-
-        <!-- php インスタンス -->
-        <?php
-        class article_data
-        {
-           public string $title = ' '; //タイトル
-           public string $link = ' '; // リンク
-           public string $date = ' '; // 投稿日
-           public string $excerpt = ' '; // 本文
-           public ?bool $is_important = false; // 重要タグの有無
-        }
-        ?>
+        </div>
     </div>
-</main>
+<?php
+}
+
+/* 記事一覧の記事テンプレート*/
+function circle_news($article_array) {
+    if($article_array == null): // 表示する記事がない場合
+?>
+    <p class="pt-4 text-center">記事がありません。</p>
+<?php
+    else: // 表示する記事がある場合
+        foreach($article_array as $article):
+?>
+        <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
+            <div class="mb-1">
+                <span class="badge bg-primary">New</span>
+                <?php if($article -> is_important == 'true'):// 重要タグの有無 ?>
+                <span class="badge bg-danger">重要</span>
+                <?php endif; ?>
+            </div>
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="line-clamp-1"><?php echo $article -> title; //タイトル ?></h5>
+                <small class="text-muted"><?php echo $article -> date; ?></small>
+            </div>
+            <p class="line-clamp-2">
+                <?php echo $article -> excerpt; //本文抜粋 ?>
+            </p>
+        </a>
+<?php
+        endforeach;
+    endif;
+}
+
+// postデータから変数を作成
+function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object {
+    $article_id = get_the_ID();       // 記事番号
+    $article_id = new article_data(); // 記事のID名でインスタンスを作成
+    $article_id->title   = get_the_title();    // タイトル
+    $article_id->link    = get_permalink();    // リンク
+    $article_id->date    = get_the_date();     // 投稿日
+    $article_id->excerpt = get_the_excerpt();  // 本文
+    if( in_array('重要', $article_tags_array) ): // 重要タグの有無
+        $article_id->is_important = true;
+    else:
+        $article_id->is_important = false;
+    endif;
+    return $article_id;
+}
+
+// php インスタンス
+class article_data
+{
+    public string $title   = ' ';        //タイトル
+    public string $link    = ' ';        // リンク
+    public string $date    = ' ';        // 投稿日
+    public string $excerpt = ' ';        // 本文
+    public ?bool  $is_important = false; // 重要タグの有無(nullable)
+}
+?>
 
 <?=get_footer()?>
