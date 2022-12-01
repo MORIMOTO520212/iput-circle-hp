@@ -127,39 +127,32 @@
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
             <?php
-            $aritcle_is_important = false;
-
-            // 取得したい内容を配列に記載します（不要箇所は省略可）
-            $args = array(
-                'posts_per_page'   => -1,     // 読み込みしたい記事数（全件取得時は-1）
-                'orderby'          => 'date', // 日付順でソート
-                'exclude'          => '',     // 一覧に表示したくない記事のID（複数時は,区切）
-                'post_type'        => 'post', // 投稿記事の取り出す
-                'category_name'    => 'news'  // 表示したいカテゴリーのスラッグを指定
-            );
-
-            // 配列で指定した内容で、記事情報を取得
-            $datas = get_posts( $args );
+            // 配列や変数の初期化
             $new_info_array     = null;  // 新規情報タグのある投稿を格納するリスト
             $announcement_array = null;  // お知らせタグのある投稿を格納するリスト
             $event_array        = null;  // 行事・イベントタグのある投稿を格納するリスト
+            $aritcle_is_important = false;
+            $news_datas = null;
+
+            // 記事データを取得する。
+            $news_datas = get_article_data("news");
 
             // 取得した記事情報の表示
-            if ( $datas ):
+            if ( $news_datas ):
                 // 記事情報がある場合はforeachで記事情報を表示
-                foreach ( $datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
+                foreach ( $news_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                     setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                    $all_tags = get_the_tags(); // タグのリストを$tagsに代入
-                    if( $all_tags ): // タグが存在する場合
-                        $article_tags_array = array_column($all_tags, 'name'); // タグの配列からnameのカラムを抽出
+                    $news_all_tags = get_the_tags(); // タグのリストを$tagsに代入
+                    if( $news_all_tags ): // タグが存在する場合
+                        $article_tags_array = array_column($news_all_tags, 'name'); // タグの配列からnameのカラムを抽出
                         if(in_array('新規情報', $article_tags_array)): // 新規情報タグのある記事を表示
-                            $new_info_array[] = create_article_datas($post, $article_tags_array, '新規情報');
+                            $new_info_array[] = create_article_datas($post, $article_tags_array);
                         endif;
                         if(in_array('お知らせ', $article_tags_array)): // お知らせタグのある記事を表示
-                            $announcement_array[] = create_article_datas($post, $article_tags_array, 'お知らせ');
+                            $announcement_array[] = create_article_datas($post, $article_tags_array);
                         endif;
                         if(in_array('行事・イベント', $article_tags_array)): // 行事・イベントタグのある記事を表示
-                            $event_array[] = create_article_datas($post, $article_tags_array, '行事・イベント');
+                            $event_array[] = create_article_datas($post, $article_tags_array);
                         endif;
                     else: // $all_tagsにタグが存在しない場合
                         continue;
@@ -201,96 +194,54 @@
                 <!-- 活動 -->
                 <div class="col" id="activity">
                     <h4>活動</h4>
-                    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
-                        <?php
-                        for ($i = 0; $i < 4; $i++) :
-                        ?>
-                            <div class="col">
-                                <div class="card h-100">
-                                    <a class="card-link" href="#"></a>
-                                    <div class="row g-0">
-                                        <div class="col-4 col-lg-12">
-                                            <img src="<?=get_theme_file_uri('src/no_image.png')?>" class="card-img-top ratio-3x2 h-100" alt="...">
-                                        </div>
-                                        <div class="col-8 col-lg-12">
-                                            <div class="card-body h-100 d-flex flex-column">
-                                                <h5 class="card-title">
-                                                    記事タイトルタイトルタイトルタイトルタイトル
-                                                </h5>
-                                                <div class="card-text d-none d-lg-block">
-                                                    <p class="line-clamp-2">
-                                                        ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                                        最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                                        省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                                                    </p>
-                                                </div>
-                                                <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="text-nowrap">
-                                                        <small class="text-muted">3時間前</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php
-                        endfor;
-                        ?>
-                    </div>
-                    <!-- ボタン もっと見る -->
-                    <div class="d-flex justify-content-end mt-3">
-                        <a href="<?=home_url('index.php/activity')?>">
-                            <button type="button" class="btn btn-success">もっと見る</button>
-                        </a>
-                    </div>
+                    <?php 
+                    // 配列を定義
+                    $card_array = null;
+                    // 記事データを取得
+                    $card_datas = get_article_data("activity");
+                    // 取得した記事情報の表示
+                    if ( $card_datas ):
+                        // 記事情報がある場合はforeachで記事情報を表示
+                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
+                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                            //var_dump($post);
+                            $card_array[] = create_article_datas($post, null);
+                        endforeach; 
+                        // ↑ ループ終了 ↑
+                    else: // 記事情報がなかったら
+                        $card_array = null;
+                    endif;
+                    // 一覧情報取得に利用したループをリセットする
+                    wp_reset_postdata();
+                    // 活動カード描画
+                    circle_info_card($card_array);
+                    ?>
                 </div>
                 <!-- ニュース -->
                 <div class="col" id="news">
                     <h4>ニュース</h4>
-                    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
-                        <?php
-                        for ($i = 0; $i < 4; $i++) :
-                        ?>
-                            <div class="col">
-                                <div class="card h-100">
-                                    <a class="card-link" href="#"></a>
-                                    <div class="row g-0">
-                                        <div class="col-4 col-lg-12">
-                                            <img src="<?=get_theme_file_uri('src/no_image.png')?>" class="card-img-top ratio-3x2 h-100" alt="...">
-                                        </div>
-                                        <div class="col-8 col-lg-12">
-                                            <div class="card-body h-100 d-flex flex-column">
-                                                <h5 class="card-title">
-                                                    記事タイトルタイトルタイトルタイトルタイトル
-                                                </h5>
-                                                <div class="card-text d-none d-lg-block">
-                                                    <p class="line-clamp-2">
-                                                        ここへ記事の本文が挿入されます。ここへ表示される記事の本文は、
-                                                        最大3行までとし、本文の内容が溢れる場合（オーバーフロー）は三点リーダーで
-                                                        省略を示します。CSSを用いてtext-overflowで溢れる文字を省略をすることができます。
-                                                    </p>
-                                                </div>
-                                                <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                                    <div class="text-nowrap">
-                                                        <small class="text-muted">3時間前</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php
-                        endfor;
-                        ?>
-                    </div>
-                    <!-- ボタン もっと見る -->
-                    <div class="d-flex justify-content-end mt-3">
-                        <a href="<?=home_url('index.php/news')?>">
-                            <button type="button" class="btn btn-success">もっと見る</button>
-                        </a>
-                    </div>
+                    <?php 
+                    // 配列を定義
+                    $card_array = null;
+                    // 記事データを取得
+                    $card_datas = get_article_data("news");
+                    // 取得した記事情報の表示
+                    if ( $card_datas ):
+                        // 記事情報がある場合はforeachで記事情報を表示
+                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
+                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                            //var_dump($post);
+                            $card_array[] = create_article_datas($post, null);
+                        endforeach; 
+                        // ↑ ループ終了 ↑
+                    else: // 記事情報がなかったら
+                        $card_array = null;
+                    endif;
+                    // 一覧情報取得に利用したループをリセットする
+                    wp_reset_postdata();
+                    // 活動カード描画
+                    circle_info_card($card_array);
+                    ?>
                 </div>
             </div>
         </div>
@@ -405,7 +356,7 @@
 <?php
 /* サークル カードのテンプレート */
 function circle_card($circle_name, $thumbnail_image, $place_text, $members_text) {
-?>
+    ?>
     <div class="col">
         <div class="card h-100">
             <a class="card-link" href="#"></a>
@@ -430,18 +381,18 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text)
             </div>
         </div>
     </div>
-<?php
+    <?php
 }
 
 /* 記事一覧の記事テンプレート*/
 function circle_news($article_array) {
     if($article_array == null): // 表示する記事がない場合
-?>
+    ?>
     <p class="pt-4 text-center">記事がありません。</p>
-<?php
+    <?php
     else: // 表示する記事がある場合
         foreach($article_array as $article):
-?>
+    ?>
         <a class="list-group-item mt-1" href="<?php echo $article -> link; ?>">
             <div class="mb-1">
                 <span class="badge bg-primary">New</span>
@@ -457,35 +408,145 @@ function circle_news($article_array) {
                 <?php echo $article -> excerpt; //本文抜粋 ?>
             </p>
         </a>
-<?php
+    <?php
         endforeach;
+    ?>
+        <!-- ボタン 一覧を表示する -->
+        <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-success">一覧を表示する</button>
+        </div>
+    <?php
     endif;
 }
 
-// postデータから変数を作成
-function create_article_datas(WP_Post $post, array $article_tags_array, string $article_tag):?object {
+/* 記事カードのテンプレート */
+function circle_info_card(?array $card_array){
+    if($card_array == null): //表示する記事がない場合
+    ?>
+    <p class="pt-4 text-center">記事がありません。</p>
+    <?php
+    else: //表示する記事がある場合
+        ?>
+        <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
+        <?php
+        foreach($card_array as $card):
+        ?>
+        <div class="col">
+            <div class="card h-100">
+                <a class="card-link" href="<?php echo $card -> link; ?>"></a>
+                <div class="row g-0">
+                    <div class="col-4 col-lg-12">
+                        <img src="<?php echo $card -> img; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
+                    </div>
+                    <div class="col-8 col-lg-12">
+                        <div class="card-body h-100 d-flex flex-column">
+                            <h5 class="card-title">
+                                <?php echo $card->title; //タイトル ?>
+                            </h5>
+                            <div class="card-text d-none d-lg-block">
+                                <p class="line-clamp-2">
+                                    <?php echo $card -> excerpt; //本文抜粋 ?>
+                                </p>
+                            </div>
+                            <div class="card-text d-flex justify-content-between align-items-center mt-auto">
+                                <div class="text-nowrap">
+                                    <small class="text-muted"><?php echo $card -> date; ?></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        endforeach;
+        ?>
+        </div>
+        <!-- ボタン もっと見る -->
+        <div class="d-flex justify-content-end mt-3">
+            <a href="<?=home_url('index.php/news')?>">
+                <button type="button" class="btn btn-success">もっと見る</button>
+            </a>
+        </div>
+        <?php
+    endif;
+}
+
+// postデータのカテゴリから必要なpostデータを引き出す。 使えません。
+/*
+function filter_category(string $category){
+    // 配列を定義
+    $card_array = null;
+    // 記事データを取得
+    $card_datas = get_article_data($category);
+    // 取得した記事情報の表示
+    if ( $card_datas ):
+        // 記事情報がある場合はforeachで記事情報を表示
+        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
+            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+            //var_dump($post);
+            $card_array[] = create_article_datas($post, null);
+        endforeach; 
+        // ↑ ループ終了 ↑
+    else: // 記事情報がなかったら
+        // 
+    endif;
+    
+    //var_dump($card_array);
+    // 一覧情報取得に利用したループをリセットする
+    wp_reset_postdata();
+    // 活動カード描画
+    circle_info_card($card_array);
+}
+*/
+
+// postデータからインスタンスを作成し各インスタンスごとにデータを格納
+function create_article_datas(WP_Post $post, ?array $article_tags_array):?object {
     $article_id = get_the_ID();       // 記事番号
     $article_id = new article_data(); // 記事のID名でインスタンスを作成
     $article_id->title   = get_the_title();    // タイトル
     $article_id->link    = get_permalink();    // リンク
     $article_id->date    = get_the_date();     // 投稿日
     $article_id->excerpt = get_the_excerpt();  // 本文
-    if( in_array('重要', $article_tags_array) ): // 重要タグの有無
-        $article_id->is_important = true;
+    if(has_post_thumbnail()):// アイキャッチ画像の有無
+        $article_id->img = the_post_thumbnail_url();
     else:
-        $article_id->is_important = false;
+        $article_id->img = get_theme_file_uri('src/no_image.png');
+    endif;
+    if($article_tags_array != null):
+        if( in_array('重要', $article_tags_array) ): // 重要タグの有無
+            $article_id->is_important = true;
+        else:
+            $article_id->is_important = false;
+        endif;
     endif;
     return $article_id;
 }
 
-// php インスタンス
-class article_data
-{
+// 記事データ取得
+function get_article_data(string $article_category){
+    // 取得したい内容を配列に記載します（不要箇所は省略可）
+    $all_article_array = array(
+        'posts_per_page'   => -1,     // 読み込みしたい記事数（全件取得時は-1）
+        'orderby'          => 'date', // 日付順でソート
+        'exclude'          => '',     // 一覧に表示したくない記事のID（複数時は,区切）
+        'post_type'        => 'post', // 投稿記事の取り出す
+        'category_name'    => $article_category  // 表示したいカテゴリーのスラッグを指定
+    );
+
+    // 配列で指定した内容で、記事情報を取得
+    $all_datas = get_posts( $all_article_array );
+    return $all_datas;
+}
+
+/* php インスタンス */
+class article_data{
     public string $title   = ' ';        //タイトル
     public string $link    = ' ';        // リンク
     public string $date    = ' ';        // 投稿日
     public string $excerpt = ' ';        // 本文
-    public ?bool  $is_important = false; // 重要タグの有無(nullable)
+    public string $img     = ' ';        // アイキャッチ画像
+    public bool  $is_important = false; // 重要タグの有無(nullable)
 }
 ?>
 
