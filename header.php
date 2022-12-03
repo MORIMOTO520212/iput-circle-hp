@@ -32,7 +32,7 @@ elseif ( is_single() ) { // is post page
         <meta name="Keywords" content="東京国際工科専門職大学,専門職大学,iput" />
         <meta name="Description" content="" />
         <!-- Icon -->
-        <link rel="shortcut icon" href="<?=get_theme_file_uri('/src/icon.png')?>" />
+        <link rel="shortcut icon" href="<?=get_theme_file_uri('src/iputone_logo.svg')?>" />
         <!-- OGP Settings -->
         <!-- CSS -->
         <link href="<?=get_theme_file_uri("assets/style-$slug.css")?>" rel="stylesheet" type="text/css"/>
@@ -60,8 +60,8 @@ elseif ( is_single() ) { // is post page
             integrity="sha512-BOsvKbLb0dB1IVplOL9ptU1EYA+LuCKEluZWRUYG73hxqNBU85JBIBhPGwhQl7O633KtkjMv8lvxZcWP+N3V3w=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <!-- trix.js v1.3.1 -->
-        <link rel="stylesheet" type="text/css" href="<?=get_theme_file_uri("assets/trix1.3.1.css")?>" />
-        <script src="<?=get_theme_file_uri("assets/trix1.3.1.js")?>"></script>
+        <link rel="stylesheet" type="text/css" href="<?php echo get_theme_file_uri("assets/trix1.3.1.css"); ?>" />
+        <script src="<?php echo get_theme_file_uri("assets/trix1.3.1.js"); ?>"></script>
         <?php wp_head(); ?>
     </head>
     <body>
@@ -69,7 +69,8 @@ elseif ( is_single() ) { // is post page
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
                 <div class="container-fluid nav-padding">
-                    <a class="navbar-brand" href="<?=home_url()?>">IPUTONE ベータ版</a>
+                    <img class="me-1" src="<?php echo get_theme_file_uri("src/iputone_logo_white.svg"); ?>" style="width:26px;">
+                    <a class="navbar-brand" href="<?php echo home_url(); ?>">IPUT ONE ベータ版</a>
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
                             aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>

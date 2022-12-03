@@ -1,7 +1,10 @@
     <footer>
         <div class="footer-top">
             <div class="container">
-                <h2 class="mb-3">IPUTONE</h2>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="me-2" src="<?php echo get_theme_file_uri("src/iputone_logo.svg"); ?>" style="width:36px;">
+                    <h2 class="g-0">IPUT ONE ベータ版</h2>
+                </div>
                 <div class="row pb-5">
                     <div class="col-md-4 footer-links">
                         <div class="row">
@@ -29,7 +32,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <span>&copy;2022 IPUTONE 学生によって運営されています</span>
+                    <span>&copy;2022 IPUT ONE 学生によって運営されています</span>
                 </div>
             </div>
         </div>

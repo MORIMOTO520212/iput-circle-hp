@@ -17,7 +17,12 @@ body {
     min-height: 100vh;
 }
 
-/* aタグでボタンを設置（親要素に付ける） */
+/* aタグでボタンを設置（親要素に付ける）
+   <div class="a-button">
+       <a href="#"></a>
+       <div></div>
+   </div>
+*/
 .a-button {
     position: relative;
 }
@@ -27,11 +32,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 50;
 }
 
 /* 変数 */
 :root {
     --main-h1-font-color: #212529;
+    --main-h2-font-color: #212529;
     --main-p-font-color: #212529;
 }
 
