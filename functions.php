@@ -298,7 +298,7 @@ function user_login() {
     echo "ログイン成功";
     wp_redirect( home_url( "index.php/author/{$user_login}" ) );
     exit;
-    return 1;
+    return true;
 }
 
 
@@ -320,6 +320,12 @@ function user_signup() {
         modal('登録できません', 'すでにユーザー名「'. $user_name .'」は登録されています。<br>他の名前を入力してください。');
         return;
     }
+    // ユーザー名の確認
+    // 半角英数字+アンダーバー1～15文字
+    if ( !(preg_match("/^[a-zA-Z0-9_]{1,15}$/iD", $user_name)) ) {
+        modal('ユーザー名の入力', 'ユーザー名は半角英数字+アンダーバーのみです。');
+        return;
+    }
     // メールチェック
     if ( email_exists( $user_email ) !== false ) {
         modal('登録できません', 'すでにメールアドレス「'. $user_email .'」は登録されています。');
@@ -328,16 +334,19 @@ function user_signup() {
     //メールの文字列確認
     // ユーザー名 - 半角英数字+プラス記号+マイナス記号+アンダーパス2~16文字
     // ドメイン名 - tokyo.iput.ac.jpまたはtks.iput.ac.jp
+    /*
     if ( !(preg_match("/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD", $user_email)) ) {
         modal('登録できません', '正しいメールアドレスを入力してください。使用できるドメインはtokyo.iput.ac.jpまたはtks.iput.ac.jpです。');
         return;
-    }
+    }*/
+
     // パスワードの確認
     // 半角英数字+記号を6文字以上16文字以下
     if ( !(preg_match("/^[ -~]{6,16}$/iD", $user_pass)) ) {
         modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
         return;
     }
+    // 氏名の確認
     if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_first_name)) ) {
         modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
         return;
@@ -357,46 +366,48 @@ function user_signup() {
         return;
     }
 
-    return 1;
+    return true;
 }
 
 /**
  * ユーザーの仮登録
- * @param string        $user_login
- * @return array|false $activation_key, $user_approval_url
+ * ユーザー情報をsignupsテーブルに保持し、認証リンクを返す。
+ * @param string        $user_login - ユーザー名
+ * @return array|false  array($activation_key, $user_approval_url) | false
 */
 function signup_provisional( $user_login, $user_email, $password, $first_name, $last_name ) {
     global $wpdb;
-    // バリデーションチェック
-    // データベース書き込み
+
 	$user_login = preg_replace( '/\s+/', '', sanitize_user( $user_login, true ) );
 	$user_email = sanitize_email( $user_email );
-    /** @var string ユーザーの有効化キー（メール認証で使う） */
+
+    /** @var string ユーザーの有効化キー16文字（メール認証で使う） */
 	$activation_key = substr( md5( time() . wp_rand() . $user_email ), 0, 16 );
 
+    // データベース書き込み
 	$res = $wpdb->insert(
 		$wpdb->signups,
 		array(
-			'user_login'     => $user_login,
-			'user_email'     => $user_email,
-            'password'       => $password,
-            'first_name'     => $first_name,
-            'last_name'      => $last_name,
-			'user_registered'     => current_time( 'mysql', true ),
-			'activation_key' => $activation_key,
+			'user_login'      => $user_login,
+			'user_email'      => $user_email,
+            'password'        => $password,
+            'first_name'      => $first_name,
+            'last_name'       => $last_name,
+			'user_registered' => current_time( 'mysql', true ),
+			'activation_key'  => $activation_key,
 		)
 	);
     if ( $res ) {
-        $user_approval_url = home_url( '/index.php/signup?t=auth&token=' . $activation_key );
+        $user_approval_url = home_url( '/index.php/signup?token=' . $activation_key );
         return array($activation_key, $user_approval_url);
     }
     return false;
 }
 
 /**
- * ユーザーにユーザー登録のメール認証を送信する
+ * ユーザー登録のメール認証を送信する
  * @param string      $user_email
- * @param string      $user_approval_url
+ * @param string      $user_approval_url - 認証リンク
  * @return true|false 送信成功, 送信失敗
 */
 function user_approval_sendmail( $user_email, $activation_key, $user_approval_url ) {
@@ -404,14 +415,7 @@ function user_approval_sendmail( $user_email, $activation_key, $user_approval_ur
     $res = $wpdb->get_results("SELECT first_name, last_name FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
     $name = $res[0]->last_name . " " . $res[0]->first_name;
 
-    $to = $user_email;
-
-	$headers = "
-	From: IPUT ONE制作チーム <iputone.staff@gmail.com>\r\n
-	Reply-To: IPUT ONE制作チーム <iputone.staff@gmail.com>\r\n
-    cc: iputone.staff@gmail.com\r\n
-    ";
-
+    $to      = $user_email;
     $subject = "【IPUT ONE】メールアドレス認証";
     $message = "
     {$name} 様
@@ -426,25 +430,24 @@ function user_approval_sendmail( $user_email, $activation_key, $user_approval_ur
     IPUT ONE制作チーム
     iputone.staff@gmail.com
     ";
-
-    wp_mail( $to, $subject, $message, $headers );
+    my_sendmail( $to, $subject, $message );
 
     return 1;
 }
 
 /**
- * ユーザー承認
- * 
- * @param string $activation_key 有効化キー
+ * ユーザーを有効化する
+ * 一度実行したら2回目はスルーする。
+ * @param string $activation_key - 有効化キー
+ * @return bool true - 成功, false - 失敗
 */
 function user_activation( $activation_key ) {
-    // signupテーブルのレコードを削除する
-    // ユーザー側へメール
-    // 管理者側へメール
-    // 問題がなければユーザーを登録する処理を開始
+    global $wpdb;
 
+    
     $user = $wpdb->get_results("SELECT * FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
 
+    // ユーザーを登録する
     if ( $user ) {
         $userdata = array(
             'user_login'   => $user[0]->user_login,  // ログイン名
@@ -460,18 +463,38 @@ function user_activation( $activation_key ) {
         $user_id = wp_insert_user( $userdata );
         if ( is_wp_error( $user_id ) ) {
             modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
-            return;
+            return false;
         }
     
-        // ユーザーの削除
+        // signupテーブルのレコードを削除する
         $wpdb->get_results("DELETE FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
     
         // 登録完了後、そのままログインさせる（ 任意 ）
         wp_set_auth_cookie( $user_id, false, is_ssl() );
 
-        return 1;
+        // 登録完了メール
+        $to      = $user[0]->user_email;
+        $subject = "【IPUT ONE】メールアドレス認証";
+        $message = "
+        IPUT ONEにご登録いただき、ありがとうございます。
+        登録が正常に完了しました。
+
+        何かご質問がありましたらこのメールにご返信ください。
+    
+        ============================
+        IPUT ONE制作チーム
+        iputone.staff@gmail.com
+        ";
+        my_sendmail( $to, $subject, $message );
+
+        wp_redirect( home_url("index.php/signup?t=done") );
+        exit;
+    } else {
+        // エラー
+        wp_redirect( home_url("index.php/signup?t=error") );
     }
-    return 0;
+
+    return true;
 }
 
 
@@ -685,6 +708,60 @@ function input_value_error_exit( $error_code = "" ) {
 }
 
 
+/**
+ * 活動記録投稿ページ 投稿処理
+*/
+function post_activity() {
+    if ( isset(
+        $_POST['title'],       // 記事のタイトル
+        $_POST['contents'],    // 記事の内容
+        $_POST['organization'] // 所属しているサークル名
+    ) )
+    {
+
+        $post_data = array(
+            'post_title'    => $_POST['title'],    // タイトル
+            'post_content'  => $_POST['contents'], // コンテンツ
+            'post_category' => array( get_cat_ID('activity') ),  // カテゴリID
+            'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
+            'post_status'   => 'publish', // 公開設定
+        );
+
+        $post_id = wp_insert_post( $post_data, true );
+
+        if ( is_wp_error( $post_id ) ) {
+            echo $user_id -> get_error_code();    // WP_Error() の第一引数
+            echo $user_id -> get_error_message(); // WP_Error() の第二引数
+            modal('記事の投稿に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+            return;
+        }
+
+        // 所属サークル（自動サニタイズ、add_post_meta関数は禁止）
+        update_post_meta( $post_id, 'organization', $_POST['organization'] );
+        if ( isset( $_POST['permission'] ) ) update_post_meta( $post_id, 'permission', true ); // 内部公開
+
+        // 記事ページへリダイレクト
+        wp_redirect( get_permalink( $post_id ) );
+        exit;
+
+    } else {
+        modal('エラー', '不正なリクエストです。');
+        return;
+    }
+}
+
+
+/**
+ * ニュース投稿ページ 投稿処理
+*/
+function post_news() {
+    if ( 1 ) {
+        return;
+    } else {
+        return;
+    }
+}
+
 
 /**
  * POSTリクエストを受け取る
@@ -704,6 +781,7 @@ add_action('after_setup_theme', function() {
         $res = user_signup();
         if ( $res ) {
             wp_redirect( home_url('index.php/signup?t=confirm') );
+            exit;
         }
     }
     // 基本情報の更新
@@ -728,4 +806,40 @@ add_action('after_setup_theme', function() {
         if ( !isset( $_POST['circle_edit_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_edit_nonce'], 'circle_edit_nonce_action' ) ) return;
     }
+    // 活動記録投稿ページ
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
+        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+        post_activity();
+    }
 });
+
+
+/**
+ * メールを送信する
+ * @param string $to - 宛先メールアドレス
+ * @param string $subject - 件名
+ * @param string $message - 本文
+ * @param string $headers - メールヘッダ。特別な理由がない限り指定しない
+ * @return bool  true - 送信成功, false - メールアドレス取得失敗
+ * 
+*/
+function my_sendmail( $to, $subject, $message, $headers = "" ) {
+    global $wpdb;
+
+    // WordPressの管理者メールアドレスを取得
+    $admin_email = get_option('admin_email');
+
+    if ( $admin_email ) {
+        $headers = "
+        From: IPUT ONE制作チーム <{$admin_email}>\r\n
+        Reply-To: IPUT ONE制作チーム <{$admin_email}>\r\n
+        cc: {$admin_email}\r\n
+        ";
+        wp_mail( $to, $subject, $message, $headers );
+    } else {
+        return false;
+    }
+
+    return true;
+}
