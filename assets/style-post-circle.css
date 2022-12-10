@@ -1,3 +1,4 @@
+/* サークル作成ページのスタイルシート */
 .mainarea {
     max-width: 590px;
     min-height: 50px;
@@ -11,9 +12,4 @@
 /* trix.js */
 trix-toolbar .trix-button--icon {
     width: 1.9em !important;
-}
-
-trix-editor h1 {
-    font-size: 23px;
-    color: var(--main-h1-font-color);
 }

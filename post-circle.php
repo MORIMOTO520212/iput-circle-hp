@@ -52,28 +52,7 @@ $post_id = wp_insert_post()
 ?>
 
 <!-- 非対応のファイル添付時に表示 -->
-<div class="modal fade" id="fileTypeCaution" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header alert alert-warning">
-            <h5 class="modal-title" id="exampleModalLabel">非対応のファイルです</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            jpegまたはpng形式のファイルのみ添付できます。
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
-        </div>
-        </div>
-    </div>
-</div>
-<script>
-    var fileTypeCautionElm = $('#fileTypeCaution');
-    var options = "keyboard";
-    fileTypeCautionElm.removeClass('display'); // display:none解除
-    fileTypeCaution = new bootstrap.Modal(fileTypeCautionElm, options);
-</script>
+<?php require_once( get_theme_file_path("assets/components/trix_file_type_caution_modal.php") ); ?>
 
 <form class="container mt-4 pb-4 mb-4 needs-validation" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
     <div class="row">
@@ -232,7 +211,10 @@ $post_id = wp_insert_post()
                     <div class="mb-3">
                         <p>活動内容</p>
                         <input id="trixeditor" class="form-control" type="text"  name="activityDetail" style="display:none;" required>
-                        <trix-editor class="form-control" input="trixeditor"></trix-editor>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
+                            <trix-editor class="form-control" input="trixeditor"></trix-editor>
+                        </div>
                         <div class="invalid-feedback">
                             入力必須です
                         </div>
