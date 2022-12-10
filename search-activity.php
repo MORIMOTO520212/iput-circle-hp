@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: 活動一覧
- */
+ * Template Name: 活動一覧ページ
+*/
 ?>
 
 <?php get_header(); ?>
@@ -42,12 +42,12 @@
 </div>
 
 <div class="container pt-4 pb-4" style="max-width: 750px !important;">
-    <div class="row row-cols-1  row-cols-lg-3 g-2 g-lg-3">
+    <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
 
         <?php for($i = 0; $i < 6; $i++): ?>
-        <div class="col h-100 card-link">
-            <a href="#"></a>
-            <div class="card h-100">
+        <div class="col">
+            <div class="card h-100 a-button">
+                <a href="#"></a>
                 <div class="row g-0">
                     <div class="col-4  col-lg-12">
                         <img src="https://via.placeholder.com/468x200?text=Sample+Image"

@@ -1,5 +1,7 @@
 <?php
-/* Template Name: ニュース一覧 */
+/**
+ * Template Name: ニュース一覧ページ
+*/
 ?>
 
 <?=get_header()?>
@@ -35,7 +37,7 @@
     <div class="row row-cols-1  row-cols-lg-3 g-2 g-lg-3">
 
         <?php for($i = 0; $i < 6; $i++): ?>
-        <div class="col h-100 card-link">
+        <div class="col">
             <a href="#"></a>
             <div class="card h-100">
                 <div class="row g-0">
