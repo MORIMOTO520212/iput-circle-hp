@@ -594,6 +594,12 @@ function create_circle() {
         $_POST['circle_post_nonce' ], // WordPressNonce
         ) )
     {
+        // 文字数チェック
+        if ( mb_strlen( $_POST['circleName']      ) > 20 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
+        if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
+        
         // ページ公開ステータスの取得
         $post_status = "publish"; // draft | publish
         if ( isset( $_GET['post_status'] ) ) {
@@ -612,12 +618,6 @@ function create_circle() {
                 return;
             }
         }
-
-        // 文字数チェック
-        if ( mb_strlen( $_POST['circleName']      ) > 20 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
-        if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
 
         // トップ画像をアップロード
         $top_img_url = upload_image('topImage')[1] ?? '';
@@ -702,10 +702,6 @@ function delete_circle() {
     return false;
 }
 
-function input_value_error_exit( $error_code = "" ) {
-    modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
-    return;
-}
 
 
 /**
@@ -718,6 +714,9 @@ function post_activity() {
         $_POST['organization'] // 所属しているサークル名
     ) )
     {
+        // 文字数チェック
+        if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
 
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
@@ -738,7 +737,8 @@ function post_activity() {
 
         // 所属サークル（自動サニタイズ、add_post_meta関数は禁止）
         update_post_meta( $post_id, 'organization', $_POST['organization'] );
-        if ( isset( $_POST['permission'] ) ) update_post_meta( $post_id, 'permission', true ); // 内部公開
+        // 内部公開の設定
+        if ( isset( $_POST['permission'] ) ) update_post_meta( $post_id, 'permission', true );
 
         // 記事ページへリダイレクト
         wp_redirect( get_permalink( $post_id ) );
@@ -842,4 +842,14 @@ function my_sendmail( $to, $subject, $message, $headers = "" ) {
     }
 
     return true;
+}
+
+/**
+ * inputフォームエラー時のアラートモーダル
+ * @param string $error_code - エラーコード
+ * @return false
+*/
+function input_value_error_exit( $error_code = "" ) {
+    modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
+    return;
 }
