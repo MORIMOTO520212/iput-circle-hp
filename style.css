@@ -181,3 +181,9 @@ body {
         width: 100% !important;
     }
 }
+
+/* Trix.js */
+trix-editor h1 {
+    font-size: 23px;
+    color: var(--main-h1-font-color);
+}
