@@ -285,7 +285,6 @@ function user_login() {
     if( isset( $_POST['keep_loggedin'] ) ) {
         $creds += array( 'remember', true );
     }
-    var_dump( $creds );
 
     // ログイン処理
     $user = wp_signon($creds);
@@ -293,10 +292,8 @@ function user_login() {
         modal( 'ログインに失敗しました', $user->get_error_message() );
         return;
     }
-
-    // マイページへリダイレクト
-    echo "ログイン成功";
-    wp_redirect( home_url( "index.php/author/{$user_login}" ) );
+    // マイページへ遷移する
+    wp_redirect( home_url( "index.php/author/{$user->user_login}" ) );
     exit;
     return true;
 }
@@ -462,7 +459,7 @@ function user_activation( $activation_key ) {
         // ユーザー作成処理
         $user_id = wp_insert_user( $userdata );
         if ( is_wp_error( $user_id ) ) {
-            modal('ユーザーの作成に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+            modal('ユーザーの作成に失敗しました', "{$user_id->get_error_code()}<br>{$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return false;
         }
     
@@ -561,9 +558,9 @@ function profile_update() {
 
     // ユーザーの作成に失敗
     if ( is_wp_error( $user_id ) ) {
-        echo $user_id -> get_error_code(); // WP_Error() の第一引数
-        echo $user_id -> get_error_message(); // WP_Error() の第二引数
-        modal('ユーザーの更新に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+        echo $user_id->get_error_code();
+        echo $user_id->get_error_message();
+        modal('ユーザーの更新に失敗しました', "{$user_id->get_error_code()}<br>{$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
     } else {
         modal('更新が完了しました', 'ユーザープロフィールの更新が正常に完了しました。');
     }
@@ -599,7 +596,7 @@ function create_circle() {
         if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
         if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
         if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
-        
+
         // ページ公開ステータスの取得
         $post_status = "publish"; // draft | publish
         if ( isset( $_GET['post_status'] ) ) {
@@ -729,9 +726,9 @@ function post_activity() {
         $post_id = wp_insert_post( $post_data, true );
 
         if ( is_wp_error( $post_id ) ) {
-            echo $user_id -> get_error_code();    // WP_Error() の第一引数
-            echo $user_id -> get_error_message(); // WP_Error() の第二引数
-            modal('記事の投稿に失敗しました', "${$user_id->get_error_code()}<br>${$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+            echo $post_id->get_error_code();
+            echo $post_id->get_error_message();
+            modal('記事の投稿に失敗しました', "{$post_id->get_error_code()}<br>{$post_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return;
         }
 
