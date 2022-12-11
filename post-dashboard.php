@@ -12,10 +12,12 @@ if ( isset( $_GET['type'] ) === false ) {
 if ( $_GET['type'] === 'post' ) {
     /** @var int $posts_length 記事の数をカウントする */
     $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'post' ) );
-    $title = '記事を管理する';
+    $title = "記事を管理する";
+    $option_url = home_url('index.php/post-%_%/');
 } elseif ( $_GET['type'] === 'circle' ) {
     $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'circle' ) );
-    $title = 'サークルを管理する';
+    $title = "サークルを管理する";
+    $option_url = home_url('index.php/post-circle');
 } else {
     echo "エラー";
     exit;
@@ -68,10 +70,12 @@ get_header();
                     <a href="<?php echo get_permalink( get_the_ID() ); ?>" class="col-lg-10 col-7 text-decoration-none text-black text-start overflow-hidden fs-6 text-truncate"><?php the_title(); ?></a>
                     <div class="col-lg-2 col-5 row mx-auto justify-content-center">
                         <div class="col-6">
-                            <a class="p-0 w-100 btn btn-secondary editbtn" href="?_post=edit" role="button"></a>
+                            <a class="p-0 w-100 btn btn-secondary editbtn" href="<?php
+                            echo str_replace('%_%', get_the_category()[0]->name, $option_url) . "?_post=edit&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                         <div class="col-6">
-                            <a class="p-0 w-100 btn btn-danger deletebtn" href="?_post=delete" role="button"></a>
+                            <a class="p-0 w-100 btn btn-danger deletebtn" href="<?php
+                            echo str_replace('%_%', get_the_category()[0]->name, $option_url) . "?_post=delete&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                     </div>
                 </div>
