@@ -69,13 +69,19 @@ get_header();
                 <div class="row py-3 px-lg-3 border-bottom border-1 border-secondary">
                     <a href="<?php echo get_permalink( get_the_ID() ); ?>" class="col-lg-10 col-7 text-decoration-none text-black text-start overflow-hidden fs-6 text-truncate"><?php the_title(); ?></a>
                     <div class="col-lg-2 col-5 row mx-auto justify-content-center">
+                        <?php
+                        // 投稿はカテゴリのニュース(post-news)と活動記録(post-activity)を判別してリンクを更新する
+                        if ( $_GET['type'] === 'post' ) {
+                            $option_url = str_replace('%_%', get_the_category()[0]->name, $option_url);
+                        }
+                        ?>
                         <div class="col-6">
                             <a class="p-0 w-100 btn btn-secondary editbtn" href="<?php
-                            echo str_replace('%_%', get_the_category()[0]->name, $option_url) . "?_post=edit&id=" . get_the_ID(); ?>" role="button"></a>
+                            echo $option_url . "?_post=edit&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                         <div class="col-6">
                             <a class="p-0 w-100 btn btn-danger deletebtn" href="<?php
-                            echo str_replace('%_%', get_the_category()[0]->name, $option_url) . "?_post=delete&id=" . get_the_ID(); ?>" role="button"></a>
+                            echo $option_url . "?_post=delete&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                     </div>
                 </div>
