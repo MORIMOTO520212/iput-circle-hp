@@ -230,9 +230,14 @@ add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
 function upload_image( $input_name ) {
     global $max_file_size;
 
+    // ファイルの存在確認
+    if ( isset( $_FILES[$input_name] ) === false ) {
+        return '';
+    }
+
     // ファイルサイズが5MB以上はアップロードしない
     if ( $_FILES[$input_name]['size'] > $max_file_size ) {
-        return array( NULL, NULL );
+        return '';
     }
 
     // アップロード処理
@@ -242,7 +247,7 @@ function upload_image( $input_name ) {
     // アップロードエラーチェック
     if ( is_wp_error( $attachment_id ) ) {
         // 何もしない
-        return array( NULL, NULL );
+        return '';
     } else {
         // アップロードした画像リンク
         $img_url = wp_get_attachment_image_src( $attachment_id, 'full' )[0];
@@ -570,9 +575,9 @@ function profile_update() {
 
 
 /**
- * サークル作成ページ サークル登録処理
+ * サークル 作成, 編集
 */
-function create_circle() {
+function post_circle() {
     if ( isset(
         $_POST['circleName'        ], // サークル名
         $_POST['belongNum'         ], // 所属人数
@@ -603,30 +608,7 @@ function create_circle() {
             $post_status = $_GET['post_status'];
         }
 
-        // 既存のサークル名ではないか
-        $args = array(
-            'posts_per_page' => -1,
-            'post_type'      => 'circle',
-        );
-        $circles = get_posts( $args );
-        foreach ( $circles as $circle ) {
-            if ( $circle->post_title === $_POST['circleName'] ) {
-                modal('エラー', '既に同じ名前のサークルが存在しています。');
-                return;
-            }
-        }
-
-        // トップ画像をアップロード
-        $top_img_url = upload_image('topImage')[1] ?? '';
-
-        // ヘッダー画像をアップロード
-        $header_img_url = upload_image('headerImage')[1] ?? '';
-
-
-        // アルバム画像
-        // ～ここへ処理～
-
-        // 投稿処理
+        // 投稿データ初期化
         $post_data = array(
             'post_title'     => $_POST['circleName'],      // 投稿のタイトル
             'post_name'      => md5( time() ),             // スラッグ名（時間をmd5でハッシュ化したもの）
@@ -636,6 +618,27 @@ function create_circle() {
             'post_author'    => wp_get_current_user()->ID, // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
             'post_category'  => array(),                   // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
         );
+
+        if ( $_POST['submit_type'] === 'circle_edit' ) {
+            // 更新の場合、postIDを指定する
+            if ( isset( $_POST['postID'] ) ) {
+                $post_data['ID'] = $_POST['postID'];
+            }
+        } else {
+            // 新規の場合、既存のサークル名ではないか
+            $args = array(
+                'posts_per_page' => -1,
+                'post_type'      => 'circle',
+            );
+            $circles = get_posts( $args );
+            foreach ( $circles as $circle ) {
+                if ( $circle->post_title === $_POST['circleName'] ) {
+                    modal('エラー', '既に同じ名前のサークルが存在しています。');
+                    return;
+                }
+            }
+        }
+
         $post_id = wp_insert_post( $post_data, true ); // 投稿を作成　自動サニタイズ
 
         if (  is_wp_error( $post_id ) ) {
@@ -647,13 +650,26 @@ function create_circle() {
         $category_id = wp_create_category( $_POST['circleName'] );
 
         if ( !($category_id) ) {
-            modal('エラー', '投稿に失敗しました。');
+            modal('エラー', 'カテゴリの作成に失敗しました。');
             return;
         }
 
+        // トップ画像をアップロード
+        $top_img_url = upload_image('topImage')[1] ?? '';
+
+        // ヘッダー画像をアップロード
+        $header_img_url = upload_image('headerImage')[1] ?? '';
+
+        // アルバム画像
+        // ～ここへ処理～
+
         // 投稿にカスタムフィールドを追加（自動サニタイズ、add_post_meta関数は禁止）
-        update_post_meta( $post_id, 'topImage',           $top_img_url                 ); // トップ画像（URL）
-        update_post_meta( $post_id, 'headerImage',        $header_img_url              ); // ヘッダー画像（URL）
+        if ( $_POST['submit_type'] === 'circle_post' || $top_img_url != '' ) { // 更新時に画像をアップしない場合はスルー
+            update_post_meta( $post_id, 'topImage', $top_img_url ); // トップ画像（URL）
+        }
+        if ( $_POST['submit_type'] === 'circle_post' || $header_img_url != '' ) {
+            update_post_meta( $post_id, 'headerImage', $header_img_url ); // ヘッダー画像（URL）
+        }
         update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
         update_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
         update_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
@@ -682,21 +698,13 @@ function create_circle() {
 }
 
 
-
 /**
- * サークル作成ページ　更新処理
-*/
-function update_circle() {
-    //  サークル名は変更不可
-    return false;
-}
-
-/**
- * サークル作成ページ　サークル削除処理
+ * サークル 削除
 */
 function delete_circle() {
+    // 投稿を削除する
     // サークル名のタグを削除する
-    return false;
+    return true;
 }
 
 
@@ -732,8 +740,9 @@ function post_activity() {
             return;
         }
 
-        // 所属サークル（自動サニタイズ、add_post_meta関数は禁止）
+        // 所属サークルの追加（自動サニタイズ、add_post_meta関数は禁止）
         update_post_meta( $post_id, 'organization', $_POST['organization'] );
+        
         // 内部公開の設定
         if ( isset( $_POST['permission'] ) ) update_post_meta( $post_id, 'permission', true );
 
@@ -791,17 +800,18 @@ add_action('after_setup_theme', function() {
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_post' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
-        create_circle();
+        post_circle();
     }
     // サークルをドラフト保存する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_draft' ) {
-        if ( !isset( $_POST['circle_draft_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_edit_nonce'], 'circle_draft_nonce_action' ) ) return;
+        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
     }
     // サークルを編集する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_edit' ) {
-        if ( !isset( $_POST['circle_edit_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_edit_nonce'], 'circle_edit_nonce_action' ) ) return;
+        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
+        post_circle();
     }
     // 活動記録投稿ページ
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
