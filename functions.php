@@ -13,8 +13,8 @@ require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 */
 // アップロード画像の最大ファイルサイズ（byte）
 $max_file_size = 5242880; //5MB
-// ファイルサイズ閾値
-$compression_file_size_threshold = 1048576;
+// ファイルサイズ閾値（byte）
+$compression_file_size_threshold = 1048576; //1MB
 
 $upload_post_name = "";
 
@@ -198,9 +198,8 @@ function modal( $title, $message ) {
  * 指定ファイルサイズ以上なら横幅1200pxで圧縮
 */
 function otocon_resize_at_upload( $file ) {
-    global $compression_file_size_threshold;
+    global $compression_file_size_threshold; // ファイルサイズ閾値
 	if ( $file['type'] == 'image/jpeg' || $file['type'] == 'image/gif' || $file['type'] == 'image/png') {
-
         if ( $_FILES[$GLOBALS['upload_post_name']]['size'] > $compression_file_size_threshold ) {
             $w = 1200;
             $h = 0;
@@ -209,8 +208,10 @@ function otocon_resize_at_upload( $file ) {
                 $size = getimagesize( $file['file'] );
                 if ( $size[0] > $w || $size[1] > $h ){
                     $image->resize( $w, $h, false );
-                    $final_image = $image->save( $file['file'] );
+                    $image->save( $file['file'] );
                 }
+            } else {
+                echo $image->get_error_message();
             }
         }
 
@@ -770,7 +771,7 @@ function post_news() {
 
 
 /**
- * POSTリクエストを受け取る
+ * POSTリクエストを受け付ける
  * after_setup_theme に処理をフック
  */
 add_action('after_setup_theme', function() {
@@ -819,6 +820,12 @@ add_action('after_setup_theme', function() {
         if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
         post_activity();
     }
+    // ニュース投稿ページ
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
+        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+        post_news();
+    }
 });
 
 
@@ -832,7 +839,6 @@ add_action('after_setup_theme', function() {
  * 
 */
 function my_sendmail( $to, $subject, $message, $headers = "" ) {
-    global $wpdb;
 
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
