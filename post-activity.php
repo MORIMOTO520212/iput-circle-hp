@@ -4,9 +4,13 @@
 */
 ?>
 
-<?php get_header(); ?>
+<?php
+require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
-<!-- 非対応のファイル添付時に表示 -->
+get_header();
+?>
+
+<!-- 非対応のファイル添付時に表示するモーダル -->
 <?php require_once( get_theme_file_path("assets/components/trix_file_type_caution_modal.php") ); ?>
 
 <div class="main mx-2">
@@ -82,5 +86,7 @@
         <?php wp_nonce_field( 'Mw8mgUz5', 'post_activity_nonce' ); ?>
     </form>
 </div>
+
+<?php trix_file_upload_to_wordpress(); ?>
 
 <?php get_footer(); ?>

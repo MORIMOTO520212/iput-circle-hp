@@ -11,10 +11,9 @@
  * フロー図：https://docs.google.com/drawings/d/1_D9srwDlzHAwPy2sCkck6nT2wg6cu_afPSiU9KdmMNo/edit?usp=sharing
 */
 
-get_header();
+require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
-/* 画像アップロード用media_upload.phpのリンクを指定する */
-$img_post_url = home_url('index.php/media-upload');
+get_header();
 
 /* サークル特色 */
 $features = [
@@ -209,7 +208,7 @@ if( isset( $_GET['_post'] ) ) {
                             ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="<?php echo "chkbox-$i"; ?>"
-                                    name="features[]" value="<?php echo $features[$i]; ?>" <?php echo in_array( $features[$i], ($input['features'] ?? '') ) ? 'checked' : ''; ?>>
+                                    name="features[]" value="<?php echo $features[$i]; ?>" <?php echo in_array( $features[$i], ($input['features'] ?? array()) ) ? 'checked' : ''; ?>>
                                 <label class="form-check-label" for="<?php echo "chkbox-$i"; ?>"><?php echo $features[$i]; ?></label>
                             </div>
                             <?php
@@ -321,9 +320,6 @@ if( isset( $_GET['_post'] ) ) {
     <?php wp_nonce_field( 'n4Uyh98k', 'circle_post_nonce' ); ?>
 </form>
 
-<!-- 活動記録 画像アップロード -->
-<?php wp_nonce_field( 'P7chUSMY', 'my_image_upload_nonce' ); ?>
-<form enctype="multipart/form-data" method="post" name="imgUploadForm" id="imgUploadForm"></form>
 
 <script>
     // submitボタン押下時に上にスクロールする
@@ -333,88 +329,6 @@ if( isset( $_GET['_post'] ) ) {
     });
 </script>
 
-<script>
-    /**
-     * 活動内容 画像アップロード処理
-    */
-
-    // フィールドnonce取得
-    var my_image_upload_nonce = document.getElementById('my_image_upload_nonce').value;
-    var attachment;
-
-    // 画像ID格納
-    var img_id_list = [];
-
-    /* upload media to WordPress */
-    // trix-file-accept → trix-attachment-add の順で
-    // イベントが実行されたとき、画像をアップロードする。
-    // これは、Redoのときに画像をアップロードさせないため。
-    var file_upload_flag = 0;
-    addEventListener('trix-file-accept', function(event) {
-        console.log("trix-file-accept");
-        if( event['file']['type'] == "image/png" || event['file']['type'] == "image/jpeg" ) {
-            file_upload_flag = 1;
-        }else{
-            fileTypeCaution.show(); // ファイル形式の警告表示
-        }
-    });
-    // Ajax通信でmedia_upload.phpを呼び出してアップロード
-    addEventListener('trix-attachment-add', function(event) {
-        console.log("trix-attachment-add");
-
-        // アップロードされた時
-        if(file_upload_flag) {
-            file_upload_flag = 0;
-
-            // ファイル情報取得
-            attachment = event.attachment;
-            var file = attachment.file;
-            var id = attachment.id;
-            console.log(attachment);
-
-            // 画像ID格納
-            img_id_list.push(id);
-
-            /* 通信設定 */
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '<?php echo $img_post_url; ?>', true);
-
-            // 通信完了時のアクション
-            xhr.onreadystatechange = () => {
-                console.log(xhr.readyState);
-                if(xhr.status == 200){
-                    console.log("readystatechange");
-                    if(xhr.response){
-                        var imgPath = xhr.responseText;
-                        console.log(imgPath);
-                        attachment.setUploadProgress(70);
-                        // TrixEditorに画像をリンクする
-                        attachment.setAttributes({
-                            url: imgPath,  // img > src
-                            href: imgPath,  // img > a
-                        });
-                    }
-                }
-            };
-
-            // エラー処理
-            xhr.onerror = () => {
-                console.log("error!");
-            }
-
-            // フォーム作成
-            var imgUploadForm = document.getElementById('imgUploadForm');
-            var formData = new FormData(imgUploadForm);
-            formData.append('my_image_upload', file);
-            formData.append('my_image_upload_nonce', my_image_upload_nonce);
-            formData.append('_wp_http_referer', '/wordpress/index.php/circle-edit/');
-
-            attachment.setUploadProgress(50);
-
-            // データ送信
-            xhr.send(formData);
-        }
-    });
-</script>
+<?php trix_file_upload_to_wordpress(); ?>
 
 <?php get_footer(); ?>
