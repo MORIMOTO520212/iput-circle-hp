@@ -712,6 +712,18 @@ function delete_circle() {
 
 /**
  * 活動記録投稿ページ 投稿処理
+ * 
+ * # データベースに記録されるデータ
+ * ## 記事データ一覧
+ * - post_title    - タイトル
+ * - post_content  - コンテンツ
+ * - post_category - 活動のカテゴリID
+ * - tags_input    - タグ
+ * - post_status   - 公開設定
+ * 
+ * ## カスタムメタデータ一覧
+ * - organization  - 所属サークル名
+ * - permission    - 内部公開設定 true-内部公開, false-外部公開
 */
 function post_activity() {
     if ( isset(
@@ -745,7 +757,11 @@ function post_activity() {
         update_post_meta( $post_id, 'organization', $_POST['organization'] );
         
         // 内部公開の設定
-        if ( isset( $_POST['permission'] ) ) update_post_meta( $post_id, 'permission', true );
+        if ( isset( $_POST['permission'] ) ) {
+            update_post_meta( $post_id, 'permission', 'true' );
+        } else {
+            update_post_meta( $post_id, 'permission', 'false' );
+        }
 
         // 記事ページへリダイレクト
         wp_redirect( get_permalink( $post_id ) );
