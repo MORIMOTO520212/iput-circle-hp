@@ -1,7 +1,7 @@
 /*
-Theme Name: IPUTONE制作チーム
+Theme Name: IPUT ONE制作チーム
 Version:    1.0.0
-Author:     IPUTONE制作チーム
+Author:     IPUT ONE制作チーム
 */
 
 body {
@@ -105,7 +105,7 @@ body {
     object-fit: cover;
 }
 
-/* 3点リーダー省略 (クランプ) */
+/* 文字列3点リーダー省略 (クランプ) */
 /* line clamp 1 */
 .line-clamp-1 {
     display: -webkit-box;
@@ -176,9 +176,17 @@ body {
         width: 70% !important;
     }
 }
+
 @media screen and (max-width: 1200px) {
     .nav-padding {
         width: 100% !important;
+    }
+}
+
+/* breakpoint lg */
+@media only screen and (max-width: 991px) {
+    .card-img-top {
+        border-radius: .25rem 0 0 .25rem !important;
     }
 }
 

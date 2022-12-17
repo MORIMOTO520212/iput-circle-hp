@@ -4,22 +4,20 @@
 */
 ?>
 
+<?php get_header(); ?>
+
 <?php
-get_header();
+
 ?>
 
 
-    <!-- faq -->
+<!-- faq -->
 <main class="container-fluid p-0" id="contents">
-    <!-- top -->
-    <!-- 大まか指示通りできているはず -->
     <div class="position-relative" id="faq-top">
         <img src="<?php echo get_theme_file_uri('src/background/room1.webp'); ?>" class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="text-center text-white">
-                <!-- よくあるご質問 -->
                 <h1>よくあるご質問</h1>
-                <!-- FAQ -->
                 <h3>FAQ</h3>
             </div>
         </div>

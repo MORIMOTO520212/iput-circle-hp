@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
 
 .top {
-    position: relative;
     height: 500px;
     background-repeat: no-repeat;
     background-position: center;
@@ -12,10 +11,7 @@
 
 /* 登録フォーム */
 .register {
-    position: absolute;
-    top: 10%;
-    right: 5%;
-    width: 400px;
+    max-width: 400px;
     border-radius: 10px;
     background: #fff;
     padding: 20px;
@@ -249,11 +245,4 @@ h4 {
     font-size: 1.1rem;
     margin-left: 0.1rem;
     margin-right: 0.5rem;
-}
-
-/* -lg */
-@media only screen and (max-width: 991px) {
-    .card-img-top {
-        border-radius: .25rem 0 0 .25rem !important;
-    }
 }

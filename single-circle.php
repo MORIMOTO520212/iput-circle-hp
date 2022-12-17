@@ -59,17 +59,17 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                                 活動一覧
                                 </div>
                             <div class="mobile-menu-link a-button mt-3 icon twitter">
-                                <a href=""></a>
+                                <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
                                 公式Twitter
                             </div>
                         </div>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon person-fill">
-                                <a href=""></a>
+                                <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
                                 参加申請
                             </div>
                             <div class="mobile-menu-link a-button mt-3 icon envelope-fill">
-                                <a href=""></a>
+                                <a href="<?php echo home_url("index.php/circle-contact/?to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
                                 お問い合わせ
                             </div>
                         </div>
@@ -217,7 +217,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                 endif;
                 ?>
                 <div class="menu-link a-button mt-4 icon envelope-fill">
-                    <a href="#"></a>
+                    <a href="javascript:piplup();"></a>
                     お問い合わせ
                 </div>
                 <p class="mt-4">更新日: <?php echo date_formatting( $post->post_modified ); ?></p>
@@ -226,5 +226,10 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
     </div>
 </div>
 
+<script>
+function piplup() {
+    window.open("<?php echo home_url("index.php/circle-contact/?circlename=" . get_the_title() . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>", "window1", "width=400, height=400, scrollbars=1");
+}
+</script>
 
 <?php get_footer(); ?>

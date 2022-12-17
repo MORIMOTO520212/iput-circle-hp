@@ -1,7 +1,7 @@
 <?php
 /* Template Name: マイページ */
 
-// マイページは固定ページに登録する必要はありません。
+// マイページは固定ページに登録しません。
 // index.php/author/<username> でアクセスできます。
 ?>
 
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="create-circle mb-3">
-            <a class="button" href="<?php echo home_url("index.php/post-circle"); ?>"></a>
+            <a class="button" href="<?php echo home_url("index.php/post-circle/?_post=create"); ?>"></a>
             <div><h4>サークルを作成する</h4></div>
             <div class="icon">
                 <span></span>
@@ -29,7 +29,7 @@
 
     <div class="main-second">
         <div class="management-card">
-            <a class="button" href="<?php echo home_url("index.php/post-activity"); ?>"></a>
+            <a class="button" href="<?php echo home_url("index.php/post-activity/?_post=create"); ?>"></a>
             <div class="title">
                 <h4 class="pb-2">活動記録を書く</h4>
                 <p>サークルの活動や、その他の課外活動に関する活動状況について書きます。</p>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="management-card">
-            <a class="button" href="#"></a>
+            <a class="button" href="<?php echo home_url("index.php/post-dashboard/?type=circle&paged=1"); ?>"></a>
             <div class="title">
                 <h4 class="pb-2">サークルを管理する</h4>
                 <p>作成したサークルを管理できます。</p>
@@ -68,7 +68,7 @@
         </div>
 
         <div class="management-card">
-            <a class="button" href="#"></a>
+            <a class="button" href="<?php echo home_url("index.php/post-dashboard/?type=post&paged=1"); ?>"></a>
             <div class="title">
                 <h4 class="pb-2">記事を管理する</h4>
                 <p>投稿した活動記録とニュースを管理できます。</p>

@@ -62,9 +62,9 @@ get_header();
                 <select class="form-select form-select-sm" name="organization" style="flex:1" aria-label="Default select example">
                     <!-- set value post id -->
                     <option value="false" selected>なし</option>
-                    <option value="1">サークル１</option>
-                    <option value="2">サークル２</option>
-                    <option value="3">サークル３</option>
+                    <option value="サークル１">サークル１</option>
+                    <option value="サークル２">サークル２</option>
+                    <option value="サークル３">サークル３</option>
                 </select>
                 <div style="flex:1"></div>
             </div>

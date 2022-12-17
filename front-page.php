@@ -6,52 +6,67 @@
 
 <main class="contents">
     <!-- ファーストビュー -->
-    <div class="top" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
-        <!-- 登録フォーム -->
-        <form action="" method="post" class="register needs-validation" novalidate>
-            <h3>新規ユーザーの登録</h3>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-userid">
-                    <span class="bi bi-person-circle"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">入力必須です</div>
-            </div>
-            <div class="row row-cols-1 row-cols-md-2 mb-3">
-                <div class="col">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text">姓</span>
-                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="姓" aria-label="姓" aria-describedby="lastname-help" required>
-                    </div>
-                    <div class="invalid-feedback">入力必須です</div>
+    <div class="top row row-cols-1 row-cols-md-2 g-0 overflow-hidden" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
+        <div class="col"></div>
+        <div class="col">
+            <?php
+            // ログインしていない場合、登録フォームを表示する
+            if ( !is_user_logged_in() ):
+            ?>
+            <!-- 登録フォーム -->
+            <form class="register mx-3 mx-sm-auto mt-5 needs-validation" action="" method="post" novalidate>
+                <h3>新規ユーザーの登録</h3>
+                <!-- ユーザー名 -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text" id="addon-wrapping-userid">
+                        <span class="bi bi-person-circle"></span>
+                    </span>
+                    <input type="text" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" class="form-control mb-0" 
+                        name="username" placeholder="ユーザー名を入力してください" aria-label="ユーザー名を入力してください" required>
                 </div>
-                <div class="col">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text">名</span>
-                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="名" aria-label="名" aria-describedby="firstname-help" required>
+                <!-- 氏名 -->
+                <div class="row row-cols-1 row-cols-sm-2 mb-3">
+                    <div class="col mb-2 mb-sm-auto">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">姓</span>
+                            <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" class="form-control" 
+                                name="lastname" id="lastname" placeholder="姓" aria-label="姓" required>
+                        </div>
                     </div>
-                    <div class="invalid-feedback">入力必須です</div>
+                    <div class="col">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">名</span>
+                            <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" class="form-control" 
+                                name="firstname" id="firstname" placeholder="名" aria-label="名" required>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-email">
-                    <span class="bi bi-envelope-fill"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">メールアドレスの形式が違います</div>
-            </div>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-password">
-                    <span class="bi bi-key-fill"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">入力必須です</div>
-            </div>
-            <!-- Bootstrap 登録ボタン -->
-            <div class="d-flex justify-content-center mt-4">
-                <button type="submit" name="signup" class="btn btn-success" value="signup">アカウントを作成する</button>
-            </div>
-        </form>
+                <!-- 学校のメールアドレス -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text">
+                        <span class="bi bi-envelope-fill"></span>
+                    </span>
+                    <input type="text" minlength="2" maxlength="50" class="form-control mb-0" name="email" placeholder="学校のメールアドレスを入力してください" 
+                        aria-label="学校のメールアドレスを入力してください" required>
+                </div>
+                <!-- パスワード -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text">
+                        <span class="bi bi-key-fill"></span>
+                    </span>
+                    <input type="text" minlength="6" maxlength="16" class="form-control mb-0" name="password" placeholder="パスワードを入力してください" 
+                        aria-label="パスワードを入力してください" required>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" name="submit_type" class="btn btn-success" value="signup">アカウントを作成する</button>
+                </div>
+                <?php wp_nonce_field( 'N9zxfbth', 'signup_nonce' ); ?>
+            </form>
+            <?php
+            endif;
+            ?>
+        </div>
     </div>
 
     <!-- トップ カテゴリ only wider than -lg -->
@@ -73,7 +88,7 @@
                 <span>IPUTで活動しているサークルを紹介します。</span>
             </div>
             <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
-                <a class="card-link" href="#"></a>
+                <a class="card-link" href="<?php echo home_url('index.php/faq'); ?>"></a>
                 <h3>FAQ</h3>
                 <span>学生が気になる学校に関する質問をまとめています。</span>
             </div>
@@ -191,46 +206,39 @@
         <!-- 活動・ニュース -->
         <div class="container w-100 mt-5 max-width-lg">
             <div class="row row-cols-1 row-cols-lg-2 g-5">
+
                 <!-- 活動 -->
                 <div class="col" id="activity">
                     <h4>活動</h4>
-                    <?php 
-                    // 配列を定義
-                    $card_array = null;
-                    // 記事データを取得
-                    $card_datas = get_article_data("activity");
-                    // 取得した記事情報の表示
+                    <?php
+                    $card_array = null; // 配列を定義
+                    $card_datas = get_article_data('activity'); // 記事データを取得
                     if ( $card_datas ):
                         // 記事情報がある場合はforeachで記事情報を表示
                         foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                             setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            //var_dump($post);
                             $card_array[] = create_article_datas($post, null);
                         endforeach; 
                         // ↑ ループ終了 ↑
                     else: // 記事情報がなかったら
                         $card_array = null;
                     endif;
-                    // 一覧情報取得に利用したループをリセットする
                     wp_reset_postdata();
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
                 </div>
+
                 <!-- ニュース -->
                 <div class="col" id="news">
                     <h4>ニュース</h4>
-                    <?php 
-                    // 配列を定義
+                    <?php
                     $card_array = null;
-                    // 記事データを取得
-                    $card_datas = get_article_data("news");
-                    // 取得した記事情報の表示
+                    $card_datas = get_article_data('news');
                     if ( $card_datas ):
                         // 記事情報がある場合はforeachで記事情報を表示
                         foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
                             setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            //var_dump($post);
                             $card_array[] = create_article_datas($post, null);
                         endforeach; 
                         // ↑ ループ終了 ↑
@@ -322,7 +330,7 @@
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
                     for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館' . $i + 1, ($i + 2) ** ($i + 1));
+                        circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館', $i + 1, ($i + 2) ** ($i + 1));
                     }
                     ?>
                 </div>
@@ -372,8 +380,8 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text)
                         </h5>
                         <div class="card-text mt-auto">
                             <div class="row row-cols-1 mb-0 circle-info">
-                                <small class="col line-clamp-1"><?php echo $place_text ?? '不明'; ?></small>
-                                <small class="col line-clamp-1"><?php echo $members_text ?? '不明'; ?></small>
+                                <small class="col line-clamp-1"><?php echo $place_text ?? ''; ?></small>
+                                <small class="col line-clamp-1"><?php echo $members_text ?? ''; ?></small>
                             </div>
                         </div>
                     </div>
@@ -420,85 +428,53 @@ function circle_news($article_array) {
 }
 
 /* 記事カードのテンプレート */
-function circle_info_card(?array $card_array){
+function circle_info_card(?array $card_array) {
     if($card_array == null): //表示する記事がない場合
     ?>
     <p class="pt-4 text-center">記事がありません。</p>
     <?php
     else: //表示する記事がある場合
-        ?>
-        <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
-        <?php
-        foreach($card_array as $card):
-        ?>
-        <div class="col">
-            <div class="card h-100">
-                <a class="card-link" href="<?php echo $card -> link; ?>"></a>
-                <div class="row g-0">
-                    <div class="col-4 col-lg-12">
-                        <img src="<?php echo $card -> img; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
-                    </div>
-                    <div class="col-8 col-lg-12">
-                        <div class="card-body h-100 d-flex flex-column">
-                            <h5 class="card-title">
-                                <?php echo $card->title; //タイトル ?>
-                            </h5>
-                            <div class="card-text d-none d-lg-block">
-                                <p class="line-clamp-2">
-                                    <?php echo $card -> excerpt; //本文抜粋 ?>
-                                </p>
-                            </div>
-                            <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                <div class="text-nowrap">
-                                    <small class="text-muted"><?php echo $card -> date; ?></small>
-                                </div>
+    ?>
+    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
+    <?php
+    foreach($card_array as $card):
+    ?>
+    <div class="col">
+        <div class="card h-100">
+            <a class="card-link" href="<?php echo $card->link; ?>"></a>
+            <div class="row g-0">
+                <div class="col-4 col-lg-12">
+                    <img src="<?php echo $card->img; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
+                </div>
+                <div class="col-8 col-lg-12">
+                    <div class="card-body h-100 d-flex flex-column">
+                        <h5 class="card-title line-clamp-2">
+                            <?php echo $card->title; //タイトル ?>
+                        </h5>
+                        <!-- 本文 -->
+                        <div class="card-text d-flex justify-content-between align-items-center mt-auto">
+                            <div class="text-nowrap">
+                                <small class="text-muted"><?php echo $card->date; ?></small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
-        endforeach;
-        ?>
-        </div>
-        <!-- ボタン もっと見る -->
-        <div class="d-flex justify-content-end mt-3">
-            <a href="<?=home_url('index.php/news')?>">
-                <button type="button" class="btn btn-success">もっと見る</button>
-            </a>
-        </div>
-        <?php
+    </div>
+    <?php
+    endforeach;
+    ?>
+    </div>
+    <!-- ボタン もっと見る -->
+    <div class="d-flex justify-content-end mt-3">
+        <a href="<?=home_url('index.php/news')?>">
+            <button type="button" class="btn btn-success">もっと見る</button>
+        </a>
+    </div>
+    <?php
     endif;
 }
-
-// postデータのカテゴリから必要なpostデータを引き出す。 使えません。
-/*
-function filter_category(string $category){
-    // 配列を定義
-    $card_array = null;
-    // 記事データを取得
-    $card_datas = get_article_data($category);
-    // 取得した記事情報の表示
-    if ( $card_datas ):
-        // 記事情報がある場合はforeachで記事情報を表示
-        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-            //var_dump($post);
-            $card_array[] = create_article_datas($post, null);
-        endforeach; 
-        // ↑ ループ終了 ↑
-    else: // 記事情報がなかったら
-        // 
-    endif;
-    
-    //var_dump($card_array);
-    // 一覧情報取得に利用したループをリセットする
-    wp_reset_postdata();
-    // 活動カード描画
-    circle_info_card($card_array);
-}
-*/
 
 // postデータからインスタンスを作成し各インスタンスごとにデータを格納
 function create_article_datas(WP_Post $post, ?array $article_tags_array):?object {
