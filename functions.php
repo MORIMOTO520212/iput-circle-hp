@@ -63,7 +63,8 @@ add_action('init', 'post_type_circle');
 
 /**
  * WordPressで管理する時間の文字列を、年、月、日で分割する。
- * 
+ * @param string $date
+ * @return string
  * 例えば、引数に'2022-11-11 01:19:30'を渡すと'2022年11月11日'が返される
  */
 function date_formatting( $date ) {
@@ -577,8 +578,21 @@ function profile_update() {
 
 /**
  * サークル 作成, 編集
+ * 
+ * # データベースに記録されるデータ
+ * ## 基本データ一覧
+ * - post_title    - タイトル
+ * - post_name     - スラッグ名（時間をmd5でハッシュ化したものを用いる）
+ * - post_type     - 投稿タイプ（circle）
+ * - post_status   - 公開状態（draft | publish）
+ * - post_content  - 投稿の全文
+ * - post_category - 投稿カテゴリには投稿サークルのカテゴリを作成して追加する。
+ * 
+ * ## カスタムメタデータ一覧
+ * - 
 */
 function post_circle() {
+    // パラメータのチェック
     if ( isset(
         $_POST['circleName'        ], // サークル名
         $_POST['belongNum'         ], // 所属人数
@@ -588,7 +602,6 @@ function post_circle() {
         $_POST['establishmentDate' ], // 設立日
         $_POST['activityFrequency' ], // 活動頻度
         $_POST['membershipFree'    ], // 会費
-        $_POST['features'          ], // 特色(array)
         $_POST['activitySummary'   ], // サークル概要
         $_POST['activityDetail'    ], // 活動内容
         $_POST['contactMailAddress'], // 連絡先
@@ -603,30 +616,35 @@ function post_circle() {
         if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
         if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
 
-        // ページ公開ステータスの取得
+        // 公開状態の取得
         $post_status = "publish"; // draft | publish
         if ( isset( $_GET['post_status'] ) ) {
             $post_status = $_GET['post_status'];
         }
 
-        // 投稿データ初期化
+        // 投稿データの配列を作成
         $post_data = array(
             'post_title'     => $_POST['circleName'],      // 投稿のタイトル
-            'post_name'      => md5( time() ),             // スラッグ名（時間をmd5でハッシュ化したもの）
             'post_type'      => 'circle',                  // 投稿タイプ
             'post_status'    => $post_status,              // 公開ステータス
             'post_content'   => $_POST['activitySummary'], // 投稿の全文
-            'post_author'    => wp_get_current_user()->ID, // 作成者のユーザー ID。デフォルトはログイン中のユーザーの ID。
-            'post_category'  => array(),                   // 投稿カテゴリー。デフォルトは空（カテゴリーなし）。
         );
 
+        /* 更新の場合 */
         if ( $_POST['submit_type'] === 'circle_edit' ) {
-            // 更新の場合、postIDを指定する
+            // postIDを指定する
             if ( isset( $_POST['postID'] ) ) {
                 $post_data['ID'] = $_POST['postID'];
             }
+            // カテゴリ名を更新する
+            wp_set_post_categories( $_POST['postID'], get_the_category( $_POST['postID'] )[0]->cat_ID, false );
+
+        /* 新規投稿の場合 */
         } else {
-            // 新規の場合、既存のサークル名ではないか
+            // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
+            $post_data['post_name'] = md5( time() );
+
+            // 既存のサークル名ではないかチェック
             $args = array(
                 'posts_per_page' => -1,
                 'post_type'      => 'circle',
@@ -640,6 +658,7 @@ function post_circle() {
             }
         }
 
+        // 投稿を作成する
         $post_id = wp_insert_post( $post_data, true ); // 投稿を作成　自動サニタイズ
 
         if (  is_wp_error( $post_id ) ) {
@@ -647,18 +666,17 @@ function post_circle() {
             return;
         }
 
-        // カテゴリ作成
-        $category_id = wp_create_category( $_POST['circleName'] );
-
-        if ( !($category_id) ) {
-            modal('エラー', 'カテゴリの作成に失敗しました。');
-            return;
+        // サークルのカテゴリを作成する
+        if ( $_POST['submit_type'] === 'circle_post' ) {
+            $category_id = wp_create_category( $_POST['circleName'] );
+            wp_set_post_categories( $post_id, array($category_id), true );
         }
+        
 
-        // トップ画像をアップロード
+        // トップ画像のアップロード
         $top_img_url = upload_image('topImage')[1] ?? '';
 
-        // ヘッダー画像をアップロード
+        // ヘッダー画像のアップロード
         $header_img_url = upload_image('headerImage')[1] ?? '';
 
         // アルバム画像
@@ -671,6 +689,7 @@ function post_circle() {
         if ( $_POST['submit_type'] === 'circle_post' || $header_img_url != '' ) {
             update_post_meta( $post_id, 'headerImage', $header_img_url ); // ヘッダー画像（URL）
         }
+        // 自動サニタイズ、add_post_meta関数は禁止
         update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
         update_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
         update_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
@@ -678,13 +697,13 @@ function post_circle() {
         update_post_meta( $post_id, 'establishmentDate',  $_POST['establishmentDate']  ); // 設立日
         update_post_meta( $post_id, 'activityFrequency',  $_POST['activityFrequency']  ); // 活動頻度
         update_post_meta( $post_id, 'membershipFree',     $_POST['membershipFree']     ); // 会費
-        update_post_meta( $post_id, 'features',           $_POST['features']           ); // 特色（配列をシリアル化して文字列で保存）
         update_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
         update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
         update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
         update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ); // 公式Twitterユーザー名
-        update_post_meta( $post_id, 'circleCategoryId',   $category_id                 ); // サークルカテゴリID
-
+        if ( isset( $_POST['features'] ) ) {
+            update_post_meta( $post_id, 'features',       $_POST['features']           ); // 特色（配列をシリアル化して文字列で保存）
+        }
         
 
     } else {
@@ -717,7 +736,7 @@ function delete_circle() {
  * ## 記事データ一覧
  * - post_title    - タイトル
  * - post_content  - コンテンツ
- * - post_category - 活動のカテゴリID
+ * - post_category - 活動のカテゴリIDとサークルカテゴリID
  * - tags_input    - タグ
  * - post_status   - 公開設定
  * 
@@ -729,7 +748,7 @@ function post_activity() {
     if ( isset(
         $_POST['title'],       // 記事のタイトル
         $_POST['contents'],    // 記事の内容
-        $_POST['organization'] // 所属しているサークル名
+        $_POST['organizationId'] // 所属しているサークルのカテゴリID
     ) )
     {
         // 文字数チェック
@@ -739,7 +758,7 @@ function post_activity() {
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
-            'post_category' => array( get_cat_ID('activity') ),  // カテゴリID
+            'post_category' => array( get_cat_ID('activity'),  $_POST['organizationId'] ),  // カテゴリID
             'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
@@ -752,9 +771,6 @@ function post_activity() {
             modal('記事の投稿に失敗しました', "{$post_id->get_error_code()}<br>{$post_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return;
         }
-
-        // 所属サークルの追加（自動サニタイズ、add_post_meta関数は禁止）
-        update_post_meta( $post_id, 'organization', $_POST['organization'] );
         
         // 内部公開の設定
         if ( isset( $_POST['permission'] ) ) {
