@@ -118,7 +118,7 @@
                 <!-- wider than -sm -->
                 <li class="nav-item d-none d-sm-block" role="presentation">
                     <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">
-                        イベント・行事
+                        行事・イベント
                     </button>
                 </li>
                 <!-- smaller than -sm -->
@@ -133,7 +133,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link dropdown-item" id="event-tab-sm" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">
-                                イベント・行事
+                                行事・イベント
                             </button>
                         </li>
                     </ul>
@@ -142,43 +142,45 @@
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
             <?php
-            // 配列や変数の初期化
-            $new_info_array     = null;  // 新規情報タグのある投稿を格納するリスト
-            $announcement_array = null;  // お知らせタグのある投稿を格納するリスト
-            $event_array        = null;  // 行事・イベントタグのある投稿を格納するリスト
+            $new_info_array       = null;  // 新規情報
+            $announcement_array   = null;  // お知らせ
+            $event_array          = null;  // 行事・イベント
             $aritcle_is_important = false;
-            $news_datas = null;
+            $news_datas           = null;
 
-            // 記事データを取得する。
+            // 記事データ取得
             $news_datas = get_article_data("news");
 
-            // 取得した記事情報の表示
-            if ( $news_datas ):
-                // 記事情報がある場合はforeachで記事情報を表示
-                foreach ( $news_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                    setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                    $news_all_tags = get_the_tags(); // タグのリストを$tagsに代入
-                    if( $news_all_tags ): // タグが存在する場合
-                        $article_tags_array = array_column($news_all_tags, 'name'); // タグの配列からnameのカラムを抽出
-                        if(in_array('新規情報', $article_tags_array)): // 新規情報タグのある記事を表示
+            if ( $news_datas ) {
+
+                // 記事取得
+                foreach ( $news_datas as $post ) {
+                    setup_postdata( $post );
+                    $news_all_tags = get_the_tags();
+
+                    if( $news_all_tags ) { // タグが存在する場合
+                        $article_tags_array = array_column($news_all_tags, 'name');
+
+                        if(in_array('新規情報', $article_tags_array)) {
                             $new_info_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                        if(in_array('お知らせ', $article_tags_array)): // お知らせタグのある記事を表示
+                        }
+
+                        if(in_array('お知らせ', $article_tags_array)) {
                             $announcement_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                        if(in_array('行事・イベント', $article_tags_array)): // 行事・イベントタグのある記事を表示
+                        }
+
+                        if(in_array('行事・イベント', $article_tags_array)) {
                             $event_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                    else: // $all_tagsにタグが存在しない場合
+                        }
+
+                    } else { // $all_tagsにタグが存在しない場合
                         continue;
-                        // 
-                    endif;
-                endforeach; 
-                // ↑ ループ終了 ↑
-            else: // 記事情報がなかったら
-                // 
-            endif;
-            
+                    }
+                }
+
+            } else { // 記事情報がなかったら
+            }
+
             // 一覧情報取得に利用したループをリセットする
             wp_reset_postdata();
             ?>
@@ -213,17 +215,17 @@
                     <?php
                     $card_array = null; // 配列を定義
                     $card_datas = get_article_data('activity'); // 記事データを取得
-                    if ( $card_datas ):
-                        // 記事情報がある場合はforeachで記事情報を表示
-                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                    if ( $card_datas ) {
+                        for ( $i = 0; $i < 4; $i++ ) {
+                            if ( !isset( $card_datas[$i] ) ) break;
+                            $post = $card_datas[$i];
                             $card_array[] = create_article_datas($post, null);
-                        endforeach; 
-                        // ↑ ループ終了 ↑
-                    else: // 記事情報がなかったら
+                        }
+                    } else {
                         $card_array = null;
-                    endif;
+                    }
                     wp_reset_postdata();
+
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
@@ -237,8 +239,7 @@
                     $card_datas = get_article_data('news');
                     if ( $card_datas ):
                         // 記事情報がある場合はforeachで記事情報を表示
-                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
+                        foreach ( $card_datas as $post ):
                             $card_array[] = create_article_datas($post, null);
                         endforeach; 
                         // ↑ ループ終了 ↑
@@ -324,13 +325,24 @@
                     </div>
                 </div>
             </div>
+            <?php
+            $args = array(
+                'posts_per_page'   => -1,
+                'post_type'        => 'circle', 
+            );
+            $circle_data = get_posts( $args );
+            ?>
+            
             <!-- 運動 -->
             <div class="pt-5" id="circle-sport">
                 <h4 class="rounded circle-category-title sport-icon">運動</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館', $i + 1, ($i + 2) ** ($i + 1));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '運動' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -340,8 +352,11 @@
                 <h4 class="rounded circle-category-title culture-icon">文化・学術</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('Nectgrams', 'nectgrams.jpg', 'Discord', ($i + 10) * ($i + 1 * 2));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '文化・学術' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -351,8 +366,11 @@
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('映像研', null, '291 MIRAI STUDIO', ($i + 3) ** ($i + 2));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '創造' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -363,14 +381,14 @@
 
 <?php
 /* サークル カードのテンプレート */
-function circle_card($circle_name, $thumbnail_image, $place_text, $members_text) {
+function circle_card($circle_name, $thumbnail_image, $place_text, $members_text, $url) {
     ?>
     <div class="col">
         <div class="card h-100">
-            <a class="card-link" href="#"></a>
+            <a class="card-link" href="<?php echo $url; ?>"></a>
             <div class="row g-0">
                 <div class="col-4 col-lg-12">
-                    <img src="<?=get_theme_file_uri( 'src/' . ($thumbnail_image ?? 'no_image.png') )?>"
+                    <img src="<?php echo !empty($thumbnail_image) ? $thumbnail_image : get_theme_file_uri('src/no_image.png'); ?>"
                         class="card-img-top ratio-3x2 h-100" alt="...">
                 </div>
                 <div class="col-8 col-lg-12">
@@ -427,7 +445,7 @@ function circle_news($article_array) {
     endif;
 }
 
-/* 記事カードのテンプレート */
+/* 記事カードのテンプレート（活動、ニュース） */
 function circle_info_card(?array $card_array) {
     if($card_array == null): //表示する記事がない場合
     ?>
@@ -448,9 +466,9 @@ function circle_info_card(?array $card_array) {
                 </div>
                 <div class="col-8 col-lg-12">
                     <div class="card-body h-100 d-flex flex-column">
-                        <h5 class="card-title line-clamp-2">
-                            <?php echo $card->title; //タイトル ?>
-                        </h5>
+                        <h1 class="card-title fs-6 line-clamp-2">
+                            <?php echo $card->title; ?>
+                        </h1>
                         <!-- 本文 -->
                         <div class="card-text d-flex justify-content-between align-items-center mt-auto">
                             <div class="text-nowrap">
@@ -476,9 +494,8 @@ function circle_info_card(?array $card_array) {
     endif;
 }
 
-// postデータからインスタンスを作成し各インスタンスごとにデータを格納
+/* postデータからインスタンスを作成し各インスタンスごとにデータを格納 */
 function create_article_datas(WP_Post $post, ?array $article_tags_array):?object {
-    $article_id = get_the_ID();       // 記事番号
     $article_id = new article_data(); // 記事のID名でインスタンスを作成
     $article_id->title   = get_the_title();    // タイトル
     $article_id->link    = get_permalink();    // リンク
@@ -500,7 +517,7 @@ function create_article_datas(WP_Post $post, ?array $article_tags_array):?object
 }
 
 // 記事データ取得
-function get_article_data(string $article_category){
+function get_article_data(string $article_category) {
     // 取得したい内容を配列に記載します（不要箇所は省略可）
     $all_article_array = array(
         'posts_per_page'   => -1,     // 読み込みしたい記事数（全件取得時は-1）
@@ -516,7 +533,7 @@ function get_article_data(string $article_category){
 }
 
 /* php インスタンス */
-class article_data{
+class article_data {
     public string $title   = ' ';        //タイトル
     public string $link    = ' ';        // リンク
     public string $date    = ' ';        // 投稿日
