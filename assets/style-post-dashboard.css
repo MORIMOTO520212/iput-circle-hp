@@ -4,6 +4,12 @@
 
 }
 
+#main h2 {
+    font-weight: normal;
+    text-align: center;
+    color: #212529;
+}
+
 #post-dashboard a {
     color: black!important;
 }

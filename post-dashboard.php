@@ -53,7 +53,7 @@ get_header();
 
 <main class="container" id="main">
     <div class="px-lg-4 px-0 py-4 mw-100">
-        <div class="text-secondary text-center fs-2 p-lg-3"><?php echo $title; ?></div>
+        <h2 class="text-center p-lg-3"><?php echo $title; ?></h2>
         <div class="p-3" id="post-dashboard">
             <div class="row p-lg-3">
                 <div class="col-lg-10 col-7 text-secondary text-start fs-6">タイトル</div>
