@@ -43,7 +43,8 @@ get_header();
             $tag_array = get_tags();
             $tagNum = 1;
             foreach($tag_array as $tag){
-              display_checkbox($tag, true, $tagNum);
+              if($tagNum != 1) display_checkbox($tag, '', $tagNum);
+              else display_checkbox($tag, 'checked', $tagNum);
               $tagNum++;
             }
             ?>
@@ -90,7 +91,7 @@ get_header();
   function display_checkbox($tag, $isChecked,$tagNum){
   ?>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" id="chk<?php echo $tagNum ?>" type="checkbox" name="tags[]" value="<?php echo $tag->name ?>">
+      <input class="form-check-input" id="chk<?php echo $tagNum ?>" type="checkbox" name="tags[]" value="<?php echo $tag->name ?>" <?php echo $isChecked ?>>
       <label class="form-check-label" for="chk<?php echo $tagNum ?>"><?php echo $tag->name ?></label>
     </div>
   <?php
