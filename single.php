@@ -3,6 +3,8 @@
 ?>
 
 <?php
+global $post;
+
 get_header();
 
 /* カテゴリ名 取得 */
@@ -68,8 +70,8 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 
                 <div class="title-color">
-                    <div>@username</div>
-                    <div>2022/08/20</div>
+                    <div><?php echo get_user_meta( $post->post_author, 'nickname', true ); ?></div>
+                    <div><?php echo get_the_date(); ?></div>
                 </div>
             </div>
         </div>
