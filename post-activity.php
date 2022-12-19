@@ -59,12 +59,26 @@ get_header();
 
             <div class="d-flex align-items-center">
                 <p class="m-0 pe-1">サークル</p>
-                <select class="form-select form-select-sm" name="organization" style="flex:1" aria-label="Default select example">
+                <select class="form-select form-select-sm" name="organizationId" style="flex:1" aria-label="所属サークルを選択する">
                     <!-- set value post id -->
                     <option value="false" selected>なし</option>
-                    <option value="サークル１">サークル１</option>
-                    <option value="サークル２">サークル２</option>
-                    <option value="サークル３">サークル３</option>
+                    <?php
+                    $args = array(
+                        'posts_per_page' => -1,
+                        'post_type' => 'circle',
+                        'post_status' => 'publish',
+                        'author' => wp_get_current_user()->id,
+                    );
+                    $posts = get_posts( $args );
+                    
+                    foreach( $posts as $post ):
+                        $category_name = get_the_category( $post->ID )[0]->cat_name;
+                        $category_id = get_the_category( $post->ID )[0]->cat_ID;
+                    ?>
+                    <option value="<?php echo $category_id ?>"><?php echo $category_name ?></option>
+                    <?php
+                    endforeach;
+                    ?>
                 </select>
                 <div style="flex:1"></div>
             </div>

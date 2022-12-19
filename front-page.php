@@ -213,14 +213,19 @@
                 <div class="col" id="activity">
                     <h4>活動</h4>
                     <?php
-                    $card_array = null; // 配列を定義
-                    $card_datas = get_article_data('activity'); // 記事データを取得
+                    $card_array = null;
+                    // 記事データを取得
+                    $card_datas = get_article_data('activity');
+
                     if ( $card_datas ) {
                         for ( $i = 0; $i < 4; $i++ ) {
                             if ( !isset( $card_datas[$i] ) ) break;
                             $post = $card_datas[$i];
+                            // 内部公開の判定
+                            if ( get_post_custom( $post->ID )['permission'][0] === "true" && !is_user_logged_in() ) continue;
                             $card_array[] = create_article_datas($post, null);
                         }
+
                     } else {
                         $card_array = null;
                     }
@@ -229,6 +234,13 @@
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
+                    
+                    <!-- ボタン もっと見る -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?=home_url('index.php/search-activity')?>">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- ニュース -->
@@ -236,21 +248,33 @@
                     <h4>ニュース</h4>
                     <?php
                     $card_array = null;
+                    // 記事データ取得
                     $card_datas = get_article_data('news');
-                    if ( $card_datas ):
-                        // 記事情報がある場合はforeachで記事情報を表示
-                        foreach ( $card_datas as $post ):
+
+                    if ( $card_datas ) {
+                        for ( $i = 0; $i < 4; $i++ ) {
+                            if ( !isset( $card_datas[$i] ) ) break;
+                            $post = $card_datas[$i];
+                            // 内部公開の判定
+                            if ( get_post_custom( $post->ID )['permission'][0] === "true" && !is_user_logged_in() ) continue;
                             $card_array[] = create_article_datas($post, null);
-                        endforeach; 
-                        // ↑ ループ終了 ↑
-                    else: // 記事情報がなかったら
+                        }
+
+                    } else {
                         $card_array = null;
-                    endif;
-                    // 一覧情報取得に利用したループをリセットする
+                    }
                     wp_reset_postdata();
+
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
+
+                    <!-- ボタン もっと見る -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?=home_url('index.php/search-news')?>">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -388,7 +412,7 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
             <a class="card-link" href="<?php echo $url; ?>"></a>
             <div class="row g-0">
                 <div class="col-4 col-lg-12">
-                    <img src="<?php echo !empty($thumbnail_image) ? $thumbnail_image : get_theme_file_uri('src/no_image.png'); ?>"
+                    <img src="<?php echo !empty($thumbnail_image) ? wp_get_attachment_image_src( $thumbnail_image )[0] : get_theme_file_uri('src/no_image.png'); ?>"
                         class="card-img-top ratio-3x2 h-100" alt="...">
                 </div>
                 <div class="col-8 col-lg-12">
@@ -484,12 +508,6 @@ function circle_info_card(?array $card_array) {
     endforeach;
     ?>
     </div>
-    <!-- ボタン もっと見る -->
-    <div class="d-flex justify-content-end mt-3">
-        <a href="<?=home_url('index.php/news')?>">
-            <button type="button" class="btn btn-success">もっと見る</button>
-        </a>
-    </div>
     <?php
     endif;
 }
@@ -501,11 +519,9 @@ function create_article_datas(WP_Post $post, ?array $article_tags_array):?object
     $article_id->link    = get_permalink();    // リンク
     $article_id->date    = get_the_date();     // 投稿日
     $article_id->excerpt = get_the_excerpt();  // 本文
-    if(has_post_thumbnail()):// アイキャッチ画像の有無
-        $article_id->img = the_post_thumbnail_url();
-    else:
-        $article_id->img = get_theme_file_uri('src/no_image.png');
-    endif;
+    $post_custom = get_post_custom( get_the_ID() );
+    $article_id->img = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+
     if($article_tags_array != null):
         if( in_array('重要', $article_tags_array) ): // 重要タグの有無
             $article_id->is_important = true;

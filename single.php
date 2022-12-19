@@ -36,14 +36,14 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
     <!-- title banner -->
     <div class="title d-flex flex-row">
         <!-- アイキャッチ画像 wider than -lg -->
-        <img class="thumb d-none d-lg-block" src="<?php echo get_theme_file_uri('src/no_image_activity.png'); ?>" alt="...">
+        <img class="thumb d-none d-lg-block" src="<?php echo !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png'); ?>" alt="...">
         <!-- 情報 -->
         <div class="d-flex flex-column w-100 m-3">
             <!-- top -->
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="title-color"><?php the_title(); ?></h3>
                 <?php
-                if ( $post_custom['permission'][0] == "true" ):
+                if ( $post_custom['permission'][0] === "true" ):
                 ?>
                 <div class="mb-2">
                     <span class="badge bg-danger">内部公開</span>

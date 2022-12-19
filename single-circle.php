@@ -10,11 +10,12 @@
 
 <?php
 global $post;
+
+// カスタムデータ取得
 $post_custom = get_post_custom( $post->ID );
 
-var_dump( $post );
-
-$headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['headerImage'][0] : get_theme_file_uri('src/no_image.png');
+// ヘッダー画像のURL取得（ない場合はダミー画像を使う）
+$headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_image_src( $post_custom['headerImage'][0] )[0] : get_theme_file_uri('src/no_image_circle_header.png');
 ?>
 
 <div class="top-image" style="background-image: url('<?php echo $headerImageUrl ?>');">
@@ -52,24 +53,34 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
             <div class="d-block d-lg-none">
                 <div class="container">
                     <!-- mobile navigation -->
-                    <div class="row">
+                    <div class="row flex-wrap">
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon journal-bookmark-fill">
-                                <a href=""></a>
+                                <a href="#"></a>
                                 活動一覧
-                                </div>
-                            <div class="mobile-menu-link a-button mt-3 icon twitter">
-                                <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
+                            </div>
+                        </div>
+                        <?php
+                        if ( !empty($post_custom['twitterUserName'][0]) ):
+                        ?>
+                        <div class="col-6 g-2">
+                            <div class="mobile-menu-link a-button icon twitter">
+                                <a href="<?php echo "https://twitter.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
                                 公式Twitter
                             </div>
                         </div>
+                        <?php
+                        endif;
+                        ?>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon person-fill">
-                                <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
+                                <a href="#"></a>
                                 参加申請
                             </div>
-                            <div class="mobile-menu-link a-button mt-3 icon envelope-fill">
-                                <a href="<?php echo home_url("index.php/circle-contact/?to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
+                        </div>
+                        <div class="col-6 g-2">
+                            <div class="mobile-menu-link a-button icon envelope-fill">
+                                <a href="<?php echo home_url("index.php/circle-contact/?circlename=" . get_the_title() . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
                                 お問い合わせ
                             </div>
                         </div>
@@ -112,13 +123,19 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                         <th scope="row">特色</th>
                         <td>
                             <?php
+                            if ( isset( $post_custom['features'][0] ) ):
                             // 非シリアライズ化して取り出し
                             $features = maybe_unserialize( $post_custom['features'][0] );
-                            foreach( $features as $name ) {
+                            foreach( $features as $name ):
                             ?>
                             <span class="features badge rounded-pill bg-primary"><?php echo $name ?></span>
                             <?php
-                            }
+                            endforeach;
+                            else:
+                            ?>
+                            なし
+                            <?php
+                            endif;
                             ?>
                         </td>
                     </tr>
@@ -132,6 +149,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                 <?php echo $post_custom['activityDetail'][0]; ?>
             </div>
 
+            <!--
             <div class="album mt-5">
                 <h2>アルバム</h2>
                 <hr />
@@ -149,49 +167,51 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                     </div>
                 </div>
             </div>
+            -->
 
             <div class="activity-posts mt-5">
                 <h2>活動記録</h2>
                 <hr />
                 <?php
-                // サークルカテゴリID
-                $circle_category_id = 99;
-
                 $args = array(
                     'posts_per_page' => 5, // 読み込む記事数
-                    'category' => $circle_category_id
+                    'category' => get_the_category()[0]->cat_ID // サークルカテゴリID
                 );
-
                 $posts = get_posts( $args );
 
-                if ( $posts ) {
+                if ( $posts ):
+
                 foreach ( $posts as $post ):
+
+                // カスタムデータ取得
+                $activity_post_custom = get_post_custom( $post->ID );
+
                 // 内部公開判定
-                    if ( $post->internal_disclosure === false ):
+                if ( $activity_post_custom['permission'][0] === 'false' ):
                 ?>
-                    <div class="card a-button mb-3">
-                        <a href="<?php echo get_permalink( $post->ID ); ?>"></a>
-                        <div class="row act-card">
-                            <div class="col-4 col-sm-3 h-100 pe-0">
-                                <img src="<?php echo $post->thumbnail_image_url; ?>" />
-                            </div>
-                            <div class="col-8 col-sm-9 p-0">
-                                <div class="card-body">
-                                    <p><?php echo date_formatting( $post->post_date ); ?></p>
-                                    <p class="card-text line-clamp-2"><?php echo $post->post_title; ?></p>
-                                </div>
+                <div class="card a-button mb-3">
+                    <a href="<?php echo get_permalink( $post->ID ); ?>"></a>
+                    <div class="row act-card">
+                        <div class="col-4 col-sm-3 h-100 pe-0">
+                            <img src="<?php echo !empty( $activity_post_custom['topImage'][0] ) ? wp_get_attachment_image_src( $activity_post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png'); ?>" />
+                        </div>
+                        <div class="col-8 col-sm-9 p-0">
+                            <div class="card-body">
+                                <p><?php echo date_formatting( $post->post_date ); ?></p>
+                                <p class="card-text line-clamp-2"><?php echo $post->post_title; ?></p>
                             </div>
                         </div>
                     </div>
+                </div>
                 <?php
-                    endif;
+                endif;
                 endforeach;
-                
-                } else {
+
+                else:
                 ?>
-                    <p class="text-center">活動記録がまだありません。</p>
+                <p class="text-center">活動記録がまだありません。</p>
                 <?php
-                }
+                endif;
                 ?>
             </div>
         </div>
@@ -207,10 +227,10 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
                     参加申請
                 </div>
                 <?php
-                if ( $post_custom['twitterUserName'][0] ):
+                if ( !empty($post_custom['twitterUserName'][0]) ):
                 ?>
                 <div class="menu-link a-button mt-4 icon twitter">
-                    <a href="https://twitter.com/<?php echo $post_custom['twitterUserName'][0] ?>" target="_blank"></a>
+                    <a href="<?php echo "https://twitter.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
                     公式Twitter
                 </div>
                 <?php
@@ -227,6 +247,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? $post_custom['heade
 </div>
 
 <script>
+/* お問い合わせポップアップ画面 */
 function piplup() {
     window.open("<?php echo home_url("index.php/circle-contact/?circlename=" . get_the_title() . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>", "window1", "width=400, height=400, scrollbars=1");
 }

@@ -41,6 +41,26 @@ wp_wordpresssignupsテーブルを作成している。
 > **Note**\
 > Wordpressのホームページは`設定 > 表示設定 > ホームページの表示 > 固定ページ`からドロップダウンで選択して変更できる
 
+## データベースに記録されるデータ
+### サークル
+- 基本データ一覧
+  - 
+- カスタムメタデータ一覧
+  - 
+
+### 活動記録
+- 基本データ一覧
+  - post_title - タイトル
+  - post_content - コンテンツ
+  - post_category - 活動のカテゴリID
+  - tags_input - タグ
+  - post_status - 公開設定
+- カスタムメタデータ一覧
+  - organization  - 所属サークル名
+  - permission    - 内部公開設定 true-内部公開, false-外部公開
+
+### ニュース
+
 ## 使用する関数一覧
 `the_author()`  
 ユーザー名を取得する。  

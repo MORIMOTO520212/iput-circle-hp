@@ -4,7 +4,25 @@
 */
 ?>
 
-<?php get_header(); ?>
+<?php
+
+// ページパラメータの確認（マイナスの数値や文字記号を1とする）
+if ( isset( $_GET['d'] ) ) {
+    $paged = $_GET['d'] > 0 ? $_GET['d'] : 1;
+} else {
+    $paged = 1;
+}
+
+/* 記事 取得 */
+$args = array(
+    'post_type'      => 'post',        // 投稿タイプ
+    'posts_per_page' => 12,            // 投稿取得数
+    'paged'          => $paged,        // 現在のページ
+);
+$the_query = new WP_Query( $args );    // 投稿データ
+
+get_header();
+?>
 
 <div class="top">
     <div class="title">
@@ -44,44 +62,67 @@
 <div class="container pt-4 pb-4" style="max-width: 750px !important;">
     <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
 
-        <?php for($i = 0; $i < 6; $i++): ?>
+        <?php
+        if ( $the_query->have_posts() ):
+        while ( $the_query->have_posts() ):
+        $the_query->the_post();
+        ?>
         <div class="col">
             <div class="card h-100 a-button">
-                <a href="#"></a>
+                <a href="<?php echo get_permalink( get_the_ID() ); ?>"></a>
                 <div class="row g-0">
-                    <div class="col-4  col-lg-12">
-                        <img src="https://via.placeholder.com/468x200?text=Sample+Image"
+                    <div class="thumbnail col-4 col-lg-12">
+                        <?php
+                        $post_custom = get_post_custom( get_the_ID() );
+                        $thumbnail_url = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+                        ?>
+                        <img src="<?php echo $thumbnail_url; ?>"
                         class="card-img-top ratio h-100" alt="...">
                     </div>
                     <div class="col-8  col-lg-12">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span class="line-clamp-3">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</span>
+                                <span class="line-clamp-3"><?php the_title(); ?></span>
                             </h5>
                             <span class="badge bg-secondary">地元活性化サークル</span>
-                            <p class="card-text"><small class="text-muted">2022.09.05</small></p>
+                            <p class="card-text"><small class="text-muted"><?php echo get_the_date(); ?></small></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endfor; ?>
-
+        <?php
+        endwhile;
+        endif;
+        ?>
     </div>
 </div>
 
 <div class="page">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item disabled"><a class="page-link" href="#">戻る</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">次へ</a></li>
-        </ul>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation pt-3">
+    <?php
+    $pagination = paginate_links(
+        array(
+            'base'    => home_url("index.php/search-activity/%_%"),
+            'format'  => '?d=%#%',
+            'type'    => 'list',
+            'current' => $paged, // int current page
+            'total'   => $the_query->max_num_pages,  // int total pages
+        )
+    );
+    echo $pagination;
+    ?>
     </nav>
 </div>
 
-<?=get_footer()?>
+<script>
+    /* Add Bootstrap Pagination Class */
+    $('ul.page-numbers').addClass('pagination justify-content-center');
+    $('ul.page-numbers li').addClass('page-item');
+    $('ul.page-numbers li a').addClass('page-link');
+    $('ul.page-numbers li span').addClass('page-link');
+    $('ul.page-numbers li .current').parent().addClass('active');
+</script>
+
+<?php get_footer(); ?>

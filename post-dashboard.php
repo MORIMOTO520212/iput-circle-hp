@@ -3,7 +3,7 @@
 ?>
 
 <?php
-// クエリパラメータの確認
+// クエリパラメータのチェック
 if ( isset( $_GET['type'] ) === false ) {
     echo "エラー";
     exit;
@@ -40,7 +40,7 @@ if ( isset( $_GET['d'] ) ) {
     $paged = 1;
 }
 
-/* 記事一覧の取得 */
+/* 記事 取得 */
 $args = array(
     'post_type'      => $_GET['type'], // 投稿タイプ
     'posts_per_page' => 5,             // 投稿取得数
@@ -62,8 +62,8 @@ get_header();
             <div id="pageBody">
                 <!-- 記事一覧 -->
                 <?php
-                if($the_query->have_posts()):
-                while($the_query->have_posts()):
+                if( $the_query->have_posts() ):
+                while( $the_query->have_posts() ):
                 $the_query->the_post(); // 記事情報取得
                 ?>
                 <div class="row py-3 px-lg-3 border-bottom border-1 border-secondary">
@@ -114,12 +114,12 @@ get_header();
         </nav>
 
         <script>
-        /* Add Bootstrap Pagination Class */
-        $('ul.page-numbers').addClass('pagination justify-content-center');
-        $('ul.page-numbers li').addClass('page-item');
-        $('ul.page-numbers li a').addClass('page-link');
-        $('ul.page-numbers li span').addClass('page-link');
-        $('ul.page-numbers li .current').parent().addClass('active');
+            /* Add Bootstrap Pagination Class */
+            $('ul.page-numbers').addClass('pagination justify-content-center');
+            $('ul.page-numbers li').addClass('page-item');
+            $('ul.page-numbers li a').addClass('page-link');
+            $('ul.page-numbers li span').addClass('page-link');
+            $('ul.page-numbers li .current').parent().addClass('active');
         </script>
 
     </div>

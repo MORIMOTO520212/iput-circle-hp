@@ -232,7 +232,22 @@ table tbody tr th {
     font-size: 14px !important;
 }
 
+/* Trix Editor 本文中の見出し */
+.activity-content h1 {
+    padding-left: 10px;
+    border-left: solid 3px #9AC629;
+    color: var(--main-h1-font-color);
+    line-height: 2rem;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin: 12px 0;
+}
 
+/* Trix Editor 画像サイズ */
+.activity-content img {
+    width: 100% !important;
+    height: auto;
+}
 
 
 @media (max-width: 767px) {

@@ -24,20 +24,16 @@ $upload_post_name = "";
 show_admin_bar(false);
 
 
-
 /**
- * 投稿とサークルの投稿時スラッグ自動生成
- * 
- * postIDをmd5でハッシュ化したものをスラッグとして使う
- * ※ランダム値をハッシュ化すると更新時にスラッグが変わるので、固定されたpostIDを採用
- */
-function custom_auto_post_slug($slug, $post_ID, $post_status, $post_type) {
-    if ( $post_type === "post" || $post_type === "circle" ) {
-        $slug = md5($post_ID);
+ * ローカルホストかどうか
+ * @return bool
+*/
+function is_localhost() {
+    if ( $_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1' ) {
+        return true;
     }
-    return $slug;
+    return false;
 }
-add_filter('wp_unique_post_slug', 'custom_auto_post_slug', 10, 4);
 
 
 
@@ -153,6 +149,21 @@ function save_custom_fields( $post_id ) {
     }
 }
 add_action( 'save_post', 'save_custom_fields' );
+
+
+
+/**
+ * 画像のリンクからattachment idを取得する
+ * @param string $image_src - 
+ * @return string $id - attachment id
+ */
+function get_attachment_id_from_src( $image_src ) {
+    global $wpdb;
+    $query = "SELECT ID FROM {$wpdb->posts} WHERE guid='$image_src'";
+    $id = $wpdb->get_var($query);
+    return $id;
+
+}
 
 
 
@@ -589,7 +600,8 @@ function profile_update() {
  * - post_category - 投稿カテゴリには投稿サークルのカテゴリを作成して追加する。
  * 
  * ## カスタムメタデータ一覧
- * - 
+ * - topImage    - トップ画像のattachment id
+ * - headerImage - ヘッダー画像のattachment id
 */
 function post_circle() {
     // パラメータのチェック
@@ -674,20 +686,20 @@ function post_circle() {
         
 
         // トップ画像のアップロード
-        $top_img_url = upload_image('topImage')[1] ?? '';
+        $topImage_id = upload_image('topImage')[0] ?? '';
 
         // ヘッダー画像のアップロード
-        $header_img_url = upload_image('headerImage')[1] ?? '';
+        $headerImage_id = upload_image('headerImage')[0] ?? '';
 
         // アルバム画像
         // ～ここへ処理～
 
-        // 投稿にカスタムフィールドを追加（自動サニタイズ、add_post_meta関数は禁止）
-        if ( $_POST['submit_type'] === 'circle_post' || $top_img_url != '' ) { // 更新時に画像をアップしない場合はスルー
-            update_post_meta( $post_id, 'topImage', $top_img_url ); // トップ画像（URL）
+        // カスタムフィールド（自動サニタイズ、add_post_meta関数は禁止）
+        if ( !empty( $topImage_id ) ) { // 更新時に画像をアップしない場合はスルー
+            update_post_meta( $post_id, 'topImage', $topImage_id ); // トップ画像
         }
-        if ( $_POST['submit_type'] === 'circle_post' || $header_img_url != '' ) {
-            update_post_meta( $post_id, 'headerImage', $header_img_url ); // ヘッダー画像（URL）
+        if ( !empty( $headerImage_id ) ) {
+            update_post_meta( $post_id, 'headerImage', $headerImage_id ); // ヘッダー画像
         }
         // 自動サニタイズ、add_post_meta関数は禁止
         update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
@@ -758,6 +770,7 @@ function post_activity() {
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
+            'post_name'     => md5( time() ),      // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             'post_category' => array( get_cat_ID('activity'),  $_POST['organizationId'] ),  // カテゴリID
             'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
             'post_status'   => 'publish', // 公開設定
@@ -772,16 +785,34 @@ function post_activity() {
             return;
         }
         
-        // 内部公開の設定
+        // 内部公開 設定
         if ( isset( $_POST['permission'] ) ) {
             update_post_meta( $post_id, 'permission', 'true' );
         } else {
             update_post_meta( $post_id, 'permission', 'false' );
         }
 
-        // 記事ページへリダイレクト
+        // 記事内容からアイキャッチ画像 設定
+        if ( is_localhost() ) {
+            $pattern = "http:\/\/(.*?)(.png|.jpg)";
+        } else {
+            $pattern = "https:\/\/(.*?)(.png|.jpg)";
+        }
+        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
+
+        $topImage_url = !empty($matches) ? esc_url( $matches[0] ) : '';
+
+        if ( !empty($topImage_url) ) {
+            $topImage_id = get_attachment_id_from_src( $topImage_url ); // urlからサムネイルIDを取得
+            update_post_meta( $post_id, 'topImage', $topImage_id );
+        } else {
+            update_post_meta( $post_id, 'topImage', '' );
+        }
+
+        // リダイレクト
         wp_redirect( get_permalink( $post_id ) );
         exit;
+        return true;
 
     } else {
         modal('エラー', '不正なリクエストです。');
