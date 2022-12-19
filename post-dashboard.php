@@ -5,7 +5,7 @@
 <?php
 // クエリパラメータのチェック
 if ( isset( $_GET['type'] ) === false ) {
-    echo "エラー";
+    echo "エラー1";
     exit;
 }
 
@@ -19,7 +19,7 @@ if ( $_GET['type'] === 'post' ) {
     $title = "サークルを管理する";
     $option_url = home_url('index.php/post-circle');
 } else {
-    echo "エラー";
+    echo "エラー2";
     exit;
 }
 
