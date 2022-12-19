@@ -271,8 +271,8 @@
 
                     <!-- ボタン もっと見る -->
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="<?=home_url('index.php/search-news')?>">
-                            <button type="button" class="btn btn-success">もっと見る</button>
+                        <a href="#">
+                            <button type="button" class="btn btn-success" disabled>もっと見る</button>
                         </a>
                     </div>
                 </div>

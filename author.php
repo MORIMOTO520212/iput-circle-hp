@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="management-card">
+        <div class="management-card" style="background:#c9c9c9;">
             <a class="button" href="#"></a>
             <div class="title">
                 <h4 class="pb-2">ニュースを書く</h4>

@@ -55,7 +55,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                     <!-- mobile navigation -->
                     <div class="row flex-wrap">
                         <div class="col-6 g-2">
-                            <div class="mobile-menu-link a-button icon journal-bookmark-fill">
+                            <div class="mobile-menu-link a-button icon journal-bookmark-fill" style="background:#767676;">
                                 <a href="#"></a>
                                 活動一覧
                             </div>
@@ -73,7 +73,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                         endif;
                         ?>
                         <div class="col-6 g-2">
-                            <div class="mobile-menu-link a-button icon person-fill">
+                            <div class="mobile-menu-link a-button icon person-fill" style="background:#767676;">
                                 <a href="#"></a>
                                 参加申請
                             </div>
@@ -218,11 +218,11 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
         <!-- desktop navigation -->
         <div class="col-lg-4 mt-5">
             <nav class="toc d-none d-lg-block">
-                <div class="menu-link a-button mt-4 icon journal-bookmark-fill">
+                <div class="menu-link a-button mt-4 icon journal-bookmark-fill" style="background:#767676;">
                     <a href="#"></a>
                     活動一覧
                 </div>
-                <div class="menu-link a-button mt-4 icon person-fill">
+                <div class="menu-link a-button mt-4 icon person-fill" style="background:#767676;">
                     <a href="#"></a>
                     参加申請
                 </div>
