@@ -101,11 +101,11 @@ if( isset( $_GET['_post'] ) ) {
                     <!-- サークル名 -->
                     <div class="mb-3">
                         <label class="form-label" for="email-input">サークル名</label>
-                        <input type="text" maxlength="20" class="form-control" id="circle-name-input" name="circleName"
+                        <input type="text" maxlength="50" class="form-control" id="circle-name-input" name="circleName"
                             placeholder="サークル名を入力してください" value="<?php echo $input['circleName'] ?? ''; ?>"
                             aria-label="サークル名を入力してください" aria-describedby="circle-name-help" required>
                         <div class="invalid-feedback">
-                            20文字以内で入力してください。
+                            50文字以内で入力してください。
                         </div>
                     </div>
 

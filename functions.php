@@ -623,7 +623,7 @@ function post_circle() {
         ) )
     {
         // 文字数チェック
-        if ( mb_strlen( $_POST['circleName']      ) > 20 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['circleName']      ) > 50 ) input_value_error_exit();
         if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
         if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
         if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
