@@ -29,7 +29,7 @@ show_admin_bar(false);
  * 使用するクエリパラメータを設定する。
  */
 function add_query_vars_filter( $vars ){
-    $vars[] = "d";
+    $vars[] = "test_var";
     return $vars;
 }
 add_filter( 'query_vars', 'add_query_vars_filter' );
