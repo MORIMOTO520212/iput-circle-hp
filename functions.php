@@ -25,6 +25,18 @@ show_admin_bar(false);
 
 
 /**
+ * クエリパラメータの設定
+ * 使用するクエリパラメータを設定する。
+ */
+function add_query_vars_filter( $vars ){
+    $vars[] = "d";
+    return $vars;
+}
+add_filter( 'query_vars', 'add_query_vars_filter' );
+
+
+
+/**
  * ローカルホストかどうか
  * @return bool
 */
