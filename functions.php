@@ -21,19 +21,19 @@ $upload_post_name = "";
 /**
  * 管理者以外はアドミンバーを非表示
  */
-show_admin_bar(false);
+//show_admin_bar(false);
 
 
 /**
  * クエリパラメータの設定
  * 使用するクエリパラメータを設定する。
  */
-function add_query_vars_filter( $vars ){
-    $vars[] = "test_var";
-    return $vars;
+function myplugin_register_query_vars( $vars ) {
+	$vars[] = 'key1';
+	$vars[] = 'key2';
+	return $vars;
 }
-add_filter( 'query_vars', 'add_query_vars_filter' );
-
+add_filter( 'query_vars', 'myplugin_register_query_vars' );
 
 
 /**
