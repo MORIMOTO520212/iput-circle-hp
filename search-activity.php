@@ -6,9 +6,11 @@
 
 <?php
 
+$param_d = get_params('d');
+
 // ページパラメータの確認（マイナスの数値や文字記号を1とする）
-if ( isset( $_GET['d'] ) ) {
-    $paged = $_GET['d'] > 0 ? $_GET['d'] : 1;
+if ( isset( $param_d ) ) {
+    $paged = $param_d > 0 ? $param_d : 1;
 } else {
     $paged = 1;
 }

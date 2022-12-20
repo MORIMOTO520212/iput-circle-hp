@@ -5,7 +5,16 @@
 // index.php/author/<username> でアクセスできます。
 ?>
 
-<?php get_header(); ?>
+<?php
+
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
+get_header();
+?>
 
 <div class="main container">
     <h2>ようこそ、<?php the_author(); ?>さん</h2>
@@ -91,4 +100,4 @@
     </div>
 </div>
 
-<?=get_footer()?>
+<?php get_footer(); ?>

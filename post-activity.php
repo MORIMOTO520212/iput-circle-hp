@@ -7,6 +7,12 @@
 <?php
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
 get_header();
 ?>
 

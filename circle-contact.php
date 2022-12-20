@@ -1,6 +1,13 @@
 <?php
 /* Template Name: サークルのお問い合わせページ */
 
+
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
 $flag = 0;
 
 // メール送信
@@ -22,9 +29,9 @@ if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle-contact
     $flag = 1;
 
 } else {
-    $to = $_GET['to'];
-    $from = $_GET['from'];
-    $circleName = $_GET['circlename'];
+    $to = get_params('to');
+    $from = get_params('from');
+    $circleName = get_params('circlename');
 }
 
 get_header();

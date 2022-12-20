@@ -5,8 +5,17 @@
 ?>
 
 <?php
-if( isset($_GET['t']) ) {
-    if( $_GET['t'] == "logout" ) {
+
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
+$param_t = get_params('t'); // パラメータ取得
+
+if( isset( $param_t ) ) {
+    if( $param_t == "logout" ) {
         wp_logout();
         wp_redirect( home_url() );
         exit;

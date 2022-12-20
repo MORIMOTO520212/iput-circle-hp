@@ -3,18 +3,28 @@
 ?>
 
 <?php
+
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
+$param_type = get_params('type');
+$param_d = get_params('d');
+
 // クエリパラメータのチェック
-if ( isset( $_GET['type'] ) === false ) {
+if ( $param_type === null ) {
     echo "エラー1";
     exit;
 }
 
-if ( $_GET['type'] === 'post' ) {
+if ( $param_type === 'post' ) {
     /** @var int $posts_length 記事の数をカウントする */
     $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'post' ) );
     $title = "記事を管理する";
     $option_url = home_url('index.php/post-%_%/');
-} elseif ( $_GET['type'] === 'circle' ) {
+} elseif ( $param_type === 'circle' ) {
     $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'circle' ) );
     $title = "サークルを管理する";
     $option_url = home_url('index.php/post-circle');
@@ -34,17 +44,17 @@ function change_title( $_title ) {
 add_filter( 'the_title', 'change_title', 10, 1 );
 
 // ページパラメータの確認 マイナスの数値や文字記号を1とする
-if ( isset( $_GET['d'] ) ) {
-    $paged = $_GET['d'] > 0 ? $_GET['d'] : 1;
+if ( isset( $param_d ) ) {
+    $paged = $param_d > 0 ? $param_d : 1;
 } else {
     $paged = 1;
 }
 
 /* 記事 取得 */
 $args = array(
-    'post_type'      => $_GET['type'], // 投稿タイプ
-    'posts_per_page' => 5,             // 投稿取得数
-    'paged'          => $paged,        // 現在のページ
+    'post_type'      => $param_type, // 投稿タイプ
+    'posts_per_page' => 10,          // 投稿取得数
+    'paged'          => $paged,      // 現在のページ
 );
 $the_query = new WP_Query( $args );    // 投稿データ
 
@@ -71,7 +81,7 @@ get_header();
                     <div class="col-lg-2 col-5 row mx-auto justify-content-center">
                         <?php
                         // 投稿はカテゴリのニュース(post-news)と活動記録(post-activity)を判別してリンクを更新する
-                        if ( $_GET['type'] === 'post' ) {
+                        if ( $param_type === 'post' ) {
                             $option_url = str_replace('%_%', get_the_category()[0]->name, $option_url);
                         }
                         ?>
@@ -102,7 +112,7 @@ get_header();
         <?php
         $pagination = paginate_links(
             array(
-                'base'    => home_url("index.php/post-dashboard/?type={$_GET['type']}%_%"),
+                'base'    => home_url("index.php/post-dashboard/?type={$param_type}%_%"),
                 'format'  => '&d=%#%',
                 'type'    => 'list',
                 'current' => $paged, // int current page

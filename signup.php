@@ -5,10 +5,14 @@
 ?>
 
 <?php
+
+$param_token = get_params('token');
+$param_t = get_params('t');
+
 // 認証メールに記載されたユーザー承認用リンクからアクセスしたときに、
 // ユーザーを有効化する処理を行う。
-if ( isset( $_GET['token'] ) ) {
-    user_activation( $_GET['token'] );
+if ( isset( $param_token ) ) {
+    user_activation( $param_token );
 }
 ?>
 
@@ -29,7 +33,7 @@ if ( isset( $_GET['token'] ) ) {
 
             <?php
             /* 登録画面 */
-            if( isset( $_GET['t'] ) === false ):
+            if( $param_token === null ):
             ?>
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation" novalidate>
@@ -75,7 +79,7 @@ if ( isset( $_GET['token'] ) ) {
 
             <?php
             /* 確認画面 */
-            elseif ( $_GET['t'] === 'confirm' ):
+            elseif ( $param_t === 'confirm' ):
             ?>
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation">
@@ -85,7 +89,7 @@ if ( isset( $_GET['token'] ) ) {
 
             <?php
             /* ユーザー登録完了画面 */
-            elseif ( $_GET['t'] === 'done' ):
+            elseif ( $param_t === 'done' ):
             ?>
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation">
@@ -95,7 +99,7 @@ if ( isset( $_GET['token'] ) ) {
 
             <?php
             /* ユーザー登録エラー画面 */
-            elseif ( $_GET['t'] === 'error' ):
+            elseif ( $param_t === 'error' ):
             ?>
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation">

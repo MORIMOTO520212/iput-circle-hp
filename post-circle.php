@@ -29,21 +29,25 @@ $features = [
     "設立1年未満",
 ];
 
-if( isset( $_GET['_post'] ) ) {
+// _postパラメータ
+$param__post = get_params('_post');
+$param_id = get_params('id');
+
+if( isset( $param__post ) ) {
 
     /* サークル新規作成 */
-    if ( $_GET['_post'] === 'create' ) {
+    if ( $param__post === 'create' ) {
         /* pass */
 
     /* サークル編集 */
-    } elseif ( $_GET['_post'] === 'edit' ) {
+    } elseif ( $param__post === 'edit' ) {
         // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
-        if ( !isset( $_GET['id'] ) || !is_numeric( $_GET['id'] ) ) {
+        if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
             echo "エラー";
             exit;
         }
 
-        $post = get_post( $_GET['id'] );
+        $post = get_post( $param_id );
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
             echo "エラー";
@@ -71,8 +75,8 @@ if( isset( $_GET['_post'] ) ) {
         );
 
     /* サークル削除 */
-    } elseif ( $_GET['_post'] === 'delete' ) {
-        $post = get_post( $_GET['id'] );
+    } elseif ( $param__post === 'delete' ) {
+        $post = get_post( $param_id );
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
             echo "エラー";
@@ -300,12 +304,12 @@ if( isset( $_GET['_post'] ) ) {
                 </div>
                 <div class="d-flex justify-content-around mt-5">
                     <?php
-                    if ( $_GET['_post'] === 'create' ):
+                    if ( $param__post === 'create' ):
                     ?>
                     <button type="submit" name="submit_type" value="circle_draft" class="btn btn-secondary btn-lg" disabled>下書き保存する</button>
                     <button type="submit" name="submit_type" value="circle_post" class="btn btn-primary btn-lg">サークルを作成する</button>
                     <?php
-                    elseif ( $_GET['_post'] === 'edit' ):
+                    elseif ( $param__post === 'edit' ):
                     ?>
                     <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
                     <a class="btn btn-secondary btn-lg" href="<?php echo home_url("index.php/author/" . wp_get_current_user()->user_login); ?>" role="button">キャンセル</a>

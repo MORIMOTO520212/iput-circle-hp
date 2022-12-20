@@ -21,24 +21,32 @@ $upload_post_name = "";
 /**
  * 管理者以外はアドミンバーを非表示
  */
-//show_admin_bar(false);
+show_admin_bar(false);
 
 
 /**
- * クエリパラメータの設定
- * 使用するクエリパラメータを設定する。
+ * クエリパラメータの取得
+ * $_GETやget_query_varでパラメータが取得できないのでその代わりの関数です。
+ * @param string $key - パラメータのキーを指定する。
+ * @return string|null パラメータが見つかった場合はその値を返し、見つからなかった場合はnullを返す。
  */
-function myplugin_register_query_vars( $vars ) {
-	$vars[] = 'key1';
-	$vars[] = 'key2';
-	return $vars;
+function get_params( $key = "" ) {
+    preg_match( "/\?(.*)/", $_SERVER['REQUEST_URI'], $matches );
+    if ( empty( $matches ) ) {
+        return null;
+    }
+    parse_str( $matches[1], $args );
+
+    foreach( array_keys($args) as $get_key ) {
+        if ( $key === $get_key ) return $args[$get_key];
+    }
+    return null;
 }
-add_filter( 'query_vars', 'myplugin_register_query_vars' );
 
 
 /**
  * ローカルホストかどうか
- * @return bool
+ * @return bool ローカルホストだった場合はtrue、そうでない場合はfalseを返す。
 */
 function is_localhost() {
     if ( $_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1' ) {
