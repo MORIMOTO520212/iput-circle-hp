@@ -15,15 +15,17 @@ if( isset( $_POST['btn_sub'] ) ) {
 	$admin_reply_text    = null;
 	date_default_timezone_set('Asia/Tokyo');
 
+    // WordPressの管理者メールアドレスを取得
+    $admin_email = get_option('admin_email');
+
 	// ヘッダー情報を設定
 	$header = "MIME-Version: 1.0\n";
-	$header .= "From: IPUTONE制作チーム <iputone.staff@gmail.com>\n";
-	$header .= "Reply-To: IPUTONE制作チーム <iputone.staff@gmail.com>\n";
+	$header .= "From: IPUTONE制作チーム <{$admin_email}>\n";
+	$header .= "Reply-To: IPUTONE制作チーム <{$admin_email}>\n";
 
-	// 件名を設定
+    /* ユーザーにメール送信 */
 	$auto_reply_subject = 'お問い合わせありがとうございます。';
 
-	// 本文を設定
 	$auto_reply_text = "この度は、お問い合わせ頂き誠にありがとうございます。下記の内容でお問い合わせを受け付けました。\n\n";
     $auto_reply_text .= "{$_POST['contact']}\n";
 	$auto_reply_text .= "お問い合わせ日時：" . date("Y-m-d H:i") . "\n";
@@ -31,23 +33,20 @@ if( isset( $_POST['btn_sub'] ) ) {
 	$auto_reply_text .= "メールアドレス：" . $_POST['Email'] . "\n\n";
 	$auto_reply_text .= "IPUTONE制作チーム";
 
-	// メール送信
 	mb_send_mail( $_POST['email'], $auto_reply_subject, $auto_reply_text, $header );
 
-	// 運営側へ送るメールの件名
+
+	/* 運営者側にメール送信 */
 	$admin_reply_subject = "お問い合わせを受け付けました";
 	
-	// 本文を設定
 	$admin_reply_text = "下記の内容でお問い合わせがありました。\n\n";
     $admin_reply_text .= "{$_POST['contact']}\n";
 	$admin_reply_text .= "お問い合わせ日時：" . date("Y-m-d H:i") . "\n";
 	$admin_reply_text .= "氏名：" . $_POST['your_name'] . "\n";
 	$admin_reply_text .= "メールアドレス：" . $_POST['email'] . "\n\n";
 
-	// 運営側へメール送信
-	mb_send_mail( 'iputone.staff@gmail.com', $admin_reply_subject, $admin_reply_text, $header );
+	mb_send_mail( $admin_email, $admin_reply_subject, $admin_reply_text, $header );
 
-    // 完了ページを表示する
     wp_redirect( home_url('index.php/contact/?t=done') );
     exit;
 }
@@ -59,7 +58,7 @@ if( isset( $_POST['btn_sub'] ) ) {
 
     <?php
     /* お問い合わせ画面 */
-    if ( isset($_GET['t']) === false ):
+    if ( get_params('t') === null ):
     ?>
 
     <!-- top -->
@@ -141,7 +140,7 @@ if( isset( $_POST['btn_sub'] ) ) {
 
     <?php
     /* お問い合わせ完了画面 */
-    elseif ( $_GET['t'] === 'done' ):
+    elseif ( get_params('t') === 'done' ):
     ?>
 
     <div class="container thanks-msg" style="margin-top:70px;">
