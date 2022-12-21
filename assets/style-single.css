@@ -14,17 +14,6 @@
     object-fit: cover;
 }
 
-.summary {
-    line-height: 2rem;
-    border-left: solid 3px #9AC629;
-    border-bottom: solid 1px #9AC629;
-    padding-left: 10px;
-}
-
-.detail {
-    padding-top: 30px;
-}
-
 .post-img {
     width: 100%;
     max-width: 400px;
@@ -39,4 +28,21 @@
     width: 100%;
     height: 110px;
     background: #ECDDC1;
+}
+
+/* Trix Editor 本文中の見出し */
+.detail h1 {
+    padding-left: 10px;
+    border-left: solid 3px #9AC629;
+    color: var(--main-h1-font-color);
+    line-height: 2rem;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+/* Trix Editor 画像サイズ */
+.detail img {
+    width: 100% !important;
+    height: auto;
 }

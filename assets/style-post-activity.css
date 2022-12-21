@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 活動記録投稿ページ スタイルシート */
 
 .txt-subject {
@@ -29,4 +30,37 @@ form {
 /* Trix toolbar アイコンのサイズ指定 */
 trix-toolbar .trix-button--icon {
     width: 1.6em !important;
+=======
+/* 活動記録投稿ページ スタイルシート */
+
+.txt-subject {
+    color: var(--main-h2-font-color);
+    margin-top: 60px;
+    margin-bottom: 35px;
+    font-weight: normal;
+}
+
+form label span {
+    color: #FB0D0D;
+}
+
+form {
+    background-color: #F3F0EA;
+    border-radius: 10px;
+    filter: drop-shadow(0 3px 3px #B1B0B0);
+}
+
+.wrapper-name {
+    display:flex;
+    justify-content: space-between;
+}
+
+.botton-edit {
+    margin-bottom: 130px;
+}
+
+/* Trix toolbar アイコンのサイズ指定 */
+trix-toolbar .trix-button--icon {
+    width: 1.6em !important;
+>>>>>>> ddb434df7fee5dee65477e60f376b53dd5be52a5
 }

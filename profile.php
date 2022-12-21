@@ -5,8 +5,17 @@
 ?>
 
 <?php
-if( isset($_GET['t']) ) {
-    if( $_GET['t'] == "logout" ) {
+
+/* ログイン状態のチェック */
+if ( !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
+
+$param_t = get_params('t'); // パラメータ取得
+
+if( isset( $param_t ) ) {
+    if( $param_t == "logout" ) {
         wp_logout();
         wp_redirect( home_url() );
         exit;
@@ -65,7 +74,7 @@ $email = get_user_option('user_email', $user_id);
             <button id="edit" class="btn btn-success" type="submit" name="submit_type" value="profile">編集する</button>
         </div>
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#accountDel">アカウントを削除する</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#accountDel" disabled>アカウントを削除する</button>
             <a class="btn btn-warning" href="./?t=logout" role="button">ログアウトする</a>
         </div>
         <small class="text-secondary">一度削除すると元に戻せません</small>

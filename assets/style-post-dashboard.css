@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #main {
     max-width: 996px;
     background: #f0ece5;
@@ -25,4 +26,39 @@ a.deletebtn::before {
     content: "\F78B";
     font-size: 1.25rem;
     color: #fff;
+=======
+#main {
+    max-width: 996px;
+    background: #f0ece5;
+
+}
+
+#main h2 {
+    font-weight: normal;
+    text-align: center;
+    color: #212529;
+}
+
+#post-dashboard a {
+    color: black!important;
+}
+
+#main button {
+    width: 32px !important;
+    height: 26px !important;
+}
+
+a.editbtn::before {
+    font-family: "bootstrap-icons";
+    content: "\F4CB";
+    font-size: 1.25rem;
+    color: #fff;
+}
+
+a.deletebtn::before {
+    font-family: "bootstrap-icons";
+    content: "\F78B";
+    font-size: 1.25rem;
+    color: #fff;
+>>>>>>> ddb434df7fee5dee65477e60f376b53dd5be52a5
 }

@@ -6,52 +6,67 @@
 
 <main class="contents">
     <!-- ファーストビュー -->
-    <div class="top" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
-        <!-- 登録フォーム -->
-        <form action="" method="post" class="register needs-validation" novalidate>
-            <h3>新規ユーザーの登録</h3>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-userid">
-                    <span class="bi bi-person-circle"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="ユーザー名を入力してください" aria-label="userid" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">入力必須です</div>
-            </div>
-            <div class="row row-cols-1 row-cols-md-2 mb-3">
-                <div class="col">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text">姓</span>
-                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="姓" aria-label="姓" aria-describedby="lastname-help" required>
-                    </div>
-                    <div class="invalid-feedback">入力必須です</div>
+    <div class="top row row-cols-1 row-cols-md-2 g-0 overflow-hidden" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
+        <div class="col"></div>
+        <div class="col">
+            <?php
+            // ログインしていない場合、登録フォームを表示する
+            if ( !is_user_logged_in() ):
+            ?>
+            <!-- 登録フォーム -->
+            <form class="register mx-3 mx-sm-auto mt-5 needs-validation" action="" method="post" novalidate>
+                <h3>新規ユーザーの登録</h3>
+                <!-- ユーザー名 -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text" id="addon-wrapping-userid">
+                        <span class="bi bi-person-circle"></span>
+                    </span>
+                    <input type="text" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" class="form-control mb-0" 
+                        name="username" placeholder="ユーザー名を入力してください" aria-label="ユーザー名を入力してください" required>
                 </div>
-                <div class="col">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text">名</span>
-                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="名" aria-label="名" aria-describedby="firstname-help" required>
+                <!-- 氏名 -->
+                <div class="row row-cols-1 row-cols-sm-2 mb-3">
+                    <div class="col mb-2 mb-sm-auto">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">姓</span>
+                            <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" class="form-control" 
+                                name="lastname" id="lastname" placeholder="姓" aria-label="姓" required>
+                        </div>
                     </div>
-                    <div class="invalid-feedback">入力必須です</div>
+                    <div class="col">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">名</span>
+                            <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" class="form-control" 
+                                name="firstname" id="firstname" placeholder="名" aria-label="名" required>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-email">
-                    <span class="bi bi-envelope-fill"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="学校のメールアドレスを入力してください" aria-label="email" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">メールアドレスの形式が違います</div>
-            </div>
-            <div class="input-group flex-nowrap mb-3">
-                <span class="input-group-text" id="addon-wrapping-password">
-                    <span class="bi bi-key-fill"></span>
-                </span>
-                <input type="text" class="form-control mb-0" placeholder="パスワードを入力してください" aria-label="password" aria-describedby="addon-wrapping" required>
-                <div class="invalid-feedback">入力必須です</div>
-            </div>
-            <!-- Bootstrap 登録ボタン -->
-            <div class="d-flex justify-content-center mt-4">
-                <button type="submit" name="signup" class="btn btn-success" value="signup">アカウントを作成する</button>
-            </div>
-        </form>
+                <!-- 学校のメールアドレス -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text">
+                        <span class="bi bi-envelope-fill"></span>
+                    </span>
+                    <input type="text" minlength="2" maxlength="50" class="form-control mb-0" name="email" placeholder="学校のメールアドレスを入力してください" 
+                        aria-label="学校のメールアドレスを入力してください" required>
+                </div>
+                <!-- パスワード -->
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text">
+                        <span class="bi bi-key-fill"></span>
+                    </span>
+                    <input type="text" minlength="6" maxlength="16" class="form-control mb-0" name="password" placeholder="パスワードを入力してください" 
+                        aria-label="パスワードを入力してください" required>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" name="submit_type" class="btn btn-success" value="signup">アカウントを作成する</button>
+                </div>
+                <?php wp_nonce_field( 'N9zxfbth', 'signup_nonce' ); ?>
+            </form>
+            <?php
+            endif;
+            ?>
+        </div>
     </div>
 
     <!-- トップ カテゴリ only wider than -lg -->
@@ -73,7 +88,7 @@
                 <span>IPUTで活動しているサークルを紹介します。</span>
             </div>
             <div class="w-25 p-4 pb-5 ms-4 me-4 shadow-hover card-link-parent">
-                <a class="card-link" href="#"></a>
+                <a class="card-link" href="<?php echo home_url('index.php/faq'); ?>"></a>
                 <h3>FAQ</h3>
                 <span>学生が気になる学校に関する質問をまとめています。</span>
             </div>
@@ -103,7 +118,7 @@
                 <!-- wider than -sm -->
                 <li class="nav-item d-none d-sm-block" role="presentation">
                     <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">
-                        イベント・行事
+                        行事・イベント
                     </button>
                 </li>
                 <!-- smaller than -sm -->
@@ -118,7 +133,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link dropdown-item" id="event-tab-sm" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false">
-                                イベント・行事
+                                行事・イベント
                             </button>
                         </li>
                     </ul>
@@ -127,43 +142,45 @@
             <!-- コンテンツ -->
             <div class="tab-content p-4 pt-0" id="info-content">
             <?php
-            // 配列や変数の初期化
-            $new_info_array     = null;  // 新規情報タグのある投稿を格納するリスト
-            $announcement_array = null;  // お知らせタグのある投稿を格納するリスト
-            $event_array        = null;  // 行事・イベントタグのある投稿を格納するリスト
+            $new_info_array       = null;  // 新規情報
+            $announcement_array   = null;  // お知らせ
+            $event_array          = null;  // 行事・イベント
             $aritcle_is_important = false;
-            $news_datas = null;
+            $news_datas           = null;
 
-            // 記事データを取得する。
+            // 記事データ取得
             $news_datas = get_article_data("news");
 
-            // 取得した記事情報の表示
-            if ( $news_datas ):
-                // 記事情報がある場合はforeachで記事情報を表示
-                foreach ( $news_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                    setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                    $news_all_tags = get_the_tags(); // タグのリストを$tagsに代入
-                    if( $news_all_tags ): // タグが存在する場合
-                        $article_tags_array = array_column($news_all_tags, 'name'); // タグの配列からnameのカラムを抽出
-                        if(in_array('新規情報', $article_tags_array)): // 新規情報タグのある記事を表示
+            if ( $news_datas ) {
+
+                // 記事取得
+                foreach ( $news_datas as $post ) {
+                    setup_postdata( $post );
+                    $news_all_tags = get_the_tags();
+
+                    if( $news_all_tags ) { // タグが存在する場合
+                        $article_tags_array = array_column($news_all_tags, 'name');
+
+                        if(in_array('新規情報', $article_tags_array)) {
                             $new_info_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                        if(in_array('お知らせ', $article_tags_array)): // お知らせタグのある記事を表示
+                        }
+
+                        if(in_array('お知らせ', $article_tags_array)) {
                             $announcement_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                        if(in_array('行事・イベント', $article_tags_array)): // 行事・イベントタグのある記事を表示
+                        }
+
+                        if(in_array('行事・イベント', $article_tags_array)) {
                             $event_array[] = create_article_datas($post, $article_tags_array);
-                        endif;
-                    else: // $all_tagsにタグが存在しない場合
+                        }
+
+                    } else { // $all_tagsにタグが存在しない場合
                         continue;
-                        // 
-                    endif;
-                endforeach; 
-                // ↑ ループ終了 ↑
-            else: // 記事情報がなかったら
-                // 
-            endif;
-            
+                    }
+                }
+
+            } else { // 記事情報がなかったら
+            }
+
             // 一覧情報取得に利用したループをリセットする
             wp_reset_postdata();
             ?>
@@ -191,57 +208,73 @@
         <!-- 活動・ニュース -->
         <div class="container w-100 mt-5 max-width-lg">
             <div class="row row-cols-1 row-cols-lg-2 g-5">
+
                 <!-- 活動 -->
                 <div class="col" id="activity">
                     <h4>活動</h4>
-                    <?php 
-                    // 配列を定義
+                    <?php
                     $card_array = null;
                     // 記事データを取得
-                    $card_datas = get_article_data("activity");
-                    // 取得した記事情報の表示
-                    if ( $card_datas ):
-                        // 記事情報がある場合はforeachで記事情報を表示
-                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            //var_dump($post);
+                    $card_datas = get_article_data('activity');
+
+                    if ( $card_datas ) {
+                        for ( $i = 0; $i < 4; $i++ ) {
+                            if ( !isset( $card_datas[$i] ) ) break;
+                            $post = $card_datas[$i];
+                            // 内部公開の判定
+                            if ( get_post_custom( $post->ID )['permission'][0] === "true" && !is_user_logged_in() ) continue;
                             $card_array[] = create_article_datas($post, null);
-                        endforeach; 
-                        // ↑ ループ終了 ↑
-                    else: // 記事情報がなかったら
+                        }
+
+                    } else {
                         $card_array = null;
-                    endif;
-                    // 一覧情報取得に利用したループをリセットする
+                    }
                     wp_reset_postdata();
+
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
+                    
+                    <!-- ボタン もっと見る -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?=home_url('index.php/search-activity')?>">
+                            <button type="button" class="btn btn-success">もっと見る</button>
+                        </a>
+                    </div>
                 </div>
+
                 <!-- ニュース -->
                 <div class="col" id="news">
                     <h4>ニュース</h4>
-                    <?php 
-                    // 配列を定義
+                    <?php
                     $card_array = null;
-                    // 記事データを取得
-                    $card_datas = get_article_data("news");
-                    // 取得した記事情報の表示
-                    if ( $card_datas ):
-                        // 記事情報がある場合はforeachで記事情報を表示
-                        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-                            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-                            //var_dump($post);
+                    // 記事データ取得
+                    $card_datas = get_article_data('news');
+
+                    if ( $card_datas ) {
+                        for ( $i = 0; $i < 4; $i++ ) {
+                            if ( !isset( $card_datas[$i] ) ) break;
+                            $post = $card_datas[$i];
+                            // 内部公開の判定
+                            if ( get_post_custom( $post->ID )['permission'][0] === "true" && !is_user_logged_in() ) continue;
                             $card_array[] = create_article_datas($post, null);
-                        endforeach; 
-                        // ↑ ループ終了 ↑
-                    else: // 記事情報がなかったら
+                        }
+
+                    } else {
                         $card_array = null;
-                    endif;
-                    // 一覧情報取得に利用したループをリセットする
+                    }
                     wp_reset_postdata();
+
                     // 活動カード描画
                     circle_info_card($card_array);
                     ?>
+
+                    <!-- ボタン もっと見る -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="#">
+                            <button type="button" class="btn btn-success" disabled>もっと見る</button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -316,13 +349,24 @@
                     </div>
                 </div>
             </div>
+            <?php
+            $args = array(
+                'posts_per_page'   => -1,
+                'post_type'        => 'circle', 
+            );
+            $circle_data = get_posts( $args );
+            ?>
+            
             <!-- 運動 -->
             <div class="pt-5" id="circle-sport">
                 <h4 class="rounded circle-category-title sport-icon">運動</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('サークルサークルサークルサークル', 'man.png', '新宿スポーツ会館' . $i + 1, ($i + 2) ** ($i + 1));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '運動' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -332,8 +376,11 @@
                 <h4 class="rounded circle-category-title culture-icon">文化・学術</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('Nectgrams', 'nectgrams.jpg', 'Discord', ($i + 10) * ($i + 1 * 2));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '文化・学術' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -343,8 +390,11 @@
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
-                        circle_card('映像研', null, '291 MIRAI STUDIO', ($i + 3) ** ($i + 2));
+                    foreach ( $circle_data as $post ) {
+                        $post_custom = get_post_custom( $post->ID );
+                        if ( $post_custom['categoryRadio'][0] === '創造' ) {
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                        }
                     }
                     ?>
                 </div>
@@ -355,14 +405,14 @@
 
 <?php
 /* サークル カードのテンプレート */
-function circle_card($circle_name, $thumbnail_image, $place_text, $members_text) {
+function circle_card($circle_name, $thumbnail_image, $place_text, $members_text, $url) {
     ?>
     <div class="col">
         <div class="card h-100">
-            <a class="card-link" href="#"></a>
+            <a class="card-link" href="<?php echo $url; ?>"></a>
             <div class="row g-0">
                 <div class="col-4 col-lg-12">
-                    <img src="<?=get_theme_file_uri( 'src/' . ($thumbnail_image ?? 'no_image.png') )?>"
+                    <img src="<?php echo !empty($thumbnail_image) ? wp_get_attachment_image_src( $thumbnail_image )[0] : get_theme_file_uri('src/no_image.png'); ?>"
                         class="card-img-top ratio-3x2 h-100" alt="...">
                 </div>
                 <div class="col-8 col-lg-12">
@@ -372,8 +422,8 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text)
                         </h5>
                         <div class="card-text mt-auto">
                             <div class="row row-cols-1 mb-0 circle-info">
-                                <small class="col line-clamp-1"><?php echo $place_text ?? '不明'; ?></small>
-                                <small class="col line-clamp-1"><?php echo $members_text ?? '不明'; ?></small>
+                                <small class="col line-clamp-1"><?php echo $place_text ?? ''; ?></small>
+                                <small class="col line-clamp-1"><?php echo $members_text ?? ''; ?></small>
                             </div>
                         </div>
                     </div>
@@ -419,100 +469,59 @@ function circle_news($article_array) {
     endif;
 }
 
-/* 記事カードのテンプレート */
-function circle_info_card(?array $card_array){
+/* 記事カードのテンプレート（活動、ニュース） */
+function circle_info_card(?array $card_array) {
     if($card_array == null): //表示する記事がない場合
     ?>
     <p class="pt-4 text-center">記事がありません。</p>
     <?php
     else: //表示する記事がある場合
-        ?>
-        <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
-        <?php
-        foreach($card_array as $card):
-        ?>
-        <div class="col">
-            <div class="card h-100">
-                <a class="card-link" href="<?php echo $card -> link; ?>"></a>
-                <div class="row g-0">
-                    <div class="col-4 col-lg-12">
-                        <img src="<?php echo $card -> img; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
-                    </div>
-                    <div class="col-8 col-lg-12">
-                        <div class="card-body h-100 d-flex flex-column">
-                            <h5 class="card-title">
-                                <?php echo $card->title; //タイトル ?>
-                            </h5>
-                            <div class="card-text d-none d-lg-block">
-                                <p class="line-clamp-2">
-                                    <?php echo $card -> excerpt; //本文抜粋 ?>
-                                </p>
-                            </div>
-                            <div class="card-text d-flex justify-content-between align-items-center mt-auto">
-                                <div class="text-nowrap">
-                                    <small class="text-muted"><?php echo $card -> date; ?></small>
-                                </div>
+    ?>
+    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 pt-3">
+    <?php
+    foreach($card_array as $card):
+    ?>
+    <div class="col">
+        <div class="card h-100">
+            <a class="card-link" href="<?php echo $card->link; ?>"></a>
+            <div class="row g-0">
+                <div class="col-4 col-lg-12">
+                    <img src="<?php echo $card->img; ?>" class="card-img-top ratio-3x2 h-100" alt="...">
+                </div>
+                <div class="col-8 col-lg-12">
+                    <div class="card-body h-100 d-flex flex-column">
+                        <h1 class="card-title fs-6 line-clamp-2">
+                            <?php echo $card->title; ?>
+                        </h1>
+                        <!-- 本文 -->
+                        <div class="card-text d-flex justify-content-between align-items-center mt-auto">
+                            <div class="text-nowrap">
+                                <small class="text-muted"><?php echo $card->date; ?></small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
-        endforeach;
-        ?>
-        </div>
-        <!-- ボタン もっと見る -->
-        <div class="d-flex justify-content-end mt-3">
-            <a href="<?=home_url('index.php/news')?>">
-                <button type="button" class="btn btn-success">もっと見る</button>
-            </a>
-        </div>
-        <?php
+    </div>
+    <?php
+    endforeach;
+    ?>
+    </div>
+    <?php
     endif;
 }
 
-// postデータのカテゴリから必要なpostデータを引き出す。 使えません。
-/*
-function filter_category(string $category){
-    // 配列を定義
-    $card_array = null;
-    // 記事データを取得
-    $card_datas = get_article_data($category);
-    // 取得した記事情報の表示
-    if ( $card_datas ):
-        // 記事情報がある場合はforeachで記事情報を表示
-        foreach ( $card_datas as $post ): // $datas as $post の $datas は取得時に設定した変数名、$postは変更不可
-            setup_postdata( $post ); // アーカイブページ同様にthe_titleなどで記事情報を表示できるようにする
-            //var_dump($post);
-            $card_array[] = create_article_datas($post, null);
-        endforeach; 
-        // ↑ ループ終了 ↑
-    else: // 記事情報がなかったら
-        // 
-    endif;
-    
-    //var_dump($card_array);
-    // 一覧情報取得に利用したループをリセットする
-    wp_reset_postdata();
-    // 活動カード描画
-    circle_info_card($card_array);
-}
-*/
-
-// postデータからインスタンスを作成し各インスタンスごとにデータを格納
+/* postデータからインスタンスを作成し各インスタンスごとにデータを格納 */
 function create_article_datas(WP_Post $post, ?array $article_tags_array):?object {
-    $article_id = get_the_ID();       // 記事番号
     $article_id = new article_data(); // 記事のID名でインスタンスを作成
     $article_id->title   = get_the_title();    // タイトル
     $article_id->link    = get_permalink();    // リンク
     $article_id->date    = get_the_date();     // 投稿日
     $article_id->excerpt = get_the_excerpt();  // 本文
-    if(has_post_thumbnail()):// アイキャッチ画像の有無
-        $article_id->img = the_post_thumbnail_url();
-    else:
-        $article_id->img = get_theme_file_uri('src/no_image.png');
-    endif;
+    $post_custom = get_post_custom( get_the_ID() );
+    $article_id->img = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+
     if($article_tags_array != null):
         if( in_array('重要', $article_tags_array) ): // 重要タグの有無
             $article_id->is_important = true;
@@ -524,7 +533,7 @@ function create_article_datas(WP_Post $post, ?array $article_tags_array):?object
 }
 
 // 記事データ取得
-function get_article_data(string $article_category){
+function get_article_data(string $article_category) {
     // 取得したい内容を配列に記載します（不要箇所は省略可）
     $all_article_array = array(
         'posts_per_page'   => -1,     // 読み込みしたい記事数（全件取得時は-1）
@@ -540,7 +549,7 @@ function get_article_data(string $article_category){
 }
 
 /* php インスタンス */
-class article_data{
+class article_data {
     public string $title   = ' ';        //タイトル
     public string $link    = ' ';        // リンク
     public string $date    = ' ';        // 投稿日
