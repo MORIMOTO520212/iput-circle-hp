@@ -78,10 +78,10 @@ elseif ( is_single() ) { // is post page
                     <div class="collapse navbar-collapse justify-content-end" id="top-nav">
                         <ul class="navbar-nav">
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/activity')?>">活動</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/search-activity')?>">活動</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/news')?>">ニュース</a>
+                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/search-news')?>">ニュース</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
                                 <a class="nav-link active" aria-current="page" href="<?=home_url()?>">サークル</a>
