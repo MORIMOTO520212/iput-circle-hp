@@ -23,6 +23,7 @@
 
 /* この条件で検索する */
 .dropdown{
+    width: 153px;
     margin: 10px 5px;
 }
 
