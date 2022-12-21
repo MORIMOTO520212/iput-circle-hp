@@ -33,7 +33,7 @@ if ( isset( $param_token ) ) {
 
             <?php
             /* 登録画面 */
-            if( $param_token === null ):
+            if( $param_t === null ):
             ?>
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation" novalidate>
