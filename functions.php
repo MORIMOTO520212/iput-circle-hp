@@ -8,15 +8,37 @@ require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
 // wpmu_signup_user(), wpmu_signup_user_notification()
 require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 
-/**
- * 変数の初期化
-*/
+
+
+/* * * * 変数の初期化 * * * */
+
 // アップロード画像の最大ファイルサイズ（byte）
 $max_file_size = 5242880; //5MB
 // ファイルサイズ閾値（byte）
 $compression_file_size_threshold = 1048576; //1MB
 
 $upload_post_name = "";
+
+
+
+/* * * * 初期設定 * * * */
+
+// 投稿カテゴリーのチェック（activity, news）
+function check_post_categories() {
+    $cat_id = get_cat_ID('activity');
+    if($cat_id != 0 || !$cat_id) {
+        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+        wp_create_category('activity');
+    }
+    $cat_id = get_cat_ID('news');
+    if($cat_id != 0 || !$cat_id) {
+        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+        wp_create_category('news');
+    }
+}
+check_post_categories();
+
+
 
 /**
  * 管理者以外はアドミンバーを非表示
@@ -369,11 +391,10 @@ function user_signup() {
     //メールの文字列確認
     // ユーザー名 - 半角英数字+プラス記号+マイナス記号+アンダーパス2~16文字
     // ドメイン名 - tokyo.iput.ac.jpまたはtks.iput.ac.jp
-    /*
     if ( !(preg_match("/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD", $user_email)) ) {
-        modal('登録できません', '正しいメールアドレスを入力してください。使用できるドメインはtokyo.iput.ac.jpまたはtks.iput.ac.jpです。');
+        modal('登録できません', '学校のメールアドレスのみ登録可能です。使用できるドメインはtokyo.iput.ac.jpまたはtks.iput.ac.jpです。');
         return;
-    }*/
+    }
 
     // パスワードの確認
     // 半角英数字+記号を6文字以上16文字以下
