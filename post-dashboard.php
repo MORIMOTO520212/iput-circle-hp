@@ -52,6 +52,7 @@ if ( isset( $param_d ) ) {
 
 /* 記事 取得 */
 $args = array(
+    'author'         => wp_get_current_user()->id, // 投稿者
     'post_type'      => $param_type, // 投稿タイプ
     'posts_per_page' => 10,          // 投稿取得数
     'paged'          => $paged,      // 現在のページ
