@@ -69,6 +69,7 @@ get_header();
                     <!-- set value post id -->
                     <option value="false" selected>なし</option>
                     <?php
+                    // ログイン中のユーザーのサークル一覧
                     $args = array(
                         'posts_per_page' => -1,
                         'post_type' => 'circle',
