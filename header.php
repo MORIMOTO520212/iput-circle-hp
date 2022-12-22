@@ -59,9 +59,9 @@ elseif ( is_single() ) { // is post page
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.bundle.min.js"
             integrity="sha512-BOsvKbLb0dB1IVplOL9ptU1EYA+LuCKEluZWRUYG73hxqNBU85JBIBhPGwhQl7O633KtkjMv8lvxZcWP+N3V3w=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- trix.js v1.3.1 -->
-        <link rel="stylesheet" type="text/css" href="<?php echo get_theme_file_uri("assets/trix1.3.1.css"); ?>" />
-        <script src="<?php echo get_theme_file_uri("assets/trix1.3.1.js"); ?>"></script>
+        <!-- trix.js v2.0.4 -->
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.4/dist/trix.css">
+        <script type="text/javascript" src="https://unpkg.com/trix@2.0.4/dist/trix.umd.min.js"></script>
         <?php wp_head(); ?>
     </head>
     <body>
