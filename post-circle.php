@@ -253,7 +253,7 @@ if( isset( $param__post ) ) {
                     <!-- 活動内容 -->
                     <div class="mb-3">
                         <p>活動内容</p>
-                        <input id="trixeditor" class="form-control" type="text"  name="activityDetail" style="display:none;" value="<?php echo $input['activityDetail'] ?? '' ?>" required>
+                        <input id="trixeditor" class="form-control" type="text"  name="activityDetail" style="display:none;" value="" required>
                         <div>
                             <button type="button" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
                             <trix-editor class="form-control" input="trixeditor"></trix-editor>
@@ -261,6 +261,9 @@ if( isset( $param__post ) ) {
                         <div class="invalid-feedback">
                             入力必須です
                         </div>
+                        <script>
+                            <?php echo $input['activityDetail'] ?? '' ?>
+                        </script>
                     </div>
 
                     <!-- アルバム画像 -->
