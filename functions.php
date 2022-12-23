@@ -391,8 +391,11 @@ function user_signup() {
     //メールの文字列確認
     // ユーザー名 - 半角英数字+プラス記号+マイナス記号+アンダーパス2~16文字
     // ドメイン名 - tokyo.iput.ac.jpまたはtks.iput.ac.jp
-    if ( !(preg_match("/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD", $user_email)) ) {
-        modal('登録できません', '学校のメールアドレスのみ登録可能です。使用できるドメインはtokyo.iput.ac.jpまたはtks.iput.ac.jpです。');
+    // <正規表現>
+    // TK20***@**.iput.ac.jpのみ："/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD"
+    // 
+    if ( !(preg_match("/^[a-z0-9+._-]{2,16}@(.*)iput.ac.jp$/iD", $user_email)) ) {
+        modal('登録できません', '学校のメールアドレスのみ登録可能です。使用できるドメインはiput.ac.jpのみです。');
         return;
     }
 
