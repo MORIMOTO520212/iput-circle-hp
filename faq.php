@@ -7,7 +7,39 @@
 <?php get_header(); ?>
 
 <?php
+$faqData = array(
+    array(
+        'cat_name' => '学校に関するFAQ',
+        'contents' => array(
+            array(
+                'Q' => '落とし物を見つけた場合はどうしますか？',
+                'A' => '学生カウンターへ届けてください。また、落とし物をした場合は学生カウンターへ行ってください。',    
+            ),
+            array(
+                'Q' => 'ゴミを捨てる場所はどこですか？',
+                'A' => '各階には緑の扉と赤の扉のSKルームがありますので、そこで捨ててください。',
+            ),
+            array(
+                'Q' => 'コクーンタワーでお湯を入れられる場所はありますか？',
+                'A' => 'ー',    
+            ),
+        ),
+    ),
+    array(
+        'cat_name' => 'サークル活動に関するFAQ',
+        'contents' => array(
+            array(
+                'Q' => '教室を借りるには？',
+                'A' => '管理部に連絡してください。教室の予約が出来たり、自習室を借りられます。土曜にも借りることができます。',
+            ),
 
+            array(
+                'Q' => 'サークルを公認にするにはどうしたら良いですか？',
+                'A' => '公認にはメンバーが10人以上必要という条件があります。それをクリアした場合、サークルの編集ページから公認申請を送ることができます。',    
+            ),
+        ),
+    ),
+);
 ?>
 
 
@@ -35,11 +67,12 @@
                     <p class="fs-5">項目から探す</p>
                     <ul class="list-unstyled">
                         <?php
-                        for ($i=1; $i < 6; $i++) { 
+                        foreach ( $faqData as $i => $faq ): 
                         ?>
-                            <li class="pt-3"><img src="<?php echo get_theme_file_uri('src/chevron_right.svg'); ?>" class="pb-1 me-2"><a href=" <?php echo"#category-{$i}" ?> " class="text-decoration-none text-black fs-6"> <?php echo"カテゴリ{$i}" ?> </a></li>
+                            <li class="pt-3"><img src="<?php echo get_theme_file_uri('src/chevron_right.svg'); ?>" class="pb-1 me-2"><a href="<?php echo"#category-{$i}" ?>" 
+                                class="text-decoration-none text-black fs-6"><?php echo $faq['cat_name'] ?></a></li>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </ul>
                 </div>
@@ -51,51 +84,38 @@
             <!-- faq contents -->
             <!-- category-1 -->
             <div class="mb-5">
-            <?php
-            for($i=1; $i<6; $i++){
-            ?>
-                <h1 class="fw-bold" id="<?php echo "category-{$i}" ?>"><?php echo"カテゴリ{$i}" ?></h1>
+                <?php
+                foreach ( $faqData as $i => $faq ):
+                ?>
+                <h1 class="fw-bold" id="<?php echo "category-{$i}" ?>"><?php echo $faq['cat_name'] ?></h1>
                 <!-- 各質問の間隔は32pxで仮置き -->
                 <div class="justify-content-start row row-cols-lg-2 g-4 pb-5">
-                <?php
-                for($j=1; $j<($i*3 ) ; $j++){
-                ?>
-                    <div class="accordion col-lg-6" id="<?php echo"faq-accordion-{$i}-{$j}" ?>">
-                    <!-- Accordion items -->
-                    <!-- quiestions -->
+                    <?php
+                    foreach ( $faq['contents'] as $j => $contents ):
+                    ?>
+                    <div class="accordion col-lg-6">
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="<?php echo"faq-questions-{$i}-{$j}" ?>">
-                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target=" <?php echo"#faq-questions-detail-{$i}-{$j}" ?>" aria-expanded="false" aria-controls=" <?php echo"faq-questions-detail-{$i}-{$j}" ?>">
-                                    Q <?php echo"{$i}-{$j}" ?>. Quiestion Text
+                            <h2 class="accordion-header" id="<?php echo "headingOne{$i}{$j}" ?>">
+                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" 
+                                    data-bs-target="<?php echo "#collapseOne{$i}{$j}" ?>" aria-expanded="true" aria-controls="<?php echo "collapseOne{$i}{$j}" ?>">
+                                    Q <?php echo $contents['Q'] ?>
                                 </button>
                             </h2>
-                            <div id="<?php echo"faq-questions-detail-{$i}-{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby=" <?php echo"faq-questions-{$i}-{$j}" ?>">
+                            <div id="<?php echo "collapseOne{$i}{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby="<?php echo "headingOne{$i}{$j}" ?>">
                                 <div class="accordion-body">
-                                    <strong>Sample Text</strong>
-                                </div>
-                            </div>
-                        </div>
-                    <!-- answers -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="<?php echo"faq-answers-{$i}-{$j}" ?>">
-                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" data-bs-target=" <?php echo"#faq-answers-detail-{$i}-{$j}" ?>" aria-expanded="false" aria-controls=" <?php echo"faq-answers-detail-{$i}-{$j}" ?>">
-                                    A <?php echo"{$i}-{$j}" ?>. Answer Text
-                                </button>
-                            </h2>
-                            <div id="<?php echo"faq-answers-detail-{$i}-{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby=" <?php echo"faq-answers-{$i}-{$j}" ?>">
-                                <div class="accordion-body">
-                                    <strong>Sample Text</strong>
+                                    <strong><?php echo $contents['A'] ?></strong>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <?php 
-                }
-                ?>
+                    <?php 
+                    endforeach;
+                    ?>
                 </div>
-            <?php
-            }
-            ?>
+                <?php
+                endforeach;
+                ?>
+            </div>
         </div>
     </div>
 </main>

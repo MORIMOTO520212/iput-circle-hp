@@ -40,9 +40,6 @@ if ( !empty($tags) ) {
 $the_query = new WP_Query( $args );    // 投稿データ
 
 get_header();
-
-var_dump(get_tags(array('slug' => '行事・イベント')));
-//var_dump($args);
 ?>
 
 <div class="top">
@@ -88,7 +85,7 @@ var_dump(get_tags(array('slug' => '行事・イベント')));
             <label class="tag btn btn-outline-secondary" for="btn-check3">重要連絡</label>
         </div>
         <div class="w-100 d-flex justify-content-center">
-            <button type="button" class="btn btn-primary">この条件で検索する</button>
+            <button type="button" class="btn btn-primary" disabled>この条件で検索する</button>
         </div>
     </div>
 </div>

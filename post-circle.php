@@ -29,9 +29,9 @@ $features = [
     "設立1年未満",
 ];
 
-// _postパラメータ
-$param__post = get_params('_post');
-$param_id = get_params('id');
+// パラメータ取得
+$param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
+$param_id    = get_params('id');    // 編集時の投稿ID
 
 if( isset( $param__post ) ) {
 
@@ -83,6 +83,7 @@ if( isset( $param__post ) ) {
             exit;
         }
         /* 削除処理 */
+
     } else {
         echo "エラー";
         exit;
@@ -118,7 +119,14 @@ if( isset( $param__post ) ) {
                         <label class="form-label" for="top-image">トップ画像</label>
                         <input type="file" class="form-control" id="top-image" name="topImage" accept="image/png, image/jpeg">
                         <div class="form-text">
-                            5MB以下のファイルをアップロードできます。
+                            <?php
+                            if ( $param__post === 'create' ) {
+                                echo "5MB以下のファイルをアップロードできます。";
+                            }
+                            elseif ( $param__post === 'edit' ) {
+                                echo "画像を更新する場合は、アップロードしてください。";
+                            }
+                            ?>
                         </div>
                     </div>
 
@@ -127,7 +135,14 @@ if( isset( $param__post ) ) {
                         <label class="form-label" for="header-image">ヘッダー画像</label>
                         <input type="file" class="form-control" id="header-image" name="headerImage" accept="image/png, image/jpeg">
                         <div class="form-text">
-                            5MB以下のファイルをアップロードできます。推奨する画像サイズは1900x300です。
+                            <?php
+                            if ( $param__post === 'create' ) {
+                                echo "5MB以下のファイルをアップロードできます。推奨する画像サイズは1500x300です。";
+                            }
+                            elseif ( $param__post === 'edit' ) {
+                                echo "画像を更新する場合は、アップロードしてください。";
+                            }
+                            ?>
                         </div>
                     </div>
 
@@ -262,7 +277,9 @@ if( isset( $param__post ) ) {
                             入力必須です
                         </div>
                         <script>
-                            <?php echo $input['activityDetail'] ?? '' ?>
+                            // trix editor フォームにコンテンツを配置する
+                            var activityDetail = '<?php echo $input['activityDetail'] ?? '' ?>';
+                            document.querySelector('trix-editor').innerHTML = activityDetail;
                         </script>
                     </div>
 

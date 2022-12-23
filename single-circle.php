@@ -16,6 +16,7 @@ $post_custom = get_post_custom( $post->ID );
 
 // ヘッダー画像のURL取得（ない場合はダミー画像を使う）
 $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_image_src( $post_custom['headerImage'][0] )[0] : get_theme_file_uri('src/no_image_circle_header.png');
+
 ?>
 
 <div class="top-image" style="background-image: url('<?php echo $headerImageUrl ?>');">
@@ -80,7 +81,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                         </div>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon envelope-fill">
-                                <a href="<?php echo home_url("index.php/circle-contact/?circlename=" . get_the_title() . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
+                                <a href="<?php echo home_url("index.php/circle-contact/?circlename=" . $post->post_title . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
                                 お問い合わせ
                             </div>
                         </div>
@@ -249,7 +250,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
 <script>
 /* お問い合わせポップアップ画面 */
 function piplup() {
-    window.open("<?php echo home_url("index.php/circle-contact/?circlename=" . get_the_title() . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>", "window1", "width=400, height=400, scrollbars=1");
+    window.open("<?php echo home_url("index.php/circle-contact/?circlename=" . $post->post_title . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>", "window1", "width=400, height=400, scrollbars=1");
 }
 </script>
 

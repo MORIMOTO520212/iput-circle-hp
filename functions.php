@@ -692,6 +692,13 @@ function post_circle() {
             // カテゴリ名を更新する
             wp_set_post_categories( $_POST['postID'], get_the_category( $_POST['postID'] )[0]->cat_ID, false );
 
+            // カテゴリ名を更新する
+            $cat_id = get_cat_ID( get_the_title( $_POST['postID'] ) );
+            wp_update_term( $cat_id, 'category', array(
+                'name' => sanitize_text_field( $_POST['circleName'] ),
+                'slug' => sanitize_text_field( $_POST['circleName'] ),
+              ) );
+
         /* 新規投稿の場合 */
         } else {
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）

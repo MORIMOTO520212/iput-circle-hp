@@ -55,7 +55,7 @@ get_header();
         </div>
         
         <div class="mb-3">
-          <label class="form-label" for="input">ファーストビューへクリップ</label>
+          <label class="form-label" for="input">ファーストビューへクリップ　<span class="badge bg-warning text-dark">もうすぐ...</span></label>
           <div id="Help" class="form-text mb-3">
             クリップすると、トップページの一番初めに見える部分に、ギャラリーとして期間中に記事の情報が大きく掲載されます。これにより多くの人に記事を見せることができます。イベント告知などの重要な投稿にお使いください。
           </div>
@@ -66,8 +66,8 @@ get_header();
         </div>
         
         <div class="mb-3">
-          <label class="form-label" for="input">掲載期限</label>
-          <input type="date" id="post-limite" name="limit-date" value="<?php echo date_i18n('Y-m-d')?>" min="2022-12-01" max="2024-12-31">          
+          <label class="form-label" for="post-limite">掲載期限</label>
+          <input type="date" id="post-limite" class="form-control" name="limit-date" value="<?php echo date_i18n('Y-m-d')?>" min="2022-12-01" max="2024-12-31">          
         </div>
           
         <div class="mb-3">

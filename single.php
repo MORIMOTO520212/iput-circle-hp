@@ -26,9 +26,15 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
     <div class="pt-2 pb-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">トップ</a></li>
-                <li class="breadcrumb-item"><a href="#"><?php echo $category_name; ?></a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?php the_title(); ?></li>
+                <li class="breadcrumb-item">
+                    <a href="<?php echo home_url() ?>">トップ</a>
+                </li>
+                <li class="breadcrumb-item"><a href="<?php echo home_url("index.php/search-{$category}"); ?>">
+                    <?php echo $category_name; ?></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <?php the_title(); ?>
+                </li>
             </ol>
         </nav>
     </div>
@@ -86,7 +92,7 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
 <!-- ボタン 一覧に戻る -->
 <div class="d-flex align-items-center foot mt-5">
     <div class="container max-width-lg">
-        <button type="button" class="btn btn-success">一覧に戻る</button>
+        <a class="btn btn-success" href="<?php echo home_url("index.php/search-{$category}"); ?>">一覧に戻る</a>
     </div>
 </div>
 
