@@ -44,7 +44,7 @@ if ( isset( $param__post ) ) {
     } elseif ( $param__post === 'edit' ) {
         // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
         if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
-            echo "エラー";
+            echo "エラー1";
             exit;
         }
 
@@ -53,7 +53,7 @@ if ( isset( $param__post ) ) {
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
-            echo "エラー";
+            echo "エラー2";
             exit;
         }
         
@@ -82,17 +82,17 @@ if ( isset( $param__post ) ) {
         $post = get_post( $param_id );
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
-            echo "エラー";
+            echo "エラー3";
             exit;
         }
         /* 削除処理 */
 
     } else {
-        echo "エラー";
+        echo "エラー4";
         exit;
     }
 } else {
-    modal('エラー', 'もう一度アクセスし直してください。');
+    modal('エラー5', 'もう一度アクセスし直してください。');
 }
 ?>
 

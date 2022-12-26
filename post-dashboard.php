@@ -85,6 +85,8 @@ get_header();
                         // 投稿はカテゴリのニュース(post-news)と活動記録(post-activity)を判別してリンクを更新する
                         if ( $param_type === 'post' ) {
                             $url = str_replace('%_%', get_the_category()[0]->name, $option_url);
+                        } else {
+                            $url = $option_url;
                         }
                         ?>
                         <div class="col-6">
