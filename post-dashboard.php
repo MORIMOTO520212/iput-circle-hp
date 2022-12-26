@@ -84,16 +84,16 @@ get_header();
                         <?php
                         // 投稿はカテゴリのニュース(post-news)と活動記録(post-activity)を判別してリンクを更新する
                         if ( $param_type === 'post' ) {
-                            $option_url = str_replace('%_%', get_the_category()[0]->name, $option_url);
+                            $url = str_replace('%_%', get_the_category()[0]->name, $option_url);
                         }
                         ?>
                         <div class="col-6">
                             <a class="p-0 w-100 btn btn-secondary editbtn" href="<?php
-                            echo $option_url . "?_post=edit&id=" . get_the_ID(); ?>" role="button"></a>
+                            echo $url . "?_post=edit&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                         <div class="col-6">
                             <a class="p-0 w-100 btn btn-danger deletebtn" href="<?php
-                            echo $option_url . "?_post=delete&id=" . get_the_ID(); ?>" role="button"></a>
+                            echo $url . "?_post=delete&id=" . get_the_ID(); ?>" role="button"></a>
                         </div>
                     </div>
                 </div>
