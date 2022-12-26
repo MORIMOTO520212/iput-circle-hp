@@ -62,6 +62,18 @@ elseif ( is_single() ) { // is post page
         <!-- trix.js v2.0.4 -->
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.4/dist/trix.css">
         <script type="text/javascript" src="https://unpkg.com/trix@2.0.4/dist/trix.umd.min.js"></script>
+
+        <!-- Google tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMPQRQ4Q0G"></script>
+        <script>
+            if("localhost" != location.hostname) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-BMPQRQ4Q0G');
+            }
+        </script>
+
         <?php wp_head(); ?>
     </head>
     <body>
