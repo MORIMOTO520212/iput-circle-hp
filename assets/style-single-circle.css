@@ -59,6 +59,16 @@
     object-fit: contain;
 }
 
+.top-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgb(0 0 0 / 0%) 28%, rgb(0 0 0 / 20%) 55%, rgb(0 0 0 / 34%) 80%);
+}
+
 .top-image p {
     position: relative;
     padding: 0;
@@ -71,6 +81,7 @@
     margin-left: 20px;
     bottom: 30%;
     width: 80%;
+    z-index: 1;
 }
 
 /* サークル基本情報 */
