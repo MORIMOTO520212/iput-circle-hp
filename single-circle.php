@@ -124,8 +124,8 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                         <th scope="row">特色</th>
                         <td>
                             <?php
-                            if ( isset( $post_custom['features'][0] ) ):
                             // 非シリアライズ化して取り出し
+                            if ( isset( $post_custom['features'][0] ) ):
                             $features = maybe_unserialize( $post_custom['features'][0] );
                             foreach( $features as $name ):
                             ?>

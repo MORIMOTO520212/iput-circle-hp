@@ -692,13 +692,11 @@ function post_circle() {
         );
 
         /* 更新の場合 */
-        if ( $_POST['submit_type'] === 'circle_edit' ) {
+        if ( $_POST['submit_type'] === 'edit_circle' ) {
             // postIDを指定する
             if ( isset( $_POST['postID'] ) ) {
                 $post_data['ID'] = $_POST['postID'];
             }
-            // カテゴリ名を更新する
-            wp_set_post_categories( $_POST['postID'], get_the_category( $_POST['postID'] )[0]->cat_ID, false );
 
             // カテゴリ名を更新する
             $cat_id = get_cat_ID( get_the_title( $_POST['postID'] ) );
@@ -735,7 +733,7 @@ function post_circle() {
         }
 
         // サークルのカテゴリを作成する
-        if ( $_POST['submit_type'] === 'circle_post' ) {
+        if ( $_POST['submit_type'] === 'post_circle' ) {
             $category_id = wp_create_category( $_POST['circleName'] );
             wp_set_post_categories( $post_id, array($category_id), true );
         }
@@ -750,11 +748,13 @@ function post_circle() {
         // アルバム画像
         // ～ここへ処理～
 
+
         // カスタムフィールド（自動サニタイズ、add_post_meta関数は禁止）
-        if ( !empty( $topImage_id ) ) { // 更新時に画像をアップしない場合はスルー
+        // 更新時に画像をアップしない場合はスルー
+        if ( ($_POST['submit_type'] === 'post_circle') || !empty( $topImage_id ) ) {
             update_post_meta( $post_id, 'topImage', $topImage_id ); // トップ画像
         }
-        if ( !empty( $headerImage_id ) ) {
+        if ( ($_POST['submit_type'] === 'post_circle') || !empty( $headerImage_id ) ) {
             update_post_meta( $post_id, 'headerImage', $headerImage_id ); // ヘッダー画像
         }
         // 自動サニタイズ、add_post_meta関数は禁止
@@ -769,10 +769,7 @@ function post_circle() {
         update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
         update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
         update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ); // 公式Twitterユーザー名
-        if ( isset( $_POST['features'] ) ) {
-            update_post_meta( $post_id, 'features',       $_POST['features']           ); // 特色（配列をシリアル化して文字列で保存）
-        }
-        
+        update_post_meta( $post_id, 'features',           $_POST['features'] ?? array()); // 特色（配列をシリアル化して文字列で保存）
 
     } else {
         modal('エラー', '不正なリクエストです。');
@@ -783,16 +780,6 @@ function post_circle() {
     wp_redirect( get_permalink( $post_id ) );
     exit;
     return 1;
-}
-
-
-/**
- * サークル 削除
-*/
-function delete_circle() {
-    // 投稿を削除する
-    // サークル名のタグを削除する
-    return true;
 }
 
 
@@ -826,11 +813,21 @@ function post_activity() {
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
-            'post_name'     => md5( time() ),      // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             'post_category' => array( get_cat_ID('activity'),  $_POST['organizationId'] ),  // カテゴリID
             'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
+
+        if ( $_POST['submit_type'] === 'post_activity' ) {
+            // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
+            $post_data['post_name'] = md5( time() );
+        }
+        elseif ( $_POST['submit_type'] === 'edit_activity' ) {
+            // postIDを指定する
+            if ( isset( $_POST['postID'] ) ) {
+                $post_data['ID'] = $_POST['postID'];
+            }
+        }
 
         $post_id = wp_insert_post( $post_data, true );
 
@@ -924,7 +921,7 @@ function post_news() {
 
         // 記事内容からアイキャッチ画像 設定
         $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg)";
-        
+
         preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
 
         if ( !empty($matches) ) {
@@ -976,24 +973,30 @@ add_action('after_setup_theme', function() {
         profile_update();
     }
     // サークルを作成する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_post' ) {
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_circle' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
         post_circle();
     }
     // サークルをドラフト保存する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_draft' ) {
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'draft_circle' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
     }
     // サークルを編集する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_edit' ) {
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_circle' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
         post_circle();
     }
-    // 活動記録投稿ページ
+    // 活動記録を投稿する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
+        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+        post_activity();
+    }
+    // 活動記録を編集する
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_activity' ) {
         if ( !isset( $_POST['post_activity_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
         post_activity();

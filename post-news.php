@@ -175,6 +175,7 @@ if ( isset( $param__post ) ) {
                 <?php
                 elseif ( $param__post === 'edit' ):
                 ?>
+                <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
                 <button type="submit" class="btn btn-success" name="submit_type" value="post_activity">更新する</button>
                 <?php endif; ?>
             </div>
