@@ -13,14 +13,3 @@
 trix-toolbar .trix-button--icon {
     width: 1.9em !important;
 }
-
-/* Trix Editor 本文中の見出し */
-trix-editor h1 {
-    padding-left: 10px;
-    border-left: solid 3px #9AC629;
-    color: var(--main-h1-font-color);
-    line-height: 2rem;
-    font-size: 1.5rem;
-    font-weight: normal;
-    margin: 12px 0;
-}
