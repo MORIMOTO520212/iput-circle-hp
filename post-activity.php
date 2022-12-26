@@ -47,14 +47,7 @@ if ( isset( $param__post ) ) {
         $post_custom = get_post_custom( $post->ID ); // カスタムメタデータ取得
 
         // タグ取得
-        $tags = array_map(function($t){return $t->name;}, get_the_tags($param_id));
-
-        /* 入力フォーム値の初期化 */
-        $input = array(
-            'title'    => $post->post_title,   // 記事タイトル
-            'contents' => $post->post_content, // 記事内容
-            'tags_input' => $tags,
-        );
+        $tags = array_map( function($t){return $t->name;}, get_the_tags($param_id) );
 
     /* サークル削除 */
     } elseif ( $param__post === 'delete' ) {
@@ -76,7 +69,7 @@ if ( isset( $param__post ) ) {
 
         // リダイレクト
         echo "<script>location.href = './index.php/post-dashboard/?type=post';</script>";
-        
+
     } else {
         echo "エラー4";
         exit;
@@ -104,7 +97,7 @@ if ( isset( $param__post ) ) {
 
         <div class="mb-3">
             <label class="form-label" for="input">活動内容<span>*</span></label>
-            <input type="text" class="form-control" id="trixeditor" name="contents" value="<?php echo isset($post->post_content) ? $post->post_content : '' ?>" style="display:none;" required>
+            <input type="text" class="form-control" id="trixeditor" name="contents" value="" style="display:none;" required>
             <div>
                 <button type="button" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
                 <trix-editor class="form-control" input="trixeditor"></trix-editor>
@@ -112,6 +105,11 @@ if ( isset( $param__post ) ) {
             <div class="invalid-feedback">
                 入力必須です。
             </div>
+            <script>
+                // trix editor フォームにコンテンツを配置する
+                var activityDetail = '<?php echo $post->post_content ?? '' ?>';
+                document.querySelector('trix-editor').innerHTML = activityDetail;
+            </script>
         </div>
 
         <div class="mb-3">

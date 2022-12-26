@@ -15,6 +15,69 @@ if ( !is_user_logged_in() ) {
 }
 
 get_header();
+
+$param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
+$param_id    = get_params('id');    // 編集時の投稿ID
+
+$tags = array(); // タグ
+
+if ( isset( $param__post ) ) {
+    
+    /* 記事新規作成 */
+    if ( $param__post === 'create' ) {
+        /* PASS */
+
+    /* 記事編集 */
+    } elseif ( $param__post === 'edit' ) {
+        // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
+        if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
+            echo "エラー1";
+            exit;
+        }
+
+        $post = get_post( $param_id ); // 記事取得
+
+        // 投稿者かどうか確認
+        $author = get_userdata($post->post_author);
+        if ( wp_get_current_user()->ID != $author->ID ) {
+            echo "エラー2";
+            exit;
+        }
+
+        $post_custom = get_post_custom( $post->ID ); // カスタムメタデータ取得
+
+        // タグ取得
+        $tags = array_map( function($t){return $t->name;}, get_the_tags($param_id) );
+
+    /* サークル削除 */
+    } elseif ( $param__post === 'delete' ) {
+        $post = get_post( $param_id );
+        $author = get_userdata($post->post_author);
+        if ( wp_get_current_user()->ID != $author->ID ) {
+            echo "エラー3";
+            exit;
+        }
+
+        $post_custom = get_post_custom( $post->ID );
+
+        // トップ画像 削除
+        $attachment_id = get_attachment_id_from_src( $post_custom['topImage'][0] );
+        wp_delete_attachment( $attachment_id );
+
+        // 投稿 削除
+        wp_delete_post( $post->ID );
+
+        // リダイレクト
+        echo "<script>location.href = './index.php/post-dashboard/?type=post';</script>";
+        
+    } else {
+        echo "エラー4";
+        exit;
+    }
+
+} else {
+    modal('エラー', 'もう一度アクセスし直してください。');
+}
 ?>
 
 <!-- 非対応のファイル添付時に表示するモーダル -->
@@ -26,7 +89,8 @@ get_header();
         
         <div class="mb-3">
             <label class="form-label" for="input">記事タイトル<span>*</span></label>
-            <input type="text" maxlength="50" class="form-control" id="title" name="title" value="" placeholder="タイトルを入力" required>
+            <input type="text" maxlength="50" class="form-control" id="title" name="title" 
+                value="<?php echo isset($post->post_title) ? $post->post_title : '' ?>" placeholder="タイトルを入力" required>
             <div class="invalid-feedback">
                 50文字以内で入力してください。
             </div>
@@ -42,29 +106,34 @@ get_header();
             <div class="invalid-feedback">
                 入力必須です。
             </div>
+            <script>
+                // trix editor フォームにコンテンツを配置する
+                var activityDetail = '<?php echo $post->post_content ?? '' ?>';
+                document.querySelector('trix-editor').innerHTML = activityDetail;
+            </script>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="input">タグ付け<span>*</span></label>
             <div class="d-flex justify-content-start mb-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント">
+                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント" <?php echo in_array('行事・イベント', $tags) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk1">行事・イベント</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="レジャー">
+                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="レジャー" <?php echo in_array('レジャー', $tags) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk2">レジャー</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="食事">
+                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="食事" <?php echo in_array('食事', $tags) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk3">食事</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="お知らせ">
+                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="お知らせ" <?php echo in_array('お知らせ', $tags) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk3">お知らせ</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="重要連絡">
+                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="重要連絡" <?php echo in_array('重要連絡', $tags) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk4">重要連絡</label>
                 </div>
             </div>
@@ -99,7 +168,15 @@ get_header();
                 ログインしていないユーザーに記事が公開されないようにします。
             </div>
             <div class="d-flex justify-content-evenly g-3 mb-3">
-                <button type="submit" class="btn btn-primary" name="submit_type" value="post_news">投稿する</button>
+                <?php
+                if ( $param__post === 'create' ):
+                ?>
+                <button type="submit" class="btn btn-primary" name="submit_type" value="post_activity">投稿する</button>
+                <?php
+                elseif ( $param__post === 'edit' ):
+                ?>
+                <button type="submit" class="btn btn-success" name="submit_type" value="post_activity">更新する</button>
+                <?php endif; ?>
             </div>
         </div>
         <?php wp_nonce_field( 'Fr4XZRu6', 'post_news_nonce' ); ?>
