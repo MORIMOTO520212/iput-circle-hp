@@ -144,6 +144,12 @@ function set_custom_fields() {
         'normal',
         'default'
     );
+    add_meta_box(
+        'author',
+        '作成者',
+        'post_author_meta_box',
+        'circle'
+    );
 }
 add_action( 'admin_menu', 'set_custom_fields' );
 
@@ -876,9 +882,71 @@ function post_activity() {
  * ニュース投稿ページ 投稿処理
 */
 function post_news() {
-    if ( 1 ) {
-        return;
+    if ( isset(
+        $_POST['title'],       // 記事のタイトル
+        $_POST['contents'],    // 記事の内容
+    ) )
+    {
+        // 文字数チェック
+        if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
+        if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
+
+        $post_data = array(
+            'post_title'    => $_POST['title'],    // タイトル
+            'post_content'  => $_POST['contents'], // コンテンツ
+            'post_name'     => md5( time() ),      // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
+            'post_category' => array( get_cat_ID('news') ),  // カテゴリID
+            'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
+            'post_status'   => 'publish', // 公開設定
+        );
+
+        $post_id = wp_insert_post( $post_data, true );
+
+        if ( is_wp_error( $post_id ) ) {
+            echo $post_id->get_error_code();
+            echo $post_id->get_error_message();
+            modal('記事の投稿に失敗しました', "{$post_id->get_error_code()}<br>{$post_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
+            return;
+        }
+        
+        // クリップ 設定
+        if ( isset( $_POST['clip'] ) ) {
+            update_post_meta( $post_id, 'clip', $_POST['limit-date'] );
+        } else {
+            update_post_meta( $post_id, 'clip', 'false' );
+        }
+
+        // 内部公開 設定
+        if ( isset( $_POST['permission'] ) ) {
+            update_post_meta( $post_id, 'permission', 'true' );
+        } else {
+            update_post_meta( $post_id, 'permission', 'false' );
+        }
+
+        // 記事内容からアイキャッチ画像 設定
+        if ( is_localhost() ) {
+            $pattern = "http:\/\/(.*?)(.png|.jpg)";
+        } else {
+            $pattern = "https:\/\/(.*?)(.png|.jpg)";
+        }
+        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
+
+        $topImage_url = !empty($matches) ? esc_url( $matches[0] ) : '';
+
+        if ( !empty($topImage_url) ) {
+            $topImage_id = get_attachment_id_from_src( $topImage_url ); // urlからサムネイルIDを取得
+            update_post_meta( $post_id, 'topImage', $topImage_id );
+        } else {
+            update_post_meta( $post_id, 'topImage', '' );
+        }
+
+        // リダイレクト
+        wp_redirect( get_permalink( $post_id ) );
+        exit;
+        return true;
+
     } else {
+        modal('エラー', '不正なリクエストです。');
         return;
     }
 }
@@ -935,9 +1003,9 @@ add_action('after_setup_theme', function() {
         post_activity();
     }
     // ニュース投稿ページ
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
-        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_news' ) {
+        if ( !isset( $_POST['post_news_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
         post_news();
     }
 });
