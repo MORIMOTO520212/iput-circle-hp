@@ -5,6 +5,7 @@
 ?>
 
 <?php
+require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 /* ログイン状態のチェック */
 if ( !is_user_logged_in() ) {
@@ -15,6 +16,7 @@ if ( !is_user_logged_in() ) {
 $param_t = get_params('t'); // パラメータ取得
 
 if( isset( $param_t ) ) {
+    // ログアウト処理
     if( $param_t == "logout" ) {
         wp_logout();
         wp_redirect( home_url() );
@@ -36,7 +38,7 @@ $email = get_user_option('user_email', $user_id);
 <!-- コンテンツ -->
 <div class="main mx-2 mb-5">
     <h2 class="txt-subject text-center"><?php the_title(); ?></h2>
-    <form class="container row-cols-1 g-3 mb-5 max-width-sm" action="" method="post" novalidate style="padding: 30px 40px;">
+    <form class="form-loading container row-cols-1 g-3 mb-5 max-width-sm" action="" method="post" novalidate style="padding: 30px 40px;">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="username" value="<?php echo $username; ?>" disabled>
             <label for="username">ユーザー名（変更できません）</label>
@@ -114,5 +116,7 @@ $email = get_user_option('user_email', $user_id);
         }
     });
 </script>
+
+<?php form_loading(); ?>
 
 <?php get_footer(); ?>

@@ -4,11 +4,15 @@
  */
 ?>
 
-<?php get_header(); ?>
+<?php
+require_once( get_theme_file_path('assets/components/form_loading.php') );
+
+get_header();
+?>
 
 <main class="contents" style="background-image: url('<?php echo get_theme_file_uri('src/background/student-salon-blue.webp'); ?>')">
     <!-- LOGIN FORM -->
-    <div class="container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
+    <div class="form-loading container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
         <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md needs-validation" id="form" action="" method="post" novalidate>
 
             <div class="container col col-md-8">
@@ -51,4 +55,6 @@
     </div>
 </main>
 
-<?php echo get_footer(); ?>
+<?php form_loading(); ?>
+
+<?php get_footer(); ?>

@@ -5,6 +5,7 @@
 ?>
 
 <?php
+require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 $param_token = get_params('token');
 $param_t = get_params('t');
@@ -36,7 +37,7 @@ if ( isset( $param_token ) ) {
             if( $param_t === null ):
             ?>
 
-            <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation" novalidate>
+            <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation form-loading" novalidate>
                 <h3>ようこそ！</h3>
                 <div class="mt-0">
                     <label for="username">ユーザー名</label>
@@ -116,5 +117,7 @@ if ( isset( $param_token ) ) {
         </div>
     </div>
 </main>
+
+<?php form_loading(); ?>
 
 <?php get_footer(); ?>

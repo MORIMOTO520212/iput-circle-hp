@@ -12,6 +12,7 @@
 */
 
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
+require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 get_header();
 
@@ -33,11 +34,11 @@ $features = [
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
 
-if( isset( $param__post ) ) {
+if ( isset( $param__post ) ) {
 
     /* サークル新規作成 */
     if ( $param__post === 'create' ) {
-        /* pass */
+        /* PASS */
 
     /* サークル編集 */
     } elseif ( $param__post === 'edit' ) {
@@ -47,7 +48,9 @@ if( isset( $param__post ) ) {
             exit;
         }
 
-        $post = get_post( $param_id );
+        $post = get_post( $param_id ); // 記事取得
+
+        // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
             echo "エラー";
@@ -96,7 +99,7 @@ if( isset( $param__post ) ) {
 <!-- 非対応のファイル添付時に表示 -->
 <?php require_once( get_theme_file_path("assets/components/trix_file_type_caution_modal.php") ); ?>
 
-<form class="container mt-4 pb-4 mb-4 needs-validation" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
+<form class="container mt-4 pb-4 mb-4 needs-validation form-loading" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
     <div class="row">
         <div class="col-lg-6">
             <div class="mt-5">
@@ -137,7 +140,7 @@ if( isset( $param__post ) ) {
                         <div class="form-text">
                             <?php
                             if ( $param__post === 'create' ) {
-                                echo "5MB以下のファイルをアップロードできます。推奨する画像サイズは1500x300です。";
+                                echo "5MB以下のファイルをアップロードできます。";
                             }
                             elseif ( $param__post === 'edit' ) {
                                 echo "画像を更新する場合は、アップロードしてください。";
@@ -354,5 +357,7 @@ if( isset( $param__post ) ) {
 </script>
 
 <?php trix_file_upload_to_wordpress(); ?>
+
+<?php form_loading(); ?>
 
 <?php get_footer(); ?>
