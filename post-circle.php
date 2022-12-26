@@ -28,6 +28,7 @@ $features = [
     "土日活動",
     "平日活動",
     "設立1年未満",
+    "インカレサークル",
 ];
 
 // パラメータ取得
@@ -85,8 +86,26 @@ if ( isset( $param__post ) ) {
             echo "エラー3";
             exit;
         }
-        /* 削除処理 */
 
+        $post_custom = get_post_custom( $post->ID );
+
+        // サークルのカテゴリ 削除
+        wp_delete_term( get_cat_ID( $post->post_title ), 'category' );
+
+        // トップ画像 削除
+        $attachment_id = get_attachment_id_from_src( $post_custom['topImage'][0] );
+        wp_delete_attachment( $attachment_id );
+
+        // ヘッダー画像 削除
+        $attachment_id_headerImage = get_attachment_id_from_src( $post_custom['headerImage'][0] );
+        wp_delete_attachment( $attachment_id );
+
+        // 投稿 削除
+        wp_delete_post( $post->ID );
+
+        // リダイレクト
+        echo "<script>location.href = './index.php/post-dashboard/?type=circle';</script>";
+        
     } else {
         echo "エラー4";
         exit;

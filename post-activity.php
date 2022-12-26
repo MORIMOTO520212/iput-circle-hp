@@ -19,6 +19,8 @@ get_header();
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
 
+$tags = array();
+
 if ( isset( $param__post ) ) {
     
     /* 記事新規作成 */
@@ -29,7 +31,7 @@ if ( isset( $param__post ) ) {
     } elseif ( $param__post === 'edit' ) {
         // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
         if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
-            echo "エラー";
+            echo "エラー1";
             exit;
         }
 
@@ -38,7 +40,7 @@ if ( isset( $param__post ) ) {
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
         if ( wp_get_current_user()->ID != $author->ID ) {
-            echo "エラー";
+            echo "エラー2";
             exit;
         }
 
@@ -53,6 +55,31 @@ if ( isset( $param__post ) ) {
             'contents' => $post->post_content, // 記事内容
             'tags_input' => $tags,
         );
+
+    /* サークル削除 */
+    } elseif ( $param__post === 'delete' ) {
+        $post = get_post( $param_id );
+        $author = get_userdata($post->post_author);
+        if ( wp_get_current_user()->ID != $author->ID ) {
+            echo "エラー3";
+            exit;
+        }
+
+        $post_custom = get_post_custom( $post->ID );
+
+        // トップ画像 削除
+        $attachment_id = get_attachment_id_from_src( $post_custom['topImage'][0] );
+        wp_delete_attachment( $attachment_id );
+
+        // 投稿 削除
+        wp_delete_post( $post->ID );
+
+        // リダイレクト
+        echo "<script>location.href = './index.php/post-dashboard/?type=post';</script>";
+        
+    } else {
+        echo "エラー4";
+        exit;
     }
 
 } else {
