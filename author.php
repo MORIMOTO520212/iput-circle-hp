@@ -50,8 +50,8 @@ get_header();
             </div>
         </div>
 
-        <div class="management-card" style="background:#c9c9c9;">
-            <a class="button" href="#"></a>
+        <div class="management-card">
+            <a class="button" href="<?php echo home_url("index.php/post-news/?_post=create"); ?>"></a>
             <div class="title">
                 <h4 class="pb-2">ニュースを書く</h4>
                 <p>イベントや行事など、学生に知らせたいことについて書きます。</p>
