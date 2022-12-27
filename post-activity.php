@@ -19,7 +19,12 @@ get_header();
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
 
-$tags = array();
+$input = array(
+    'post_title' => '',
+    'post_content' => '',
+    'tags' => array(),
+    'permission' => 'false',
+);
 
 if ( isset( $param__post ) ) {
     
@@ -48,6 +53,11 @@ if ( isset( $param__post ) ) {
 
         // タグ取得
         $tags = array_map( function($t){return $t->name;}, get_the_tags($param_id) );
+
+        $input['post_title'] = $post->post_title;
+        $input['post_content'] = $post->post_content;
+        $input['tags'] = $tags;
+        $input['permission'] = $post_custom['permission'][0];
 
     /* サークル削除 */
     } elseif ( $param__post === 'delete' ) {
@@ -89,7 +99,7 @@ if ( isset( $param__post ) ) {
         
         <div class="mb-3">
             <label class="form-label" for="input">見出し<span>*</span></label>
-            <input type="text" maxlength="50" class="form-control" id="title" name="title" value="<?php echo isset($post->post_title) ? $post->post_title : '' ?>" placeholder="見出しを入力" required>
+            <input type="text" maxlength="50" class="form-control" id="title" name="title" value="<?php echo $input['post_title']; ?>" placeholder="見出しを入力" required>
             <div class="invalid-feedback">
                 50文字以内で入力してください。
             </div>
@@ -107,7 +117,7 @@ if ( isset( $param__post ) ) {
             </div>
             <script>
                 // trix editor フォームにコンテンツを配置する
-                var activityDetail = '<?php echo $post->post_content ?? '' ?>';
+                var activityDetail = '<?php echo $input['post_content']; ?>';
                 document.querySelector('trix-editor').innerHTML = activityDetail;
             </script>
         </div>
@@ -116,15 +126,15 @@ if ( isset( $param__post ) ) {
             <label class="form-label" for="input">タグ付け<span>*</span></label>
             <div class="d-flex justify-content-start mb-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="活動報告" <?php echo in_array('活動報告', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="活動報告" <?php echo in_array('活動報告', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk2">活動報告</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント" <?php echo in_array('行事・イベント', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント" <?php echo in_array('行事・イベント', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk1">行事・イベント</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="重要報告" <?php echo in_array('重要報告', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="重要報告" <?php echo in_array('重要報告', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk3">重要報告</label>
                 </div>
             </div>
@@ -164,11 +174,7 @@ if ( isset( $param__post ) ) {
             <label class="form-label" for="input">内部公開</label>
             <div class="form-check mb-1">
                 <input class="form-check-input" type="checkbox" name="permission" 
-                    value="true" id="chk4" <?php
-                    // 内部公開
-                    if ( isset( $post_custom['permission'][0] ) ) {
-                        if ( $post_custom['permission'][0] === 'true' ) echo 'checked';
-                    } ?> >
+                    value="true" id="chk4" <?php ($input['permission'] === 'true') ? 'checked' : '' ?> >
                 <label class="form-check-label" for="chk4">内部公開にする</label>
             </div>
             <div id="Help" class="form-text mb-3">

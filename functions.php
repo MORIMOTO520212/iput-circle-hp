@@ -810,11 +810,22 @@ function post_activity() {
         if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
         if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
 
+        // タグが規定の名前であるかチェック
+        if ( isset( $_POST['tags'] ) ) {
+
+            array_map( function ($tag) {
+                if ( !in_array( $tag, array('活動報告', '行事・イベント', '重要報告') ) ) {
+                    modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
+                    return;
+                }
+            }, $_POST['tags'] );
+        }
+
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
             'post_category' => array( get_cat_ID('activity'),  $_POST['organizationId'] ),  // カテゴリID
-            'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
+            'tags_input'    => $_POST['tags'] ?? '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
 
@@ -868,7 +879,7 @@ function post_activity() {
         return true;
 
     } else {
-        modal('エラー', '不正なリクエストです。');
+        modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
         return;
     }
 }
@@ -886,6 +897,17 @@ function post_news() {
         // 文字数チェック
         if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
         if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
+
+        // タグが規定の名前であるかチェック
+        if ( isset( $_POST['tags'] ) ) {
+
+            array_map( function ($tag) {
+                if ( !in_array( $tag, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡') ) ) {
+                    modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
+                    return;
+                }
+            }, $_POST['tags'] );
+        }
 
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
@@ -907,7 +929,7 @@ function post_news() {
         
         // クリップ 設定
         if ( isset( $_POST['clip'] ) ) {
-            update_post_meta( $post_id, 'clip', $_POST['limit-date'] );
+            update_post_meta( $post_id, 'clip', $_POST['limit_date'] );
         } else {
             update_post_meta( $post_id, 'clip', 'false' );
         }

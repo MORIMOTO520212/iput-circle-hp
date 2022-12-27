@@ -19,7 +19,14 @@ get_header();
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
 
-$tags = array(); // タグ
+$input = array(
+    'post_title' => '',
+    'post_content' => '',
+    'tags' => array(),
+    'clip' => false,
+    'limit_date' => date_i18n('Y-m-d'),
+    'permission' => 'false'
+);
 
 if ( isset( $param__post ) ) {
     
@@ -35,7 +42,8 @@ if ( isset( $param__post ) ) {
             exit;
         }
 
-        $post = get_post( $param_id ); // 記事取得
+        // 記事取得
+        $post = get_post( $param_id );
 
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
@@ -48,6 +56,13 @@ if ( isset( $param__post ) ) {
 
         // タグ取得
         $tags = array_map( function($t){return $t->name;}, get_the_tags($param_id) );
+
+        $input['post_title']   = $post->post_title;
+        $input['post_content'] = $post->post_content;
+        $input['tags']         = $tags;
+        $input['clip']         = ($post_custom['clip'][0] !== 'false') ? true : false;
+        $input['limit_date']   = ($post_custom['clip'][0] !== 'false') ? $post_custom['clip'][0] : date_i18n('Y-m-d');
+        $input['permission']   = $post_custom['permission'][0];
 
     /* サークル削除 */
     } elseif ( $param__post === 'delete' ) {
@@ -90,7 +105,7 @@ if ( isset( $param__post ) ) {
         <div class="mb-3">
             <label class="form-label" for="input">記事タイトル<span>*</span></label>
             <input type="text" maxlength="50" class="form-control" id="title" name="title" 
-                value="<?php echo isset($post->post_title) ? $post->post_title : '' ?>" placeholder="タイトルを入力" required>
+                value="<?php echo $input['post_title']; ?>" placeholder="タイトルを入力" required>
             <div class="invalid-feedback">
                 50文字以内で入力してください。
             </div>
@@ -108,7 +123,7 @@ if ( isset( $param__post ) ) {
             </div>
             <script>
                 // trix editor フォームにコンテンツを配置する
-                var activityDetail = '<?php echo $post->post_content ?? '' ?>';
+                var activityDetail = '<?php echo $input['post_content']; ?>';
                 document.querySelector('trix-editor').innerHTML = activityDetail;
             </script>
         </div>
@@ -117,23 +132,23 @@ if ( isset( $param__post ) ) {
             <label class="form-label" for="input">タグ付け<span>*</span></label>
             <div class="d-flex justify-content-start mb-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント" <?php echo in_array('行事・イベント', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk1" type="checkbox" name="tags[]" value="行事・イベント" <?php echo in_array('行事・イベント', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk1">行事・イベント</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="レジャー" <?php echo in_array('レジャー', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk2" type="checkbox" name="tags[]" value="レジャー" <?php echo in_array('レジャー', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk2">レジャー</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="食事" <?php echo in_array('食事', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="食事" <?php echo in_array('食事', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk3">食事</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="お知らせ" <?php echo in_array('お知らせ', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="お知らせ" <?php echo in_array('お知らせ', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk3">お知らせ</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="重要連絡" <?php echo in_array('重要連絡', $tags) ? 'checked' : '' ?>>
+                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="重要連絡" <?php echo in_array('重要連絡', $input['tags']) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="chk4">重要連絡</label>
                 </div>
             </div>
@@ -148,20 +163,20 @@ if ( isset( $param__post ) ) {
                 クリップすると、トップページの一番初めに見える部分に、ギャラリーとして期間中に記事の情報が大きく掲載されます。これにより多くの人に記事を見せることができます。イベント告知などの重要な投稿にお使いください。
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" id="clipCk" type="checkbox" name="clip" value="true">
+                <input class="form-check-input" id="clipCk" type="checkbox" name="clip" value="true" <?php echo $input['clip'] ? 'checked' : ''; ?>>
                 <label class="form-check-label" for="clipCk">クリップする</label>
             </div>
         </div>
         
         <div class="mb-3 d-flex align-items-center">
             <label class="form-label m-0 pe-2" for="post-limite">掲載期限</label>
-            <input type="date" id="post-limite" class="form-control" name="limit-date" value="<?php echo date_i18n('Y-m-d')?>" min="2022-12-01" max="2024-12-31" style="width:unset;">          
+            <input type="date" id="post-limite" class="form-control" name="limit-date" value="<?php echo $input['limit_date']; ?>" min="2022-12-01" max="2024-12-31" style="width:unset;">          
         </div>
           
         <div class="mb-3">
             <label class="form-label" for="input">内部公開</label>
             <div class="form-check mb-1">
-                <input class="form-check-input" type="checkbox" name="permission" value="true" id="chk4">
+                <input class="form-check-input" type="checkbox" name="permission" value="true" id="chk4" <?php ($input['permission'] === 'true') ? 'checked' : '' ?> >
                 <label class="form-check-label" for="chk4">内部公開にする</label>
             </div>
             <div id="Help" class="form-text mb-3">
