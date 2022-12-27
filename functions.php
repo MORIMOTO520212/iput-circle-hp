@@ -157,7 +157,8 @@ add_action( 'admin_menu', 'set_custom_fields' );
 function form_01_custom_fields() {
     global $post;
     ?>
-    <p>トップ画像 <input type="text" name="topImage" value="<?php echo get_post_meta($post->ID, 'topImage', true); ?>" size="30"></p>
+    <p>トップ画像ID <input type="text" name="topImage" value="<?php echo get_post_meta($post->ID, 'topImage', true); ?>" size="30"></p>
+    <p>ヘッダー画像ID <input type="text" name="headerImage" value="<?php echo get_post_meta($post->ID, 'headerImage', true); ?>" size="30"></p>
     <p>所属人数 <input type="text" name="belongNum" value="<?php echo get_post_meta($post->ID, 'belongNum', true); ?>" size="30"></p>
     <p>活動日程 <input type="text" name="schedule" value="<?php echo get_post_meta($post->ID, 'schedule', true); ?>" size="30"></p>
     <p>活動場所 <input type="text" name="place" value="<?php echo get_post_meta($post->ID, 'place', true); ?>" size="30"></p>
@@ -186,6 +187,7 @@ function form_03_custom_fields() {
 function save_custom_fields( $post_id ) {
     if ( isset( $_POST['is_post'] ) ) {
         update_post_meta( $post_id, 'topImage',          $_POST['topImage']          );
+        update_post_meta( $post_id, 'headerImage',       $_POST['headerImage']       );
         update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         );
         update_post_meta( $post_id, 'schedule',          $_POST['schedule']          );
         update_post_meta( $post_id, 'place',             $_POST['place']             );
@@ -671,16 +673,20 @@ function post_circle() {
         $_POST['circle_post_nonce' ], // WordPressNonce
         ) )
     {
+        // 新規投稿のフラグ
+        $is_newpost = isset( $_POST['postID'] ) ? false : true;
+
         // 文字数チェック
         if ( mb_strlen( $_POST['circleName']      ) > 50 ) input_value_error_exit();
         if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
         if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
         if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
 
-        // 公開状態の取得
-        $post_status = "publish"; // draft | publish
-        if ( isset( $_GET['post_status'] ) ) {
-            $post_status = $_GET['post_status'];
+        // 公開状態
+        $post_status = 'publish';
+
+        if ( $_POST['submit_type'] === 'draft_circle' ) {
+            $post_status = 'draft';
         }
 
         // 投稿データの配列を作成
@@ -691,22 +697,9 @@ function post_circle() {
             'post_content'   => $_POST['activitySummary'], // 投稿の全文
         );
 
-        /* 更新の場合 */
-        if ( $_POST['submit_type'] === 'edit_circle' ) {
-            // postIDを指定する
-            if ( isset( $_POST['postID'] ) ) {
-                $post_data['ID'] = $_POST['postID'];
-            }
-
-            // カテゴリ名を更新する
-            $cat_id = get_cat_ID( get_the_title( $_POST['postID'] ) );
-            wp_update_term( $cat_id, 'category', array(
-                'name' => sanitize_text_field( $_POST['circleName'] ),
-                'slug' => sanitize_text_field( $_POST['circleName'] ),
-              ) );
-
         /* 新規投稿の場合 */
-        } else {
+        if ( $is_newpost ) {
+
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             $post_data['post_name'] = md5( time() );
 
@@ -718,10 +711,23 @@ function post_circle() {
             $circles = get_posts( $args );
             foreach ( $circles as $circle ) {
                 if ( $circle->post_title === $_POST['circleName'] ) {
-                    modal('エラー', '既に同じ名前のサークルが存在しています。');
+                    modal('エラー', '既に同じ名前のサークルが存在しています。名前を変更してください。');
                     return;
                 }
             }
+
+        /* 更新の場合 */
+        } else {
+
+            // postIDを指定する
+            $post_data['ID'] = $_POST['postID'];
+
+            // カテゴリ名を更新する
+            $cat_id = get_cat_ID( get_the_title( $_POST['postID'] ) );
+            wp_update_term( $cat_id, 'category', array(
+                'name' => sanitize_text_field( $_POST['circleName'] ),
+                'slug' => sanitize_text_field( $_POST['circleName'] ),
+              ) );
         }
 
         // 投稿を作成する
@@ -733,7 +739,7 @@ function post_circle() {
         }
 
         // サークルのカテゴリを作成する
-        if ( $_POST['submit_type'] === 'post_circle' ) {
+        if ( $is_newpost ) {
             $category_id = wp_create_category( $_POST['circleName'] );
             wp_set_post_categories( $post_id, array($category_id), true );
         }
@@ -751,12 +757,20 @@ function post_circle() {
 
         // カスタムフィールド（自動サニタイズ、add_post_meta関数は禁止）
         // 更新時に画像をアップしない場合はスルー
-        if ( ($_POST['submit_type'] === 'post_circle') || !empty( $topImage_id ) ) {
+        if ( $is_newpost || !empty( $topImage_id ) ) {
             update_post_meta( $post_id, 'topImage', $topImage_id ); // トップ画像
+
         }
-        if ( ($_POST['submit_type'] === 'post_circle') || !empty( $headerImage_id ) ) {
-            update_post_meta( $post_id, 'headerImage', $headerImage_id ); // ヘッダー画像
+        if ( $is_newpost || !empty( $headerImage_id ) ) {
+
+            if ( !empty( $headerImage_id ) ) {
+                update_post_meta( $post_id, 'headerImage', $headerImage_id ); // ヘッダー画像 設定
+
+            } else {
+                update_post_meta( $post_id, 'headerImage', $topImage_id ); // ヘッダー画像が無い場合、代わりにトップ画像を設定する
+            }
         }
+
         // 自動サニタイズ、add_post_meta関数は禁止
         update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
         update_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
@@ -777,7 +791,11 @@ function post_circle() {
     }
 
     // サークルページへリダイレクト
-    wp_redirect( get_permalink( $post_id ) );
+    if ( $_POST['submit_type'] === 'draft_circle' ) {
+        wp_redirect( home_url('index.php/post-dashboard/?type=circle') );
+    } else {
+        wp_redirect( get_permalink( $post_id ) );
+    }
     exit;
     return 1;
 }
@@ -1004,6 +1022,7 @@ add_action('after_setup_theme', function() {
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'draft_circle' ) {
         if ( !isset( $_POST['circle_post_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
+        post_circle();
     }
     // サークルを編集する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_circle' ) {

@@ -93,12 +93,10 @@ if ( isset( $param__post ) ) {
         wp_delete_term( get_cat_ID( $post->post_title ), 'category' );
 
         // トップ画像 削除
-        $attachment_id = get_attachment_id_from_src( $post_custom['topImage'][0] );
-        wp_delete_attachment( $attachment_id );
+        wp_delete_attachment( $post_custom['topImage'][0] );
 
         // ヘッダー画像 削除
-        $attachment_id_headerImage = get_attachment_id_from_src( $post_custom['headerImage'][0] );
-        wp_delete_attachment( $attachment_id );
+        wp_delete_attachment( $post_custom['headerImage'][0] );
 
         // 投稿 削除
         wp_delete_post( $post->ID );
@@ -348,13 +346,13 @@ if ( isset( $param__post ) ) {
                     <?php
                     if ( $param__post === 'create' ):
                     ?>
-                    <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg" disabled>下書き保存する</button>
+                    <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
                     <button type="submit" name="submit_type" value="post_circle" class="btn btn-primary btn-lg">サークルを作成する</button>
                     <?php
                     elseif ( $param__post === 'edit' ):
                     ?>
                     <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
-                    <a class="btn btn-secondary btn-lg" href="<?php echo home_url("index.php/author/" . wp_get_current_user()->user_login); ?>" role="button">キャンセル</a>
+                    <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
                     <button type="submit" name="submit_type" value="edit_circle" class="btn btn-success btn-lg">サークルを更新する</button>
                     <?php
                     endif;
