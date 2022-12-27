@@ -21,7 +21,7 @@ $faqData = array(
             ),
             array(
                 'Q' => 'コクーンタワーでお湯を入れられる場所はありますか？',
-                'A' => 'ー',    
+                'A' => '2FのNewDaysで入れることができます。',    
             ),
         ),
     ),
@@ -57,7 +57,7 @@ $faqData = array(
     <!-- 高さの調整用 -->
     <div class="mt-lg-5"></div>
     <!-- contents -->
-    <div class="row pt-5 mx-0 px-4" id="faq-contents">
+    <div class="row pt-5 mx-0 px-2 px-md-4" id="faq-contents">
         <!-- side bar ... ? -->
         <div class="col-lg-4 pe-lg-5">
             <div class="shadow rounded-3 me-lg-5 mb-5" id="faq-side-contents">
@@ -87,7 +87,7 @@ $faqData = array(
                 <?php
                 foreach ( $faqData as $i => $faq ):
                 ?>
-                <h1 class="fw-bold" id="<?php echo "category-{$i}" ?>"><?php echo $faq['cat_name'] ?></h1>
+                <h3 class="fw-bold" id="<?php echo "category-{$i}" ?>"><?php echo $faq['cat_name'] ?></h3>
                 <!-- 各質問の間隔は32pxで仮置き -->
                 <div class="justify-content-start row row-cols-lg-2 g-4 pb-5">
                     <?php

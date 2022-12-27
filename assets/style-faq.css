@@ -7,7 +7,7 @@
 
 /* faq top */
 
-#faq-main-contents h1{
+#faq-main-contents h3{
     font-family: sans-serif;
 }
 
@@ -23,6 +23,6 @@
 }
 
 /* category h1 */
-#faq-main-contents div h1 {
+#faq-main-contents div h3 {
     color :#8BB61E !important;
 }
