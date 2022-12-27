@@ -12,13 +12,13 @@ function form_loading() {
 <!-- form loading animation -->
 <style>
     div.spinner {
-        position: absolute;
+        position: fixed;
         top: 30vh;
         left: calc(50% - 17px);
         z-index: 500;
     }
     div.mask {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
