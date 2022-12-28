@@ -41,27 +41,27 @@ if ( isset( $param_token ) ) {
                 <h3>ようこそ！</h3>
                 <div class="mt-0">
                     <label for="username">ユーザー名</label>
-                    <input type="text" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" name="username" id="username" class="form-control" placeholder="ユーザー名" aria-label="ユーザー名" aria-describedby="username-help" required>
+                    <input type="text" id="username" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" name="username" class="form-control" placeholder="ユーザー名" aria-label="ユーザー名" aria-describedby="username-help" required>
                     <div class="form-text" id="username-help">投稿者の名前として公開されます</div>
                     <div class="invalid-feedback">ユーザー名は半角英数字+アンダーバーのみです。</div>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2 gy-2 gy-md-0">
                     <div class="col">
-                        <label for="lastname">姓</label>
-                        <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" name="lastname" id="lastname" class="form-control" placeholder="姓" aria-label="姓" aria-describedby="lastname-help" required>
+                        <label for="lastname">氏</label>
+                        <input type="text" id="lastname" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" name="lastname" class="form-control" placeholder="氏" aria-label="姓" aria-describedby="lastname-help" required>
                         <div class="form-text" id="lastname-help">Last name</div>
                         <div class="invalid-feedback">名前に数字と記号は使えません。</div>
                     </div>
                     <div class="col">
                         <label for="firstname">名</label>
-                        <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" name="firstname" id="firstname" class="form-control" placeholder="名" aria-label="名" aria-describedby="firstname-help" required>
+                        <input type="text" id="firstname" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" name="firstname" class="form-control" placeholder="名" aria-label="名" aria-describedby="firstname-help" required>
                         <div class="form-text" id="firstname-help">First name</div>
                         <div class="invalid-feedback">名前に数字と記号は使えません。</div>
                     </div>
                 </div>
                 <div>
                     <label for="email">メールアドレス</label>
-                    <input type="email" minlength="2" maxlength="50" name="email" id="email" class="form-control" placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="email-help" required>
+                    <input type="email" id="email" minlength="2" maxlength="50" name="email" class="form-control" placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="email-help" required>
                     <div class="form-text" id="email-help">大学のメールアドレスのみ</div>
                     <div class="invalid-feedback">メールアドレスの形式が違います</div>
                 </div>
@@ -87,6 +87,13 @@ if ( isset( $param_token ) ) {
                 <h3>確認メールを送信しました。</h3>
                 <p>登録したメールをご確認いただき、メールに記載されたURLをクリックしてIPUT ONEへの登録を完了してください。</p>
             </form>
+            <script>
+                /* 登録フォームのセッションストレージを削除する */
+                sessionStorage.removeItem('username');
+                sessionStorage.removeItem('lastname');
+                sessionStorage.removeItem('firstname');
+                sessionStorage.removeItem('enail');
+            </script>
 
             <?php
             /* ユーザー登録完了画面 */
@@ -117,6 +124,38 @@ if ( isset( $param_token ) ) {
         </div>
     </div>
 </main>
+
+<script>
+    /* セッションストレージ */
+    const e_username  = document.getElementById('username');
+    const e_lastname  = document.getElementById('lastname');
+    const e_firstname = document.getElementById('firstname');
+    const e_email     = document.getElementById('email');
+
+    /* セッションストレージから保持した入力値の取得と設置 */
+    e_username.value  = sessionStorage.username ?? '';
+    e_lastname.value  = sessionStorage.lastname ?? '';
+    e_firstname.value = sessionStorage.firstname ?? '';
+    e_email.value     = sessionStorage.email ?? '';
+
+
+    /* 新規ユーザー登録フォーム入力値の保持 */
+    e_username.addEventListener('change', (event) => {
+        sessionStorage.username = event.target.value;	
+    });
+
+    e_lastname.addEventListener('change', (event) => {
+        sessionStorage.lastname = event.target.value;	
+    });
+
+    e_firstname.addEventListener('change', (event) => {
+        sessionStorage.firstname = event.target.value;	
+    });
+
+    e_email.addEventListener('change', (event) => {
+        sessionStorage.email = event.target.value;	
+    });
+</script>
 
 <?php form_loading(); ?>
 

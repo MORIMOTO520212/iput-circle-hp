@@ -21,16 +21,16 @@
                     <span class="input-group-text" id="addon-wrapping-userid">
                         <span class="bi bi-person-circle"></span>
                     </span>
-                    <input type="text" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" class="form-control mb-0" 
-                        name="username" placeholder="ユーザー名を入力してください" aria-label="ユーザー名を入力してください" required>
+                    <input type="text" id="username" minlength="1" maxlength="15" pattern="^[a-zA-Z0-9_]{1,15}$" class="form-control mb-0" 
+                        name="username" placeholder="ユーザー名を半角英数で入力してください" aria-label="ユーザー名を入力してください" required>
                 </div>
                 <!-- 氏名 -->
                 <div class="row row-cols-1 row-cols-sm-2 mb-3">
                     <div class="col mb-2 mb-sm-auto">
                         <div class="input-group flex-nowrap">
-                            <span class="input-group-text">姓</span>
+                            <span class="input-group-text">氏</span>
                             <input type="text" minlength="1" maxlength="20" pattern="^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$" class="form-control" 
-                                name="lastname" id="lastname" placeholder="姓" aria-label="姓" required>
+                                name="lastname" id="lastname" placeholder="氏" aria-label="氏" required>
                         </div>
                     </div>
                     <div class="col">
@@ -46,7 +46,7 @@
                     <span class="input-group-text">
                         <span class="bi bi-envelope-fill"></span>
                     </span>
-                    <input type="text" minlength="2" maxlength="50" class="form-control mb-0" name="email" placeholder="学校のメールアドレスを入力してください" 
+                    <input type="text" id="email" minlength="2" maxlength="50" class="form-control mb-0" name="email" placeholder="学校のメールアドレスを入力してください" 
                         aria-label="学校のメールアドレスを入力してください" required>
                 </div>
                 <!-- パスワード -->
@@ -559,4 +559,36 @@ class article_data {
 }
 ?>
 
-<?=get_footer()?>
+<script>
+    /* セッションストレージ */
+    const e_username  = document.getElementById('username');
+    const e_lastname  = document.getElementById('lastname');
+    const e_firstname = document.getElementById('firstname');
+    const e_email     = document.getElementById('email');
+
+    /* セッションストレージから保持した入力値の取得と設置 */
+    e_username.value  = sessionStorage.username ?? '';
+    e_lastname.value  = sessionStorage.lastname ?? '';
+    e_firstname.value = sessionStorage.firstname ?? '';
+    e_email.value     = sessionStorage.email ?? '';
+
+
+    /* 新規ユーザー登録フォーム入力値の保持 */
+    e_username.addEventListener('change', (event) => {
+        sessionStorage.username = event.target.value;	
+    });
+
+    e_lastname.addEventListener('change', (event) => {
+        sessionStorage.lastname = event.target.value;	
+    });
+
+    e_firstname.addEventListener('change', (event) => {
+        sessionStorage.firstname = event.target.value;	
+    });
+
+    e_email.addEventListener('change', (event) => {
+        sessionStorage.email = event.target.value;	
+    });
+</script>
+
+<?php get_footer(); ?>
