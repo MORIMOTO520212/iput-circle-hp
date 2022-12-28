@@ -3,7 +3,7 @@
             <div class="container">
                 <div class="d-flex align-items-center mb-3">
                     <img class="me-2" src="<?php echo get_theme_file_uri("src/iputone_logo.svg"); ?>" style="width:36px;">
-                    <h2 class="g-0">IPUT ONE ベータ版</h2>
+                    <h2 class="g-0">IPUT ONE</h2>
                 </div>
                 <div class="row pb-5">
                     <div class="col-md-4 footer-links">
@@ -37,11 +37,19 @@
         </div>
     </footer>
     
+    <!-- フォーム読み込みアニメーション -->
+    <div class="loading d-none">
+        <div class="spinner spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="mask"></div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
      crossorigin="anonymous"></script>
      <!-- base.js -->
      <script type="text/javascript" src="<?=get_theme_file_uri("assets/base.js")?>"></script>
-     <?=wp_footer()?>
+     <?php wp_footer(); ?>
     </body>
 </html>
