@@ -331,7 +331,7 @@ if ( isset( $param__post ) ) {
                         <p>活動内容</p>
                         <input id="trixeditor" class="form-control" type="text"  name="activityDetail" style="display:none;" value="" required>
                         <div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
+                            <button type="button" id="template" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
                             <trix-editor class="form-control" input="trixeditor"></trix-editor>
                         </div>
                         <div class="invalid-feedback">
@@ -446,6 +446,25 @@ if ( isset( $param__post ) ) {
     // 入力エラーだった場合に上から見直してもらう
     $('form').submit( () => {
         $(window).scrollTop(0);
+    });
+
+    // テンプレートを挿入する
+    const template = document.getElementById('template');
+    template.addEventListener('click', ()=>{
+        document.querySelector('trix-editor').innerHTML = ""; // クリア
+        document.querySelector('trix-editor').innerHTML = `
+        <h1>募集している方</h1>
+        <div>○○</div>
+        <br>
+        <h1>活動日時、場所</h1>
+        <div>○○</div>
+        <br>
+        <h1>参加方法</h1>
+        <div>参加申請ボタンから申請を行ってください。</div>
+        <br>
+        <h1>今後の予定</h1>
+        <div>来月は○○を行います。</siv>
+        `;
     });
 </script>
 
