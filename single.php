@@ -89,8 +89,8 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
     </div>
 
     <!-- コンテンツ -->
-    <div class="detail container pt-5">
-        <?php the_content(); ?>
+    <div class="detail container pt-5 g-0">
+        <?php echo get_the_content(); ?>
     </div>
 </div>
 

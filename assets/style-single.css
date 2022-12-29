@@ -30,6 +30,11 @@
     background: #ECDDC1;
 }
 
+.detail {
+    max-width: 600px;
+    margin: 0;
+}
+
 /* Trix Editor 本文中の見出し */
 .detail h1 {
     padding-left: 10px;
