@@ -721,6 +721,13 @@ function post_circle() {
         /* 更新の場合 */
         } else {
 
+            // 投稿者かどうか確認
+            $author = get_userdata(get_post( $_POST['postID'] )->post_author);
+            if ( wp_get_current_user()->ID != $author->ID ) {
+                echo "エラー2";
+                exit;
+            }
+
             // postIDを指定する
             $post_data['ID'] = $_POST['postID'];
 
@@ -832,7 +839,6 @@ function post_activity() {
 
         // タグが規定の名前であるかチェック
         if ( isset( $_POST['tags'] ) ) {
-
             array_map( function ($tag) {
                 if ( !in_array( $tag, array('活動報告', '行事・イベント', '重要報告') ) ) {
                     modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
@@ -849,13 +855,24 @@ function post_activity() {
             'post_status'   => 'publish', // 公開設定
         );
 
+        /* 新規投稿 */
         if ( $_POST['submit_type'] === 'post_activity' ) {
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             $post_data['post_name'] = md5( time() );
         }
+
+        /* 更新 */
         elseif ( $_POST['submit_type'] === 'edit_activity' ) {
-            // postIDを指定する
+
             if ( isset( $_POST['postID'] ) ) {
+
+                // 投稿者かどうか確認
+                $author = get_userdata(get_post( $_POST['postID'] )->post_author);
+                if ( wp_get_current_user()->ID != $author->ID ) {
+                    modal('エラー', '記事を更新できるのは本人のみです。');
+                    return;
+                }
+                // postIDを指定する
                 $post_data['ID'] = $_POST['postID'];
             }
         }
@@ -921,7 +938,6 @@ function post_news() {
 
         // タグが規定の名前であるかチェック
         if ( isset( $_POST['tags'] ) ) {
-
             array_map( function ( $value ) {
                 if ( !in_array( $value, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡'), true ) ) {
                     modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
@@ -933,11 +949,32 @@ function post_news() {
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
-            'post_name'     => md5( time() ),      // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             'post_category' => array( get_cat_ID('news') ),  // カテゴリID
             'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
+
+        /* 新規投稿 */
+        if ( $_POST['submit_type'] === 'post_news' ) {
+            // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
+            $post_data['post_name'] = md5( time() );
+        }
+
+        /* 更新 */
+        elseif ( $_POST['submit_type'] === 'edit_news' ) {
+
+            if ( isset( $_POST['postID'] ) ) {
+
+                // 投稿者かどうか確認
+                $author = get_userdata(get_post( $_POST['postID'] )->post_author);
+                if ( wp_get_current_user()->ID != $author->ID ) {
+                    modal('エラー', '記事を更新できるのは本人のみです。');
+                    return;
+                }
+                // postIDを指定する
+                $post_data['ID'] = $_POST['postID'];
+            }
+        }
 
         $post_id = wp_insert_post( $post_data, true );
 

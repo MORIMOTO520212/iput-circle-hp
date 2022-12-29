@@ -20,6 +20,7 @@ $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編�
 $param_id    = get_params('id');    // 編集時の投稿ID
 
 $input = array(
+    'ID' => $param_id,
     'post_title' => '',
     'post_content' => '',
     'tags' => array(),
@@ -190,7 +191,7 @@ if ( isset( $param__post ) ) {
                 <?php
                 elseif ( $param__post === 'edit' ):
                 ?>
-                <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
+                <input type="hidden" name="postID" value="<?php echo $input['ID']; ?>">
                 <button type="submit" class="btn btn-success" name="submit_type" value="post_news">更新する</button>
                 <?php endif; ?>
             </div>

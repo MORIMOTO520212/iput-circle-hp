@@ -5,7 +5,6 @@
 ?>
 
 <?php
-require_once( get_theme_file_path('assets/components/form_loading.php') );
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
 /* ログイン状態のチェック */
@@ -20,6 +19,7 @@ $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編�
 $param_id    = get_params('id');    // 編集時の投稿ID
 
 $input = array(
+    'ID' => $param_id,
     'post_title' => '',
     'post_content' => '',
     'tags' => array(),
@@ -188,7 +188,7 @@ if ( isset( $param__post ) ) {
                 <?php
                 elseif ( $param__post === 'edit' ):
                 ?>
-                <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
+                <input type="hidden" name="postID" value="<?php echo $input['ID']; ?>">
                 <button type="submit" class="btn btn-success" name="submit_type" value="edit_activity">更新する</button>
                 <?php endif; ?>
             </div>
@@ -198,7 +198,5 @@ if ( isset( $param__post ) ) {
 </div>
 
 <?php trix_file_upload_to_wordpress(); ?>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>

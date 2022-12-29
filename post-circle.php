@@ -52,7 +52,6 @@ if ( isset( $param__post ) ) {
 
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
-
         if ( wp_get_current_user()->ID != $author->ID ) {
             echo "エラー2";
             exit;
