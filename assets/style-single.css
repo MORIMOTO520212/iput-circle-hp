@@ -31,8 +31,8 @@
 }
 
 .detail {
-    max-width: 600px;
-    margin: 0;
+    max-width: 600px !important;
+    margin: 0 !important;
 }
 
 /* Trix Editor 本文中の見出し */
