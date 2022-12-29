@@ -54,7 +54,7 @@
                     <span class="input-group-text">
                         <span class="bi bi-key-fill"></span>
                     </span>
-                    <input type="text" minlength="6" maxlength="16" class="form-control mb-0" name="password" placeholder="パスワードを入力してください" 
+                    <input type="password" minlength="6" maxlength="16" class="form-control mb-0" name="password" placeholder="パスワードを入力してください" 
                         aria-label="パスワードを入力してください" required>
                 </div>
 

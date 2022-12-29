@@ -182,6 +182,23 @@ trix-editor h1 {
     margin: 12px 0;
 }
 
+/* フォーム読み込みアニメーション */
+div.spinner {
+    position: fixed;
+    top: 30vh;
+    left: calc(50% - 17px);
+    z-index: 500;
+}
+div.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #ffffff96;
+    z-index: 450;
+}
+
 @media screen and (min-width: 1200px) {
     .nav-padding {
         width: 70% !important;

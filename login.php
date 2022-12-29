@@ -5,15 +5,13 @@
 ?>
 
 <?php
-require_once( get_theme_file_path('assets/components/form_loading.php') );
-
 get_header();
 ?>
 
 <main class="contents" style="background-image: url('<?php echo get_theme_file_uri('src/background/student-salon-blue.webp'); ?>')">
     <!-- LOGIN FORM -->
-    <div class="form-loading container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
-        <form class="row row-cols-1 g-3 p-4 pb-5 max-width-md needs-validation" id="form" action="" method="post" novalidate>
+    <div class="container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
+        <form class="form-loading row row-cols-1 g-3 p-4 pb-5 max-width-md needs-validation" id="form" action="" method="post" novalidate>
 
             <div class="container col col-md-8">
                 <label class="form-label" for="login">ユーザー名またはメールアドレス</label>
@@ -48,13 +46,11 @@ get_header();
             <div class="container col col-md-8 d-flex justify-content-center">
                 <button class="btn btn-success submitBtn" type="submit" name="submit_type" value="login">ログイン</button>
             </div>
-            <?php wp_nonce_field( 'login_nonce_action', 'login_nonce' ); ?>
+            <?php wp_nonce_field( 'N4wcFHsn', 'login_nonce' ); ?>
 
             <a class="text-center" href="<?php echo home_url('index.php/signup'); ?>">ここから新規登録する</a>
         </form>
     </div>
 </main>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>

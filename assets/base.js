@@ -32,3 +32,17 @@ if (form) {
         form.classList.add('was-validated');
     });
 }
+
+/**
+ * フォーム送信時にロードアニメーションを付ける。
+ * Usage:
+ * classにform-loadingを付与する。
+ * <form class="form-loading">...</form>
+ */
+var formLoading = document.querySelector('.form-loading');
+formLoading.addEventListener('submit', () => {
+    console.log('form check validate');
+    if (formLoading.checkValidity()) {
+        document.querySelector('.loading').classList.remove('d-none');
+    }
+});

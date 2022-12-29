@@ -186,12 +186,12 @@ if ( isset( $param__post ) ) {
                 <?php
                 if ( $param__post === 'create' ):
                 ?>
-                <button type="submit" class="btn btn-primary" name="submit_type" value="post_activity">投稿する</button>
+                <button type="submit" class="btn btn-primary" name="submit_type" value="post_news">投稿する</button>
                 <?php
                 elseif ( $param__post === 'edit' ):
                 ?>
                 <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
-                <button type="submit" class="btn btn-success" name="submit_type" value="post_activity">更新する</button>
+                <button type="submit" class="btn btn-success" name="submit_type" value="post_news">更新する</button>
                 <?php endif; ?>
             </div>
         </div>

@@ -74,8 +74,8 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                         endif;
                         ?>
                         <div class="col-6 g-2">
-                            <div class="mobile-menu-link a-button icon person-fill" style="background:#767676;">
-                                <a href="#"></a>
+                            <div class="mobile-menu-link a-button icon person-fill">
+                                <a href="#participationApplicationModal" data-bs-toggle="modal"></a>
                                 参加申請
                             </div>
                         </div>
@@ -223,8 +223,8 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                     <a href="#"></a>
                     活動一覧
                 </div>
-                <div class="menu-link a-button mt-4 icon person-fill" style="background:#767676;">
-                    <a href="#"></a>
+                <div class="menu-link a-button mt-4 icon person-fill">
+                    <a href="#participationApplicationModal" data-bs-toggle="modal"></a>
                     参加申請
                 </div>
                 <?php
@@ -253,5 +253,64 @@ function piplup() {
     window.open("<?php echo home_url("index.php/circle-contact/?circlename=" . $post->post_title . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>", "window1", "width=400, height=400, scrollbars=1");
 }
 </script>
+
+<!-- 参加申請モーダル -->
+<div class="modal fade" id="participationApplicationModal" aria-hidden="true" aria-labelledby="participationApplicationLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content needs-validation form-loading" action="" method="post" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="participationApplicationLabel">サークルへ参加申請をする</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                <?php echo $post->post_title; ?>へ参加申請を送ります。<br>
+                正式に承認されると参加完了メールが届きます。
+                </div>
+
+                <!-- 学年 -->
+                <div class="mb-3">
+                    <label for="grade" class="form-label">学年</label>
+                    <select name="grade" id="grade" class="form-select" aria-label="学年">
+                        <option value="1" selected>1年</option>
+                        <option value="2">2年</option>
+                        <option value="3">3年</option>
+                        <option value="4">4年</option>
+                        <option value="9">教授</option>
+                    </select>
+                </div>
+
+                <!-- 学科 -->
+                <div class="mb-3">
+                    <label for="department" class="form-label">所属学科</label>
+                    <select name="department" id="department" class="form-select" aria-label="所属学科">
+                        <option value="情報工学科" selected>情報工学科</option>
+                        <option value="デジタルエンタテイメント学科">デジタルエンタテイメント学科</option>
+                        <option value="その他">他大学</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="reason" class="form-label">参加理由</label>
+                    <textarea name="reason" id="reason" class="form-control" rows="3" required></textarea>
+                    <div class="form-text">ここで書かれた内容はサークルの関係者に公開されます。</div>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="check" required>
+                    <label class="form-check-label" for="check">入力を確認しました</label>
+                </div>
+            </div>
+
+            <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
+            <?php wp_nonce_field( 'M3fHXt2T', 'participation_application_nonce' ); ?>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <button type="submit" name="submit_type" value="participation_application" class="btn btn-primary">申請</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <?php get_footer(); ?>

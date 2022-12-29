@@ -5,7 +5,6 @@
 ?>
 
 <?php
-require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 /* ログイン状態のチェック */
 if ( !is_user_logged_in() ) {
@@ -68,7 +67,7 @@ $email = get_user_option('user_email', $user_id);
             <input type="password" class="form-control" id="password" placeholder="" name="password" value="" disabled>
             <label for="password">新しいパスワード</label>
         </div>
-        <input type="hidden" name="userid" value="<?php echo $user_id; ?>">
+
         <?php wp_nonce_field( 'profile_nonce_action', 'profile_nonce' ); ?>
 
         <!-- button -->
@@ -111,12 +110,13 @@ $email = get_user_option('user_email', $user_id);
             $("#lastname").prop("disabled", false);
             $("#firstname").prop("disabled", false);
             $("#password").prop("disabled", false);
+            setTimeout(() => {
+                document.querySelector('.loading').classList.add('d-none');
+            }, 500);
             flag = 0;
             return false;
         }
     });
 </script>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>

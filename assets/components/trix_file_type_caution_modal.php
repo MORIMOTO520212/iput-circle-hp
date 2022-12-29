@@ -2,7 +2,7 @@
 /**
  * Trix.jsエディタのファイル添付時にpng, jpeg以外の画像を
  * 添付しようとしたときにエラーをモーダルで表示させるコンポーネント
- * Usage
+ * Usage:
  * Trix.jsを使っているページのget_header()より後に以下のコードを設置する。
  * <?php require_once( get_theme_file_path("assets/components/trix_file_type_caution_modal.php") ); ?>
 */

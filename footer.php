@@ -3,7 +3,7 @@
             <div class="container">
                 <div class="d-flex align-items-center mb-3">
                     <img class="me-2" src="<?php echo get_theme_file_uri("src/iputone_logo.svg"); ?>" style="width:36px;">
-                    <h2 class="g-0">IPUT ONE</h2>
+                    <h2 class="m-0">IPUT ONE</h2>
                 </div>
                 <div class="row pb-5">
                     <div class="col-md-4 footer-links">

@@ -568,11 +568,13 @@ function user_activation( $activation_key ) {
  * 基本情報ページ　ユーザープロフィール更新
 */
 function profile_update() {
-    $user_id       = isset( $_POST['userid'] )      ? sanitize_text_field( $_POST['userid']      ) : null;
     $display_name  = isset( $_POST['displayname'] ) ? sanitize_text_field( $_POST['displayname'] ) : null;
     $user_pass     = isset( $_POST['password'] )    ? sanitize_text_field( $_POST['password']    ) : null;
     $first_name    = isset( $_POST['firstname'] )   ? sanitize_text_field( $_POST['firstname']   ) : null;
     $last_name     = isset( $_POST['lastname'] )    ? sanitize_text_field( $_POST['lastname']    ) : null;
+
+    $user_id = wp_get_current_user()->ID;
+
     // userdata初期化
     $userdata = array(
         'ID' => $user_id // ユーザーID
@@ -903,6 +905,7 @@ function post_activity() {
 }
 
 
+
 /**
  * ニュース投稿ページ 投稿処理
 */
@@ -919,8 +922,8 @@ function post_news() {
         // タグが規定の名前であるかチェック
         if ( isset( $_POST['tags'] ) ) {
 
-            array_map( function ($tag) {
-                if ( !in_array( $tag, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡') ) ) {
+            array_map( function ( $value ) {
+                if ( !in_array( $value, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡'), true ) ) {
                     modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
                     return;
                 }
@@ -985,6 +988,72 @@ function post_news() {
 }
 
 
+
+function participation_application() {
+    if ( isset(
+        $_POST['grade'],       // 学年
+        $_POST['department'],  // 学科
+        $_POST['reason'],      // 理由
+        $_POST['postID']       // 投稿ID
+    ) )
+    {
+        // 入力チェック
+        $default_grade = array('1', '2', '3', '4', '教授');
+        if ( !in_array( $_POST['grade'], $default_grade, true ) ) {
+            modal('不正なリクエストです', 'もう一度お試しください。');
+            return;
+        }
+
+        $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学');
+        if ( !in_array( $_POST['department'], $default_department, true ) ) {
+            modal('不正なリクエストです', 'もう一度お試しください。');
+            return;
+        }
+
+        if ( mb_strlen( $_POST['reason'] ) > 500 ) input_value_error_exit();
+
+        // 情報取得
+        $circle_post = get_post( $_POST['postID'] ); // サークル情報
+        $user = wp_get_current_user(); // ユーザー情報
+
+        // 承認用リンク作成
+        $user_id = $user->ID;
+        $approval_key = substr( md5( $user_id . $_POST['postID'] ), 0, 16 ); // userIdとpostIdをmd5でハッシュ化
+        $approval_url = home_url("index.php/post-circle/?_post=edit&id={$_POST['postID']}&userid={$user_id}&approval_key={$approval_key}");
+
+        // 承認用メール
+        $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
+        $subject = "【{$circle_post->post_title}】参加申請が届きました。";
+        $message = "
+        {$user->last_name} {$user->first_name}さんからサークルへ参加申請が届きました。
+
+        学年：{$_POST['grade']}
+        学科：{$_POST['department']}
+        参加理由：
+        {$_POST['reason']}
+
+        参加を承認する場合は以下のリンクにアクセスしてください。
+        {$approval_url}
+
+
+        IPUT ONEへのお問い合わせはこのメールに返信してください。
+    
+        ============================
+        IPUT ONE制作チーム
+        iputone.staff@gmail.com
+        ";
+        my_sendmail( $to, $subject, $message );
+
+        modal('申請が完了しました', '参加完了メールをお待ちください。');
+
+    } else {
+        modal('エラー', '不正なリクエストです。');
+        return;
+    }
+}
+
+
+
 /**
  * POSTリクエストを受け付ける
  * after_setup_theme に処理をフック
@@ -993,7 +1062,7 @@ add_action('after_setup_theme', function() {
     // ログインする
     if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'login' ) {
         if ( !isset( $_POST['login_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['login_nonce'], 'login_nonce_action' ) ) return;
+        if ( !wp_verify_nonce( $_POST['login_nonce'], 'N4wcFHsn' ) ) return;
         user_login();
     }
     // サインアップ
@@ -1042,11 +1111,23 @@ add_action('after_setup_theme', function() {
         if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
         post_activity();
     }
-    // ニュース投稿ページ
+    // ニュースを投稿する
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_news' ) {
         if ( !isset( $_POST['post_news_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
         post_news();
+    }
+    // ニュースを投稿する
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_news' ) {
+        if ( !isset( $_POST['post_news_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
+        post_news();
+    }
+    // サークル申請
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'participation_application' ) {
+        if ( !isset( $_POST['participation_application_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['participation_application_nonce'], 'M3fHXt2T' ) ) return;
+        participation_application();
     }
 });
 

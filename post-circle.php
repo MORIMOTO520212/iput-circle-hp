@@ -12,7 +12,6 @@
 */
 
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
-require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 get_header();
 
@@ -108,6 +107,48 @@ if ( isset( $param__post ) ) {
         echo "エラー4";
         exit;
     }
+
+    /* ユーザー承認 */
+    $user_id     = get_params('userid'); // ユーザーID
+    $param_approval = get_params('approval_key'); // 参加承認キー
+
+    if ( $param_approval ) {    
+        // キーの照合
+        $create_approval_key = substr( md5( $user_id . $post->ID ), 0, 16 );
+        if ( $create_approval_key !== $param_approval ) {
+            echo "参加承認キーの照合に失敗しました。";
+            exit;
+        }
+        // サークルのメンバーデータを取得
+        $members = maybe_unserialize( get_post_meta( $post->ID, 'members' ) );
+
+        if ( in_array( $user_id, $members, true ) ) {
+            echo "既に参加済みです。";
+            exit;
+        }
+
+        // メンバー追加
+        $members[] = $user_id;
+        update_post_meta( $post->ID, 'members', $members );
+
+        // 完了メール送信
+        $to = get_userdata($user_id)->user_email;
+        $subject = "サークルの参加申請が承認されました。";
+        $message = "
+        {$post->post_title}の参加申請が承認されました。
+        今後のやり取りはサークルのお問い合わせやSlack、SNSから行ってください。
+
+        IPUT ONEへのお問い合わせはこのメールに返信してください。
+    
+        ============================
+        IPUT ONE制作チーム
+        iputone.staff@gmail.com
+        ";
+        my_sendmail( $to, $subject, $message );
+
+        modal('ユーザー承認が完了しました', 'サークルに新しくユーザーが追加されました。');
+    }
+
 } else {
     modal('エラー5', 'もう一度アクセスし直してください。');
 }
@@ -374,7 +415,5 @@ if ( isset( $param__post ) ) {
 </script>
 
 <?php trix_file_upload_to_wordpress(); ?>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>

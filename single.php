@@ -63,7 +63,7 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
                 <div>
                     <span>タグ:</span>
                     <?php
-                    foreach( get_the_tags() as $tag ):
+                    foreach( get_the_tags() ?: array() as $tag ):
                     ?>
                     <span class="badge bg-secondary"><?php echo $tag->name; ?></span>
                     <?php
@@ -72,7 +72,7 @@ $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ�
                 </div>
                 <!--<div class="ps-2" style="flex:1;"></div>-->
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-                class="twitter-share-button" data-show-count="false">Tweet</a>
+                    class="twitter-share-button" data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 
                 <div class="title-color">
