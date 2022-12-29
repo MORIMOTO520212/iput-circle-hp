@@ -192,7 +192,7 @@ if ( isset( $param__post ) ) {
                 elseif ( $param__post === 'edit' ):
                 ?>
                 <input type="hidden" name="postID" value="<?php echo $input['ID']; ?>">
-                <button type="submit" class="btn btn-success" name="submit_type" value="post_news">更新する</button>
+                <button type="submit" class="btn btn-success" name="submit_type" value="edit_news">更新する</button>
                 <?php endif; ?>
             </div>
         </div>
