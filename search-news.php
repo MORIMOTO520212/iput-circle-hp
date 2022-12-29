@@ -4,7 +4,45 @@
 */
 ?>
 
-<?=get_header()?>
+<?php
+
+$param_d = get_params('d');
+
+// ページパラメータの確認（マイナスの数値や文字記号を1とする）
+if ( isset( $param_d ) ) {
+    $paged = $param_d > 0 ? $param_d : 1;
+} else {
+    $paged = 1;
+}
+
+/* 記事 取得 */
+$args = array(
+    'post_type'      => 'post',        // 投稿タイプ
+    'posts_per_page' => 12,            // 投稿取得数
+    'category_name'  => 'news',
+    'paged'          => $paged,        // 現在のページ
+);
+
+// 条件指定があった場合
+$param_event_1 = get_params('e1'); // 調査
+$param_event_2 = get_params('e2'); // 行事・イベント
+$param_event_3 = get_params('e3'); // レジャー
+$param_event_4 = get_params('e4'); // 食事
+$param_event_5 = get_params('e5'); // 重要連絡
+
+$tags = array();
+// タグID追加
+if ( $param_event_1 ) $tags[] = get_tags(array('slug' => '行事・イベント'))[0]->term_id;
+if ( $param_event_2 ) $tags[] = get_tags(array('slug' => '活動記録'))[0]->term_id;
+if ( $param_event_3 ) $tags[] = get_tags(array('slug' => '重要連絡'))[0]->term_id;
+if ( !empty($tags) ) {
+    $args['tag__and'] = $tags;
+}
+
+$the_query = new WP_Query( $args );    // 投稿データ
+
+get_header();
+?>
 
 <div class="top">
     <div class="title">
@@ -28,7 +66,7 @@
             <label class="tag btn btn-outline-secondary" for="btn-check5">重要連絡</label>
         </div>
         <div class="w-100 d-flex justify-content-center">
-            <button type="button" class="btn btn-primary">この条件で検索する</button>
+            <button type="button" class="btn btn-primary" disabled>この条件で検索する</button>
         </div>
     </div>
 </div>
@@ -36,44 +74,69 @@
 <div class="container pt-4 pb-4" style="max-width: 750px !important;">
     <div class="row row-cols-1  row-cols-lg-3 g-2 g-lg-3">
 
-        <?php for($i = 0; $i < 6; $i++): ?>
+        <?php
+        if ( $the_query->have_posts() ):
+        while ( $the_query->have_posts() ):
+        $the_query->the_post();
+        ?>
         <div class="col">
-            <a href="#"></a>
-            <div class="card h-100">
+            <div class="card h-100 a-button">
+                <a href="<?php echo get_permalink( get_the_ID() ); ?>"></a>
                 <div class="row g-0">
-                    <div class="col-4  col-lg-12">
-                        <img src="https://via.placeholder.com/468x200?text=Sample+Image"
+                    <div class="thumbnail col-4 col-lg-12">
+                        <?php
+                        // カスタムデータ取得
+                        $post_custom = get_post_custom( get_the_ID() );
+                        // サムネイルURL
+                        $thumbnail_url = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+                        ?>
+                        <img src="<?php echo $thumbnail_url; ?>"
                         class="card-img-top ratio h-100" alt="...">
                     </div>
                     <div class="col-8  col-lg-12">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span class="line-clamp-3">学生が地元を取材し、Uターンをの形を探すインスタマガジン「梨パック」が最高</span>
+                                <span class="line-clamp-3"><?php the_title(); ?></span>
                             </h5>
-                            <span class="badge bg-secondary">地元活性化サークル</span>
-                            <p class="card-text"><small class="text-muted">2022.09.05</small></p>
+                            <p class="card-text"><small class="text-muted"><?php echo get_the_date(); ?></small></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endfor; ?>
+        <?php
+        endwhile;
+        endif;
+        ?>
 
     </div>
 </div>
 
 <div class="page">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item disabled"><a class="page-link" href="#">戻る</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">次へ</a></li>
-        </ul>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation pt-3">
+    <?php
+    $pagination = paginate_links(
+        array(
+            'base'    => home_url("index.php/search-activity/%_%"),
+            'format'  => '?d=%#%',
+            'type'    => 'list',
+            'current' => $paged, // int current page
+            'total'   => $the_query->max_num_pages,  // int total pages
+        )
+    );
+    echo $pagination;
+    ?>
     </nav>
 </div>
+
+<script>
+    /* Add Bootstrap Pagination Class */
+    $('ul.page-numbers').addClass('pagination justify-content-center');
+    $('ul.page-numbers li').addClass('page-item');
+    $('ul.page-numbers li a').addClass('page-link');
+    $('ul.page-numbers li span').addClass('page-link');
+    $('ul.page-numbers li .current').parent().addClass('active');
+</script>
 
 <?=get_footer()?>

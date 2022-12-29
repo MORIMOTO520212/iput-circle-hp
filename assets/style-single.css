@@ -44,5 +44,6 @@
 /* Trix Editor 画像サイズ */
 .detail img {
     width: 100% !important;
+    max-width: 600px;
     height: auto;
 }

@@ -23,7 +23,7 @@ $args = array(
 );
 
 // 条件指定があった場合
-$param_circle  = get_params('c');  // サークル名（カテゴリID）
+$param_circle  = get_params('c');  // サークルID（カテゴリID）
 $param_event_1 = get_params('e1'); // 行事・イベント
 $param_event_2 = get_params('e2'); // 活動記録
 $param_event_3 = get_params('e3'); // 重要連絡
@@ -97,6 +97,12 @@ get_header();
         if ( $the_query->have_posts() ):
         while ( $the_query->have_posts() ):
         $the_query->the_post();
+
+        // カスタムデータ取得
+        $post_custom = get_post_custom( get_the_ID() );
+
+        // 内部公開の判定
+        if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) continue;
         ?>
         <div class="col">
             <div class="card h-100 a-button">
@@ -104,8 +110,6 @@ get_header();
                 <div class="row g-0">
                     <div class="thumbnail col-4 col-lg-12">
                         <?php
-                        // カスタムデータ取得
-                        $post_custom = get_post_custom( get_the_ID() );
                         // サムネイルURL
                         $thumbnail_url = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
                         ?>

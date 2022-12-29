@@ -52,6 +52,7 @@ if ( isset( $param__post ) ) {
 
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
+
         if ( wp_get_current_user()->ID != $author->ID ) {
             echo "エラー2";
             exit;
@@ -383,22 +384,57 @@ if ( isset( $param__post ) ) {
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-around mt-5">
-                    <?php
-                    if ( $param__post === 'create' ):
-                    ?>
-                    <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
-                    <button type="submit" name="submit_type" value="post_circle" class="btn btn-primary btn-lg">サークルを作成する</button>
-                    <?php
-                    elseif ( $param__post === 'edit' ):
-                    ?>
-                    <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
-                    <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
-                    <button type="submit" name="submit_type" value="edit_circle" class="btn btn-success btn-lg">サークルを更新する</button>
-                    <?php
-                    endif;
-                    ?>
+            </div>
+
+            <div class="mt-5">
+                <h5 class="ms-4">メンバー</h5>
+                <div class="mainarea">
+                    <div class="memberlist">
+                        <div class="accordion" id="accordion">
+                            <?php
+                            $member_userid_array = maybe_unserialize( $post_custom['members'][0] );
+                            if ( !empty( $member_userid_array ) ):
+                            foreach ( $member_userid_array as $i => $userid ):
+                            $user = get_userdata( $userid );
+                            ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading<?php echo $i; ?>">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="false" aria-controls="collapse<?php echo $i; ?>">
+                                    <?php echo $user->last_name . " " . $user->first_name . " " . "({$user->display_name})"; ?>
+                                </button>
+                                </h2>
+                                <div id="collapse<?php echo $i; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $i; ?>" data-bs-parent="#accordion">
+                                    <div class="accordion-body">
+                                        メールアドレス：<?php echo $user->user_email; ?><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                            endforeach;
+                            else:
+                            ?>
+                            <p class="text-center">まだメンバーがいません。</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-around mt-5">
+                <?php
+                if ( $param__post === 'create' ):
+                ?>
+                <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
+                <button type="submit" name="submit_type" value="post_circle" class="btn btn-primary btn-lg">サークルを作成する</button>
+                <?php
+                elseif ( $param__post === 'edit' ):
+                ?>
+                <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
+                <button type="submit" name="submit_type" value="draft_circle" class="btn btn-secondary btn-lg">下書き保存する</button>
+                <button type="submit" name="submit_type" value="edit_circle" class="btn btn-success btn-lg">サークルを更新する</button>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
     </div>

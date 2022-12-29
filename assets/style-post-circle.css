@@ -13,3 +13,9 @@
 trix-toolbar .trix-button--icon {
     width: 1.9em !important;
 }
+
+/* メンバー */
+.memberlist {
+    max-height: 280px;
+    overflow-y: scroll;
+}

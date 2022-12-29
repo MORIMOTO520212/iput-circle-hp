@@ -96,12 +96,12 @@ $faqData = array(
                     <div class="accordion col-lg-6">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="<?php echo "headingOne{$i}{$j}" ?>">
-                                <button type="button" class="accordion-button collapsed bg-content" data-bs-toggle="collapse" 
+                                <button type="button" class="accordion-button bg-content" data-bs-toggle="collapse" 
                                     data-bs-target="<?php echo "#collapseOne{$i}{$j}" ?>" aria-expanded="true" aria-controls="<?php echo "collapseOne{$i}{$j}" ?>">
                                     Q <?php echo $contents['Q'] ?>
                                 </button>
                             </h2>
-                            <div id="<?php echo "collapseOne{$i}{$j}" ?>" class="accordion-collapse collapse bg-content" aria-labelledby="<?php echo "headingOne{$i}{$j}" ?>">
+                            <div id="<?php echo "collapseOne{$i}{$j}" ?>" class="accordion-collapse collapse show bg-content" aria-labelledby="<?php echo "headingOne{$i}{$j}" ?>">
                                 <div class="accordion-body">
                                     <strong><?php echo $contents['A'] ?></strong>
                                 </div>

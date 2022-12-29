@@ -19,6 +19,11 @@ $tags = get_the_tags();
 
 $post_custom = get_post_custom( get_the_ID() ); // カスタムメタデータ取得
 
+// 内部公開の判定
+if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
+    echo "ログインしてください。";
+    exit;
+}
 ?>
 
 <div class="container pt-3 max-width-lg">

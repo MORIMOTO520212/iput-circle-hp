@@ -63,6 +63,14 @@ label.tag{
     z-index: 1;
 }
 
+.thumbnail {
+    height: 140px;
+}
+
+.thumbnail img {
+    object-fit: cover;
+}
+
 /* ページネーション */
 .page{
     width: 100%;

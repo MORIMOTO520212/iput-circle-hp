@@ -1027,7 +1027,7 @@ function participation_application() {
         $message = "
         {$user->last_name} {$user->first_name}さんからサークルへ参加申請が届きました。
 
-        学年：{$_POST['grade']}
+        学年：{$_POST['grade']}年
         学科：{$_POST['department']}
         参加理由：
         {$_POST['reason']}

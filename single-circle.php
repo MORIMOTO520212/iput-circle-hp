@@ -17,6 +17,9 @@ $post_custom = get_post_custom( $post->ID );
 // ヘッダー画像のURL取得（ない場合はダミー画像を使う）
 $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_image_src( $post_custom['headerImage'][0] )[0] : get_theme_file_uri('src/no_image_circle_header.png');
 
+// サークルのカテゴリID取得
+$circle_cat_id = get_cat_ID( $post->post_title );
+
 ?>
 
 <div class="top-image" style="background-image: url('<?php echo $headerImageUrl ?>');">
@@ -56,8 +59,8 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                     <!-- mobile navigation -->
                     <div class="row flex-wrap">
                         <div class="col-6 g-2">
-                            <div class="mobile-menu-link a-button icon journal-bookmark-fill" style="background:#767676;">
-                                <a href="#"></a>
+                            <div class="mobile-menu-link a-button icon journal-bookmark-fill">
+                                <a href="<?php echo home_url("index.php/search-activity/?c={$circle_cat_id}"); ?>"></a>
                                 活動一覧
                             </div>
                         </div>
@@ -188,7 +191,7 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
                 $activity_post_custom = get_post_custom( $post->ID );
 
                 // 内部公開判定
-                if ( $activity_post_custom['permission'][0] === 'false' ):
+                if ( $activity_post_custom['permission'][0] === "false" || is_user_logged_in() ):
                 ?>
                 <div class="card a-button mb-3">
                     <a href="<?php echo get_permalink( $post->ID ); ?>"></a>
@@ -219,8 +222,8 @@ $headerImageUrl = !empty( $post_custom['headerImage'][0] ) ? wp_get_attachment_i
         <!-- desktop navigation -->
         <div class="col-lg-4 mt-5">
             <nav class="toc d-none d-lg-block">
-                <div class="menu-link a-button mt-4 icon journal-bookmark-fill" style="background:#767676;">
-                    <a href="#"></a>
+                <div class="menu-link a-button mt-4 icon journal-bookmark-fill">
+                    <a href="<?php echo home_url("index.php/search-activity/?c={$circle_cat_id}"); ?>"></a>
                     活動一覧
                 </div>
                 <div class="menu-link a-button mt-4 icon person-fill">
