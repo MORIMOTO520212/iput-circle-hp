@@ -463,7 +463,7 @@ function circle_news($article_array) {
     ?>
         <!-- ボタン 一覧を表示する -->
         <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-success">一覧を表示する</button>
+            <a class="btn btn-success" href="<?php echo home_url('index.php/search-news'); ?>">一覧を表示する</a>
         </div>
     <?php
     endif;

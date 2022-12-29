@@ -14,13 +14,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 d-flex flex-column">
-                                <p class="mb-1"><a href="<?=home_url('index.php/activity')?>">活動一覧</a></p>
-                                <p class="mb-1"><a href="<?=home_url('index.php/news')?>">ニュース一覧</a></p>
+                                <p class="mb-1"><a href="<?=home_url('index.php/search-activity')?>">活動一覧</a></p>
+                                <p class="mb-1"><a href="<?=home_url('index.php/search-news')?>">ニュース一覧</a></p>
                                 <p class="mb-1"><a href="<?=home_url('index.php/faq')?>">FAQ</a></p>
                                 <p class="mb-1"><a href="<?=home_url('index.php/contact')?>">お問い合わせ</a></p>
                             </div>
                             <div class="col-md-6">
-                                <p><a href="#">このサイトについて</a></p>
+                                <p><a href="https://iput-one.com/index.php/2022/12/29/2dfa0870da3c8273f493b2b5e0d81f6e/">このサイトについて</a></p>
+                                <p><a href="https://iput-one.com/index.php/2022/12/29/d77a465e83909260ba431435ac044f10/">プライバシーとポリシー</a></p>
                             </div>
                         </div>
                     </div>

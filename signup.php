@@ -5,8 +5,6 @@
 ?>
 
 <?php
-require_once( get_theme_file_path('assets/components/form_loading.php') );
-
 $param_token = get_params('token');
 $param_t = get_params('t');
 
@@ -156,7 +154,5 @@ if ( isset( $param_token ) ) {
         sessionStorage.email = event.target.value;	
     });
 </script>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>

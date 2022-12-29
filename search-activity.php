@@ -20,6 +20,7 @@ $args = array(
     'post_type'      => 'post',        // 投稿タイプ
     'posts_per_page' => 12,            // 投稿取得数
     'paged'          => $paged,        // 現在のページ
+    'cat'            => array(get_cat_ID('activity')) // カテゴリ
 );
 
 // 条件指定があった場合
@@ -28,7 +29,7 @@ $param_event_1 = get_params('e1'); // 行事・イベント
 $param_event_2 = get_params('e2'); // 活動記録
 $param_event_3 = get_params('e3'); // 重要連絡
 
-if ( $param_circle )  $args['cat'] = $param_circle;
+if ( $param_circle )  $args['cat'][] = $param_circle;
 $tags = array();
 if ( $param_event_1 ) $tags[] = get_tags(array('slug' => '行事・イベント'))[0]->term_id;
 if ( $param_event_2 ) $tags[] = get_tags(array('slug' => '活動記録'))[0]->term_id;

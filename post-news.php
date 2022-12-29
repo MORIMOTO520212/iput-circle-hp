@@ -6,7 +6,6 @@
 
 <?php
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
-require_once( get_theme_file_path('assets/components/form_loading.php') );
 
 /* ログイン状態のチェック */
 if ( !is_user_logged_in() ) {
@@ -145,12 +144,12 @@ if ( isset( $param__post ) ) {
                     <label class="form-check-label" for="chk3">食事</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk3" type="checkbox" name="tags[]" value="お知らせ" <?php echo in_array('お知らせ', $input['tags']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="chk3">お知らせ</label>
+                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="お知らせ" <?php echo in_array('お知らせ', $input['tags']) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="chk4">お知らせ</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="chk4" type="checkbox" name="tags[]" value="重要連絡" <?php echo in_array('重要連絡', $input['tags']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="chk4">重要連絡</label>
+                    <input class="form-check-input" id="chk5" type="checkbox" name="tags[]" value="重要連絡" <?php echo in_array('重要連絡', $input['tags']) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="chk5">重要連絡</label>
                 </div>
             </div>
             <div class="form-text mb-1">
@@ -202,7 +201,5 @@ if ( isset( $param__post ) ) {
 
 
 <?php trix_file_upload_to_wordpress(); ?>
-
-<?php form_loading(); ?>
 
 <?php get_footer(); ?>
