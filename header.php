@@ -39,7 +39,6 @@ elseif ( is_single() ) { // is post page
         <meta property="og:url" content="https://iput-one.com" />
         <meta property="og:image" content="<?php echo get_theme_file_uri('src/ogp.jpg'); ?>" />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:site_name" content="サイト名" />
         <meta property="og:description" content="国際工科専門職大学のサークルサイトです。" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@iput_one"/>
