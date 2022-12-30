@@ -32,8 +32,15 @@ elseif ( is_single() ) { // is post page
         <meta name="Keywords" content="東京国際工科専門職大学,専門職大学,iput" />
         <meta name="Description" content="" />
         <!-- Icon -->
-        <link rel="shortcut icon" href="<?=get_theme_file_uri('src/iputone_logo.svg')?>" />
+        <link rel="shortcut icon" href="<?php echo get_theme_file_uri('src/iputone_logo.svg'); ?>" />
         <!-- OGP Settings -->
+        <meta property="og:title" content="IPUT ONE サークルサイト" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://iput-one.com" />
+        <meta property="og:image" content="<?php echo get_theme_file_uri('src/ogp.jpg'); ?>" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:site_name" content="サイト名" />
+        <meta property="og:description" content="国際工科専門職大学のサークルサイトです。" />
         <!-- CSS -->
         <link href="<?=get_theme_file_uri("assets/style-$slug.css")?>" rel="stylesheet" type="text/css"/>
         <link href="<?=get_theme_file_uri("assets/style-footer.css")?>" rel="stylesheet" type="text/css"/>
