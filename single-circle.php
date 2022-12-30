@@ -75,6 +75,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                         </div>
                         <?php
                         endif;
+                        if ( is_user_logged_in() ):
                         ?>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon person-fill">
@@ -82,6 +83,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                                 参加申請
                             </div>
                         </div>
+                        <?php endif; ?>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon envelope-fill">
                                 <a href="<?php echo home_url("index.php/circle-contact/?circlename=" . $post->post_title . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
@@ -226,11 +228,15 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                     <a href="<?php echo home_url("index.php/search-activity/?c={$circle_cat_id}"); ?>"></a>
                     活動一覧
                 </div>
+                <?php
+                if ( is_user_logged_in() ):
+                ?>
                 <div class="menu-link a-button mt-4 icon person-fill">
                     <a href="#participationApplicationModal" data-bs-toggle="modal"></a>
                     参加申請
                 </div>
                 <?php
+                endif;
                 if ( !empty($post_custom['twitterUserName'][0]) ):
                 ?>
                 <div class="menu-link a-button mt-4 icon twitter">

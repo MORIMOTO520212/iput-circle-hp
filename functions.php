@@ -1053,6 +1053,12 @@ function participation_application() {
         $circle_post = get_post( $_POST['postID'] ); // サークル情報
         $user = wp_get_current_user(); // ユーザー情報
 
+        // 未ログインの場合
+        if ( $user->ID === 0 ) {
+            modal('不正なリクエストです', 'ログインしてからお試しください。');
+            return;
+        }
+
         // 承認用リンク作成
         $user_id = $user->ID;
         $approval_key = substr( md5( $user_id . $_POST['postID'] ), 0, 16 ); // userIdとpostIdをmd5でハッシュ化
