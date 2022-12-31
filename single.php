@@ -64,7 +64,7 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
                 ?>
             </div>
             <!-- bottom -->
-            <div class="d-flex justify-content-between align-items-center mt-auto">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mt-auto">
                 <div>
                     <span>タグ:</span>
                     <?php
@@ -80,7 +80,7 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
                     class="twitter-share-button" data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 
-                <div class="title-color">
+                <div class="title-color ms-auto">
                     <div><?php echo get_user_meta( $post->post_author, 'nickname', true ); ?></div>
                     <div><?php echo get_the_date(); ?></div>
                 </div>
