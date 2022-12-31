@@ -9,10 +9,12 @@ var winScrollTop = 0;
 if($('nav').width() < 500){
     $(window).on('scroll', function(){
         winScrollTop = $(this).scrollTop();
-        if(winScrollTop >= startPos){
-            $('nav').addClass('hide');
-        } else {
-            $('nav').removeClass('hide');
+        if(winScrollTop > 10){
+            if(winScrollTop >= startPos){
+                $('nav').addClass('hide');
+            } else {
+                $('nav').removeClass('hide');
+            }
         }
         startPos = winScrollTop;
     });
