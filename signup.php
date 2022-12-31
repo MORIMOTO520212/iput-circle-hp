@@ -83,7 +83,7 @@ if ( isset( $param_token ) ) {
 
             <form action="" method="post" class="d-flex flex-column px-5 py-3 signup-form needs-validation">
                 <h3>確認メールを送信しました。</h3>
-                <p>登録したメールをご確認いただき、メールに記載されたURLをクリックしてIPUT ONEへの登録を完了してください。</p>
+                <p>登録したメールをご確認いただき、メールに記載されたURLをクリックしてIPUT ONEへの登録を完了してください。<br>迷惑メールに振り分けられている場合がございますので、ご注意ください。</p>
             </form>
             <script>
                 /* 登録フォームのセッションストレージを削除する */
