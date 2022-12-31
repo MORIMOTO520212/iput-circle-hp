@@ -89,8 +89,10 @@ elseif ( is_single() ) { // is post page
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
                 <div class="container-fluid nav-padding">
-                    <img class="me-1" src="<?php echo get_theme_file_uri("src/iputone_logo_white.svg"); ?>" style="width:26px;">
-                    <a class="navbar-brand" href="<?php echo home_url(); ?>">IPUT ONE</a>
+                    <a class="navbar-brand" href="<?php echo home_url(); ?>">
+                        <img class="me-1" src="<?php echo get_theme_file_uri("src/iputone_logo_white.svg"); ?>" style="width:26px;">
+                        IPUT ONE
+                    </a>
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
                             aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
