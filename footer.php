@@ -19,9 +19,9 @@
                                 <p class="mb-1"><a href="<?=home_url('index.php/faq')?>">FAQ</a></p>
                                 <p class="mb-1"><a href="<?=home_url('index.php/contact')?>">お問い合わせ</a></p>
                             </div>
-                            <div class="col-md-6">
-                                <p><a href="https://iput-one.com/index.php/2022/12/29/2dfa0870da3c8273f493b2b5e0d81f6e/">このサイトについて</a></p>
-                                <p><a href="https://iput-one.com/index.php/2022/12/29/d77a465e83909260ba431435ac044f10/">プライバシーとポリシー</a></p>
+                            <div class="col-md-6 d-flex flex-column mb-3">
+                                <p class="mb-1"><a href="https://iput-one.com/index.php/2022/12/29/2dfa0870da3c8273f493b2b5e0d81f6e/">このサイトについて</a></p>
+                                <p class="mb-1"><a href="https://iput-one.com/index.php/2022/12/29/d77a465e83909260ba431435ac044f10/">プライバシーとポリシー</a></p>
                             </div>
                         </div>
                     </div>
