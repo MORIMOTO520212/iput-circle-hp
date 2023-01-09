@@ -367,7 +367,7 @@ if ( isset( $param__post ) ) {
                         <input type="text" maxlength="50" class="form-control" id="contact-mailaddress" name="contactMailAddress"
                         value="<?php echo $input['contactMailAddress'] ?? wp_get_current_user()->user_email; ?>" placeholder="taro.yamada@gmail.com" aria-describedby="help" required>
                         <div id="help" class="form-text">
-                            指定されたメールアドレスへサークルの参加申請や、お問い合わせのメールを送信します。gmailにも対応しています。
+                            ⚠Gmailなど連絡を取りやすいメールアドレスを設定してください。サークルの参加申請や、サークルのお問い合わせに使われます。
                         </div>
                     </div>
 
@@ -391,7 +391,10 @@ if ( isset( $param__post ) ) {
                     <div class="memberlist">
                         <div class="accordion" id="accordion">
                             <?php
+                            // membersフィールドが存在するかどうか
+                            if ( isset( $post_custom['members'][0] ) ):
                             $member_userid_array = maybe_unserialize( $post_custom['members'][0] );
+                            // メンバーがいるかどうか
                             if ( !empty( $member_userid_array ) ):
                             foreach ( $member_userid_array as $i => $userid ):
                             $user = get_userdata( $userid );
@@ -413,7 +416,10 @@ if ( isset( $param__post ) ) {
                             else:
                             ?>
                             <p class="text-center">まだメンバーがいません。</p>
-                            <?php endif; ?>
+                            <?php
+                            endif;
+                            endif;
+                            ?>
                         </div>
                     </div>
                 </div>
