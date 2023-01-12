@@ -329,10 +329,10 @@ if ( isset( $param__post ) ) {
                     <!-- 活動内容 -->
                     <div class="mb-3">
                         <p>活動内容</p>
-                        <input id="trixeditor" class="form-control" type="text"  name="activityDetail" style="display:none;" value="" required>
+                        <input id="trixeditor" class="form-control" type="hidden" name="activityDetail" value="" required>
                         <div>
                             <button type="button" id="template" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う</button>
-                            <trix-editor class="form-control" input="trixeditor"></trix-editor>
+                            <trix-editor class="trix-content form-control" input="trixeditor"></trix-editor>
                         </div>
                         <div class="invalid-feedback">
                             入力必須です

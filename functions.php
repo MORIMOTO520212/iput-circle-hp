@@ -1212,3 +1212,10 @@ function input_value_error_exit( $error_code = "" ) {
     modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
     return;
 }
+
+/*
+WordPress標準の絵文字生成機能のアクションフックを外す。
+理由：Trix Editorと干渉するため。
+ */
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles', 10 );
