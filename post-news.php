@@ -123,8 +123,10 @@ if ( isset( $param__post ) ) {
             </div>
             <script>
                 // trix editor フォームにコンテンツを配置する
-                var activityDetail = '<?php echo $input['post_content']; ?>';
-                document.querySelector('trix-editor').innerHTML = activityDetail;
+                window.onload = () => {
+                    var activityDetail = '<?php echo $input['post_content']; ?>';
+                    document.querySelector('trix-editor').innerHTML = activityDetail;
+                }
             </script>
         </div>
 
