@@ -51,13 +51,17 @@ if ( isset( $param__post ) ) {
 
         $post_custom = get_post_custom( $post->ID ); // カスタムメタデータ取得
 
-        // タグ取得
-        $tags = array_map( function($t){return $t->name;}, get_the_tags($param_id) );
+        // 投稿タグを取得する
+        $tags = array_map( function($tag) {
+            return $tag->name;
 
-        $input['post_title'] = $post->post_title;
+        },  get_the_tags($param_id) ?: [] );
+
+
+        $input['post_title']   = $post->post_title;
         $input['post_content'] = $post->post_content;
-        $input['tags'] = $tags;
-        $input['permission'] = $post_custom['permission'][0];
+        $input['tags']         = $tags;
+        $input['permission']   = $post_custom['permission'][0];
 
     /* サークル削除 */
     } elseif ( $param__post === 'delete' ) {
