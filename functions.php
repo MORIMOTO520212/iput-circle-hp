@@ -893,19 +893,17 @@ function post_activity() {
             update_post_meta( $post_id, 'permission', 'false' );
         }
 
-        // 記事内容からアイキャッチ画像 設定
-        if ( is_localhost() ) {
-            $pattern = "http:\/\/(.*?)(.png|.jpg)";
-        } else {
-            $pattern = "https:\/\/(.*?)(.png|.jpg)";
-        }
-        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
+        // 記事内容から画像リンクを取得し、アイキャッチ画像を設定する
+        $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
+        
+        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのパターンマッチ
 
-        $topImage_url = !empty($matches) ? esc_url( $matches[0] ) : '';
+        $topImage_url = !empty( $matches ) ? esc_url( $matches[0] ) : '';
 
-        if ( !empty($topImage_url) ) {
+        if ( !empty( $topImage_url ) ) {
             $topImage_id = get_attachment_id_from_src( $topImage_url ); // urlからサムネイルIDを取得
             update_post_meta( $post_id, 'topImage', $topImage_id );
+
         } else {
             update_post_meta( $post_id, 'topImage', '' );
         }
@@ -1000,7 +998,7 @@ function post_news() {
         }
 
         // 記事内容からアイキャッチ画像 設定
-        $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg)";
+        $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
 
         preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
 
@@ -1176,7 +1174,7 @@ add_action('after_setup_theme', function() {
 
 
 /**
- * メールを送信する
+ * 宛先、件名、内容を引数に送り、メールを送信する
  * @param string $to - 宛先メールアドレス
  * @param string $subject - 件名
  * @param string $message - 本文
@@ -1213,9 +1211,9 @@ function input_value_error_exit( $error_code = "" ) {
     return;
 }
 
-/*
-WordPress標準の絵文字生成機能のアクションフックを外す。
-理由：Trix Editorと干渉するため。
+/**
+ * WordPress標準の絵文字生成機能のアクションフックを外す。
+ * 理由：Trix Editorと干渉して絵文字を入力すると画像として張り付けてしまう。
  */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles', 10 );
