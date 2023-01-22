@@ -77,9 +77,9 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
                     <?php
                     // サークルタグを表示する
                     if ( isset( get_the_category()[1] ) ):
-                    $circle_name = get_the_category()[1]->cat_name;
+                    $organization_name = get_the_category()[1]->cat_name;
                     ?>
-                    <span class="badge bg-secondary"><?php echo $circle_name; ?></span>
+                    <span class="badge bg-secondary"><?php echo $organization_name; ?></span>
                     <?php
                     endif;
                     ?>
