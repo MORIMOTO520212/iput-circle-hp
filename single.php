@@ -74,6 +74,15 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
                     <?php
                     endforeach;
                     ?>
+                    <?php
+                    // サークルタグを表示する
+                    if ( isset( get_the_category()[1] ) ):
+                    $circle_name = get_the_category()[1]->cat_name;
+                    ?>
+                    <span class="badge bg-secondary"><?php echo $circle_name; ?></span>
+                    <?php
+                    endif;
+                    ?>
                 </div>
                 <!--<div class="ps-2" style="flex:1;"></div>-->
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
