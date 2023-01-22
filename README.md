@@ -1,5 +1,7 @@
 # IPUT学生団体ホームページ
 
+記事のサークルタグは記事のカテゴリーに追加している。get_the_category()で取得可能。  
+
 ## Directory Configuration
 ```
 wp-content/
