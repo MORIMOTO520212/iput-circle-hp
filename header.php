@@ -24,24 +24,28 @@ elseif ( is_single() ) { // is post page
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <!-- Site Settings -->
         <title><?php echo $title; ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="content-script-type" content="text/javascript" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="Keywords" content="国際工科専門職大学,専門職大学,iput" />
-        <meta name="Description" content="国際工科専門職大学のサークルサイトです。" />
+        <meta name="Keywords" content="国際工科専門職大学,専門職大学,iput,サークル" />
+        <meta name="Description" content="国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を外部へ発信します。" />
+
         <!-- Icon -->
         <link rel="shortcut icon" href="<?php echo get_theme_file_uri('src/iputone_logo.svg'); ?>" />
+
         <!-- OGP Settings -->
         <meta property="og:title" content="IPUT ONE サークルサイト" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://iput-one.com" />
         <meta property="og:image" content="<?php echo get_theme_file_uri('src/ogp.jpg'); ?>" />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:description" content="国際工科専門職大学のサークルサイトです。" />
+        <meta property="og:description" content="国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を外部へ発信します。" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@iput_one"/>
+
         <!-- CSS -->
         <link href="<?=get_theme_file_uri("assets/style-$slug.css")?>" rel="stylesheet" type="text/css"/>
         <link href="<?=get_theme_file_uri("assets/style-footer.css")?>" rel="stylesheet" type="text/css"/>
@@ -51,22 +55,28 @@ elseif ( is_single() ) { // is post page
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css"
             integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+
         <!-- CSS Bootstrap Icons v1.9.1 -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
         <!-- Google Fonts Icons | Rounded & Variable -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
         <!-- jQuery uncompressed v3.6.1 -->
         <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <!-- popper.min.js 1.14.3 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <!-- JavaScript Bootstrap Bundle v5.2.2 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.bundle.min.js"
             integrity="sha512-BOsvKbLb0dB1IVplOL9ptU1EYA+LuCKEluZWRUYG73hxqNBU85JBIBhPGwhQl7O633KtkjMv8lvxZcWP+N3V3w=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <!-- trix.js v2.0.0 -->
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
         <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
