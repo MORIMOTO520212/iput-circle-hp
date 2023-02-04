@@ -119,6 +119,17 @@ elseif ( is_single() ) { // is post page
                             </li>
                             <li class="nav-item ms-2 me-2 d-flex justify-content-end">
                                 <?php
+                                if ( !is_user_logged_in() ) {
+                                ?>
+                                    <a href="<?=home_url('index.php/signup')?>">
+                                        <button type="button" class="btn btn-light rounded-pill">新規登録</button>
+                                    </a>
+                                <?php
+                                }
+                                ?>
+                            </li>
+                            <li class="nav-item ms-2 me-2 d-flex justify-content-end">
+                                <?php
                                 if ( is_user_logged_in() ) {
                                 ?>
                                     <a href="<?php echo home_url( "index.php/author/" . wp_get_current_user()->user_nicename ); ?>">
