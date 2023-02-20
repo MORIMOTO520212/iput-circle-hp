@@ -86,7 +86,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                         <?php endif; ?>
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon envelope-fill">
-                                <a href="<?php echo home_url("index.php/circle-contact/?circlename=" . $post->post_title . "&to=" . $post_custom['contactMailAddress'][0] . "&from=" . wp_get_current_user()->user_email ); ?>"></a>
+                                <a href="#contactModal"data-bs-toggle="modal"></a>
                                 お問い合わせ
                             </div>
                         </div>
