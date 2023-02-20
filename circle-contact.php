@@ -25,7 +25,12 @@ if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle-contact
     Reply-To: {$from}\r\n
     cc: {$admin_email}\r\n
     ";
-    wp_mail( $to, $subject, $message, $headers );
+    $body = "
+    メールアドレス：
+    ----------------
+    {$message}
+    ";
+    wp_mail( $to, $subject, $body, $headers );
     $flag = 1;
 
 } else {

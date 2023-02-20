@@ -1039,7 +1039,7 @@ function participation_application() {
             return;
         }
 
-        $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学');
+        $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学', 'その他');
         if ( !in_array( $_POST['department'], $default_department, true ) ) {
             modal('不正なリクエストです', 'もう一度お試しください。');
             return;
@@ -1057,6 +1057,9 @@ function participation_application() {
             return;
         }
 
+        // ログイン中のユーザーのメールアドレス取得
+        $login_user_email = get_user_option('user_email', $user->ID);
+
         // 承認用リンク作成
         $user_id = $user->ID;
         $approval_key = substr( md5( $user_id . $_POST['postID'] ), 0, 16 ); // userIdとpostIdをmd5でハッシュ化
@@ -1070,22 +1073,92 @@ function participation_application() {
 
         学年：{$_POST['grade']}年
         学科：{$_POST['department']}
-        参加理由：
+        メールアドレス：{$login_user_email}
+
+        参加理由
+        --------------------
         {$_POST['reason']}
 
         参加を承認する場合は以下のリンクにアクセスしてください。
         {$approval_url}
 
 
-        IPUT ONEへのお問い合わせはこのメールに返信してください。
-    
         ============================
+        IPUT ONEへのお問い合わせはこのメールに返信してください。
         IPUT ONE制作チーム
         iputone.staff@gmail.com
         ";
         my_sendmail( $to, $subject, $message );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
+
+    } else {
+        modal('エラー', '不正なリクエストです。');
+        return;
+    }
+}
+
+
+
+function circle_contact() {
+    if ( isset(
+        $_POST['grade'],       // 学年
+        $_POST['department'],  // 学科
+        $_POST['contactbody'], // 問い合わせ内容
+        $_POST['postID']       // 投稿ID
+    ) )
+    {
+        // 入力チェック
+        $default_grade = array('1', '2', '3', '4', '教授');
+        if ( !in_array( $_POST['grade'], $default_grade, true ) ) {
+            modal('不正なリクエストです', 'もう一度お試しください。');
+            return;
+        }
+
+        $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学', 'その他');
+        if ( !in_array( $_POST['department'], $default_department, true ) ) {
+            modal('不正なリクエストです', 'もう一度お試しください。');
+            return;
+        }
+
+        if ( mb_strlen( $_POST['contactbody'] ) > 500 ) input_value_error_exit();
+
+        // 情報取得
+        $circle_post = get_post( $_POST['postID'] ); // サークル情報
+        $user = wp_get_current_user(); // ユーザー情報
+
+        // 未ログインの場合
+        if ( $user->ID === 0 ) {
+            modal('不正なリクエストです', 'ログインしてからお試しください。');
+            return;
+        }
+
+        // ログイン中のユーザーのメールアドレス取得
+        $login_user_email = get_user_option('user_email', $user->ID);
+
+        // お問い合わせメール
+        $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
+        $subject = "【IPUT ONE】{$circle_post->post_title}についてお問い合わせを頂いております。";
+        $message = "
+        {$user->last_name} {$user->first_name}さんからお問い合わせがありました。
+
+        学年：{$_POST['grade']}年
+        学科：{$_POST['department']}
+        メールアドレス：{$login_user_email}
+
+        お問い合わせ内容
+        --------------------
+        {$_POST['contactbody']}
+
+
+        ============================
+        IPUT ONEへのお問い合わせはこのメールに返信してください。
+        IPUT ONE制作チーム
+        iputone.staff@gmail.com
+        ";
+        my_sendmail( $to, $subject, $message );
+
+        modal('お問い合わせが完了しました', '返信をお待ちください。');
 
     } else {
         modal('エラー', '不正なリクエストです。');
@@ -1111,10 +1184,8 @@ add_action('after_setup_theme', function() {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['signup_nonce'], 'N9zxfbth' ) ) return;
         $res = user_signup();
-        if ( $res ) {
-            wp_redirect( home_url('index.php/signup?t=confirm') );
+        if ($res) wp_redirect( home_url('index.php/signup?t=confirm') );
             exit;
-        }
     }
     // 基本情報の更新
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
@@ -1164,11 +1235,17 @@ add_action('after_setup_theme', function() {
         if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
         post_news();
     }
-    // サークル申請
+    // サークルページ - サークル申請
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'participation_application' ) {
         if ( !isset( $_POST['participation_application_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['participation_application_nonce'], 'M3fHXt2T' ) ) return;
         participation_application();
+    }
+    // サークルページ - お問い合わせ
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_contact' ) {
+        if ( !isset( $_POST['circle_contact_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'P5kseWwp' ) ) return;
+        circle_contact();
     }
 });
 
@@ -1201,8 +1278,10 @@ function my_sendmail( $to, $subject, $message, $headers = "" ) {
     return true;
 }
 
+
+
 /**
- * inputフォームエラー時のアラートモーダル
+ * inputフォームエラー時の警告モーダル
  * @param string $error_code - エラーコード
  * @return false
 */
@@ -1211,8 +1290,10 @@ function input_value_error_exit( $error_code = "" ) {
     return;
 }
 
+
+
 /**
- * WordPress標準の絵文字生成機能のアクションフックを外す。
+ * WordPress標準の絵文字生成機能のアクションフックを解除
  * 理由：Trix Editorと干渉して絵文字を入力すると画像として張り付けてしまう。
  */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );

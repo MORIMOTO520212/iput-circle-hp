@@ -247,7 +247,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                 endif;
                 ?>
                 <div class="menu-link a-button mt-4 icon envelope-fill">
-                    <a href="javascript:piplup();"></a>
+                    <a href="#contactModal" data-bs-toggle="modal"></a>
                     お問い合わせ
                 </div>
                 <p class="mt-4">更新日: <?php echo date_formatting( $post->post_modified ); ?></p>
@@ -273,8 +273,8 @@ function piplup() {
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                <?php echo $post->post_title; ?>へ参加申請を送ります。<br>
-                正式に承認されると参加完了メールが届きます。
+                    <?php echo $post->post_title; ?>へ参加申請を送ります。<br>
+                    正式に承認されると参加完了メールが届きます。
                 </div>
 
                 <!-- 学年 -->
@@ -317,6 +317,65 @@ function piplup() {
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
                 <button type="submit" name="submit_type" value="participation_application" class="btn btn-primary">申請</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- お問い合わせモーダル -->
+<div class="modal fade" id="contactModal" aria-hidden="true" aria-labelledby="contactLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content needs-validation form-loading" action="" method="post" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactLabel">サークルへお問い合わせ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <?php echo $post->post_title; ?>へお問い合わせを送ります。<br>
+                    お問い合わせ完了後、サークルの関係者から返信があります。
+                </div>
+
+                <!-- 学年 -->
+                <div class="mb-3">
+                    <label for="grade" class="form-label">学年</label>
+                    <select name="grade" id="grade" class="form-select" aria-label="学年">
+                        <option value="1" selected>1年</option>
+                        <option value="2">2年</option>
+                        <option value="3">3年</option>
+                        <option value="4">4年</option>
+                        <option value="9">教授</option>
+                    </select>
+                </div>
+
+                <!-- 学科 -->
+                <div class="mb-3">
+                    <label for="department" class="form-label">所属学科</label>
+                    <select name="department" id="department" class="form-select" aria-label="所属学科">
+                        <option value="情報工学科" selected>情報工学科</option>
+                        <option value="デジタルエンタテイメント学科">デジタルエンタテイメント学科</option>
+                        <option value="その他">他大学</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="contactbody" class="form-label">お問い合わせ内容</label>
+                    <textarea name="contactbody" id="contactbody" class="form-control" rows="3" required></textarea>
+                    <div class="form-text">ここで書かれた内容はサークルの関係者に公開されます。</div>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="check" required>
+                    <label class="form-check-label" for="check">入力を確認しました</label>
+                </div>
+            </div>
+
+            <input type="hidden" name="postID" value="<?php echo $post->ID; ?>">
+            <?php wp_nonce_field( 'P5kseWwp', 'circle_contact_nonce' ); ?>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <button type="submit" name="submit_type" value="circle_contact" class="btn btn-primary">送信</button>
             </div>
         </form>
     </div>
