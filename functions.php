@@ -874,6 +874,9 @@ function post_activity() {
                 }
                 // postIDを指定する
                 $post_data['ID'] = $_POST['postID'];
+
+                // post_dateは更新させない
+                $post_data['post_date'] = get_post( $_POST['postID'] )->post_date;
             }
         }
 
@@ -971,6 +974,9 @@ function post_news() {
                 }
                 // postIDを指定する
                 $post_data['ID'] = $_POST['postID'];
+
+                // post_dateは更新させない
+                $post_data['post_date'] = get_post( $_POST['postID'] )->post_date;
             }
         }
 
