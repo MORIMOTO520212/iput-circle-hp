@@ -360,7 +360,7 @@
             <!-- 運動 -->
             <div class="pt-5" id="circle-sport">
                 <h4 class="rounded circle-category-title sport-icon">運動</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
+                <div class="row row-cols-1 row-cols-lg-4 g-2 g-lg-3 pt-2">
                     <?php
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
@@ -374,7 +374,7 @@
             <!-- 文化・学術 -->
             <div class="pt-5" id="circle-culture">
                 <h4 class="rounded circle-category-title culture-icon">文化・学術</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
+                <div class="row row-cols-1 row-cols-lg-4 g-2 g-lg-3 pt-2">
                     <?php
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
@@ -388,7 +388,7 @@
             <!-- 創造 -->
             <div class="pt-5" id="circle-creation">
                 <h4 class="rounded circle-category-title creation-icon">創造</h4>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 pt-2">
+                <div class="row row-cols-1 row-cols-lg-4 g-2 g-lg-3 pt-2">
                     <?php
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
@@ -417,9 +417,9 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
                 </div>
                 <div class="col-8 col-lg-12">
                     <div class="card-body h-100 d-flex flex-column">
-                        <h5 class="card-title circle-title">
+                        <h1 class="card-title circle-title fs-6">
                             <span class="line-clamp-1"><?php echo $circle_name; ?></span>
-                        </h5>
+                        </h1>
                         <div class="card-text mt-auto">
                             <div class="row row-cols-1 mb-0 circle-info">
                                 <small class="col line-clamp-1"><?php echo $place_text ?? ''; ?></small>
@@ -434,7 +434,7 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
     <?php
 }
 
-/* 記事一覧の記事テンプレート*/
+/* 記事一覧の記事テンプレート */
 function circle_news($article_array) {
     if($article_array == null): // 表示する記事がない場合
     ?>
