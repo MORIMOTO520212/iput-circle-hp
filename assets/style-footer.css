@@ -2,6 +2,9 @@
 
 
 footer {
+    padding: 60px 0 10px 0;
+    text-align: left;
+    color: #aaa;
     z-index: 1000;
     background: #353535;
     word-break: keep-all;
@@ -21,12 +24,6 @@ footer p:before {
 footer a {
     color: #EEEEEE;
     text-decoration: none;
-}
-
-.footer-top {
-    padding: 60px 0 0 0;
-    text-align: left;
-    color: #aaa;
 }
 
 .footer-bottom h6 {
