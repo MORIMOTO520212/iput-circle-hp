@@ -97,14 +97,14 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                 <div class="mt-5"></div>
             </div>
             <div class="overview">
-                <h2>サークル概要</h2>
+                <h2 class="circle_head_text">サークル概要</h2>
                 <hr />
                 <p><?php echo $post->post_content; ?></p>
             </div>
 
             <!-- 基本情報テーブル -->
             <div class="information mt-5">
-                <h2>サークル情報</h2>
+                <h2 class="circle_head_text">サークル情報</h2>
                 <hr />
             </div>
             <table class="table table-bordered border-3 border-dark">
@@ -150,7 +150,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
 
 
             <div class="activity-content mt-5">
-                <h2>活動内容</h2>
+                <h2 class="circle_head_text">活動内容</h2>
                 <hr />
                 <?php echo $post_custom['activityDetail'][0]; ?>
             </div>
@@ -176,7 +176,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
             -->
 
             <div class="activity-posts mt-5">
-                <h2>活動記録</h2>
+                <h2 class="circle_head_text">活動記録</h2>
                 <hr />
                 <?php
                 $args = array(

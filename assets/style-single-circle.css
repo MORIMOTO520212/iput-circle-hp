@@ -1,3 +1,7 @@
+.circle_head_text {
+    font-size: 24px;
+}
+
 /* Icons */
 .icon {
     font-family: "bootstrap-icons";
@@ -111,12 +115,12 @@
 }
 
 .top-sub-text h2 {
-    font-size: 30px;
+    font-size: 22px;
     font-weight: normal;
 }
 
 .top-sub-text p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -129,26 +133,11 @@
     min-height: 134px;
 }
 
-.overview h2 {
-    font-size: 30px;
-}
-
 .overview p {
     font-size: 16px;
 }
 
-.information h2 {
-    font-size: 30px;
-}
-
-.information td {
-    width: 50%;
-}
-
 /* 活動内容 */
-.activity-content h2 {
-    font-size: 30px;
-}
 
 .activity-content p {
     font-size: 16px;
@@ -161,10 +150,6 @@
 
 .activity-content h1 {
     font-size: 23px;
-}
-
-.album h2 {
-    font-size: 30px;
 }
 
 .activity-posts img {

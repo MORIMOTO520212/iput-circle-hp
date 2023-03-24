@@ -150,8 +150,8 @@ get_header();
             'base'    => home_url("index.php/search-activity/%_%"),
             'format'  => '?d=%#%',
             'type'    => 'list',
-            'current' => $paged, // int current page
-            'total'   => $the_query->max_num_pages,  // int total pages
+            'current' => $paged, // 現在のページ
+            'total'   => $the_query->max_num_pages,  // 全ページ数
         )
     );
     echo $pagination;
