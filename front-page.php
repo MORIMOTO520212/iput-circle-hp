@@ -78,7 +78,7 @@
                     <div class="card-body">
                         <p class="card-text">サークルに関する調査を行っています。新歓アンケートの回答にご協力ください。<br>（回答時間：3分）</p>
                         <div class="d-flex justify-content-center">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi9w8pwwuHzdea5ct3_C33FDL2-nIv7sN3eU3U21xbvxTSdg/viewform?usp=sf_link"
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi9w8pwwuHzdea5ct3_C33FDL2-nIv7sN3eU3U21xbvxTSdg/viewform?usp=sf_link" target="_blank" rel="noopener"
                              class="btn btn-success" role="button">回答する</a>
                         </div>
                     </div>
