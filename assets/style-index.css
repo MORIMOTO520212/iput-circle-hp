@@ -47,6 +47,23 @@
     color: #fff;
 }
 
+/* トップカテゴリ スマホ用 */
+#top-category-lg > div > div {
+    background-color: #9ac629;
+}
+
+#top-category-lg > div > div :nth-child(n) {
+    color: #fff;
+}
+
+#top-category-lg > div > div > span::before {
+    font-family: "bootstrap-icons";
+    content: "\F229";
+    color: #fff;
+    font-size: 1.25rem;
+    transform: translateY(3px);
+}
+
 .spacing {
     padding-top: 10rem;
 }

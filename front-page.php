@@ -119,6 +119,44 @@
     <!-- トップ & メイン余白 only wider than -lg -->
     <div class="spacing d-none d-lg-block"></div>
 
+    <!-- トップ カテゴリ スマホ用 -->
+    <div class='container d-lg-none p-0 pb-5' id='top-category-lg'>
+        <div class='row row-cols-1 justify-content-center'>
+            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+                <a class="card-link" href="#activity"></a>
+                <div class='col-10'>
+                    <h3>活動</h3>
+                    <span>サークル・ゼミの活動状況を報告します。</span>
+                </div>
+                <span class='col-2 text-center'></span>
+            </div>
+            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+                <a class="card-link" href="#news"></a>
+                <div class='col-10'>
+                    <h3>ニュース</h3>
+                    <span>不定期で学校に関した自由な投稿を期待します。</span>
+                </div>
+                <span class='col-2 text-center'></span>
+            </div>
+            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+                <a class="card-link" href="#circle"></a>
+                <div class='col-10'>
+                    <h3>サークル</h3>
+                    <span>IPUTで活動しているサークルを紹介します。</span>
+                </div>
+                <span class='col-2 text-center'></span>
+            </div>
+            <div class='col card-link-parent row align-items-center p-4 pb-1'>
+                <a class="card-link" href="<?php echo home_url('index.php/faq'); ?>"></a>
+                <div class='col-10'>
+                    <h3>FAQ</h3>
+                    <span>学生が気になる学校に関する質問をまとめています。</span>
+                </div>
+                <span class='col-2 text-center'></span>
+            </div>
+        </div>
+    </div>
+
     <!-- メイン -->
     <div class="main container pt-5 pb-5">
 
