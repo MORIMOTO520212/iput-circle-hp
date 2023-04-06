@@ -27,7 +27,7 @@
 
                 <div class="col-md-6 offset-md-1 d-flex flex-column">
                     <h6>外部リンク</h6>
-                    <p class="mb-1"><a href="https://twitter.com/IputTokyo">IPUT days Tokyo - Twitter</a></p>
+                    <p class="mb-1"><a href="https://twitter.com/iput_one">IPUT ONE - Twitter</a></p>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
