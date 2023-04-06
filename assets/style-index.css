@@ -50,10 +50,15 @@
 /* トップカテゴリ スマホ用 */
 #top-category-lg > div > div {
     background-color: #9ac629;
+    border-bottom: solid 1px #7ca11e;
 }
 
 #top-category-lg > div > div :nth-child(n) {
     color: #fff;
+}
+
+#top-category-lg > div > div :last-child {
+    font-size: 14px;
 }
 
 #top-category-lg > div > div > span::before {

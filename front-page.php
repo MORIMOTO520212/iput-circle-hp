@@ -120,36 +120,36 @@
     <div class="spacing d-none d-lg-block"></div>
 
     <!-- トップ カテゴリ スマホ用 -->
-    <div class='container d-lg-none p-0 pb-5' id='top-category-lg'>
-        <div class='row row-cols-1 justify-content-center'>
-            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+    <div class='d-lg-none p-0 pb-5' id='top-category-lg'>
+        <div class='row row-cols-1 justify-content-center g-0'>
+            <div class='col card-link-parent row align-items-center p-3'>
                 <a class="card-link" href="#activity"></a>
                 <div class='col-10'>
-                    <h3>活動</h3>
+                    <h5>活動</h5>
                     <span>サークル・ゼミの活動状況を報告します。</span>
                 </div>
                 <span class='col-2 text-center'></span>
             </div>
-            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+            <div class='col card-link-parent row align-items-center p-3'>
                 <a class="card-link" href="#news"></a>
                 <div class='col-10'>
-                    <h3>ニュース</h3>
+                    <h5>ニュース</h5>
                     <span>不定期で学校に関した自由な投稿を期待します。</span>
                 </div>
                 <span class='col-2 text-center'></span>
             </div>
-            <div class='col card-link-parent row align-items-center p-4 pb-1 border-bottom border-1 border-secondary'>
+            <div class='col card-link-parent row align-items-center p-3'>
                 <a class="card-link" href="#circle"></a>
                 <div class='col-10'>
-                    <h3>サークル</h3>
+                    <h5>サークル</h5>
                     <span>IPUTで活動しているサークルを紹介します。</span>
                 </div>
                 <span class='col-2 text-center'></span>
             </div>
-            <div class='col card-link-parent row align-items-center p-4 pb-1'>
+            <div class='col card-link-parent row align-items-center p-3'>
                 <a class="card-link" href="<?php echo home_url('index.php/faq'); ?>"></a>
                 <div class='col-10'>
-                    <h3>FAQ</h3>
+                    <h5>FAQ</h5>
                     <span>学生が気になる学校に関する質問をまとめています。</span>
                 </div>
                 <span class='col-2 text-center'></span>
