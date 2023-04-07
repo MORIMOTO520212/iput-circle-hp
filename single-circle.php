@@ -129,7 +129,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                         <th scope="row">特色</th>
                         <td>
                             <?php
-                            // 非シリアライズ化して取り出し
+                            // 特色を非シリアライズ化して取り出し
                             if ( isset( $post_custom['features'][0] ) ):
                             $features = maybe_unserialize( $post_custom['features'][0] );
                             foreach( $features as $name ):
@@ -161,15 +161,9 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                 <hr />
                 <div class="container">
                     <div class="row row-cols-2">
-                        <?php
-                        for($i = 0; $i < 4; $i++):
-                        ?>
-                            <div class="col-6 col-lg-12 col-xl-6">
-                                <img class="img-thumbnail mt-4" src="<?php echo get_theme_file_uri('src/no_image.png'); ?>" />
-                            </div>
-                        <?php
-                        endfor;
-                        ?>
+                        <div class="col-6 col-lg-12 col-xl-6">
+                            <img class="img-thumbnail mt-4" src="" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,6 +206,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                 <?php
                 endif;
                 endforeach;
+                wp_reset_postdata();
 
                 else:
                 ?>

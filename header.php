@@ -102,6 +102,7 @@ elseif ( is_single() ) { // is post page
                     <a class="navbar-brand" href="<?php echo home_url(); ?>">
                         <img class="me-1" src="<?php echo get_theme_file_uri("src/iputone_logo_white.svg"); ?>" style="width:26px;">
                         IPUT ONE
+                        <?php echo is_localhost() ? "（開発環境）" : "" ?>
                     </a>
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#top-nav"
                             aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
