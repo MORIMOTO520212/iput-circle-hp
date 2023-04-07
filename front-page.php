@@ -200,7 +200,7 @@
                 </li>
             </ul>
             <!-- コンテンツ -->
-            <div class="tab-content p-4 pt-0" id="info-content">
+            <div class="tab-content px-2 pb-4 p-sm-4 pt-0" id="info-content">
             <?php
             $new_info_array       = null;  // 新規情報
             $announcement_array   = null;  // お知らせ
@@ -510,8 +510,8 @@ function circle_news($article_array) {
                 <span class="badge bg-danger">重要</span>
                 <?php endif; ?>
             </div>
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="line-clamp-1"><?php echo $article -> title; //タイトル ?></h5>
+            <div class="d-flex w-100 justify-content-between mb-1">
+                <div class='overflow-hidden'><h5 class="m-0 line-clamp-1"><?php echo $article -> title; //タイトル ?></h5></div>
                 <small class="text-muted"><?php echo $article -> date; ?></small>
             </div>
             <p class="line-clamp-2">
