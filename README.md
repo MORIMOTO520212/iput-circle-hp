@@ -77,16 +77,29 @@ WP_Userオブジェクトを返す。ログインしているユーザー情報�
 > **Warning**  
 > header関数より手前に書かなければならない。
 
-## functions.php
-### モーダルを使う
+
+## ファイルの説明
+
+**functions.php**
+
+モーダルを使う
 ```php
 modal($title, $message);
 ``` 
-**引数**  
+引数  
 $title - モーダルのタイトル  
 $message - モーダルの本文  
-**戻り値**  
+戻り値  
 html形式でモーダルを出力する
+
+**post-circle.php**  
+説明  
+サークルを作成するページ。  
+サークルの参加承認も受け付ける。
+
+
+
+
 
 ## WordPress Nonce
 `wp_nonce_field`関数を使ってformに設置する。  

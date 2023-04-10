@@ -10,6 +10,7 @@ if ( is_author() ) { // is user page
 
 }
 elseif ( is_singular('circle') ) { // is circle custom type
+    $title = get_the_title();
     $slug = "single-circle";
 }
 elseif ( is_single() ) { // is post page

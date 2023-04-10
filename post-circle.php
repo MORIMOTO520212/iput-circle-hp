@@ -6,6 +6,7 @@
  * https://docs.google.com/drawings/d/1_D9srwDlzHAwPy2sCkck6nT2wg6cu_afPSiU9KdmMNo/edit?usp=sharing
 */
 
+global $page_url;
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
 get_header();
@@ -31,7 +32,7 @@ $param_id    = get_params('id');    // 編集時の投稿ID
 
 // ログインしてなかったらログインページにリダイレクトする
 if ( is_user_logged_in() === false ) {
-    echo "<script type=\"text/javascript\">document.location.href = '$page_url_login';</script>";
+    echo "<script type=\"text/javascript\">document.location.href = '$page_url->login';</script>";
     exit;
 }
 
@@ -464,7 +465,7 @@ if ( isset( $param__post ) ) {
         $(window).scrollTop(0);
     });
 
-    // テンプレートを挿入する
+    // Trix Editor - テンプレートを挿入する
     const template = document.getElementById('template');
     template.addEventListener('click', ()=>{
         document.querySelector('trix-editor').innerHTML = ""; // クリア
