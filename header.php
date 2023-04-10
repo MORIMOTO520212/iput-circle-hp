@@ -2,6 +2,8 @@
 // Anti-Clickjacking Measures
 header('X-Frame-Options: DENY');
 
+global $page_url;
+
 if ( is_author() ) { // is user page
     $title = "マイページ";
     $slug = "author";
@@ -30,21 +32,45 @@ elseif ( is_single() ) { // is post page
         <meta http-equiv="content-script-type" content="text/javascript" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="Keywords" content="国際工科専門職大学,専門職大学,iput,サークル" />
-        <meta name="Description" content="国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を外部へ発信します。" />
+        <meta name="Keywords" content="東京国際工科専門職大学,国際工科専門職大学,専門職大学,iput,サークル" />
+        <meta name="Description" content="IPUT ONEは東京国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を発信しています。" />
 
         <!-- Icon -->
         <link rel="shortcut icon" href="<?php echo get_theme_file_uri('src/iputone_logo.svg'); ?>" />
 
         <!-- OGP Settings -->
-        <meta property="og:title" content="IPUT ONE サークルサイト" />
-        <meta property="og:type" content="website" />
+        <?php
+        // 記事ページのOGP
+        if ( $slug === 'single' ) {
+            $post_custom = get_post_custom( get_the_ID() );
+            // 内部公開の場合
+            if ( $post_custom['permission'][0] === "true" ) {
+                $ogp_title = "記事はログインすると閲覧できます。 - IPUT ONE サークルサイト";
+                $ogp_description = "記事の本文はログインすると閲覧できます。";
+                $ogp_image = get_theme_file_uri('src/ogp.jpg');
+            // 外部公開の場合
+            } else {
+                $ogp_title = get_the_title();
+                $ogp_description = get_the_excerpt();
+                $ogp_image = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+            }
+        // その他のページのOGP
+        } else {
+            $ogp_title = "IPUT ONE サークルサイト";
+            $ogp_description = "IPUT ONEは東京国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を発信しています。";
+            $ogp_image = get_theme_file_uri('src/ogp.jpg');
+        }
+        ?>
+
+        <meta property="og:title" content="<?php echo $ogp_title; ?>" />
+        <meta property="og:description" content="<?php echo $ogp_description; ?>" />
         <meta property="og:url" content="https://iput-one.com" />
-        <meta property="og:image" content="<?php echo get_theme_file_uri('src/ogp.jpg'); ?>" />
+        <meta property="og:type" content="website" />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:description" content="国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を外部へ発信します。" />
+        <meta property="og:image" content="<?php echo $ogp_image; ?>" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@iput_one"/>
+
 
         <!-- CSS -->
         <link href="<?=get_theme_file_uri("assets/style-$slug.css")?>" rel="stylesheet" type="text/css"/>
@@ -111,19 +137,19 @@ elseif ( is_single() ) { // is post page
                     <div class="collapse navbar-collapse justify-content-end" id="top-nav">
                         <ul class="navbar-nav">
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/search-activity')?>">活動</a>
+                                <a class="nav-link active" aria-current="page" href="<?php echo $page_url->activity; ?>">活動</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/search-news')?>">ニュース</a>
+                                <a class="nav-link active" aria-current="page" href="<?php echo $page_url->news; ?>">ニュース</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url()?>">サークル</a>
+                                <a class="nav-link active" aria-current="page" href="<?php echo home_url('#circle'); ?>">サークル</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/faq')?>">FAQ</a>
+                                <a class="nav-link active" aria-current="page" href="<?php echo $page_url->faq; ?>">FAQ</a>
                             </li>
                             <li class="nav-item ms-2 me-2">
-                                <a class="nav-link active" aria-current="page" href="<?=home_url('index.php/contact')?>">お問い合わせ</a>
+                                <a class="nav-link active" aria-current="page" href="<?php echo $page_url->contact; ?>">お問い合わせ</a>
                             </li>
                             <li>
                                 <hr class="border-top">
@@ -132,7 +158,7 @@ elseif ( is_single() ) { // is post page
                                 <?php
                                 if ( !is_user_logged_in() ) {
                                 ?>
-                                    <a class="my-1" href="<?php echo $page_url_signup; ?>">
+                                    <a class="my-1" href="<?php echo $page_url->signup; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">新規登録</button>
                                     </a>
                                 <?php
@@ -144,14 +170,14 @@ elseif ( is_single() ) { // is post page
                                 /* ログイン中の場合はプロフィールボタンを表示 */
                                 if ( is_user_logged_in() ) {
                                 ?>
-                                    <a class="my-1" href="<?php echo $page_url_mypage; ?>">
+                                    <a class="my-1" href="<?php echo $page_url->mypage; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">マイページ</button>
                                     </a>
                                 <?php
                                 /* 未ログインの場合はログインボタンを表示 */
                                 } else {
                                 ?>
-                                    <a class="my-1" href="<?php echo $page_url_login; ?>">
+                                    <a class="my-1" href="<?php echo $page_url->login; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">ログイン</button>
                                     </a>
                                 <?php
