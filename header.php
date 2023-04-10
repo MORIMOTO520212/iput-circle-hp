@@ -132,7 +132,7 @@ elseif ( is_single() ) { // is post page
                                 <?php
                                 if ( !is_user_logged_in() ) {
                                 ?>
-                                    <a class="my-1" href="<?=home_url('index.php/signup')?>">
+                                    <a class="my-1" href="<?php echo $page_url_signup; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">新規登録</button>
                                     </a>
                                 <?php
@@ -144,14 +144,14 @@ elseif ( is_single() ) { // is post page
                                 /* ログイン中の場合はプロフィールボタンを表示 */
                                 if ( is_user_logged_in() ) {
                                 ?>
-                                    <a class="my-1" href="<?php echo home_url( "index.php/author/" . wp_get_current_user()->user_nicename ); ?>">
+                                    <a class="my-1" href="<?php echo $page_url_mypage; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">マイページ</button>
                                     </a>
                                 <?php
                                 /* 未ログインの場合はログインボタンを表示 */
                                 } else {
                                 ?>
-                                    <a class="my-1" href="<?=home_url('index.php/login')?>">
+                                    <a class="my-1" href="<?php echo $page_url_login; ?>">
                                         <button type="button" class="btn btn-light rounded-pill">ログイン</button>
                                     </a>
                                 <?php
