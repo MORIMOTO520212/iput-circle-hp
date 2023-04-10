@@ -12,13 +12,19 @@ require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 
 /* * * * 変数の初期化 * * * */
 
-// アップロード画像の最大ファイルサイズ（byte）
+// アップロード可能な画像の最大ファイルサイズ（byte）
 $max_file_size = 5242880; //5MB
-// ファイルサイズ閾値（byte）
+// 圧縮するファイルサイズ閾値（byte）
 $compression_file_size_threshold = 1048576; //1MB
 
 $upload_post_name = "";
 
+/* 各ページリンクのグローバル変数 */
+$page_url_signup = home_url('index.php/signup');
+$page_url_login = home_url('index.php/login');
+$page_url_mypage = home_url( "index.php/author/" . wp_get_current_user()->user_nicename );
+$page_url_activity = home_url('index.php/search-activity');
+$page_url_news = home_url('index.php/search-news');
 
 
 /* * * * 初期設定 * * * */
