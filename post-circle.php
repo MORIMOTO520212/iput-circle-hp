@@ -2,13 +2,8 @@
 /* Template Name: サークル作成編集ページ */
 
 /**
- * TODO
- * ・ドラフト投稿機能を付ける
- * ・画像アップロードの投稿IDを設定する　260行目
- * ・下書き保存
- * ・
- * 
- * フロー図：https://docs.google.com/drawings/d/1_D9srwDlzHAwPy2sCkck6nT2wg6cu_afPSiU9KdmMNo/edit?usp=sharing
+ * フロー図
+ * https://docs.google.com/drawings/d/1_D9srwDlzHAwPy2sCkck6nT2wg6cu_afPSiU9KdmMNo/edit?usp=sharing
 */
 
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
@@ -34,13 +29,19 @@ $features = [
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
 
+// ログインしてなかったらログインページにリダイレクトする
+if ( is_user_logged_in() === false ) {
+    echo "<script type=\"text/javascript\">document.location.href = '$page_url_login';</script>";
+    exit;
+}
+
 if ( isset( $param__post ) ) {
 
     /* サークル新規作成 */
     if ( $param__post === 'create' ) {
         /* PASS */
 
-    /* サークル編集 */
+    /* サークル編集 or 参加承認 */
     } elseif ( $param__post === 'edit' ) {
         // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
         if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
@@ -49,6 +50,12 @@ if ( isset( $param__post ) ) {
         }
 
         $post = get_post( $param_id ); // 記事取得
+
+        // サークルが存在するか
+        if ( $post === NULL ) {
+            echo "サークルが存在しません。";
+            exit;
+        }
 
         // 投稿者かどうか確認
         $author = get_userdata($post->post_author);
@@ -97,7 +104,7 @@ if ( isset( $param__post ) ) {
         // ヘッダー画像 削除
         wp_delete_attachment( $post_custom['headerImage'][0] );
 
-        // 投稿 削除
+        // サークルの削除
         wp_delete_post( $post->ID );
 
         // リダイレクト
@@ -119,20 +126,20 @@ if ( isset( $param__post ) ) {
             echo "参加承認キーの照合に失敗しました。";
             exit;
         }
-        // サークルのメンバーデータを取得
-        $members = maybe_unserialize( get_post_meta( $post->ID, 'members' ) );
 
+        // メンバーの追加
+        $members = maybe_unserialize( get_post_meta( $post->ID, 'members' ) ); // サークルのメンバーデータを取得
         if ( in_array( $user_id, $members, true ) ) {
-            echo "既に参加済みです。";
+            echo "ユーザーは既に承認済みです。";
             exit;
         }
-
-        // メンバー追加
         $members[] = $user_id;
-        update_post_meta( $post->ID, 'members', $members );
+        update_post_meta( $post->ID, 'members', $members ); // データベースに追加
+
+        $user = get_userdata($user_id);
 
         // 完了メール送信
-        $to = get_userdata($user_id)->user_email;
+        $to = $user->user_email;
         $subject = "サークルの参加申請が承認されました。";
         $message = "
         {$post->post_title}の参加申請が承認されました。
@@ -146,7 +153,8 @@ if ( isset( $param__post ) ) {
         ";
         my_sendmail( $to, $subject, $message );
 
-        modal('ユーザー承認が完了しました', 'サークルに新しくユーザーが追加されました。');
+        $name = $user->last_name . " " . $user->first_name;
+        modal('ユーザー承認が完了しました', `サークルに{$name}を追加しました。`);
     }
 
 } else {
