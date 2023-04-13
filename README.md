@@ -39,6 +39,7 @@ wp_wordpresssignupsテーブルを作成している。
 |サークル作成&編集|circle-post|page-circle-post.php|
 |メディアアップロード|media-upload|media_upload.php|
 |サークル&記事管理ページ|dashboard|dashboard.php|
+|アカウント情報|profile|profile.php|
 
 > **Note**\
 > Wordpressのホームページは`設定 > 表示設定 > ホームページの表示 > 固定ページ`からドロップダウンで選択して変更できる
