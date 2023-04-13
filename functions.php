@@ -399,18 +399,18 @@ function user_signup() {
     //すでにユーザー名が使われていないかチェック
     if ( username_exists( $user_name ) !== false ) {
         modal('登録できません', 'すでにユーザー名「'. $user_name .'」は登録されています。<br>他の名前を入力してください。');
-        return;
+        return "E01";
     }
     // ユーザー名の確認
     // 半角英数字+アンダーバー1～15文字
     if ( !(preg_match("/^[a-zA-Z0-9_]{1,15}$/iD", $user_name)) ) {
         modal('ユーザー名の入力', 'ユーザー名は半角英数字+アンダーバーのみです。');
-        return;
+        return "E02";
     }
     // メールチェック
     if ( email_exists( $user_email ) !== false ) {
         modal('登録できません', 'すでにメールアドレス「'. $user_email .'」は登録されています。');
-        return;
+        return "E03";
     }
     //メールの文字列確認
     // ユーザー名 - 半角英数字+プラス記号+マイナス記号+アンダーパス2~16文字
@@ -420,23 +420,23 @@ function user_signup() {
     // 
     if ( !(preg_match("/^[a-z0-9+._-]{2,16}@(.*)iput.ac.jp$/iD", $user_email)) ) {
         modal('登録できません', '学校のメールアドレスのみ登録可能です。使用できるドメインはiput.ac.jpのみです。');
-        return;
+        return "E04";
     }
 
     // パスワードの確認
     // 半角英数字+記号を6文字以上16文字以下
     if ( !(preg_match("/^[ -~]{6,16}$/iD", $user_pass)) ) {
         modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
-        return;
+        return "E05";
     }
     // 氏名の確認
     if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_first_name)) ) {
         modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
-        return;
+        return "E06";
     }
     if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_last_name)) ) {
         modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
-        return;
+        return "E07";
     }
 
     // ユーザー仮登録
@@ -446,7 +446,7 @@ function user_signup() {
         user_approval_sendmail( $user_email, $activation_key, $user_approval_url );
     } else {
         modal('エラー', 'ユーザーの仮登録に失敗しました');
-        return;
+        return "E08";
     }
 
     return true;
@@ -1206,9 +1206,11 @@ add_action('after_setup_theme', function() {
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'signup') {
         if ( !isset( $_POST['signup_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['signup_nonce'], 'N9zxfbth' ) ) return;
-        $res = user_signup();
-        if ($res) wp_redirect( home_url('index.php/signup?t=confirm') );
+        $res = user_signup(); // サインアップの処理
+        if ($res === true) {
+            wp_redirect( home_url('index.php/signup?t=confirm') );
             exit;
+        }
     }
     // 基本情報の更新
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
