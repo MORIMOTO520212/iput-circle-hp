@@ -42,7 +42,7 @@ if ( isset( $param__post ) ) {
     if ( $param__post === 'create' ) {
         /* PASS */
 
-    /* サークル編集 or 参加承認 */
+    /* サークル編集 or ユーザー参加承認 */
     } elseif ( $param__post === 'edit' ) {
         // idパラメータの存在確認とマイナスの数値や文字記号はエラーとする
         if ( !isset( $param_id ) || !is_numeric( $param_id ) ) {
