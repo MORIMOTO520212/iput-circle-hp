@@ -2,25 +2,89 @@
 
 記事のサークルタグは記事のカテゴリーに追加している。get_the_category()で取得可能。  
 
-## Directory Configuration
+## ディレクトリ構造
 ```
-wp-content/
- ├── db.php - 独自テーブルの指定
-.
-├── assets/
-    ├── style-footer.css
-    ├── style-header.css
-    ├── style-index.css
-    ├── style-login.css
-    ├── style-news.css
-├── images/
-├── js/
-    ├── author.js
-├── .htaccess - サイト設定ファイル
-├── screenshot.png - テーマのヘッダー画像
-├── style.css - テーマのCSS
-├── author.php
-├── post.php - 記事投稿プログラム
+iput-circle-hp
+│  author.php  -- マイページ
+│  contact.php -- お問い合わせページ
+│  db.php      -- 独自のsignupsテーブルの指定。メール認証時にユーザー情報をデータベースに仮保存する
+│  faq.php     -- FAQページ
+│  footer.php
+│  front-page.php -- トップページ
+│  functions.php -- サイトの設定や主な処理を行う
+│  header.php
+│  index.php
+│  login.php         -- ログインページ
+│  media_upload.php  -- Trix.jsでアップロードされた画像をWordPressのメディアに保存するプログラム
+│  post-activity.php -- 活動記録投稿ページ
+│  post-circle.php   -- サークル作成ページ
+│  post-dashboard.php -- 記事管理ページ
+│  post-news.php      -- ニュース投稿ページ
+│  profile.php        -- 基本情報ページ
+│  README.md
+│  screenshot.png
+│  search-activity.php -- 活動記録一覧ページ
+│  search-news.php     -- ニュース一覧ページ
+│  signup.php          -- 新規登録ページ
+│  single-circle.php   -- サークルページテンプレート
+│  single.php          -- 記事ページテンプレート
+│  style.css
+│  TODO.txt
+│  wordpress_export.xml
+│  wordpress_export2022-11-23.xml
+│
+├─assets
+│  │  author.js
+│  │  base.js
+│  │  contact.js
+│  │  style-author.css
+│  │  style-contact-thanks.css
+│  │  style-contact.css
+│  │  style-faq.css
+│  │  style-footer.css
+│  │  style-index.css
+│  │  style-login.css
+│  │  style-post-activity.css
+│  │  style-post-circle.css
+│  │  style-post-dashboard.css
+│  │  style-post-news.css
+│  │  style-profile.css
+│  │  style-search-activity.css
+│  │  style-search-news.css
+│  │  style-signup.css
+│  │  style-single-circle.css
+│  │  style-single.css
+│  │
+│  └─components
+│          trix_file_type_caution_modal.php -- Trix Editorにドロップされたファイルの形式が対応外な場合に警告を表示するコンポーネント
+│          trix_file_upload_to_wordpress.php -- Trix Editorにドロップされた画像をWordPressにアップロードするコンポーネント
+│
+└─src
+    │  banner_1080p.png
+    │  chevron_right.svg
+    │  faq-top-img.jpg
+    │  firstView_Image.jpg
+    │  girl.png
+    │  iputone_logo.svg
+    │  iputone_logo_white.svg
+    │  keyboard.png
+    │  line.png
+    │  man.png
+    │  nectgrams.jpg
+    │  no_image.png
+    │  no_image_activity.png
+    │  no_image_circle_header.png
+    │  ogp.jpg
+    │  pencil.svg
+    │  register_bg_img.png
+    │  thanks.png
+    │  trash.svg
+    │
+    └─background
+            cocoon-tower2.webp
+            room1.webp
+            room2.webp
+            student-salon-blue.webp
 ```
 
 ## データベース

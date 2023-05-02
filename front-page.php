@@ -14,8 +14,7 @@
         <div class="col">
             <?php
             // ログインしていない場合、登録フォームを表示する
-            //if ( !is_user_logged_in() ):
-            if ( false ): // アンケートを表示するため登録フォームを消す
+            if ( !is_user_logged_in() ):
             ?>
             <!-- 登録フォーム -->
             <form class="register mx-3 mx-sm-auto mt-5 needs-validation" action="" method="post" novalidate>
@@ -67,23 +66,6 @@
                 </div>
                 <?php wp_nonce_field( 'N9zxfbth', 'signup_nonce' ); ?>
             </form>
-
-            <?php
-            else:
-            ?>
-
-            <div class="mv-info d-flex justify-content-center mt-5">
-                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">新歓アンケート</div>
-                    <div class="card-body">
-                        <p class="card-text">サークルに関する調査を行っています。新歓アンケートの回答にご協力ください。<br>（回答時間：3分）</p>
-                        <div class="d-flex justify-content-center">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi9w8pwwuHzdea5ct3_C33FDL2-nIv7sN3eU3U21xbvxTSdg/viewform?usp=sf_link" target="_blank" rel="noopener"
-                             class="btn btn-success" role="button">回答する</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <?php
             endif;
