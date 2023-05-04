@@ -68,7 +68,10 @@ $email = get_user_option('user_email', $user_id);
             <label for="password">新しいパスワード</label>
         </div>
 
-        <?php wp_nonce_field( 'profile_nonce_action', 'profile_nonce' ); ?>
+        <?php 
+        // $action引数の文字列はパスワードではありません.
+        wp_nonce_field( 'vpd8NFzp', 'profile_nonce' ); 
+        ?>
 
         <!-- button -->
         <div class="botton-edit d-flex justify-content-end">

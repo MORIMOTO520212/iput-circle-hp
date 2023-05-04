@@ -46,7 +46,10 @@ get_header();
             <div class="container col col-md-8 d-flex justify-content-center">
                 <button class="btn btn-success submitBtn" type="submit" name="submit_type" value="login">ログイン</button>
             </div>
-            <?php wp_nonce_field( 'N4wcFHsn', 'login_nonce' ); ?>
+            <?php
+            // $action引数の文字列はパスワードではありません.
+            wp_nonce_field( 'N4wcFHsn', 'login_nonce' );
+            ?>
 
             <a class="text-center" href="<?php echo home_url('index.php/signup'); ?>">ここから新規登録する</a>
         </form>

@@ -199,7 +199,10 @@ if ( isset( $param__post ) ) {
                 <?php endif; ?>
             </div>
         </div>
-        <?php wp_nonce_field( 'Mw8mgUz5', 'post_activity_nonce' ); ?>
+        <?php
+        // $action引数の文字列はパスワードではありません.
+        wp_nonce_field( 'Mw8mgUz5', 'post_activity_nonce' );
+        ?>
     </form>
 </div>
 
