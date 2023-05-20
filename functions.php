@@ -1285,17 +1285,47 @@ add_action('after_setup_theme', function() {
  * 
 */
 function my_sendmail( $to, $subject, $message, $headers = "" ) {
+    // gasのidとurl
+    // デプロイID
+    $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
+    //POST送信先
+    $post_url = "https://script.google.com/macros/s/$id/exec";
 
+/*
+    //cURL
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $post_url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_POST => true, 
+        CURLOPT_POSTFIELDS => json_encode($post_data),
+    ]);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    $response_data = json_decode($result, true); 
+
+    // print_r($post_data);
+    print_r($response_data['message']);
+*/
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
 
     if ( $admin_email ) {
-        $headers = "
-        From: IPUT ONE制作チーム <{$admin_email}>\r\n
-        Reply-To: IPUT ONE制作チーム <{$admin_email}>\r\n
-        cc: {$admin_email}\r\n
-        ";
-        wp_mail( $to, $subject, $message, $headers );
+        // $headers = "
+        // From: IPUT ONE制作チーム <{$admin_email}>\r\n
+        // Reply-To: IPUT ONE制作チーム <{$admin_email}>\r\n
+        // cc: {$admin_email}\r\n
+        // ";
+        // wp_mail( $to, $subject, $message, $headers );
+    //POSTデータ
+    // $post_data = array(
+    //     "toAddress" => $to,
+    //     "subject" => $subject,
+    //     "textMessage" => $message,
+    // );
+
     } else {
         return false;
     }
