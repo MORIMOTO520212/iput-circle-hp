@@ -753,7 +753,7 @@ function post_circle() {
             wp_update_term( $cat_id, 'category', array(
                 'name' => sanitize_text_field( $_POST['circleName'] ),
                 'slug' => sanitize_text_field( $_POST['circleName'] ),
-              ) );
+            ) );
         }
 
         // 投稿を作成する
@@ -1311,8 +1311,10 @@ function my_sendmail( $to, $subject, $message, $headers = "" ) {
             CURLOPT_POST => true, 
             CURLOPT_POSTFIELDS => json_encode($post_data),
         ]);
+        // post実行
+        curl_exec($ch);
+        // cURLクローズ
         curl_close($ch);
-
     } else {
         return false;
     }
