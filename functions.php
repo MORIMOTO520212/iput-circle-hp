@@ -501,18 +501,18 @@ function user_approval_sendmail( $user_email, $activation_key, $user_approval_ur
     $to      = $user_email;
     $subject = "【IPUT ONE】メールアドレス認証";
     $message = "
-    {$name} 様
+{$name} 様
 
-    IPUT ONEにご登録いただき、ありがとうございます。
-    本メールは、ご登録いただいたメールアドレスの確認証メールです。
-    
-    下記のリンクにアクセスして、アカウント登録を完了してください。
-    {$user_approval_url}
+IPUT ONEにご登録いただき、ありがとうございます。
+本メールは、ご登録いただいたメールアドレスの確認証メールです。
 
-    ============================
-    IPUT ONE制作チーム
-    iputone.staff@gmail.com
-    ";
+下記のリンクにアクセスして、アカウント登録を完了してください。
+{$user_approval_url}
+
+============================
+IPUT ONE制作チーム
+iputone.staff@gmail.com
+";
     my_sendmail( $to, $subject, $message );
 
     return 1;
@@ -1092,25 +1092,25 @@ function participation_application() {
         $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
         $subject = "【{$circle_post->post_title}】参加申請が届きました。";
         $message = "
-        {$user->last_name} {$user->first_name}さんからサークルへ参加申請が届きました。
+{$user->last_name} {$user->first_name}さんからサークルへ参加申請が届きました。
 
-        学年：{$_POST['grade']}年
-        学科：{$_POST['department']}
-        メールアドレス：{$login_user_email}
+学年：{$_POST['grade']}年
+学科：{$_POST['department']}
+メールアドレス：{$login_user_email}
 
-        参加理由
-        --------------------
-        {$_POST['reason']}
+参加理由
+--------------------
+{$_POST['reason']}
 
-        参加を承認する場合は以下のリンクにアクセスしてください。
-        {$approval_url}
+参加を承認する場合は以下のリンクにアクセスしてください。
+{$approval_url}
 
 
-        ============================
-        IPUT ONEへのお問い合わせはこのメールに返信してください。
-        IPUT ONE制作チーム
-        iputone.staff@gmail.com
-        ";
+============================
+IPUT ONEへのお問い合わせはこのメールに返信してください。
+IPUT ONE制作チーム
+iputone.staff@gmail.com
+";
         my_sendmail( $to, $subject, $message );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
@@ -1163,22 +1163,22 @@ function circle_contact() {
         $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
         $subject = "【IPUT ONE】{$circle_post->post_title}についてお問い合わせを頂いております。";
         $message = "
-        {$user->last_name} {$user->first_name}さんからお問い合わせがありました。
+{$user->last_name} {$user->first_name}さんからお問い合わせがありました。
 
-        学年：{$_POST['grade']}年
-        学科：{$_POST['department']}
-        メールアドレス：{$login_user_email}
+学年：{$_POST['grade']}年
+学科：{$_POST['department']}
+メールアドレス：{$login_user_email}
 
-        お問い合わせ内容
-        --------------------
-        {$_POST['contactbody']}
+お問い合わせ内容
+--------------------
+{$_POST['contactbody']}
 
 
-        ============================
-        IPUT ONEへのお問い合わせはこのメールに返信してください。
-        IPUT ONE制作チーム
-        iputone.staff@gmail.com
-        ";
+============================
+IPUT ONEへのお問い合わせはこのメールに返信してください。
+IPUT ONE制作チーム
+iputone.staff@gmail.com
+";
         my_sendmail( $to, $subject, $message );
 
         modal('お問い合わせが完了しました', '返信をお待ちください。');
