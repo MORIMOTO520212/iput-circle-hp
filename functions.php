@@ -1280,12 +1280,12 @@ add_action('after_setup_theme', function() {
  * @param string $to - 宛先メールアドレス
  * @param string $subject - 件名
  * @param string $message - 本文
- * @param string $headers - メールヘッダ。特別な理由がない限り指定しない
  * @return bool  true - 送信成功, false - メールアドレス取得失敗
  * 
 */
-function my_sendmail( $to, $subject, $message, $headers = "" ) {
+function my_sendmail( $to, $subject, $message ) {
     // gasのidとurl
+    // iputone.staff@gmai.comのGASにデータを送信します。
     // デプロイID
     $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
     //POST送信先
