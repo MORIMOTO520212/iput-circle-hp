@@ -46,12 +46,12 @@ elseif ( is_single() ) { // is post page
             $post_custom = get_post_custom( get_the_ID() );
             // 内部公開の場合
             if ( $post_custom['permission'][0] === "true" ) {
-                $ogp_title = "記事はログインすると閲覧できます。 - IPUT ONE サークルサイト";
+                $ogp_title = "記事はログインすると閲覧できます。 - IPUT ONEサークルサイト";
                 $ogp_description = "記事の本文はログインすると閲覧できます。";
                 $ogp_image = get_theme_file_uri('src/ogp.jpg');
             // 外部公開の場合
             } else {
-                $ogp_title = get_the_title();
+                $ogp_title = get_the_title() . " - IPUT ONEサークルサイト";
                 $ogp_description = get_the_excerpt();
                 $ogp_image = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
             }
