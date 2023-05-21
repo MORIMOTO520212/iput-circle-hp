@@ -753,7 +753,7 @@ function post_circle() {
             wp_update_term( $cat_id, 'category', array(
                 'name' => sanitize_text_field( $_POST['circleName'] ),
                 'slug' => sanitize_text_field( $_POST['circleName'] ),
-              ) );
+            ) );
         }
 
         // 投稿を作成する
@@ -1285,21 +1285,39 @@ add_action('after_setup_theme', function() {
  * 
 */
 function my_sendmail( $to, $subject, $message, $headers = "" ) {
-
+    // gasのidとurl
+    // デプロイID
+    $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
+    //POST送信先
+    $post_url = "https://script.google.com/macros/s/$id/exec";
+    
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
 
     if ( $admin_email ) {
-        $headers = "
-        From: IPUT ONE制作チーム <{$admin_email}>\r\n
-        Reply-To: IPUT ONE制作チーム <{$admin_email}>\r\n
-        cc: {$admin_email}\r\n
-        ";
-        wp_mail( $to, $subject, $message, $headers );
+        //POSTデータ
+        $post_data = array(
+            "toAddress" => $to,
+            "subject" => $subject,
+            "message" => $message,
+        );
+
+        //cURL
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $post_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_POST => true, 
+            CURLOPT_POSTFIELDS => json_encode($post_data),
+        ]);
+        // post実行
+        curl_exec($ch);
+        // cURLクローズ
+        curl_close($ch);
     } else {
         return false;
     }
-
     return true;
 }
 

@@ -1,4 +1,12 @@
 <?php
+// none:
+// to address
+$to = "to email address";
+// subject
+$subject  = "test subject";
+// message
+$message = "test message";
+
 
 // デプロイID
 $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
@@ -6,11 +14,9 @@ $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN'
 $post_url = "https://script.google.com/macros/s/$id/exec";
 //POSTデータ
 $post_data = array(
-    "toAddress" => "mikihito19990619@gmail.com",
-    "name" => "へのへのもへじ",
-    "id" => "TK200000",
-    "major" => "デジタルエンタテインメント",
-    "grade" => "4",
+    "toAddress" => $to,
+    "subject" => $subject,
+    "message" => $message,
 );
 
 //cURL
@@ -25,9 +31,11 @@ curl_setopt_array($ch, [
 $result = curl_exec($ch);
 curl_close($ch);
 
-$response_data = json_decode($result, true); 
 
-// print_r($post_data);
-print_r($response_data['message']);
+// debug
+$response_data = json_decode($result, true); 
+echo "送信 => ". $response_data["message"];
+// echo ""
+// print_r($response_data["message"]);
 
 ?>
