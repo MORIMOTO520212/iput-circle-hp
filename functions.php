@@ -40,7 +40,8 @@ $page_url->contact  = home_url('index.php/contact');
 
 /* * * * 初期設定 * * * */
 
-// 投稿カテゴリーのチェック（activity, news）
+// 投稿カテゴリーの存在チェック（activity, news）
+// なければ作成する.
 function check_post_categories() {
     $cat_id = get_cat_ID('activity');
     if($cat_id != 0 || !$cat_id) {
@@ -55,6 +56,13 @@ function check_post_categories() {
 }
 check_post_categories();
 
+
+// nonceのaction用のランダム値をCookieに保存しておく.
+// ソースコードから推測されないように.
+if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
+    $experied = time() + 1 * 24 * 3600; // 1日
+    setcookie('wp_nonce_action', md5(), $experied);
+}
 
 
 /**
@@ -165,7 +173,18 @@ function set_custom_fields() {
         'author',
         '作成者',
         'post_author_meta_box',
-        'circle'
+        'circle',
+        'normal',
+        'default'
+    );
+    /* 管理画面 */
+    add_meta_box(
+        'gas_deploy_id',
+        'メール送信用GASデプロイID', 
+        'gas_deploy_id_fields', 
+        'dashboard', 
+        'normal', 
+        'default'
     );
 }
 add_action( 'admin_menu', 'set_custom_fields' );
@@ -218,6 +237,35 @@ function save_custom_fields( $post_id ) {
 add_action( 'save_post', 'save_custom_fields' );
 
 
+/* メール送信用GASデプロイID */
+function gas_deploy_id_fields() { 
+?>
+    <style>
+        #mybox .input-text-wrap {
+            margin-bottom: 12px;
+        }
+        #mybox label {
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+        #mybox .submit {
+            display: flex;
+            width: 100%;
+            justify-content: end;
+        }
+    </style>
+    <form id="mybox" action="" method="post">
+        <div class="input-text-wrap">
+            <label for="input1">GASデプロイID</label>
+            <input type="text" id="input1" name="gas_deploy_id" value="<?php echo get_post_meta( 1, 'gas_deploy_id', true ); ?>" placeholder="">
+        </div>
+        <div class="submit">
+            <input type="hidden" name="submit_type" value="gas_deploy_id">
+            <input type="submit" class="button button-primary" value="保存する">
+        </div>
+    </form>
+<?
+}
 
 /**
  * 画像のリンクからattachment idを取得する
@@ -1215,7 +1263,7 @@ add_action('after_setup_theme', function() {
     // 基本情報の更新
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
         if ( !isset( $_POST['profile_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['profile_nonce'], 'profile_nonce_action' ) ) return;
+        if ( !wp_verify_nonce( $_POST['profile_nonce'], 'vpd8NFzp' ) ) return;
         profile_update();
     }
     // サークルを作成する
@@ -1272,10 +1320,17 @@ add_action('after_setup_theme', function() {
         if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'P5kseWwp' ) ) return;
         circle_contact();
     }
+    // ダッシュボード - メール送信用GASデプロイID
+    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'gas_deploy_id' ) {
+        if ( !isset( $_POST['circle_contact_nonce'] ) ) return;
+        if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'Ujfsi4390k' ) ) return;
+        my_gas_sendmail();
+    }
 });
 
 
 /**
+ * GoogleのSMTPサーバーを使ってメール送信
  * 宛先、件名、内容を引数に送り、メールを送信する
  * @param string $to - 宛先メールアドレス
  * @param string $subject - 件名
@@ -1315,6 +1370,32 @@ function my_sendmail( $to, $subject, $message ) {
         curl_exec($ch);
         // cURLクローズ
         curl_close($ch);
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Google App Scriptからメール送信する
+ * 宛先、件名、内容を引数に送り、メールを送信する
+ * @param string $to - 宛先メールアドレス
+ * @param string $subject - 件名
+ * @param string $message - 本文
+ * @param string $headers - メールヘッダ。特別な理由がない限り指定しない
+ * @return bool  true - 送信成功, false - メールアドレス取得失敗
+ */
+function my_gas_sendmail( $to, $subject, $message, $headers = "" ) {
+
+    // WordPressの管理者メールアドレスを取得
+    $admin_email = get_option('admin_email');
+
+    $gas_deploy_id = get_post_meta( 1, 'gas_deploy_id', true );
+    $post_url = "https://script.google.com/macros/s/$gas_deploy_id/exec";
+
+    if ( $admin_email ) {
+        
+        
     } else {
         return false;
     }
