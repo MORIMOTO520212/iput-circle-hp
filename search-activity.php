@@ -20,7 +20,9 @@ $args = array(
     'post_type'      => 'post',        // 投稿タイプ
     'posts_per_page' => 12,            // 投稿取得数
     'paged'          => $paged,        // 現在のページ
-    'cat'            => array(get_cat_ID('activity')) // カテゴリ
+    'cat'            => array(get_cat_ID('activity')), // カテゴリ
+    'order'          => 'DESC',
+    'orderby'        => 'date'
 );
 
 // 条件指定があった場合
