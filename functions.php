@@ -58,10 +58,10 @@ check_post_categories();
 
 
 // nonceのaction用のランダム値をCookieに保存しておく.
-// ソースコードから推測されないように.
+// ソースコードから推測されないようにするため.
 if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
     $experied = time() + 1 * 24 * 3600; // 1日
-    setcookie('wp_nonce_action', md5(), $experied);
+    setcookie('wp_nonce_action', bin2hex(random_bytes(10)), $experied);
 }
 
 
@@ -1324,7 +1324,15 @@ add_action('after_setup_theme', function() {
     elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'gas_deploy_id' ) {
         if ( !isset( $_POST['circle_contact_nonce'] ) ) return;
         if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'Ujfsi4390k' ) ) return;
-        my_gas_sendmail();
+        $to = get_option('admin_email');
+        $subject = "{$_POST['your_name']} さんからお問い合わせを受け取っています。";
+        $message = "
+氏名：{$_POST['your_name']}
+メールアドレス：{$_POST['email']}
+内容：
+{$_POST['contact']}
+        ";
+        my_gas_sendmail($to, $subject, $message);
     }
 });
 
