@@ -23,7 +23,7 @@ iput-circle-hp
 │  profile.php        -- 基本情報ページ
 │  README.md
 │  screenshot.png
-│  search-activity.php -- 活動記録一覧ページ
+│  search-activity.php -- 活動一覧ページ
 │  search-news.php     -- ニュース一覧ページ
 │  signup.php          -- 新規登録ページ
 │  single-circle.php   -- サークルページテンプレート
