@@ -1,0 +1,16 @@
+[12-Jul-2023 11:48:49 UTC] PHP Deprecated:  File wp-db.php is <strong>deprecated</strong> since version 6.1.0! Use wp-includes/class-wpdb.php instead. in /usr/share/nginx/iput-one.com/wp-includes/functions.php on line 5595
+[12-Jul-2023 11:48:49 UTC] PHP Warning:  require_once(/usr/share/nginx/iput-one.com/wp-admin/includes/plugin.php): Failed to open stream: No such file or directory in /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/wp-security-audit-log.php on line 603
+[12-Jul-2023 11:48:49 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/usr/share/nginx/iput-one.com/wp-admin/includes/plugin.php' (include_path='.:/usr/share/php') in /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/wp-security-audit-log.php:603
+Stack trace:
+#0 /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/classes/Sensors/LogInOut.php(61): WpSecurityAuditLog::is_plugin_active()
+#1 /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/classes/Sensors/LogInOut.php(72): WSAL_Sensors_LogInOut->hook_events()
+#2 /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/wp-security-audit-log.php(286): WSAL_Sensors_LogInOut->init()
+#3 /usr/share/nginx/iput-one.com/wp-includes/class-wp-hook.php(308): WpSecurityAuditLog->maybe_add_login_sensor_early()
+#4 /usr/share/nginx/iput-one.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#5 /usr/share/nginx/iput-one.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#6 /usr/share/nginx/iput-one.com/wp-settings.php(480): do_action()
+#7 /usr/share/nginx/iput-one.com/wp-config.php(103): require_once('...')
+#8 /usr/share/nginx/iput-one.com/wp-load.php(50): require_once('...')
+#9 /usr/share/nginx/iput-one.com/xmlrpc.php(31): require_once('...')
+#10 {main}
+  thrown in /usr/share/nginx/iput-one.com/wp-content/plugins/wp-security-audit-log/wp-security-audit-log.php on line 603
