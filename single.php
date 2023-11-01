@@ -8,11 +8,17 @@ global $post;
 get_header();
 
 /* カテゴリ名 取得 */
-$category = get_the_category()[0]->name;
-if ( $category === 'news' ) {
+$categories = array_map(function($term) {
+    return $term->name;
+}, get_the_category());
+
+if ( in_array('news', $categories) ) {
     $category_name = "ニュース";
-}elseif ( $category === 'activity' ) {
+}elseif ( in_array('activity', $categories) ) {
     $category_name = "活動記録";
+}else{
+    echo "Error:記事にカテゴリが含まれていませんでした。お手数ですがiputone.staff@gmail.comまでご連絡をお願いいたします。";
+    exit;
 }
 
 $tags = get_the_tags();
