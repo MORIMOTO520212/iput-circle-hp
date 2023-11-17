@@ -1,0 +1,19 @@
+/* ログインページ スタイルシート */
+
+
+/* コンテンツ */
+.contents {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* -------- メイン --------- */
+
+/* ログインフォーム */
+#form-login > form {
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 6px 9px 0px rgba(31, 194, 255, 0.36);
+}
