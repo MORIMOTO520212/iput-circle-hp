@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
+    volumes:
+      - ./db:/var/lib/mysql
+  
+  WordPress:
+    image: wordpress:latest
+    container_name: IPUTONE-WordPress
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 10090:80
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
+    volumes:
+     - ./wp-content:/var/www/html/wp-content
+
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_ingrid
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 10099:80

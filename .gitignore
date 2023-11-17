@@ -3,3 +3,6 @@
 robots.txt
 sitemap.xml
 test.php
+
+# MySQL
+db/mysql.sock
