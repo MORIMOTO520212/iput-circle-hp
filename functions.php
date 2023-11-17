@@ -1,5 +1,5 @@
 <?php
-// media_upload_hundle()
+// media_handle_upload()
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 require_once( ABSPATH . 'wp-admin/includes/file.php' );
 require_once( ABSPATH . 'wp-admin/includes/media.php' );
@@ -882,7 +882,7 @@ function post_circle() {
  * # データベースに記録されるデータ
  * ## 記事データ一覧
  * - post_title    - タイトル
- * - post_content  - コンテンツ
+ * - post_content  - 本文(ボディ)
  * - post_category - 活動のカテゴリIDとサークルカテゴリID
  * - tags_input    - タグ
  * - post_status   - 公開設定
@@ -920,13 +920,13 @@ function post_activity() {
             'post_status'   => 'publish', // 公開設定
         );
 
-        /* 新規投稿 */
+        /* 新規投稿の場合の処理 */
         if ( $_POST['submit_type'] === 'post_activity' ) {
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
             $post_data['post_name'] = md5( time() );
         }
 
-        /* 更新 */
+        /* 編集の場合の処理 */
         elseif ( $_POST['submit_type'] === 'edit_activity' ) {
 
             if ( isset( $_POST['postID'] ) ) {
@@ -963,9 +963,7 @@ function post_activity() {
 
         // 記事内容から画像リンクを取得し、アイキャッチ画像を設定する
         $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
-        
         preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのパターンマッチ
-
         $topImage_url = !empty( $matches ) ? esc_url( $matches[0] ) : '';
 
         if ( !empty( $topImage_url ) ) {
