@@ -32,7 +32,7 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
 }
 ?>
 
-<div class="container pt-3 max-width-lg">
+<div class="container pt-3 max-width-lg text-break">
     <!-- breadcrumb -->
     <div class="pt-2 pb-2">
         <nav aria-label="breadcrumb">
