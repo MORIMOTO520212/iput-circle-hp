@@ -12,9 +12,9 @@ services:
       MYSQL_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
     volumes:
       - ./db:/var/lib/mysql
-  
+
   WordPress:
-    image: wordpress:latest
+    image: wordpress:6.5.0
     container_name: IPUTONE-WordPress
     restart: always
     depends_on:
@@ -28,9 +28,8 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-     - ./wp-content:/var/www/html/wp-content
+      - ./wp-content:/var/www/html/wp-content
 
-  
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_ingrid
