@@ -17,3 +17,8 @@ temp*
 *ib_logfile0
 *ib_logfile1
 *ibdata1
+
+# themes
+wp-content/themes/twentytwentyfour/
+wp-content/themes/twentytwentythree/
+wp-content/themes/twentytwentytwo/
