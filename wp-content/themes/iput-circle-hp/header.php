@@ -1,7 +1,4 @@
 <?php
-// Anti-Clickjacking Measures
-header('X-Frame-Options: DENY');
-
 global $page_url;
 
 if ( is_author() ) { // is user page
