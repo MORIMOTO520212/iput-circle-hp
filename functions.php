@@ -70,6 +70,13 @@ if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
  */
 show_admin_bar(false);
 
+/**
+ * CORS設定
+ */
+add_action('send_headers', 'cors_http_header');
+function cors_http_header(){
+    header("Access-Control-Allow-Origin: *");
+}
 
 /**
  * クエリパラメータの取得
