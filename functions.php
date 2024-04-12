@@ -271,7 +271,7 @@ function gas_deploy_id_fields() {
             <input type="submit" class="button button-primary" value="保存する">
         </div>
     </form>
-<?
+<?php
 }
 
 /**
@@ -1166,9 +1166,8 @@ iputone.staff@gmail.com
 ";
         my_sendmail( $to, $subject, $message );
 
-        //modal('申請が完了しました', '参加完了メールをお待ちください。');
-        echo '正常終了';
-        exit;
+        modal('申請が完了しました', '参加完了メールをお待ちください。');
+        return;
     } else {
         modal('エラー', '不正なリクエストです。');
         return;
