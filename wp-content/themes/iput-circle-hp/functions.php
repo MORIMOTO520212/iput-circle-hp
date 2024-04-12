@@ -70,6 +70,13 @@ if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
  */
 show_admin_bar(false);
 
+/**
+ * CORS設定
+ */
+add_action('send_headers', 'cors_http_header');
+function cors_http_header(){
+    header("Access-Control-Allow-Origin: *");
+}
 
 /**
  * クエリパラメータの取得
@@ -264,7 +271,7 @@ function gas_deploy_id_fields() {
             <input type="submit" class="button button-primary" value="保存する">
         </div>
     </form>
-<?
+<?php
 }
 
 /**
@@ -1160,7 +1167,7 @@ iputone.staff@gmail.com
         my_sendmail( $to, $subject, $message );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
-
+        return;
     } else {
         modal('エラー', '不正なリクエストです。');
         return;
