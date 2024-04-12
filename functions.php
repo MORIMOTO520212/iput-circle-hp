@@ -1166,8 +1166,9 @@ iputone.staff@gmail.com
 ";
         my_sendmail( $to, $subject, $message );
 
-        modal('申請が完了しました', '参加完了メールをお待ちください。');
-
+        //modal('申請が完了しました', '参加完了メールをお待ちください。');
+        echo '正常終了';
+        exit;
     } else {
         modal('エラー', '不正なリクエストです。');
         return;
