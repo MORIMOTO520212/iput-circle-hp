@@ -28,7 +28,17 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-      - ./wp-content:/var/www/html/wp-content
+      - type: bind
+        source: ./plugins
+        target: /var/www/html/wp-content/plugins
+
+      - type: bind
+        source: ./iput-circle-hp
+        target: /var/www/html/wp-content/themes/iput-circle-hp
+
+      - type: bind
+        source: ./languages
+        target: /var/www/html/wp-content/languages
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest

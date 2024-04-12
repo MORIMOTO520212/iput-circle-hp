@@ -1,0 +1,14 @@
+/* アカウント作成ページ スタイルシート */
+.bg {
+    background: url("../src/register_bg_img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+form {
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 6px 9px 0px rgba(31, 194, 255, 0.36);
+}
