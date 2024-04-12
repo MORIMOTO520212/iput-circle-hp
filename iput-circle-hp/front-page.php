@@ -451,7 +451,10 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
     ?>
     <div class="col">
         <div class="card h-100">
-            <a class="card-link" href="<?php echo $url; ?>"></a>
+            <a class="card-link" href="<?php echo $url; ?>">
+                <!-- 公認マーク-->
+                <div class="rounded official-mark">公認</div>
+            </a>
             <div class="row g-0">
                 <div class="col-4 col-lg-12">
                     <img src="<?php echo !empty($thumbnail_image) ? wp_get_attachment_image_src( $thumbnail_image )[0] : get_theme_file_uri('src/no_image.png'); ?>"
