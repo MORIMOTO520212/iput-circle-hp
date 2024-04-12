@@ -8,6 +8,8 @@ require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
 // wpmu_signup_user(), wpmu_signup_user_notification()
 require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 
+require_once( ABSPATH . 'wp-content/themes/iput-circle-hp/bootstrap/app.php');
+require_once( ABSPATH . 'wp-content/themes/iput-circle-hp/config/app.php');
 
 
 /* * * * 変数の初期化 * * * */
@@ -40,22 +42,6 @@ $page_url->contact  = home_url('index.php/contact');
 
 /* * * * 初期設定 * * * */
 
-// 投稿カテゴリーの存在チェック（activity, news）
-// なければ作成する.
-function check_post_categories() {
-    $cat_id = get_cat_ID('activity');
-    if($cat_id != 0 || !$cat_id) {
-        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
-        wp_create_category('activity');
-    }
-    $cat_id = get_cat_ID('news');
-    if($cat_id != 0 || !$cat_id) {
-        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
-        wp_create_category('news');
-    }
-}
-check_post_categories();
-
 
 // nonceのaction用のランダム値をCookieに保存しておく.
 // ソースコードから推測されないようにするため.
@@ -64,19 +50,6 @@ if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
     setcookie('wp_nonce_action', bin2hex(random_bytes(10)), $experied);
 }
 
-
-/**
- * 管理者以外はアドミンバーを非表示
- */
-show_admin_bar(false);
-
-/**
- * CORS設定
- */
-add_action('send_headers', 'cors_http_header');
-function cors_http_header(){
-    header("Access-Control-Allow-Origin: *");
-}
 
 /**
  * クエリパラメータの取得
@@ -1426,12 +1399,3 @@ function input_value_error_exit( $error_code = "" ) {
     modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
     return;
 }
-
-
-
-/**
- * WordPress標準の絵文字生成機能のアクションフックを解除
- * 理由：Trix Editorと干渉して絵文字を入力すると画像として張り付けてしまう。
- */
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'wp_print_styles', 'print_emoji_styles', 10 );
