@@ -2,6 +2,7 @@
 robots.txt
 sitemap.xml
 test.php
+.vscode/settings.json
 
 # MySQL
 db/mysql.sock
