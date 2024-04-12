@@ -7,13 +7,13 @@
 <?php
 require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
 
+get_header();
+
 /* ログイン状態のチェック */
 if ( !is_user_logged_in() ) {
     echo "ログインしてください。";
     exit;
 }
-
-get_header();
 
 $param__post = get_params('_post'); // 投稿タイプ create-作成, edit-編集, delete-削除
 $param_id    = get_params('id');    // 編集時の投稿ID
