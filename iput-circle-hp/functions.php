@@ -12,6 +12,7 @@ $function_files = [
     '/app/app.php',//全てのファイルをインポート
     '/config/config.php',//設定
     '/bootstrap/bootstrap.php',//起動
+    '/routes/graphql.php'
 ];
 
 foreach ($function_files as $file) {
