@@ -132,6 +132,10 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                             // 特色を非シリアライズ化して取り出し
                             if ( isset( $post_custom['features'][0] ) ):
                             $features = maybe_unserialize( $post_custom['features'][0] );
+                            //一回「大学公認」のみ削除
+                            $features = array_values(array_diff($features,array('大学公認')));
+                            //公認であれば$featuresに'大学公認'を追加する
+                            if($post_custom['officialCheck'][0] == 'official')  array_push($features,'大学公認');
                             foreach( $features as $name ):
                             ?>
                             <span class="features badge rounded-pill bg-primary"><?php echo $name ?></span>
