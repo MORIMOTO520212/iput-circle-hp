@@ -407,7 +407,7 @@
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
                         if ( $post_custom['categoryRadio'][0] === '運動' ) {
-                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID), is_official_circle($post_custom));
                         }
                     }
                     ?>
@@ -421,7 +421,7 @@
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
                         if ( $post_custom['categoryRadio'][0] === '文化・学術' ) {
-                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID), is_official_circle($post_custom));
                         }
                     }
                     ?>
@@ -435,7 +435,7 @@
                     foreach ( $circle_data as $post ) {
                         $post_custom = get_post_custom( $post->ID );
                         if ( $post_custom['categoryRadio'][0] === '創造' ) {
-                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID) );
+                            circle_card( $post->post_title, $post_custom['topImage'][0], $post_custom['place'][0], $post_custom['belongNum'][0], get_permalink($post->ID), is_official_circle($post_custom));
                         }
                     }
                     ?>
@@ -447,13 +447,19 @@
 
 <?php
 /* サークル カードのテンプレート */
-function circle_card($circle_name, $thumbnail_image, $place_text, $members_text, $url) {
+function circle_card($circle_name, $thumbnail_image, $place_text, $members_text, $url, $official=false) {
     ?>
     <div class="col">
         <div class="card h-100">
             <a class="card-link" href="<?php echo $url; ?>">
-                <!-- 公認マーク-->
+                <?php
+                //officialなら公認マークをつける
+                if ( $official ):
+                ?>
                 <div class="rounded official-mark">公認</div>
+                <?php
+                endif;
+                ?>
             </a>
             <div class="row g-0">
                 <div class="col-4 col-lg-12">
@@ -477,6 +483,14 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
         </div>
     </div>
     <?php
+}
+
+/* サークルが公認であるかどうか判定 */ 
+function is_official_circle($post_custom){
+    //値が存在しなければfalse
+    if(!isset($post_custom['officialCheck'][0])) return false;
+    //officialならば
+    return $post_custom['officialCheck'][0] == 'official';
 }
 
 /* 記事一覧の記事テンプレート */
