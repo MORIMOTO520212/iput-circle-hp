@@ -124,6 +124,18 @@ h4 {
 
 /* サークル */
 /* アイコン */
+/* 公式マーク */
+.official-mark{
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    font-size: 0.75rem;
+    background: #ffbc00;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
 /* 運動 */
 .sport-icon::before {
     font-family: "Material Symbols Rounded";

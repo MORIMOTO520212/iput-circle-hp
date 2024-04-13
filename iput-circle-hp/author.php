@@ -23,7 +23,7 @@ get_header();
         <div class="posts-number p-3 mb-3">
             <p class="m-0">記事の投稿数</p>
             <div class="number">
-                <span style="font-size:2rem;"><?php echo count_user_posts( wp_get_current_user()->id ); ?></span>
+                <span style="font-size:2rem;"><?php echo count_user_posts( wp_get_current_user()->ID ); ?></span>
                 件
             </div>
         </div>
