@@ -10,6 +10,7 @@ require_once( ABSPATH . 'wp-includes/ms-functions.php' );
 
 require_once( ABSPATH . 'wp-content/themes/iput-circle-hp/bootstrap/app.php');
 require_once( ABSPATH . 'wp-content/themes/iput-circle-hp/config/app.php');
+require_once( ABSPATH . 'wp-content/themes/iput-circle-hp/routes/graphql.php' );
 
 /* * * * 変数の初期化 * * * */
 
