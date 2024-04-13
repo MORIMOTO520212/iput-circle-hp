@@ -84,6 +84,7 @@ if ( isset( $param__post ) ) {
             'contactMailAddress' => $post_custom['contactMailAddress'][0], // 連絡先
             'representative'     => $post_custom['representative'][0], // 代表者氏名
             'twitterUserName'    => $post_custom['twitterUserName'][0], // 公式Twitterユーザー名
+            'official'           => $post_custom['officialCheck'][0] ?? 'unofficial', //公認マークの有無('official'/'unofficial')
         );
 
     /* サークル削除 */
@@ -298,7 +299,7 @@ if ( isset( $param__post ) ) {
                             ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="<?php echo "chkbox-$i"; ?>"
-                                    name="features[]" value="<?php echo $features[$i]; ?>" <?php echo in_array( $features[$i], ($input['features'] ?? array()) ) ? 'checked' : ''; ?>>
+                                    name="features[]" value="<?php echo $features[$i]; ?>" <?php echo (($features[$i] != '大学公認' &&  in_array( $features[$i], ($input['features'] ?? array()) )) || ($features[$i] == '大学公認' && $input['official'] == 'official')) ? 'checked' : ''; ?> <?php echo $features[$i] == '大学公認' ? 'disabled' : '' ?>>
                                 <label class="form-check-label" for="<?php echo "chkbox-$i"; ?>"><?php echo $features[$i]; ?></label>
                             </div>
                             <?php
