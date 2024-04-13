@@ -146,10 +146,23 @@ function set_custom_fields() {
 }
 add_action( 'admin_menu', 'set_custom_fields' );
 
+/* 投稿画面にタグ一覧をチェックボックスで表示する */
+function post_tag_to_checkbox() {
+    $args = get_taxonomy('post_tag');
+    $args -> hierarchical = true;
+    $args -> meta_box_cb = 'post_categories_meta_box';
+    register_taxonomy( 'post_tag', 'post', $args);
+    }
+    add_action( 'init', 'post_tag_to_checkbox', 1 );
+
 /* サークル基本情報フォームHTML */
 function form_01_custom_fields() {
     global $post;
     ?>
+    <p>
+        <input type="hidden" name="officialCheck" value="unofficial">
+        <input type="checkbox" name="officialCheck" value="official" <?php if(get_post_meta($post->ID, 'officialCheck', true) == "official") echo 'checked'; ?>>大学公認
+    </p>
     <p>トップ画像ID <input type="text" name="topImage" value="<?php echo get_post_meta($post->ID, 'topImage', true); ?>" size="30"></p>
     <p>ヘッダー画像ID <input type="text" name="headerImage" value="<?php echo get_post_meta($post->ID, 'headerImage', true); ?>" size="30"></p>
     <p>所属人数 <input type="text" name="belongNum" value="<?php echo get_post_meta($post->ID, 'belongNum', true); ?>" size="30"></p>
@@ -179,6 +192,7 @@ function form_03_custom_fields() {
 /* カスタムフィールドの値を保存 */
 function save_custom_fields( $post_id ) {
     if ( isset( $_POST['is_post'] ) ) {
+        update_post_meta( $post_id, 'officialCheck',     $_POST['officialCheck']     );
         update_post_meta( $post_id, 'topImage',          $_POST['topImage']          );
         update_post_meta( $post_id, 'headerImage',       $_POST['headerImage']       );
         update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         );
