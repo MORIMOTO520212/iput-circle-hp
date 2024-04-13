@@ -21,11 +21,11 @@ if ( $param_type === null ) {
 
 if ( $param_type === 'post' ) {
     /** @var int $posts_length 記事の数をカウントする */
-    $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'post' ) );
+    $posts_length = intval( count_user_posts( wp_get_current_user()->ID, 'post' ) );
     $title = "記事を管理する";
     $option_url = home_url('index.php/post-%_%/');
 } elseif ( $param_type === 'circle' ) {
-    $posts_length = intval( count_user_posts( wp_get_current_user()->id, 'circle' ) );
+    $posts_length = intval( count_user_posts( wp_get_current_user()->ID, 'circle' ) );
     $title = "サークルを管理する";
     $option_url = home_url('index.php/post-circle');
 } else {
@@ -52,7 +52,7 @@ if ( isset( $param_d ) ) {
 
 /* 記事 取得 */
 $args = array(
-    'author'         => wp_get_current_user()->id, // 投稿者
+    'author'         => wp_get_current_user()->ID, // 投稿者
     'post_type'      => $param_type,               // 投稿タイプ
     'post_status'    => array('draft','publish'),  // 公開ステータス
     'posts_per_page' => 10,                        // 投稿取得数
