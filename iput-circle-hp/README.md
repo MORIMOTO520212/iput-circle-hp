@@ -1,65 +1,23 @@
-# IPUT 学生団体ホームページ
+# IPUT ONE
 
 記事のサークルタグは記事のカテゴリーに追加している。get_the_category()で取得可能。
 
-## ディレクトリ構造
+### ディレクトリ構成
 
-```
-iput-circle-hp
-│  author.php  -- マイページ
-│  contact.php -- お問い合わせページ
-│  db.php      -- 独自のsignupsテーブルの指定。メール認証時にユーザー情報をデータベースに仮保存する
-│  faq.php     -- FAQページ
-│  footer.php
-│  front-page.php -- トップページ
-│  functions.php -- サイトの設定や主な処理を行う
-│  header.php
-│  index.php
-│  login.php         -- ログインページ
-│  media_upload.php  -- Trix.jsでアップロードされた画像をWordPressのメディアに保存するプログラム
-│  post-activity.php -- 活動記録投稿ページ
-│  post-circle.php   -- サークル作成ページ
-│  post-dashboard.php -- 記事管理ページ
-│  post-news.php      -- ニュース投稿ページ
-│  profile.php        -- 基本情報ページ
-│  README.md
-│  screenshot.png
-│  search-activity.php -- 活動一覧ページ
-│  search-news.php     -- ニュース一覧ページ
-│  signup.php          -- 新規登録ページ
-│  single-circle.php   -- サークルページテンプレート
-│  single.php          -- 記事ページテンプレート
-│  style.css
-│  TODO.txt
-│  wordpress_export.xml
-│  wordpress_export2022-11-23.xml
-│
-├─assets
-│  │  author.js
-│  │  base.js
-│  │  contact.js
-│  │  style-author.css
-│  │  style-contact-thanks.css
-│  │  style-contact.css
-│  │  style-faq.css
-│  │  style-footer.css
-│  │  style-index.css
-│  │  style-login.css
-│  │  style-post-activity.css
-│  │  style-post-circle.css
-│  │  style-post-dashboard.css
-│  │  style-post-news.css
-│  │  style-profile.css
-│  │  style-search-activity.css
-│  │  style-search-news.css
-│  │  style-signup.css
-│  │  style-single-circle.css
-│  │  style-single.css
-│  │
-│  └─components
-│          trix_file_type_caution_modal.php -- Trix Editorにドロップされたファイルの形式が対応外な場合に警告を表示するコンポーネント
-│          trix_file_upload_to_wordpress.php -- Trix Editorにドロップされた画像をWordPressにアップロードするコンポーネント
-```
+- app/
+  - Api/
+  - Http/（ここでリクエストのバリデーションを行う）
+    - Activity/
+      - CreateActivity.php
+    - News/
+      - CreateNews.php
+  - UseCases/（使い回しできるやつ置く）
+- bootstrap/
+  - app.php
+- config/
+  - app.php
+- routes/
+  - api.php（ここでリクエストを受け付ける）
 
 ## WordPress 説明
 
