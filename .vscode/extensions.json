@@ -1,3 +1,6 @@
 {
-  "recommendations": ["bmewburn.vscode-intelephense-client"]
+  "recommendations": [
+    "bmewburn.vscode-intelephense-client",
+    "wordpresstoolbox.wordpress-toolbox"
+  ]
 }
