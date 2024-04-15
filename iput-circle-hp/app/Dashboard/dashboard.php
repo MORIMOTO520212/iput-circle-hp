@@ -79,7 +79,7 @@ function form_01_custom_fields() {
   <p>設立日 <input type="date" name="establishmentDate" value="<?php echo get_post_meta($post->ID, 'establishmentDate', true); ?>" size="30"></p>
   <p>活動頻度 <input type="text" name="activityFrequency" value="<?php echo get_post_meta($post->ID, 'activityFrequency', true); ?>" size="30"></p>
   <p>会費 <input type="text" name="membershipFree" value="<?php echo get_post_meta($post->ID, 'membershipFree', true); ?>" size="30"></p>
-  <p>公式Twitterユーザー名 <input type="text" name="twitterUserName" value="<?php echo get_post_meta($post->ID, 'twitterUserName', true); ?>" size="30"></p>
+  <p>公式Xユーザー名 <input type="text" name="twitterUserName" value="<?php echo get_post_meta($post->ID, 'twitterUserName', true); ?>" size="30"></p>
   <input type="hidden" name="is_post" value="">
 <?php
 }

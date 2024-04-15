@@ -70,7 +70,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                         <div class="col-6 g-2">
                             <div class="mobile-menu-link a-button icon twitter">
                                 <a href="<?php echo "https://twitter.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
-                                公式Twitter
+                                公式X
                             </div>
                         </div>
                         <?php
@@ -240,7 +240,7 @@ $circle_cat_id = get_cat_ID( $post->post_title );
                 ?>
                 <div class="menu-link a-button mt-4 icon twitter">
                     <a href="<?php echo "https://twitter.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
-                    公式Twitter
+                    公式X
                 </div>
                 <?php
                 endif;

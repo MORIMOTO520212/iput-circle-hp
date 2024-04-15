@@ -8535,8 +8535,8 @@ msgid "Comment status"
 msgstr "コメントの状態"
 
 #: wp-admin/edit-form-advanced.php:362
-msgid "You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the content of your post/page. <a href=\"https://wordpress.org/documentation/article/embeds/\">Learn more about embeds</a>."
-msgstr "メディアの URL を独自の行に貼り付けるだけで、簡単に Twitter、YouTube、Flickr などの人気のある多くのサイトのメディアを投稿や固定ページの本文に埋め込むことができます。<a href=\"https://wordpress.org/support/article/embeds/\">埋め込み機能についてさらに詳しく</a>。"
+msgid "You can also embed media from many popular websites including X, YouTube, Flickr and others by pasting the media URL on its own line into the content of your post/page. <a href=\"https://wordpress.org/documentation/article/embeds/\">Learn more about embeds</a>."
+msgstr "メディアの URL を独自の行に貼り付けるだけで、簡単に X、YouTube、Flickr などの人気のある多くのサイトのメディアを投稿や固定ページの本文に埋め込むことができます。<a href=\"https://wordpress.org/support/article/embeds/\">埋め込み機能についてさらに詳しく</a>。"
 
 #: wp-admin/includes/class-custom-background.php:110
 msgid "<a href=\"https://codex.wordpress.org/Appearance_Background_Screen\">Documentation on Custom Background</a>"
