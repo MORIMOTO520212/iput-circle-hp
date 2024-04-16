@@ -309,11 +309,11 @@ if ( isset( $param__post ) ) {
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="input">公式Twitterユーザー名</label>
+                        <label class="form-label" for="input">公式Xユーザー名</label>
                         <input type="text" maxlength="30" pattern="^[a-zA-Z0-9_]{1,40}$" class="form-control" id="twitter-username" name="twitterUserName"
                             placeholder="ユーザー名" aria-label="twitter-username" value="<?php echo $input['twitterUserName'] ?? '' ?>">
                         <div class="form-text">
-                            サイドバーからTwitterにアクセスできるようになります。
+                            サイドバーからXにアクセスできるようになります。
                         </div>
                         <div class="invalid-feedback">
                             @などの記号は使えません。

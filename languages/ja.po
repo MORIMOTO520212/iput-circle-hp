@@ -7875,8 +7875,8 @@ msgstr "URL をコピー"
 
 #: wp-includes/blocks/embed/block.json
 msgctxt "block description"
-msgid "Add a block that displays content pulled from other sites, like Twitter or YouTube."
-msgstr "Twitter や YouTube などの他サイトからコンテンツを取り込んで表示するブロックを追加します。"
+msgid "Add a block that displays content pulled from other sites, like X or YouTube."
+msgstr "X や YouTube などの他サイトからコンテンツを取り込んで表示するブロックを追加します。"
 
 #: wp-includes/js/dist/block-library.js:15938
 #: wp-includes/blocks/embed/block.json
@@ -10593,8 +10593,8 @@ msgstr "Instagram"
 
 #: wp-includes/theme.php:2423
 msgctxt "Theme starter content"
-msgid "Twitter"
-msgstr "Twitter"
+msgid "X"
+msgstr "X"
 
 #: wp-includes/theme.php:2399
 msgctxt "Theme starter content"
