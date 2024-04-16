@@ -28,6 +28,8 @@
                 <div class="col-md-6 offset-md-1 d-flex flex-column">
                     <h6>外部リンク</h6>
                     <p class="mb-1"><a href="https://twitter.com/iput_one">IPUT ONE - X</a></p>
+                    <h6>運営への連絡</h6>
+                    <p class="mb-1"><a href="mailto:iputone.staff@gmail.com">iputone.staff@gmail.com</a></p>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
