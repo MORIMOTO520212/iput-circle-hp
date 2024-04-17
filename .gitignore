@@ -5,20 +5,7 @@ test.php
 .vscode/settings.json
 
 # MySQL
-# WordPressに変更を加えた場合はdbの変更をプッシュする。
-db/*
-db/mysql.sock
-temp*
-*~
-*.a
-*.la
-*.lo
-*.o
-*.so
-*ib_doublewrite
-*ib_logfile0
-*ib_logfile1
-*ibdata1
+db/
 
 # themes
 wp-content/themes/twentytwentyfour/
