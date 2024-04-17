@@ -1,18 +1,30 @@
 # IPUT ONE
 
-### 環境
+## 環境
 
 - WordPress 6.5.0
 - MySQL 8.0
 - phpmyadmin latest
 
-### 環境構築
+## 環境構築
+
+### Docker の設定
 
 - docker を動かす。
 
 - 管理画面へ入る。
+
   - ID: staff
   - PASS: password
+
+## データベースの設定
+
+1. phpmyadmin へ入る http://localhost:10099
+
+- ID: root
+- PASS: yWcMY9GcwA972YiXEQCpTqid
+
+2. phpmyadmin のインポートで`db.sql`を指定してインポート
 
 ## ディレクトリ構成
 
