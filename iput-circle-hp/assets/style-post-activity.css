@@ -1,5 +1,9 @@
 /* 活動記録投稿ページ スタイルシート */
 
+#trixeditor{
+    display: none;
+}
+
 .txt-subject {
     color: var(--main-h2-font-color);
     margin-top: 60px;
