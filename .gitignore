@@ -5,6 +5,8 @@ test.php
 .vscode/settings.json
 
 # MySQL
+# WordPressに変更を加えた場合はdbの変更をプッシュする。
+db/*
 db/mysql.sock
 temp*
 *~
