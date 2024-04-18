@@ -3,7 +3,7 @@ version: "3.7"
 services:
   db:
     image: mysql:8.0
-    container_name: mysql8
+    container_name: iputone_mysql8
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
@@ -15,7 +15,7 @@ services:
 
   WordPress:
     image: wordpress:6.5.0
-    container_name: IPUTONE-WordPress
+    container_name: iputone_wordpress
     restart: always
     depends_on:
       - db
@@ -42,7 +42,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin_ingrid
+    container_name: iputone_phpmyadmin
     restart: always
     depends_on:
       - db

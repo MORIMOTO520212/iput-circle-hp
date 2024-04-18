@@ -1,5 +1,8 @@
-.PHONY dev
+.PHONY: init
+init:
+	docker compose up -d
+	docker exec -i iputone_mysql8 mysql -u root --password=yWcMY9GcwA972YiXEQCpTqid < db.sql
+
+.PHONY: dev
 dev:
 	docker compose up -d
-	docker exec -i wordpress mysql -h localhost -u root -p yWcMY9GcwA972YiXEQCpTqid < db.sql
-	

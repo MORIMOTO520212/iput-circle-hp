@@ -8,23 +8,17 @@
 
 ## 環境構築
 
-### Docker の設定
+### 初期化する
 
-- docker を動かす。
+```bash
+make init
+```
 
-- 管理画面へ入る。
+### 実行する
 
-  - ID: staff
-  - PASS: password
-
-## データベースの設定
-
-1. phpmyadmin へ入る http://localhost:10099
-
-- ID: root
-- PASS: yWcMY9GcwA972YiXEQCpTqid
-
-2. phpmyadmin のインポートで`db.sql`を指定してインポート
+```bash
+make run
+```
 
 ## ディレクトリ構成
 
