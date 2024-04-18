@@ -6,6 +6,17 @@
 - MySQL 8.0
 - phpmyadmin latest
 
+## ログイン情報
+
+- 管理画面
+  - ID: staff
+  - Pass: password
+- mysql
+  - User: root
+  - Pass: yWcMY9GcwA972YiXEQCpTqid
+  - User: wpuser
+  - Pass: yWcMY9GcwA972YiXEQCpTqid
+
 ## 環境構築
 
 ### 初期化する
