@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "bmewburn.vscode-intelephense-client",
-    "wordpresstoolbox.wordpress-toolbox"
+    "wordpresstoolbox.wordpress-toolbox",
+    "ms-azuretools.vscode-docker"
   ]
 }
