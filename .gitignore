@@ -7,6 +7,9 @@ test.php
 # MySQL
 db/
 
+# composer
+vendor/
+
 # themes
 wp-content/themes/twentytwentyfour/
 wp-content/themes/twentytwentythree/
