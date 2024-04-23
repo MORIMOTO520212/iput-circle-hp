@@ -19,6 +19,12 @@
 
 ## 環境構築
 
+### 依存関係のインストール
+
+```bash
+php composer.phar install
+```
+
 ### 初期化する
 
 ```bash
