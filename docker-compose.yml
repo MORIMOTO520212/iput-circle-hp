@@ -40,6 +40,10 @@ services:
         source: ./languages
         target: /var/www/html/wp-content/languages
 
+      - type: bind
+        source: ./vendor
+        target: /var/www/html/wp-content/themes/iput-circle-hp/vendor
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: iputone_phpmyadmin
