@@ -25,13 +25,28 @@
 php composer.phar install
 ```
 
-### 初期化する
+### Docker を初期化する
 
 ```bash
 make init
 ```
 
-### 実行する
+> [!WARNING]  
+> すでにコンテナが作成されている場合には失敗します。  
+> 一度コンテナを削除してからコマンドを実行してください。
+
+### データベースを初期化する
+
+```bash
+make migrate
+```
+
+> [!WARNING]  
+> `db`ディレクトリを削除してからコマンドを実行してください。
+
+## 実行
+
+### Docker を実行する
 
 ```bash
 make run
