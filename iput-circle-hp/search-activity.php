@@ -127,8 +127,10 @@ get_header();
                             <?php
                             // サークル名を表示する
                             if ( isset( get_the_category()[1]->name ) ):
+                            $organization_name = get_the_category()[1]->name;
+                            $organization_id = query_posts( 'post_type=circle&title=' . $organization_name )[0]->ID;
                             ?>
-                            <span class="badge bg-secondary"><?php echo get_the_category()[1]->name; ?></span>
+                            <span class="badge bg-secondary"><a class="text-white non-text-decoration" href="<?php echo get_permalink($organization_id)?>"></a><?php echo $organization_name; ?></span>
                             <?php endif; ?>
                             <p class="card-text"><small class="text-muted"><?php echo get_the_date(); ?></small></p>
                         </div>

@@ -17,6 +17,11 @@ body {
     min-height: 100vh;
 }
 
+/* デコレーションなし*/
+.non-text-decoration{
+    text-decoration: none;
+}
+
 /* aタグでボタンを設置（親要素に付ける）
    <div class="a-button">
        <a href="#"></a>
