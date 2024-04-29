@@ -111,7 +111,7 @@ if ( isset( $param__post ) ) {
 
         <div class="mb-3">
             <label class="form-label" for="input">活動内容<span>*</span></label>
-            <input type="hidden" id="trixeditor" name="contents" value="" required>
+            <input type="text" id="trixeditor" name="contents" value="" required>
             <div>
                 <!-- <button type="button" class="btn btn-outline-secondary btn-sm mb-2">テンプレートを使う（未実装）</button> -->
                 <trix-editor class="trix-content form-control" input="trixeditor"></trix-editor>

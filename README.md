@@ -1,18 +1,41 @@
 # IPUT ONE
 
-### 環境
+## 環境
 
 - WordPress 6.5.0
 - MySQL 8.0
 - phpmyadmin latest
 
-### 環境構築
+## ログイン情報
 
-- docker を動かす。
-
-- 管理画面へ入る。
+- 管理画面
   - ID: staff
-  - PASS: password
+  - Pass: password
+- mysql
+  - User: root
+  - Pass: yWcMY9GcwA972YiXEQCpTqid
+  - User: wpuser
+  - Pass: yWcMY9GcwA972YiXEQCpTqid
+
+## 環境構築
+
+### 依存関係のインストール
+
+```bash
+php composer.phar install
+```
+
+### 初期化する
+
+```bash
+make init
+```
+
+### 実行する
+
+```bash
+make run
+```
 
 ## ディレクトリ構成
 
@@ -30,3 +53,8 @@
 - `bootstrap/`（一番初めに処理するプログラムが入る）
 - `config/`（WordPress に関する設定）
 - `routes/`（リクエストを受け付ける処理 GraphQL の設定が入る）
+
+## トラブルシューティング
+
+- mysql のコンテナが再起動を繰り返す場合
+  - プロジェクトの db ディレクトリを削除して`make init`する
