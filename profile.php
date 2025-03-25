@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Template Name: アカウント情報
  */
@@ -7,18 +8,18 @@
 <?php
 
 /* ログイン状態のチェック */
-if ( !is_user_logged_in() ) {
+if (!is_user_logged_in()) {
     echo "ログインしてください。";
     exit;
 }
 
 $param_t = get_params('t'); // パラメータ取得
 
-if( isset( $param_t ) ) {
+if (isset($param_t)) {
     // ログアウト処理
-    if( $param_t == "logout" ) {
+    if ($param_t == "logout") {
         wp_logout();
-        wp_redirect( home_url() );
+        wp_redirect(home_url());
         exit;
     }
 }
@@ -68,15 +69,25 @@ $email = get_user_option('user_email', $user_id);
             <label for="password">新しいパスワード</label>
         </div>
 
-        <?php 
+        <?php
         // $action引数の文字列はパスワードではありません.
-        wp_nonce_field( 'vpd8NFzp', 'profile_nonce' ); 
+        wp_nonce_field('vpd8NFzp', 'profile_nonce');
         ?>
 
         <!-- button -->
-        <div class="botton-edit d-flex justify-content-end">
+        <div class="d-flex justify-content-end mb-3">
             <button id="edit" class="btn btn-success" type="submit" name="submit_type" value="profile">編集する</button>
         </div>
+
+        <div class="mb-5">
+            <p class="mb-2 fw-bold">アカウント連携</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1250622307618132019" class="discord-button mb-2">
+                <img src="<?= get_theme_file_uri('src/Discord-Symbol-White.svg'); ?>" />
+                <p class="text-white">Discordと連携する</p>
+            </a>
+            <small class="d-block">IPUT ONEのアカウントをDiscordアカウントと連携することで、IPUT ONEのさまざまな機能をDiscordで使うことができます。</small>
+        </div>
+
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#accountDel">アカウントを削除する</button>
             <a class="btn btn-warning" href="./?t=logout" role="button">ログアウトする</a>
@@ -109,7 +120,7 @@ $email = get_user_option('user_email', $user_id);
 <script>
     var flag = 1;
     $("form#profile").submit(function() {
-        if(flag) {
+        if (flag) {
             $("#edit").text("更新する");
             $("#displayname").prop("disabled", false);
             $("#lastname").prop("disabled", false);
