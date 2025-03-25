@@ -240,8 +240,8 @@ $circle_cat_id = get_cat_ID($post->post_title);
         if (!empty($post_custom['twitterUserName'][0])) :
         ?>
           <div class="menu-link a-button mt-4 icon twitter">
-            <a href="<?php echo "https://twitter.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
-            公式Twitter
+            <a href="<?php echo "https://x.com/" . $post_custom['twitterUserName'][0]; ?>" target="_blank"></a>
+            公式X
           </div>
         <?php
         endif;
