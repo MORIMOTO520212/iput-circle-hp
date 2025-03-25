@@ -31,9 +31,15 @@ $lastname = get_user_option('last_name', $user_id);
 $username = get_user_option('user_login', $user_id);
 $displayname = get_user_option('display_name', $user_id);
 $email = get_user_option('user_email', $user_id);
+
+$export_data = [
+    'user_id' => $user_id
+];
 ?>
 
 <?php get_header(); ?>
+
+<div id="aboutPage"></div>
 
 <!-- コンテンツ -->
 <div class="main mx-2 mb-5">
@@ -133,6 +139,10 @@ $email = get_user_option('user_email', $user_id);
             return false;
         }
     });
+</script>
+
+<script type="application/json" id="__REACT_DATA__">
+    <?php echo json_encode($export_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
 </script>
 
 <?php get_footer(); ?>

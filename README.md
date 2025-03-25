@@ -211,3 +211,19 @@ TrixEditorへ画像をリンクする
 ### アップロードした画像が圧縮されない場合
 
 GD 拡張機能が無効になっている可能性がある。
+
+## 一部のページに React を導入する
+
+exsample.php
+
+```php
+<?php
+$export_data = []; // JSON
+?>
+
+<div id="examplePage"></div>
+<script type="application/json" id="__REACT_DATA__">
+    <?php echo json_encode($export_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+</script>
+
+```
