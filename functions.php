@@ -1,12 +1,12 @@
 <?php
 // media_handle_upload()
-require_once( ABSPATH . 'wp-admin/includes/image.php' );
-require_once( ABSPATH . 'wp-admin/includes/file.php' );
-require_once( ABSPATH . 'wp-admin/includes/media.php' );
+require_once(ABSPATH . 'wp-admin/includes/image.php');
+require_once(ABSPATH . 'wp-admin/includes/file.php');
+require_once(ABSPATH . 'wp-admin/includes/media.php');
 // wp_create_category()
-require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 // wpmu_signup_user(), wpmu_signup_user_notification()
-require_once( ABSPATH . 'wp-includes/ms-functions.php' );
+require_once(ABSPATH . 'wp-includes/ms-functions.php');
 
 
 
@@ -20,7 +20,8 @@ $compression_file_size_threshold = 1048576; //1MB
 $upload_post_name = "";
 
 /* 各ページリンクのグローバル変数 */
-class page_url {
+class page_url
+{
     public $signup;
     public $login;
     public $mypage;
@@ -32,7 +33,7 @@ class page_url {
 $page_url = new page_url;
 $page_url->signup   = home_url('index.php/signup');
 $page_url->login    = home_url('index.php/login');
-$page_url->mypage   = home_url( "index.php/author/" . wp_get_current_user()->user_nicename );
+$page_url->mypage   = home_url("index.php/author/" . wp_get_current_user()->user_nicename);
 $page_url->activity = home_url('index.php/search-activity');
 $page_url->news     = home_url('index.php/search-news');
 $page_url->faq      = home_url('index.php/faq');
@@ -42,15 +43,16 @@ $page_url->contact  = home_url('index.php/contact');
 
 // 投稿カテゴリーの存在チェック（activity, news）
 // なければ作成する.
-function check_post_categories() {
+function check_post_categories()
+{
     $cat_id = get_cat_ID('activity');
-    if($cat_id != 0 || !$cat_id) {
-        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+    if ($cat_id != 0 || !$cat_id) {
+        require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
         wp_create_category('activity');
     }
     $cat_id = get_cat_ID('news');
-    if($cat_id != 0 || !$cat_id) {
-        require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+    if ($cat_id != 0 || !$cat_id) {
+        require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
         wp_create_category('news');
     }
 }
@@ -59,7 +61,7 @@ check_post_categories();
 
 // nonceのaction用のランダム値をCookieに保存しておく.
 // ソースコードから推測されないようにするため.
-if( isset( $_COOKIE['wp_nonce_action'] ) !== false ) {
+if (isset($_COOKIE['wp_nonce_action']) !== false) {
     $experied = time() + 1 * 24 * 3600; // 1日
     setcookie('wp_nonce_action', bin2hex(random_bytes(10)), $experied);
 }
@@ -74,7 +76,8 @@ show_admin_bar(false);
  * CORS設定
  */
 add_action('send_headers', 'cors_http_header');
-function cors_http_header(){
+function cors_http_header()
+{
     header("Access-Control-Allow-Origin: *");
 }
 
@@ -84,15 +87,16 @@ function cors_http_header(){
  * @param string $key - パラメータのキーを指定する。
  * @return string|null パラメータが見つかった場合はその値を返し、見つからなかった場合はnullを返す。
  */
-function get_params( $key = "" ) {
-    preg_match( "/\?(.*)/", $_SERVER['REQUEST_URI'], $matches );
-    if ( empty( $matches ) ) {
+function get_params($key = "")
+{
+    preg_match("/\?(.*)/", $_SERVER['REQUEST_URI'], $matches);
+    if (empty($matches)) {
         return null;
     }
-    parse_str( $matches[1], $args );
+    parse_str($matches[1], $args);
 
-    foreach( array_keys($args) as $get_key ) {
-        if ( $key === $get_key ) return $args[$get_key];
+    foreach (array_keys($args) as $get_key) {
+        if ($key === $get_key) return $args[$get_key];
     }
     return null;
 }
@@ -101,9 +105,10 @@ function get_params( $key = "" ) {
 /**
  * ローカルホストかどうか
  * @return bool ローカルホストだった場合はtrue、そうでない場合はfalseを返す。
-*/
-function is_localhost() {
-    if ( $_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1' ) {
+ */
+function is_localhost()
+{
+    if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
         return true;
     }
     return false;
@@ -115,16 +120,18 @@ function is_localhost() {
  * カスタム投稿タイプ サークル
  * 
  */
-function post_type_circle() {
-    register_post_type('circle', // 投稿タイプ名
-    array(
-        'labels' => array(
-            'name'          => 'サークル',
-            'singular_name' => 'circle'
-        ),
-        'public' => true,
-        'menu_position' => 5,
-    )
+function post_type_circle()
+{
+    register_post_type(
+        'circle', // 投稿タイプ名
+        array(
+            'labels' => array(
+                'name'          => 'サークル',
+                'singular_name' => 'circle'
+            ),
+            'public' => true,
+            'menu_position' => 5,
+        )
     );
 }
 add_action('init', 'post_type_circle');
@@ -137,8 +144,9 @@ add_action('init', 'post_type_circle');
  * @return string
  * 例えば、引数に'2022-11-11 01:19:30'を渡すと'2022年11月11日'が返される
  */
-function date_formatting( $date ) {
-    preg_match( '/(\d{4})-(\d{2})-(\d{2})/', $date, $matches );
+function date_formatting($date)
+{
+    preg_match('/(\d{4})-(\d{2})-(\d{2})/', $date, $matches);
     $year  = $matches[1];
     $month = $matches[2];
     $day   = $matches[3];
@@ -150,8 +158,9 @@ function date_formatting( $date ) {
 /**
  * カスタム投稿タイプ　カスタムフィールドを設置
  * 
-*/
-function set_custom_fields() {
+ */
+function set_custom_fields()
+{
     add_meta_box(
         'cf_01',
         'サークル基本情報',
@@ -187,33 +196,35 @@ function set_custom_fields() {
     /* 管理画面 */
     add_meta_box(
         'gas_deploy_id',
-        'メール送信用GASデプロイID', 
-        'gas_deploy_id_fields', 
-        'dashboard', 
-        'normal', 
+        'メール送信用GASデプロイID',
+        'gas_deploy_id_fields',
+        'dashboard',
+        'normal',
         'default'
     );
 }
-add_action( 'admin_menu', 'set_custom_fields' );
+add_action('admin_menu', 'set_custom_fields');
 
 
 /* 投稿画面にタグ一覧をチェックボックスで表示する */
-function post_tag_to_checkbox() {
+function post_tag_to_checkbox()
+{
     $args = get_taxonomy('post_tag');
-    $args -> hierarchical = true;
-    $args -> meta_box_cb = 'post_categories_meta_box';
-    register_taxonomy( 'post_tag', 'post', $args);
+    $args->hierarchical = true;
+    $args->meta_box_cb = 'post_categories_meta_box';
+    register_taxonomy('post_tag', 'post', $args);
 }
-add_action( 'init', 'post_tag_to_checkbox', 1 );
+add_action('init', 'post_tag_to_checkbox', 1);
 
 
 /* サークル基本情報フォームHTML */
-function form_01_custom_fields() {
+function form_01_custom_fields()
+{
     global $post;
-    ?>
+?>
     <p>
         <input type="hidden" name="officialCheck" value="unofficial">
-        <input type="checkbox" name="officialCheck" value="official" <?php if(get_post_meta($post->ID, 'officialCheck', true) == "official") echo 'checked'; ?>>大学公認
+        <input type="checkbox" name="officialCheck" value="official" <?php if (get_post_meta($post->ID, 'officialCheck', true) == "official") echo 'checked'; ?>>大学公認
     </p>
     <p>トップ画像ID <input type="text" name="topImage" value="<?php echo get_post_meta($post->ID, 'topImage', true); ?>" size="30"></p>
     <p>ヘッダー画像ID <input type="text" name="headerImage" value="<?php echo get_post_meta($post->ID, 'headerImage', true); ?>" size="30"></p>
@@ -230,47 +241,53 @@ function form_01_custom_fields() {
 }
 
 /* サークル説明フォームHTML */
-function form_02_custom_fields() {
+function form_02_custom_fields()
+{
     global $post;
-    echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
+    echo '<p>管理番号 <input type="text" name="contents_num" value="' . get_post_meta($post->ID, 'contents_num', true) . '" size="30"></p>';
 }
 
 /* 管理者情報フォームHTML */
-function form_03_custom_fields() {
+function form_03_custom_fields()
+{
     global $post;
-    echo '<p>管理番号 <input type="text" name="contents_num" value="'.get_post_meta($post->ID, 'contents_num', true).'" size="30"></p>';
+    echo '<p>管理番号 <input type="text" name="contents_num" value="' . get_post_meta($post->ID, 'contents_num', true) . '" size="30"></p>';
 }
 
 /* カスタムフィールドの値を保存 */
-function save_custom_fields( $post_id ) {
-    if ( isset( $_POST['is_post'] ) ) {
-        update_post_meta( $post_id, 'officialCheck',     $_POST['officialCheck']     );
-        update_post_meta( $post_id, 'topImage',          $_POST['topImage']          );
-        update_post_meta( $post_id, 'headerImage',       $_POST['headerImage']       );
-        update_post_meta( $post_id, 'belongNum',         $_POST['belongNum']         );
-        update_post_meta( $post_id, 'schedule',          $_POST['schedule']          );
-        update_post_meta( $post_id, 'place',             $_POST['place']             );
-        update_post_meta( $post_id, 'categoryRadio',     $_POST['categoryRadio']     );
-        update_post_meta( $post_id, 'establishmentDate', $_POST['establishmentDate'] );
-        update_post_meta( $post_id, 'activityFrequency', $_POST['activityFrequency'] );
-        update_post_meta( $post_id, 'membershipFree',    $_POST['membershipFree']    );
-        update_post_meta( $post_id, 'twitterUserName',   $_POST['twitterUserName']   );
+function save_custom_fields($post_id)
+{
+    if (isset($_POST['is_post'])) {
+        update_post_meta($post_id, 'officialCheck',     $_POST['officialCheck']);
+        update_post_meta($post_id, 'topImage',          $_POST['topImage']);
+        update_post_meta($post_id, 'headerImage',       $_POST['headerImage']);
+        update_post_meta($post_id, 'belongNum',         $_POST['belongNum']);
+        update_post_meta($post_id, 'schedule',          $_POST['schedule']);
+        update_post_meta($post_id, 'place',             $_POST['place']);
+        update_post_meta($post_id, 'categoryRadio',     $_POST['categoryRadio']);
+        update_post_meta($post_id, 'establishmentDate', $_POST['establishmentDate']);
+        update_post_meta($post_id, 'activityFrequency', $_POST['activityFrequency']);
+        update_post_meta($post_id, 'membershipFree',    $_POST['membershipFree']);
+        update_post_meta($post_id, 'twitterUserName',   $_POST['twitterUserName']);
     }
 }
-add_action( 'save_post', 'save_custom_fields' );
+add_action('save_post', 'save_custom_fields');
 
 
 /* メール送信用GASデプロイID */
-function gas_deploy_id_fields() { 
+function gas_deploy_id_fields()
+{
 ?>
     <style>
         #mybox .input-text-wrap {
             margin-bottom: 12px;
         }
+
         #mybox label {
             display: inline-block;
             margin-bottom: 4px;
         }
+
         #mybox .submit {
             display: flex;
             width: 100%;
@@ -280,7 +297,7 @@ function gas_deploy_id_fields() {
     <form id="mybox" action="" method="post">
         <div class="input-text-wrap">
             <label for="input1">GASデプロイID</label>
-            <input type="text" id="input1" name="gas_deploy_id" value="<?php echo get_post_meta( 1, 'gas_deploy_id', true ); ?>" placeholder="">
+            <input type="text" id="input1" name="gas_deploy_id" value="<?php echo get_post_meta(1, 'gas_deploy_id', true); ?>" placeholder="">
         </div>
         <div class="submit">
             <input type="hidden" name="submit_type" value="gas_deploy_id">
@@ -295,7 +312,8 @@ function gas_deploy_id_fields() {
  * @param string $image_src - 
  * @return string $id - attachment id
  */
-function get_attachment_id_from_src( $image_src ) {
+function get_attachment_id_from_src($image_src)
+{
     global $wpdb;
     $query = "SELECT ID FROM {$wpdb->posts} WHERE guid='$image_src'";
     $id = $wpdb->get_var($query);
@@ -309,21 +327,22 @@ function get_attachment_id_from_src( $image_src ) {
  * 
  * modal(モーダルのタイトル, モーダルの本文)
  */
-function modal( $title, $message ) {
+function modal($title, $message)
+{
 ?>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display:none;">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header alert alert-warning">
-                <h5 class="modal-title" id="exampleModalLabel"><?php echo $title; ?></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <?php echo $message; ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
-            </div>
+                <div class="modal-header alert alert-warning">
+                    <h5 class="modal-title" id="exampleModalLabel"><?php echo $title; ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php echo $message; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
+                </div>
             </div>
         </div>
     </div>
@@ -345,29 +364,29 @@ function modal( $title, $message ) {
  * 容量が大きい画像の圧縮
  * 
  * 指定ファイルサイズ以上なら横幅1200pxで圧縮
-*/
-function otocon_resize_at_upload( $file ) {
+ */
+function otocon_resize_at_upload($file)
+{
     global $compression_file_size_threshold; // ファイルサイズ閾値
-	if ( $file['type'] == 'image/jpeg' || $file['type'] == 'image/gif' || $file['type'] == 'image/png') {
-        if ( $_FILES[$GLOBALS['upload_post_name']]['size'] > $compression_file_size_threshold ) {
+    if ($file['type'] == 'image/jpeg' || $file['type'] == 'image/gif' || $file['type'] == 'image/png') {
+        if ($_FILES[$GLOBALS['upload_post_name']]['size'] > $compression_file_size_threshold) {
             $w = 1200;
             $h = 0;
-            $image = wp_get_image_editor( $file['file'] );
-            if ( ! is_wp_error( $image ) ) {
-                $size = getimagesize( $file['file'] );
-                if ( $size[0] > $w || $size[1] > $h ){
-                    $image->resize( $w, $h, false );
-                    $image->save( $file['file'] );
+            $image = wp_get_image_editor($file['file']);
+            if (! is_wp_error($image)) {
+                $size = getimagesize($file['file']);
+                if ($size[0] > $w || $size[1] > $h) {
+                    $image->resize($w, $h, false);
+                    $image->save($file['file']);
                 }
             } else {
                 echo $image->get_error_message();
             }
         }
-
-	}
-	return $file;
+    }
+    return $file;
 }
-add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
+add_action('wp_handle_upload', 'otocon_resize_at_upload');
 
 
 
@@ -376,48 +395,50 @@ add_action( 'wp_handle_upload', 'otocon_resize_at_upload' );
  * 
  * @param string $input_name 画像が添付されたinputタグのname属性
  * @return array $attachment_id, $img_url
-*/
-function upload_image( $input_name ) {
+ */
+function upload_image($input_name)
+{
     global $max_file_size;
 
     // ファイルの存在確認
-    if ( isset( $_FILES[$input_name] ) === false ) {
+    if (isset($_FILES[$input_name]) === false) {
         return '';
     }
 
     // ファイルサイズが5MB以上はアップロードしない
-    if ( $_FILES[$input_name]['size'] > $max_file_size ) {
+    if ($_FILES[$input_name]['size'] > $max_file_size) {
         return '';
     }
 
     // アップロード処理
     $GLOBALS['upload_post_name'] = $input_name;
-    $attachment_id = media_handle_upload( $input_name, 0 );
+    $attachment_id = media_handle_upload($input_name, 0);
 
     // アップロードエラーチェック
-    if ( is_wp_error( $attachment_id ) ) {
+    if (is_wp_error($attachment_id)) {
         // 何もしない
         return '';
     } else {
         // アップロードした画像リンク
-        $img_url = wp_get_attachment_image_src( $attachment_id, 'full' )[0];
+        $img_url = wp_get_attachment_image_src($attachment_id, 'full')[0];
     }
 
-    return array( $attachment_id, $img_url );
+    return array($attachment_id, $img_url);
 }
 
 
 
 /**
  * リサイズ画像を生成しない
-*/
-function not_create_image( $new_sizes, $image_meta ) {
-    unset( $new_sizes['thumbnail']    );
-    unset( $new_sizes['medium']       );
-    unset( $new_sizes['medium_large'] );
-    unset( $new_sizes['large']        );
-    unset( $new_sizes['1536x1536']    );
-    unset( $new_sizes['2048x2048']    );
+ */
+function not_create_image($new_sizes, $image_meta)
+{
+    unset($new_sizes['thumbnail']);
+    unset($new_sizes['medium']);
+    unset($new_sizes['medium_large']);
+    unset($new_sizes['large']);
+    unset($new_sizes['1536x1536']);
+    unset($new_sizes['2048x2048']);
     return $new_sizes;
 }
 add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
@@ -426,29 +447,30 @@ add_filter('intermediate_image_sizes_advanced', 'not_create_image', 10, 2);
 
 /**
  * ログインページ
-*/
-function user_login() {
-    $user_login    = isset( $_POST['login'] )    ? sanitize_text_field( $_POST['login'] )    : '';
-    $user_password = isset( $_POST['password'] ) ? sanitize_text_field( $_POST['password'] ) : '';
+ */
+function user_login()
+{
+    $user_login    = isset($_POST['login'])    ? sanitize_text_field($_POST['login'])    : '';
+    $user_password = isset($_POST['password']) ? sanitize_text_field($_POST['password']) : '';
 
-    if ( $user_login === '' )    return;
-    if ( $user_password === '' ) return;
+    if ($user_login === '')    return;
+    if ($user_password === '') return;
 
     $creds = array();
-    $creds += array( 'user_login'    => $user_login    );
-    $creds += array( 'user_password' => $user_password );
-    if( isset( $_POST['keep_loggedin'] ) ) {
-        $creds += array( 'remember', true );
+    $creds += array('user_login'    => $user_login);
+    $creds += array('user_password' => $user_password);
+    if (isset($_POST['keep_loggedin'])) {
+        $creds += array('remember', true);
     }
 
     // ログイン処理
     $user = wp_signon($creds);
-    if( is_wp_error($user) ) {
-        modal( 'ログインに失敗しました', $user->get_error_message() );
+    if (is_wp_error($user)) {
+        modal('ログインに失敗しました', $user->get_error_message());
         return;
     }
     // マイページへ遷移する
-    wp_redirect( home_url( "index.php/author/{$user->user_login}" ) );
+    wp_redirect(home_url("index.php/author/{$user->user_login}"));
     exit;
     return true;
 }
@@ -460,27 +482,28 @@ function user_login() {
  * 
  * @return true|false 完了, 中断
  */
-function user_signup() {
-    $user_name       = isset( $_POST['username'] )  ? sanitize_text_field( $_POST['username'] )  : '';
-    $user_pass       = isset( $_POST['password'] )  ? sanitize_text_field( $_POST['password'] )  : '';
-    $user_email      = isset( $_POST['email'] )     ? sanitize_text_field( $_POST['email'] )     : '';
-    $user_first_name = isset( $_POST['firstname'] ) ? sanitize_text_field( $_POST['firstname'] ) : '';
-    $user_last_name  = isset( $_POST['lastname'] )  ? sanitize_text_field( $_POST['lastname'] )  : '';
+function user_signup()
+{
+    $user_name       = isset($_POST['username'])  ? sanitize_text_field($_POST['username'])  : '';
+    $user_pass       = isset($_POST['password'])  ? sanitize_text_field($_POST['password'])  : '';
+    $user_email      = isset($_POST['email'])     ? sanitize_text_field($_POST['email'])     : '';
+    $user_first_name = isset($_POST['firstname']) ? sanitize_text_field($_POST['firstname']) : '';
+    $user_last_name  = isset($_POST['lastname'])  ? sanitize_text_field($_POST['lastname'])  : '';
 
     //すでにユーザー名が使われていないかチェック
-    if ( username_exists( $user_name ) !== false ) {
-        modal('登録できません', 'すでにユーザー名「'. $user_name .'」は登録されています。<br>他の名前を入力してください。');
+    if (username_exists($user_name) !== false) {
+        modal('登録できません', 'すでにユーザー名「' . $user_name . '」は登録されています。<br>他の名前を入力してください。');
         return "E01";
     }
     // ユーザー名の確認
     // 半角英数字+アンダーバー1～15文字
-    if ( !(preg_match("/^[a-zA-Z0-9_]{1,15}$/iD", $user_name)) ) {
+    if (!(preg_match("/^[a-zA-Z0-9_]{1,15}$/iD", $user_name))) {
         modal('ユーザー名の入力', 'ユーザー名は半角英数字+アンダーバーのみです。');
         return "E02";
     }
     // メールチェック
-    if ( email_exists( $user_email ) !== false ) {
-        modal('登録できません', 'すでにメールアドレス「'. $user_email .'」は登録されています。');
+    if (email_exists($user_email) !== false) {
+        modal('登録できません', 'すでにメールアドレス「' . $user_email . '」は登録されています。');
         return "E03";
     }
     //メールの文字列確認
@@ -489,32 +512,32 @@ function user_signup() {
     // <正規表現>
     // TK20***@**.iput.ac.jpのみ："/^[a-z0-9+_-]{2,16}@(tokyo|tks).iput.ac.jp$/iD"
     // 
-    if ( !(preg_match("/^[a-z0-9+._-]{2,16}@(.*)iput.ac.jp$/iD", $user_email)) ) {
+    if (!(preg_match("/^[a-z0-9+._-]{2,16}@(.*)iput.ac.jp$/iD", $user_email))) {
         modal('登録できません', '学校のメールアドレスのみ登録可能です。使用できるドメインはiput.ac.jpのみです。');
         return "E04";
     }
 
     // パスワードの確認
     // 半角英数字+記号を6文字以上16文字以下
-    if ( !(preg_match("/^[ -~]{6,16}$/iD", $user_pass)) ) {
+    if (!(preg_match("/^[ -~]{6,16}$/iD", $user_pass))) {
         modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
         return "E05";
     }
     // 氏名の確認
-    if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_first_name)) ) {
+    if (!(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_first_name))) {
         modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
         return "E06";
     }
-    if ( !(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_last_name)) ) {
+    if (!(preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $user_last_name))) {
         modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
         return "E07";
     }
 
     // ユーザー仮登録
-    [$activation_key, $user_approval_url] = signup_provisional( $user_name, $user_email, $user_pass, $user_first_name, $user_last_name );
-    if ( $user_approval_url ) {
+    [$activation_key, $user_approval_url] = signup_provisional($user_name, $user_email, $user_pass, $user_first_name, $user_last_name);
+    if ($user_approval_url) {
         // 認証メール送信
-        user_approval_sendmail( $user_email, $activation_key, $user_approval_url );
+        user_approval_sendmail($user_email, $activation_key, $user_approval_url);
     } else {
         modal('エラー', 'ユーザーの仮登録に失敗しました');
         return "E08";
@@ -528,31 +551,32 @@ function user_signup() {
  * ユーザー情報をsignupsテーブルに保持し、認証リンクを返す。
  * @param string        $user_login - ユーザー名
  * @return array|false  array($activation_key, $user_approval_url) | false
-*/
-function signup_provisional( $user_login, $user_email, $password, $first_name, $last_name ) {
+ */
+function signup_provisional($user_login, $user_email, $password, $first_name, $last_name)
+{
     global $wpdb;
 
-	$user_login = preg_replace( '/\s+/', '', sanitize_user( $user_login, true ) );
-	$user_email = sanitize_email( $user_email );
+    $user_login = preg_replace('/\s+/', '', sanitize_user($user_login, true));
+    $user_email = sanitize_email($user_email);
 
     /** @var string ユーザーの有効化キー16文字（メール認証で使う） */
-	$activation_key = substr( md5( time() . wp_rand() . $user_email ), 0, 16 );
+    $activation_key = substr(md5(time() . wp_rand() . $user_email), 0, 16);
 
     // データベース書き込み
-	$res = $wpdb->insert(
-		$wpdb->signups,
-		array(
-			'user_login'      => $user_login,
-			'user_email'      => $user_email,
+    $res = $wpdb->insert(
+        $wpdb->signups,
+        array(
+            'user_login'      => $user_login,
+            'user_email'      => $user_email,
             'password'        => $password,
             'first_name'      => $first_name,
             'last_name'       => $last_name,
-			'user_registered' => current_time( 'mysql', true ),
-			'activation_key'  => $activation_key,
-		)
-	);
-    if ( $res ) {
-        $user_approval_url = home_url( '/index.php/signup?token=' . $activation_key );
+            'user_registered' => current_time('mysql', true),
+            'activation_key'  => $activation_key,
+        )
+    );
+    if ($res) {
+        $user_approval_url = home_url('/index.php/signup?token=' . $activation_key);
         return array($activation_key, $user_approval_url);
     }
     return false;
@@ -563,8 +587,9 @@ function signup_provisional( $user_login, $user_email, $password, $first_name, $
  * @param string      $user_email
  * @param string      $user_approval_url - 認証リンク
  * @return true|false 送信成功, 送信失敗
-*/
-function user_approval_sendmail( $user_email, $activation_key, $user_approval_url ) {
+ */
+function user_approval_sendmail($user_email, $activation_key, $user_approval_url)
+{
     global $wpdb;
     $res = $wpdb->get_results("SELECT first_name, last_name FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
     $name = $res[0]->last_name . " " . $res[0]->first_name;
@@ -584,7 +609,7 @@ IPUT ONEにご登録いただき、ありがとうございます。
 IPUT ONE制作チーム
 iputone.staff@gmail.com
 ";
-    my_sendmail( $to, $subject, $message );
+    my_sendmail($to, $subject, $message);
 
     return 1;
 }
@@ -594,15 +619,16 @@ iputone.staff@gmail.com
  * 一度実行したら2回目はスルーする。
  * @param string $activation_key - 有効化キー
  * @return bool true - 成功, false - 失敗
-*/
-function user_activation( $activation_key ) {
+ */
+function user_activation($activation_key)
+{
     global $wpdb;
 
-    
+
     $user = $wpdb->get_results("SELECT * FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
 
     // ユーザーを登録する
-    if ( $user ) {
+    if ($user) {
         $userdata = array(
             'user_login'   => $user[0]->user_login,  // ログイン名
             'user_pass'    => $user[0]->password,    // パスワード
@@ -612,19 +638,19 @@ function user_activation( $activation_key ) {
             'display_name' => $user[0]->user_login,  // ブログ上の表示名
             'role'         => 'author'
         );
-    
+
         // ユーザー作成処理
-        $user_id = wp_insert_user( $userdata );
-        if ( is_wp_error( $user_id ) ) {
+        $user_id = wp_insert_user($userdata);
+        if (is_wp_error($user_id)) {
             modal('ユーザーの作成に失敗しました', "{$user_id->get_error_code()}<br>{$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return false;
         }
-    
+
         // signupテーブルのレコードを削除する
         $wpdb->get_results("DELETE FROM {$wpdb->signups} WHERE activation_key='{$activation_key}'");
-    
+
         // 登録完了後、そのままログインさせる（ 任意 ）
-        wp_set_auth_cookie( $user_id, false, is_ssl() );
+        wp_set_auth_cookie($user_id, false, is_ssl());
 
         // 登録完了メール
         $to      = $user[0]->user_email;
@@ -639,13 +665,13 @@ function user_activation( $activation_key ) {
         IPUT ONE制作チーム
         iputone.staff@gmail.com
         ";
-        my_sendmail( $to, $subject, $message );
+        my_sendmail($to, $subject, $message);
 
-        wp_redirect( home_url("index.php/signup?t=done") );
+        wp_redirect(home_url("index.php/signup?t=done"));
         exit;
     } else {
         // エラー
-        wp_redirect( home_url("index.php/signup?t=error") );
+        wp_redirect(home_url("index.php/signup?t=error"));
     }
 
     return true;
@@ -654,12 +680,13 @@ function user_activation( $activation_key ) {
 
 /**
  * 基本情報ページ　ユーザープロフィール更新
-*/
-function profile_update() {
-    $display_name  = isset( $_POST['displayname'] ) ? sanitize_text_field( $_POST['displayname'] ) : null;
-    $user_pass     = isset( $_POST['password'] )    ? sanitize_text_field( $_POST['password']    ) : null;
-    $first_name    = isset( $_POST['firstname'] )   ? sanitize_text_field( $_POST['firstname']   ) : null;
-    $last_name     = isset( $_POST['lastname'] )    ? sanitize_text_field( $_POST['lastname']    ) : null;
+ */
+function profile_update()
+{
+    $display_name  = isset($_POST['displayname']) ? sanitize_text_field($_POST['displayname']) : null;
+    $user_pass     = isset($_POST['password'])    ? sanitize_text_field($_POST['password']) : null;
+    $first_name    = isset($_POST['firstname'])   ? sanitize_text_field($_POST['firstname']) : null;
+    $last_name     = isset($_POST['lastname'])    ? sanitize_text_field($_POST['lastname']) : null;
 
     $user_id = wp_get_current_user()->ID;
 
@@ -669,14 +696,14 @@ function profile_update() {
     );
 
     // user id チェック
-    if ( $user_id == null ) {
+    if ($user_id == null) {
         modal('更新できませんでした', 'もう一度試してください。E01');
         return;
     }
     // 表示名チェック
-    if ( $display_name ) {
+    if ($display_name) {
         // 半角英数字+アンダースコア4～12文字で入力されているか
-        if ( preg_match("/^[a-z0-9_]{4,12}$/iD", $display_name) ) {
+        if (preg_match("/^[a-z0-9_]{4,12}$/iD", $display_name)) {
             $userdata += array('display_name' => $display_name);
         } else {
             modal('表示名の入力', '表示名は半角英数字+アンダースコア4～12文字で入力してください。');
@@ -684,9 +711,9 @@ function profile_update() {
         }
     }
     // パスワードチェック
-    if ( $user_pass ) {
+    if ($user_pass) {
         // 半角英数字+記号を6文字以上16文字以下で入力されているか
-        if ( preg_match("/^[ -~]{6,16}$/iD", $user_pass) ) {
+        if (preg_match("/^[ -~]{6,16}$/iD", $user_pass)) {
             $userdata += array('user_pass' => $user_pass);
         } else {
             modal('パスワードの入力', 'パスワードは半角英数字+記号6～16文字以内で入力してください。');
@@ -694,8 +721,8 @@ function profile_update() {
         }
     }
     // 名チェック
-    if ( $first_name ) {
-        if ( preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $first_name) ) {
+    if ($first_name) {
+        if (preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $first_name)) {
             $userdata += array('first_name' => $first_name);
         } else {
             modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
@@ -703,8 +730,8 @@ function profile_update() {
         }
     }
     // 姓チェック
-    if ( $last_name ) {
-        if ( preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $last_name) ) {
+    if ($last_name) {
+        if (preg_match("/^[a-zA-Zぁ-んーァ-ヶーｱ-ﾝﾞﾟ一-龠]{1,12}$/iD", $last_name)) {
             $userdata += array('last_name' => $last_name);
         } else {
             modal('氏名の入力', '氏名は半角英字+日本語1～12文字以内で入力してください。');
@@ -713,10 +740,10 @@ function profile_update() {
     }
 
     // ユーザー情報を更新
-    $user_id = wp_update_user( $userdata );
+    $user_id = wp_update_user($userdata);
 
     // ユーザーの作成に失敗
-    if ( is_wp_error( $user_id ) ) {
+    if (is_wp_error($user_id)) {
         echo $user_id->get_error_code();
         echo $user_id->get_error_message();
         modal('ユーザーの更新に失敗しました', "{$user_id->get_error_code()}<br>{$user_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
@@ -743,39 +770,39 @@ function profile_update() {
  * ## カスタムメタデータ一覧
  * - topImage    - トップ画像のattachment id
  * - headerImage - ヘッダー画像のattachment id
-*/
-function post_circle() {
+ */
+function post_circle()
+{
     // パラメータのチェック
-    if ( isset(
-        $_POST['circleName'        ], // サークル名
-        $_POST['belongNum'         ], // 所属人数
-        $_POST['schedule'          ], // 活動日程
-        $_POST['place'             ], // 活動場所
-        $_POST['categoryRadio'     ], // サークルカテゴリ
-        $_POST['establishmentDate' ], // 設立日
-        $_POST['activityFrequency' ], // 活動頻度
-        $_POST['membershipFree'    ], // 会費
-        $_POST['activitySummary'   ], // サークル概要
-        $_POST['activityDetail'    ], // 活動内容
+    if (isset(
+        $_POST['circleName'], // サークル名
+        $_POST['belongNum'], // 所属人数
+        $_POST['schedule'], // 活動日程
+        $_POST['place'], // 活動場所
+        $_POST['categoryRadio'], // サークルカテゴリ
+        $_POST['establishmentDate'], // 設立日
+        $_POST['activityFrequency'], // 活動頻度
+        $_POST['membershipFree'], // 会費
+        $_POST['activitySummary'], // サークル概要
+        $_POST['activityDetail'], // 活動内容
         $_POST['contactMailAddress'], // 連絡先
-        $_POST['representative'    ], // 代表者氏名
-        $_POST['twitterUserName'   ], // 公式Twitterユーザー名
-        $_POST['circle_post_nonce' ], // WordPressNonce
-        ) )
-    {
+        $_POST['representative'], // 代表者氏名
+        $_POST['twitterUserName'], // 公式Twitterユーザー名
+        $_POST['circle_post_nonce'], // WordPressNonce
+    )) {
         // 新規投稿のフラグ
-        $is_newpost = isset( $_POST['postID'] ) ? false : true;
+        $is_newpost = isset($_POST['postID']) ? false : true;
 
         // 文字数チェック
-        if ( mb_strlen( $_POST['circleName']      ) > 19 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['belongNum']       ) > 3  ) input_value_error_exit();
-        if ( mb_strlen( $_POST['schedule']        ) > 15 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['twitterUserName'] ) > 30 ) input_value_error_exit();
+        if (mb_strlen($_POST['circleName']) > 19) input_value_error_exit();
+        if (mb_strlen($_POST['belongNum']) > 3) input_value_error_exit();
+        if (mb_strlen($_POST['schedule']) > 15) input_value_error_exit();
+        if (mb_strlen($_POST['twitterUserName']) > 30) input_value_error_exit();
 
         // 公開状態
         $post_status = 'publish';
 
-        if ( $_POST['submit_type'] === 'draft_circle' ) {
+        if ($_POST['submit_type'] === 'draft_circle') {
             $post_status = 'draft';
         }
 
@@ -788,30 +815,30 @@ function post_circle() {
         );
 
         /* 新規投稿の場合 */
-        if ( $is_newpost ) {
+        if ($is_newpost) {
 
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
-            $post_data['post_name'] = md5( time() );
+            $post_data['post_name'] = md5(time());
 
             // 既存のサークル名ではないかチェック
             $args = array(
                 'posts_per_page' => -1,
                 'post_type'      => 'circle',
             );
-            $circles = get_posts( $args );
-            foreach ( $circles as $circle ) {
-                if ( $circle->post_title === $_POST['circleName'] ) {
+            $circles = get_posts($args);
+            foreach ($circles as $circle) {
+                if ($circle->post_title === $_POST['circleName']) {
                     modal('エラー', '既に同じ名前のサークルが存在しています。名前を変更してください。');
                     return;
                 }
             }
 
-        /* 更新の場合 */
+            /* 更新の場合 */
         } else {
 
             // 投稿者かどうか確認
-            $author = get_userdata(get_post( $_POST['postID'] )->post_author);
-            if ( wp_get_current_user()->ID != $author->ID ) {
+            $author = get_userdata(get_post($_POST['postID'])->post_author);
+            if (wp_get_current_user()->ID != $author->ID) {
                 echo "エラー2";
                 exit;
             }
@@ -820,27 +847,27 @@ function post_circle() {
             $post_data['ID'] = $_POST['postID'];
 
             // カテゴリ名を更新する
-            $cat_id = get_cat_ID( get_the_title( $_POST['postID'] ) );
-            wp_update_term( $cat_id, 'category', array(
-                'name' => sanitize_text_field( $_POST['circleName'] ),
-                'slug' => sanitize_text_field( $_POST['circleName'] ),
-            ) );
+            $cat_id = get_cat_ID(get_the_title($_POST['postID']));
+            wp_update_term($cat_id, 'category', array(
+                'name' => sanitize_text_field($_POST['circleName']),
+                'slug' => sanitize_text_field($_POST['circleName']),
+            ));
         }
 
         // 投稿を作成する
-        $post_id = wp_insert_post( $post_data, true ); // 投稿を作成　自動サニタイズ
+        $post_id = wp_insert_post($post_data, true); // 投稿を作成　自動サニタイズ
 
-        if (  is_wp_error( $post_id ) ) {
+        if (is_wp_error($post_id)) {
             modal('エラー', '投稿に失敗しました。');
             return;
         }
 
         // サークルのカテゴリを作成する
-        if ( $is_newpost ) {
-            $category_id = wp_create_category( $_POST['circleName'] );
-            wp_set_post_categories( $post_id, array($category_id), true );
+        if ($is_newpost) {
+            $category_id = wp_create_category($_POST['circleName']);
+            wp_set_post_categories($post_id, array($category_id), true);
         }
-        
+
 
         // トップ画像のアップロード
         $topImage_id = upload_image('topImage')[0] ?? '';
@@ -854,33 +881,33 @@ function post_circle() {
 
         // カスタムフィールド（自動サニタイズ、add_post_meta関数は禁止）
         // 更新時に画像をアップしない場合はスルー
-        if ( $is_newpost || !empty( $topImage_id ) ) {
-            update_post_meta( $post_id, 'topImage', $topImage_id ); // トップ画像
+        if ($is_newpost || !empty($topImage_id)) {
+            update_post_meta($post_id, 'topImage', $topImage_id); // トップ画像
 
         }
-        if ( $is_newpost || !empty( $headerImage_id ) ) {
+        if ($is_newpost || !empty($headerImage_id)) {
 
-            if ( !empty( $headerImage_id ) ) {
-                update_post_meta( $post_id, 'headerImage', $headerImage_id ); // ヘッダー画像 設定
+            if (!empty($headerImage_id)) {
+                update_post_meta($post_id, 'headerImage', $headerImage_id); // ヘッダー画像 設定
 
             } else {
-                update_post_meta( $post_id, 'headerImage', $topImage_id ); // ヘッダー画像が無い場合、代わりにトップ画像を設定する
+                update_post_meta($post_id, 'headerImage', $topImage_id); // ヘッダー画像が無い場合、代わりにトップ画像を設定する
             }
         }
 
         // 自動サニタイズ、add_post_meta関数は禁止
-        update_post_meta( $post_id, 'belongNum',          $_POST['belongNum']          ); // 所属人数
-        update_post_meta( $post_id, 'schedule',           $_POST['schedule']           ); // 活動日程
-        update_post_meta( $post_id, 'place',              $_POST['place']              ); // 活動場所
-        update_post_meta( $post_id, 'categoryRadio',      $_POST['categoryRadio']      ); // サークルカテゴリ
-        update_post_meta( $post_id, 'establishmentDate',  $_POST['establishmentDate']  ); // 設立日
-        update_post_meta( $post_id, 'activityFrequency',  $_POST['activityFrequency']  ); // 活動頻度
-        update_post_meta( $post_id, 'membershipFree',     $_POST['membershipFree']     ); // 会費
-        update_post_meta( $post_id, 'activityDetail',     $_POST['activityDetail']     ); // 活動内容
-        update_post_meta( $post_id, 'contactMailAddress', $_POST['contactMailAddress'] ); // 連絡先
-        update_post_meta( $post_id, 'representative',     $_POST['representative']     ); // 代表者氏名
-        update_post_meta( $post_id, 'twitterUserName',    $_POST['twitterUserName']    ); // 公式Twitterユーザー名
-        update_post_meta( $post_id, 'features',           $_POST['features'] ?? array()); // 特色（配列をシリアル化して文字列で保存）
+        update_post_meta($post_id, 'belongNum',          $_POST['belongNum']); // 所属人数
+        update_post_meta($post_id, 'schedule',           $_POST['schedule']); // 活動日程
+        update_post_meta($post_id, 'place',              $_POST['place']); // 活動場所
+        update_post_meta($post_id, 'categoryRadio',      $_POST['categoryRadio']); // サークルカテゴリ
+        update_post_meta($post_id, 'establishmentDate',  $_POST['establishmentDate']); // 設立日
+        update_post_meta($post_id, 'activityFrequency',  $_POST['activityFrequency']); // 活動頻度
+        update_post_meta($post_id, 'membershipFree',     $_POST['membershipFree']); // 会費
+        update_post_meta($post_id, 'activityDetail',     $_POST['activityDetail']); // 活動内容
+        update_post_meta($post_id, 'contactMailAddress', $_POST['contactMailAddress']); // 連絡先
+        update_post_meta($post_id, 'representative',     $_POST['representative']); // 代表者氏名
+        update_post_meta($post_id, 'twitterUserName',    $_POST['twitterUserName']); // 公式Twitterユーザー名
+        update_post_meta($post_id, 'features',           $_POST['features'] ?? array()); // 特色（配列をシリアル化して文字列で保存）
 
     } else {
         modal('エラー', '不正なリクエストです。');
@@ -888,10 +915,10 @@ function post_circle() {
     }
 
     // サークルページへリダイレクト
-    if ( $_POST['submit_type'] === 'draft_circle' ) {
-        wp_redirect( home_url('index.php/post-dashboard/?type=circle') );
+    if ($_POST['submit_type'] === 'draft_circle') {
+        wp_redirect(home_url('index.php/post-dashboard/?type=circle'));
     } else {
-        wp_redirect( get_permalink( $post_id ) );
+        wp_redirect(get_permalink($post_id));
     }
     exit;
     return 1;
@@ -913,50 +940,49 @@ function post_circle() {
  * ## カスタムメタデータ一覧
  * - organization  - 所属サークル名
  * - permission    - 内部公開設定 true-内部公開, false-外部公開
-*/
-function post_activity() {
-    if ( isset(
+ */
+function post_activity()
+{
+    if (isset(
         $_POST['title'],       // 記事のタイトル
         $_POST['contents'],    // 記事の内容
         $_POST['organizationId'] // 所属しているサークルのカテゴリID
-    ) )
-    {
+    )) {
         // 文字数チェック
-        if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
+        if (mb_strlen($_POST['title'])    > 50) input_value_error_exit();
+        if (mb_strlen($_POST['contents']) <  1) input_value_error_exit();
 
         // タグが規定の名前であるかチェック
-        if ( isset( $_POST['tags'] ) ) {
-            array_map( function ($tag) {
-                if ( !in_array( $tag, array('活動報告', '行事・イベント', '重要報告') ) ) {
+        if (isset($_POST['tags'])) {
+            array_map(function ($tag) {
+                if (!in_array($tag, array('活動報告', '行事・イベント', '重要報告'))) {
                     modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
                     return;
                 }
-            }, $_POST['tags'] );
+            }, $_POST['tags']);
         }
 
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
-            'post_category' => array( get_cat_ID('activity'),  $_POST['organizationId'] ),  // カテゴリID
+            'post_category' => array(get_cat_ID('activity'),  $_POST['organizationId']),  // カテゴリID
             'tags_input'    => $_POST['tags'] ?? '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
 
         /* 新規投稿の場合の処理 */
-        if ( $_POST['submit_type'] === 'post_activity' ) {
+        if ($_POST['submit_type'] === 'post_activity') {
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
-            $post_data['post_name'] = md5( time() );
+            $post_data['post_name'] = md5(time());
         }
 
-        /* 編集の場合の処理 */
-        elseif ( $_POST['submit_type'] === 'edit_activity' ) {
+        /* 編集の場合の処理 */ elseif ($_POST['submit_type'] === 'edit_activity') {
 
-            if ( isset( $_POST['postID'] ) ) {
+            if (isset($_POST['postID'])) {
 
                 // 投稿者かどうか確認
-                $author = get_userdata(get_post( $_POST['postID'] )->post_author);
-                if ( wp_get_current_user()->ID != $author->ID ) {
+                $author = get_userdata(get_post($_POST['postID'])->post_author);
+                if (wp_get_current_user()->ID != $author->ID) {
                     modal('エラー', '記事を更新できるのは本人のみです。');
                     return;
                 }
@@ -964,44 +990,42 @@ function post_activity() {
                 $post_data['ID'] = $_POST['postID'];
 
                 // post_dateは更新させない
-                $post_data['post_date'] = get_post( $_POST['postID'] )->post_date;
+                $post_data['post_date'] = get_post($_POST['postID'])->post_date;
             }
         }
 
-        $post_id = wp_insert_post( $post_data, true );
+        $post_id = wp_insert_post($post_data, true);
 
-        if ( is_wp_error( $post_id ) ) {
+        if (is_wp_error($post_id)) {
             echo $post_id->get_error_code();
             echo $post_id->get_error_message();
             modal('記事の投稿に失敗しました', "{$post_id->get_error_code()}<br>{$post_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return;
         }
-        
+
         // 内部公開 設定
-        if ( isset( $_POST['permission'] ) ) {
-            update_post_meta( $post_id, 'permission', 'true' );
+        if (isset($_POST['permission'])) {
+            update_post_meta($post_id, 'permission', 'true');
         } else {
-            update_post_meta( $post_id, 'permission', 'false' );
+            update_post_meta($post_id, 'permission', 'false');
         }
 
         // 記事内容から画像リンクを取得し、アイキャッチ画像を設定する
         $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
-        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのパターンマッチ
-        $topImage_url = !empty( $matches ) ? esc_url( $matches[0] ) : '';
+        preg_match("/{$pattern}/", $_POST['contents'], $matches); // 画像URLのパターンマッチ
+        $topImage_url = !empty($matches) ? esc_url($matches[0]) : '';
 
-        if ( !empty( $topImage_url ) ) {
-            $topImage_id = get_attachment_id_from_src( $topImage_url ); // urlからサムネイルIDを取得
-            update_post_meta( $post_id, 'topImage', $topImage_id );
-
+        if (!empty($topImage_url)) {
+            $topImage_id = get_attachment_id_from_src($topImage_url); // urlからサムネイルIDを取得
+            update_post_meta($post_id, 'topImage', $topImage_id);
         } else {
-            update_post_meta( $post_id, 'topImage', '' );
+            update_post_meta($post_id, 'topImage', '');
         }
 
         // リダイレクト
-        wp_redirect( get_permalink( $post_id ) );
+        wp_redirect(get_permalink($post_id));
         exit;
         return true;
-
     } else {
         modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
         return;
@@ -1012,49 +1036,48 @@ function post_activity() {
 
 /**
  * ニュース投稿ページ 投稿処理
-*/
-function post_news() {
-    if ( isset(
+ */
+function post_news()
+{
+    if (isset(
         $_POST['title'],       // 記事のタイトル
         $_POST['contents'],    // 記事の内容
-    ) )
-    {
+    )) {
         // 文字数チェック
-        if ( mb_strlen( $_POST['title'] )    > 50 ) input_value_error_exit();
-        if ( mb_strlen( $_POST['contents'] ) <  1 ) input_value_error_exit();
+        if (mb_strlen($_POST['title'])    > 50) input_value_error_exit();
+        if (mb_strlen($_POST['contents']) <  1) input_value_error_exit();
 
         // タグが規定の名前であるかチェック
-        if ( isset( $_POST['tags'] ) ) {
-            array_map( function ( $value ) {
-                if ( !in_array( $value, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡'), true ) ) {
+        if (isset($_POST['tags'])) {
+            array_map(function ($value) {
+                if (!in_array($value, array('行事・イベント', 'レジャー', '食事', 'お知らせ', '重要連絡'), true)) {
                     modal('不正なリクエストです', '投稿を中断しました。もう一度お試しください。');
                     return;
                 }
-            }, $_POST['tags'] );
+            }, $_POST['tags']);
         }
 
         $post_data = array(
             'post_title'    => $_POST['title'],    // タイトル
             'post_content'  => $_POST['contents'], // コンテンツ
-            'post_category' => array( get_cat_ID('news') ),  // カテゴリID
-            'tags_input'    => isset( $_POST['tags'] ) ? $_POST['tags'] : '', // タグ
+            'post_category' => array(get_cat_ID('news')),  // カテゴリID
+            'tags_input'    => isset($_POST['tags']) ? $_POST['tags'] : '', // タグ
             'post_status'   => 'publish', // 公開設定
         );
 
         /* 新規投稿 */
-        if ( $_POST['submit_type'] === 'post_news' ) {
+        if ($_POST['submit_type'] === 'post_news') {
             // スラッグ名を作成する（時間をmd5でハッシュ化したもの）
-            $post_data['post_name'] = md5( time() );
+            $post_data['post_name'] = md5(time());
         }
 
-        /* 更新 */
-        elseif ( $_POST['submit_type'] === 'edit_news' ) {
+        /* 更新 */ elseif ($_POST['submit_type'] === 'edit_news') {
 
-            if ( isset( $_POST['postID'] ) ) {
+            if (isset($_POST['postID'])) {
 
                 // 投稿者かどうか確認
-                $author = get_userdata(get_post( $_POST['postID'] )->post_author);
-                if ( wp_get_current_user()->ID != $author->ID ) {
+                $author = get_userdata(get_post($_POST['postID'])->post_author);
+                if (wp_get_current_user()->ID != $author->ID) {
                     modal('エラー', '記事を更新できるのは本人のみです。');
                     return;
                 }
@@ -1062,52 +1085,50 @@ function post_news() {
                 $post_data['ID'] = $_POST['postID'];
 
                 // post_dateは更新させない
-                $post_data['post_date'] = get_post( $_POST['postID'] )->post_date;
+                $post_data['post_date'] = get_post($_POST['postID'])->post_date;
             }
         }
 
-        $post_id = wp_insert_post( $post_data, true );
+        $post_id = wp_insert_post($post_data, true);
 
-        if ( is_wp_error( $post_id ) ) {
+        if (is_wp_error($post_id)) {
             echo $post_id->get_error_code();
             echo $post_id->get_error_message();
             modal('記事の投稿に失敗しました', "{$post_id->get_error_code()}<br>{$post_id->get_error_message()}<br>iputone.staff@gmail.comへ問い合わせてください。");
             return;
         }
-        
+
         // クリップ 設定
-        if ( isset( $_POST['clip'] ) ) {
-            update_post_meta( $post_id, 'clip', $_POST['limit_date'] );
+        if (isset($_POST['clip'])) {
+            update_post_meta($post_id, 'clip', $_POST['limit_date']);
         } else {
-            update_post_meta( $post_id, 'clip', 'false' );
+            update_post_meta($post_id, 'clip', 'false');
         }
 
         // 内部公開 設定
-        if ( isset( $_POST['permission'] ) ) {
-            update_post_meta( $post_id, 'permission', 'true' );
+        if (isset($_POST['permission'])) {
+            update_post_meta($post_id, 'permission', 'true');
         } else {
-            update_post_meta( $post_id, 'permission', 'false' );
+            update_post_meta($post_id, 'permission', 'false');
         }
 
         // 記事内容からアイキャッチ画像 設定
         $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
 
-        preg_match( "/{$pattern}/", $_POST['contents'], $matches ); // 画像URLのマッチ
+        preg_match("/{$pattern}/", $_POST['contents'], $matches); // 画像URLのマッチ
 
-        if ( !empty($matches) ) {
-            $topImage_url = esc_url( $matches[0] );
-            $topImage_id = get_attachment_id_from_src( $topImage_url ); // urlからサムネイルIDを取得
-            update_post_meta( $post_id, 'topImage', $topImage_id );
-
+        if (!empty($matches)) {
+            $topImage_url = esc_url($matches[0]);
+            $topImage_id = get_attachment_id_from_src($topImage_url); // urlからサムネイルIDを取得
+            update_post_meta($post_id, 'topImage', $topImage_id);
         } else {
-            update_post_meta( $post_id, 'topImage', '' );
+            update_post_meta($post_id, 'topImage', '');
         }
 
         // リダイレクト
-        wp_redirect( get_permalink( $post_id ) );
+        wp_redirect(get_permalink($post_id));
         exit;
         return true;
-
     } else {
         modal('エラー', '不正なリクエストです。');
         return;
@@ -1116,35 +1137,35 @@ function post_news() {
 
 
 
-function participation_application() {
-    if ( isset(
+function participation_application()
+{
+    if (isset(
         $_POST['grade'],       // 学年
         $_POST['department'],  // 学科
         $_POST['reason'],      // 理由
         $_POST['postID']       // 投稿ID
-    ) )
-    {
+    )) {
         // 入力チェック
         $default_grade = array('1', '2', '3', '4', '教授');
-        if ( !in_array( $_POST['grade'], $default_grade, true ) ) {
+        if (!in_array($_POST['grade'], $default_grade, true)) {
             modal('不正なリクエストです', 'もう一度お試しください。');
             return;
         }
 
         $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学', 'その他');
-        if ( !in_array( $_POST['department'], $default_department, true ) ) {
+        if (!in_array($_POST['department'], $default_department, true)) {
             modal('不正なリクエストです', 'もう一度お試しください。');
             return;
         }
 
-        if ( mb_strlen( $_POST['reason'] ) > 500 ) input_value_error_exit();
+        if (mb_strlen($_POST['reason']) > 500) input_value_error_exit();
 
         // 情報取得
-        $circle_post = get_post( $_POST['postID'] ); // サークル情報
+        $circle_post = get_post($_POST['postID']); // サークル情報
         $user = wp_get_current_user(); // ユーザー情報
 
         // 未ログインの場合
-        if ( $user->ID === 0 ) {
+        if ($user->ID === 0) {
             modal('不正なリクエストです', 'ログインしてからお試しください。');
             return;
         }
@@ -1154,11 +1175,11 @@ function participation_application() {
 
         // 承認用リンク作成
         $user_id = $user->ID;
-        $approval_key = substr( md5( $user_id . $_POST['postID'] ), 0, 16 ); // userIdとpostIdをmd5でハッシュ化
+        $approval_key = substr(md5($user_id . $_POST['postID']), 0, 16); // userIdとpostIdをmd5でハッシュ化
         $approval_url = home_url("index.php/post-circle/?_post=edit&id={$_POST['postID']}&userid={$user_id}&approval_key={$approval_key}");
 
         // 承認用メール
-        $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
+        $to = get_post_custom($_POST['postID'])['contactMailAddress'][0];
         $subject = "【{$circle_post->post_title}】参加申請が届きました。";
         $message = "
 {$user->last_name} {$user->first_name}さんからサークルへ参加申請が届きました。
@@ -1180,7 +1201,7 @@ IPUT ONEへのお問い合わせはこのメールに返信してください。
 IPUT ONE制作チーム
 iputone.staff@gmail.com
 ";
-        my_sendmail( $to, $subject, $message );
+        my_sendmail($to, $subject, $message);
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
         return;
@@ -1192,35 +1213,35 @@ iputone.staff@gmail.com
 
 
 
-function circle_contact() {
-    if ( isset(
+function circle_contact()
+{
+    if (isset(
         $_POST['grade'],       // 学年
         $_POST['department'],  // 学科
         $_POST['contactbody'], // 問い合わせ内容
         $_POST['postID']       // 投稿ID
-    ) )
-    {
+    )) {
         // 入力チェック
         $default_grade = array('1', '2', '3', '4', '教授');
-        if ( !in_array( $_POST['grade'], $default_grade, true ) ) {
+        if (!in_array($_POST['grade'], $default_grade, true)) {
             modal('不正なリクエストです', 'もう一度お試しください。');
             return;
         }
 
         $default_department = array('情報工学科', 'デジタルエンタテイメント学科', '他大学', 'その他');
-        if ( !in_array( $_POST['department'], $default_department, true ) ) {
+        if (!in_array($_POST['department'], $default_department, true)) {
             modal('不正なリクエストです', 'もう一度お試しください。');
             return;
         }
 
-        if ( mb_strlen( $_POST['contactbody'] ) > 500 ) input_value_error_exit();
+        if (mb_strlen($_POST['contactbody']) > 500) input_value_error_exit();
 
         // 情報取得
-        $circle_post = get_post( $_POST['postID'] ); // サークル情報
+        $circle_post = get_post($_POST['postID']); // サークル情報
         $user = wp_get_current_user(); // ユーザー情報
 
         // 未ログインの場合
-        if ( $user->ID === 0 ) {
+        if ($user->ID === 0) {
             modal('不正なリクエストです', 'ログインしてからお試しください。');
             return;
         }
@@ -1229,7 +1250,7 @@ function circle_contact() {
         $login_user_email = get_user_option('user_email', $user->ID);
 
         // お問い合わせメール
-        $to = get_post_custom( $_POST['postID'] )['contactMailAddress'][0];
+        $to = get_post_custom($_POST['postID'])['contactMailAddress'][0];
         $subject = "【IPUT ONE】{$circle_post->post_title}についてお問い合わせを頂いております。";
         $message = "
 {$user->last_name} {$user->first_name}さんからお問い合わせがありました。
@@ -1248,10 +1269,9 @@ IPUT ONEへのお問い合わせはこのメールに返信してください。
 IPUT ONE制作チーム
 iputone.staff@gmail.com
 ";
-        my_sendmail( $to, $subject, $message );
+        my_sendmail($to, $subject, $message);
 
         modal('お問い合わせが完了しました', '返信をお待ちください。');
-
     } else {
         modal('エラー', '不正なリクエストです。');
         return;
@@ -1264,87 +1284,87 @@ iputone.staff@gmail.com
  * POSTリクエストを受け付ける
  * after_setup_theme に処理をフック
  */
-add_action('after_setup_theme', function() {
+add_action('after_setup_theme', function () {
     // ログインする
-    if ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'login' ) {
-        if ( !isset( $_POST['login_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['login_nonce'], 'N4wcFHsn' ) ) return;
+    if (isset($_POST['submit_type']) && $_POST['submit_type'] === 'login') {
+        if (!isset($_POST['login_nonce'])) return;
+        if (!wp_verify_nonce($_POST['login_nonce'], 'N4wcFHsn')) return;
         user_login();
     }
     // サインアップ
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'signup') {
-        if ( !isset( $_POST['signup_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['signup_nonce'], 'N9zxfbth' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'signup') {
+        if (!isset($_POST['signup_nonce'])) return;
+        if (!wp_verify_nonce($_POST['signup_nonce'], 'N9zxfbth')) return;
         $res = user_signup(); // サインアップの処理
         if ($res === true) {
-            wp_redirect( home_url('index.php/signup?t=confirm') );
+            wp_redirect(home_url('index.php/signup?t=confirm'));
             exit;
         }
     }
     // 基本情報の更新
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'profile' ) {
-        if ( !isset( $_POST['profile_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['profile_nonce'], 'vpd8NFzp' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'profile') {
+        if (!isset($_POST['profile_nonce'])) return;
+        if (!wp_verify_nonce($_POST['profile_nonce'], 'vpd8NFzp')) return;
         profile_update();
     }
     // サークルを作成する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_circle' ) {
-        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'post_circle') {
+        if (!isset($_POST['circle_post_nonce'])) return;
+        if (!wp_verify_nonce($_POST['circle_post_nonce'], 'n4Uyh98k')) return;
         post_circle();
     }
     // サークルをドラフト保存する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'draft_circle' ) {
-        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'draft_circle') {
+        if (!isset($_POST['circle_post_nonce'])) return;
+        if (!wp_verify_nonce($_POST['circle_post_nonce'], 'n4Uyh98k')) return;
         post_circle();
     }
     // サークルを編集する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_circle' ) {
-        if ( !isset( $_POST['circle_post_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_post_nonce'], 'n4Uyh98k' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'edit_circle') {
+        if (!isset($_POST['circle_post_nonce'])) return;
+        if (!wp_verify_nonce($_POST['circle_post_nonce'], 'n4Uyh98k')) return;
         post_circle();
     }
     // 活動記録を投稿する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_activity' ) {
-        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'post_activity') {
+        if (!isset($_POST['post_activity_nonce'])) return;
+        if (!wp_verify_nonce($_POST['post_activity_nonce'], 'Mw8mgUz5')) return;
         post_activity();
     }
     // 活動記録を編集する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_activity' ) {
-        if ( !isset( $_POST['post_activity_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['post_activity_nonce'], 'Mw8mgUz5' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'edit_activity') {
+        if (!isset($_POST['post_activity_nonce'])) return;
+        if (!wp_verify_nonce($_POST['post_activity_nonce'], 'Mw8mgUz5')) return;
         post_activity();
     }
     // ニュースを投稿する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'post_news' ) {
-        if ( !isset( $_POST['post_news_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'post_news') {
+        if (!isset($_POST['post_news_nonce'])) return;
+        if (!wp_verify_nonce($_POST['post_news_nonce'], 'Fr4XZRu6')) return;
         post_news();
     }
     // ニュースを投稿する
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'edit_news' ) {
-        if ( !isset( $_POST['post_news_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['post_news_nonce'], 'Fr4XZRu6' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'edit_news') {
+        if (!isset($_POST['post_news_nonce'])) return;
+        if (!wp_verify_nonce($_POST['post_news_nonce'], 'Fr4XZRu6')) return;
         post_news();
     }
     // サークルページ - サークル申請
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'participation_application' ) {
-        if ( !isset( $_POST['participation_application_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['participation_application_nonce'], 'M3fHXt2T' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'participation_application') {
+        if (!isset($_POST['participation_application_nonce'])) return;
+        if (!wp_verify_nonce($_POST['participation_application_nonce'], 'M3fHXt2T')) return;
         participation_application();
     }
     // サークルページ - お問い合わせ
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'circle_contact' ) {
-        if ( !isset( $_POST['circle_contact_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'P5kseWwp' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'circle_contact') {
+        if (!isset($_POST['circle_contact_nonce'])) return;
+        if (!wp_verify_nonce($_POST['circle_contact_nonce'], 'P5kseWwp')) return;
         circle_contact();
     }
     // ダッシュボード - メール送信用GASデプロイID
-    elseif ( isset( $_POST['submit_type'] ) && $_POST['submit_type'] === 'gas_deploy_id' ) {
-        if ( !isset( $_POST['circle_contact_nonce'] ) ) return;
-        if ( !wp_verify_nonce( $_POST['circle_contact_nonce'], 'Ujfsi4390k' ) ) return;
+    elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'gas_deploy_id') {
+        if (!isset($_POST['circle_contact_nonce'])) return;
+        if (!wp_verify_nonce($_POST['circle_contact_nonce'], 'Ujfsi4390k')) return;
         $to = get_option('admin_email');
         $subject = "{$_POST['your_name']} さんからお問い合わせを受け取っています。";
         $message = "
@@ -1366,19 +1386,20 @@ add_action('after_setup_theme', function() {
  * @param string $message - 本文
  * @return bool  true - 送信成功, false - メールアドレス取得失敗
  * 
-*/
-function my_sendmail( $to, $subject, $message ) {
+ */
+function my_sendmail($to, $subject, $message)
+{
     // gasのidとurl
     // iputone.staff@gmai.comのGASにデータを送信します。
     // デプロイID
     $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
     //POST送信先
     $post_url = "https://script.google.com/macros/s/$id/exec";
-    
+
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
 
-    if ( $admin_email ) {
+    if ($admin_email) {
         //POSTデータ
         $post_data = array(
             "toAddress" => $to,
@@ -1392,7 +1413,7 @@ function my_sendmail( $to, $subject, $message ) {
             CURLOPT_URL => $post_url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_POST => true, 
+            CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => json_encode($post_data),
         ]);
         // post実行
@@ -1414,17 +1435,16 @@ function my_sendmail( $to, $subject, $message ) {
  * @param string $headers - メールヘッダ。特別な理由がない限り指定しない
  * @return bool  true - 送信成功, false - メールアドレス取得失敗
  */
-function my_gas_sendmail( $to, $subject, $message, $headers = "" ) {
+function my_gas_sendmail($to, $subject, $message, $headers = "")
+{
 
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
 
-    $gas_deploy_id = get_post_meta( 1, 'gas_deploy_id', true );
+    $gas_deploy_id = get_post_meta(1, 'gas_deploy_id', true);
     $post_url = "https://script.google.com/macros/s/$gas_deploy_id/exec";
 
-    if ( $admin_email ) {
-        
-        
+    if ($admin_email) {
     } else {
         return false;
     }
@@ -1437,8 +1457,9 @@ function my_gas_sendmail( $to, $subject, $message, $headers = "" ) {
  * inputフォームエラー時の警告モーダル
  * @param string $error_code - エラーコード
  * @return false
-*/
-function input_value_error_exit( $error_code = "" ) {
+ */
+function input_value_error_exit($error_code = "")
+{
     modal('エラー', "入力フォームを修正してもう一度お試しください。{$error_code}");
     return;
 }
@@ -1449,5 +1470,5 @@ function input_value_error_exit( $error_code = "" ) {
  * WordPress標準の絵文字生成機能のアクションフックを解除
  * 理由：Trix Editorと干渉して絵文字を入力すると画像として張り付けてしまう。
  */
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'wp_print_styles', 'print_emoji_styles', 10 );
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles', 10);
