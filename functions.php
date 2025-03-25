@@ -906,7 +906,7 @@ function post_circle()
         update_post_meta($post_id, 'activityDetail',     $_POST['activityDetail']); // 活動内容
         update_post_meta($post_id, 'contactMailAddress', $_POST['contactMailAddress']); // 連絡先
         update_post_meta($post_id, 'representative',     $_POST['representative']); // 代表者氏名
-        update_post_meta($post_id, 'twitterUserName',    $_POST['twitterUserName']); // 公式Twitterユーザー名
+        update_post_meta($post_id, 'twitterUserName',    $_POST['twitterUserName']); // 公式Xユーザー名
         update_post_meta($post_id, 'features',           $_POST['features'] ?? array()); // 特色（配列をシリアル化して文字列で保存）
 
     } else {
@@ -1135,7 +1135,39 @@ function post_news()
     }
 }
 
+// TODO: 参加申請をdiscordに送信する実装を行う
+function join_application_send_discord($user, $grade, $reason)
+{
+    // application_user_name: str = Form(..., description="申請ユーザー名"),
+    // application_user_id: int = Form(..., description="申請ユーザーID"),
+    // to_user_id: int = Form(..., description="対象ユーザーID"),
+    // grade: int = Form(..., description="学年"),
+    // department: str = Form(..., description="学科"),
+    // reason: str = Form(..., description="参加理由"),
+    // club_name: str = Form(..., description="対象のサークル名"),
+    // post_id: int = Form(
+    //     ..., description="対象のサークルのpost id（サークルID）"
 
+    $url = 'http://localhost:3333/circle/join/application';
+
+    $data = array(
+        'application_user_name' => 'メッセージ',
+    );
+
+    $context = array(
+        'http' => array(
+            'method'  => 'POST',
+            'header'  => implode("\r\n", array('Content-Type: application/x-www-form-urlencoded',)),
+            'content' => http_build_query($data)
+        )
+    );
+
+    $html = file_get_contents($url, false, stream_context_create($context));
+
+    //var_dump($http_response_header);
+
+    echo $html;
+}
 
 function participation_application()
 {
@@ -1202,6 +1234,26 @@ IPUT ONE制作チーム
 iputone.staff@gmail.com
 ";
         my_sendmail($to, $subject, $message);
+
+        // application_user_name: str = Form(..., description="申請ユーザー名"),
+        // application_user_id: int = Form(..., description="申請ユーザーID"),
+        // to_user_id: int = Form(..., description="対象ユーザーID"),
+        // grade: int = Form(..., description="学年"),
+        // department: str = Form(..., description="学科"),
+        // reason: str = Form(..., description="参加理由"),
+        // club_name: str = Form(..., description="対象のサークル名"),
+        // post_id: int = Form(
+        //     ..., description="対象のサークルのpost id（サークルID）"
+
+        // TODO: author_idからDiscordユーザーIDを取得する
+        $author_id = get_post_field('post_author', $_POST['postID']);
+
+        // join_application_send_discord(
+        //     from_discord_user_id: $from_discord_user_id,
+        //     grade: $_POST['grade'],
+        //     reason: $_POST['reason'],
+        //     to_discord_user_id: $to_discord_user_id
+        // );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
         return;
