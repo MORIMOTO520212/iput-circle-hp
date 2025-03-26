@@ -33,7 +33,15 @@ $displayname = get_user_option('display_name', $user_id);
 $email = get_user_option('user_email', $user_id);
 
 $export_data = [
-    'user_id' => $user_id
+    'title' => get_the_title(),
+    'userId' => $user_id,
+    'userName' => $username,
+    'firstName' => $firstname,
+    'lastName' => $lastname,
+    'displayName' => $displayname,
+    'email' => $email,
+    'nonceHtml' => wp_nonce_field(action: 'vpd8NFzp', name: 'profile_nonce'),
+    'themeFileUri' => get_theme_file_uri()
 ];
 ?>
 
