@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { useProps } from "../../hooks/useProps";
+import { WpNonce } from "../../components/WpNonce";
 
 type TextField = string | undefined;
 
@@ -18,7 +19,7 @@ type Props = {
   nonceHtml: string;
 } & DefaultProps;
 
-const Page = () => {
+function Page() {
   const props = useProps<Props>();
 
   return (
@@ -105,7 +106,7 @@ const Page = () => {
           <label htmlFor="password">新しいパスワード</label>
         </div>
 
-        <span dangerouslySetInnerHTML={{ __html: props.nonceHtml }}></span>
+        <WpNonce nonceHtml={props.nonceHtml} />
 
         <div className="d-flex justify-content-end mb-3">
           <button
@@ -151,7 +152,7 @@ const Page = () => {
       </form>
     </div>
   );
-};
+}
 
 const page = createRoot(document.getElementById("aboutPage"));
 page.render(<Page />);
