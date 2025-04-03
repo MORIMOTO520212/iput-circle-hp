@@ -134,8 +134,9 @@ if (is_author()) { // is user page
         }
     </script>
 
-    <!-- React読み込み -->
+    <!-- MEMO: React, tailwindcssを読み込む -->
     <script defer="defer" src="<?= get_theme_file_uri('/dist/assets/bundle.js') ?>"></script>
+    <!-- <link rel="stylesheet" href="<?= get_theme_file_uri('/dist/assets/index.css') ?>" /> -->
 
     <?php wp_head(); ?>
 </head>

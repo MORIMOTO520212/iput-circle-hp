@@ -1,6 +1,11 @@
-import { createRoot } from "react-dom/client";
-import { useProps } from "../../hooks/useProps";
-import { WpNonce } from "../../components/WpNonce";
+import { createRoot } from 'react-dom/client';
+import { useProps } from '../../hooks/useProps';
+import { WpNonce } from '../../components/WpNonce';
+import { useActionState, useState } from 'react';
+import { getFormProps, getInputProps, useForm } from '@conform-to/react';
+import { getZodConstraint, parseWithZod } from '@conform-to/zod';
+import { profileFormSchema } from '../../features/profile/types';
+import '@/globals.css';
 
 type TextField = string | undefined;
 
@@ -21,6 +26,38 @@ type Props = {
 
 function Page() {
   const props = useProps<Props>();
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+
+  const onSubmit = (postData) => {
+    console.log(postData);
+    // fetch('/profile', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     displayname: postData.displayname,
+    //     lastname: postData.lastname,
+    //     password: postData.password,
+    //     submit_type: postData.submit_type
+    //   }),
+    // });
+  };
+
+  const [lastResult, action, isPending] = useActionState(onSubmit, undefined);
+
+  const [form, fields] = useForm({
+    constraint: getZodConstraint(profileFormSchema),
+    lastResult,
+    defaultNoValidate: true,
+    shouldValidate: 'onInput',
+    defaultValue: {
+      displayName: props.displayName,
+      lastName: props.lastName,
+      firstName: props.firstName,
+      password: undefined,
+    },
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: profileFormSchema });
+    },
+  });
 
   return (
     <div className="main mx-2 mb-5">
@@ -28,61 +65,52 @@ function Page() {
       <form
         id="profile"
         className="form-loading container row-cols-1 g-3 mb-5 max-width-sm"
-        action=""
-        method="post"
-        noValidate
-        style={{ padding: "30px 40px" }}
+        {...getFormProps(form)}
+        action={action}
+        style={{ padding: '30px 40px' }}
       >
         <div className="form-floating mb-3">
           <input
             type="text"
             className="form-control"
-            id="username"
             value={props.userName}
             disabled
           />
           <label htmlFor="username">ユーザー名（変更できません）</label>
         </div>
+        {/* 氏名 */}
         <div className="form-floating mb-3">
           <input
-            type="text"
             className="form-control"
-            id="displayname"
-            placeholder=""
-            name="displayname"
-            value={props.displayName}
-            disabled
+            {...getInputProps(fields.displayName, { type: 'text' })}
+            disabled={!isEditable}
           />
           <label htmlFor="displayname">表示名</label>
         </div>
-        <div className="wrapper-name" style={{ width: "100%" }}>
-          <div className="form-floating mb-3" style={{ width: "49%" }}>
+        <div className="d-flex gap-2">
+          <div className="form-floating mb-3" style={{ width: '49%' }}>
             <input
-              type="text"
-              autoComplete="family-name"
               className="form-control"
-              id="lastname"
-              placeholder=""
-              name="lastname"
-              value={props.lastName}
-              disabled
+              {...getInputProps(fields.lastName, { type: 'text' })}
+              disabled={!isEditable}
             />
             <label htmlFor="lastname">姓</label>
           </div>
-          <div className="form-floating mb-3" style={{ width: "49%" }}>
+          <div className="form-floating mb-3" style={{ width: '49%' }}>
             <input
-              type="text"
-              autoComplete="given-name"
               className="form-control"
-              id="firstname"
-              placeholder=""
-              name="firstname"
-              value={props.firstName}
-              disabled
+              {...getInputProps(fields.firstName, { type: 'text' })}
+              disabled={!isEditable}
             />
             <label htmlFor="firstname">名</label>
           </div>
         </div>
+        <div>
+          {!!fields.lastName.errors || !!fields.firstName.errors ? (
+            <p>{fields.lastName.errors}</p>
+          ) : null}
+        </div>
+        {/* メールアドレス */}
         <div className="form-floating mb-3">
           <input
             type="email"
@@ -93,15 +121,12 @@ function Page() {
           />
           <label htmlFor="email">メールアドレス（変更できません）</label>
         </div>
+        {/* パスワード */}
         <div className="form-floating mb-3">
           <input
-            type="password"
             className="form-control"
-            id="password"
-            placeholder=""
-            name="password"
-            value=""
-            disabled
+            {...getInputProps(fields.password, { type: 'text' })}
+            disabled={!isEditable}
           />
           <label htmlFor="password">新しいパスワード</label>
         </div>
@@ -111,12 +136,11 @@ function Page() {
         <div className="d-flex justify-content-end mb-3">
           <button
             id="edit"
+            type={isEditable ? 'submit' : 'button'}
             className="btn btn-success"
-            type="submit"
-            name="submit_type"
-            value="profile"
+            onClick={() => setIsEditable(true)}
           >
-            編集する
+            {isEditable ? '確定する' : '編集する'}
           </button>
         </div>
 
@@ -154,5 +178,5 @@ function Page() {
   );
 }
 
-const page = createRoot(document.getElementById("aboutPage"));
+const page = createRoot(document.getElementById('profilePage'));
 page.render(<Page />);

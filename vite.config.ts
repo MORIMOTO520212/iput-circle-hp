@@ -1,5 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   server: {
@@ -8,9 +10,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: `assets/bundle.js`,
+        entryFileNames: 'assets/bundle.js',
+        assetFileNames: 'assets/[name][extname]',
       },
     },
   },
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths(), tailwindcss()],
 });

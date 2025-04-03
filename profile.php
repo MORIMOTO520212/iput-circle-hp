@@ -47,7 +47,7 @@ $export_data = [
 
 <?php get_header(); ?>
 
-<div id="aboutPage"></div>
+<div id="profilePage"></div>
 
 <!-- コンテンツ -->
 <div class="main mx-2 mb-5">
