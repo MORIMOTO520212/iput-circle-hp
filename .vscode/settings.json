@@ -5,4 +5,14 @@
   "[php]": {
     "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.semi": true,
+    "prettier.singleQuote": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.semi": true,
+    "prettier.singleQuote": true
+  }
 }
