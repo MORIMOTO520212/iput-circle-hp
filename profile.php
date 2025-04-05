@@ -43,8 +43,8 @@ $export_data = [
     'themeFileUri' => get_theme_file_uri()
 ];
 
-$discord_user_id = get_user_meta($user_id, 'discord_user_id')[0] ?? "";
-$discord_avatar = get_user_meta($user_id, 'discord_avatar')[0] ?? "";
+$discord_user_id = get_user_meta($user_id, 'discord_user_id', true) ?? "";
+$discord_avatar = get_user_meta($user_id, 'discord_avatar', true) ?? "";
 $discord_avatar_url = $discord_user_id && $discord_avatar ? "https://cdn.discordapp.com/avatars/$discord_user_id/$discord_avatar.png?size=256" : "";
 ?>
 

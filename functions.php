@@ -202,6 +202,15 @@ function set_custom_fields()
         'normal',
         'default'
     );
+    /* Discord Bot API Base */
+    add_meta_box(
+        'discordbot_api_base',
+        'Discord Bot API Base',
+        'discordbot_api_base_fields',
+        'dashboard',
+        'normal',
+        'default'
+    );
 }
 add_action('admin_menu', 'set_custom_fields');
 
@@ -301,6 +310,39 @@ function gas_deploy_id_fields()
         </div>
         <div class="submit">
             <input type="hidden" name="submit_type" value="gas_deploy_id">
+            <input type="submit" class="button button-primary" value="保存する">
+        </div>
+    </form>
+<?php
+}
+
+/* Discord Bot API Base */
+function discordbot_api_base_fields()
+{
+?>
+    <style>
+        #mybox .input-text-wrap {
+            margin-bottom: 12px;
+        }
+
+        #mybox label {
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        #mybox .submit {
+            display: flex;
+            width: 100%;
+            justify-content: end;
+        }
+    </style>
+    <form id="mybox" action="" method="post">
+        <div class="input-text-wrap">
+            <label for="input1">Discord Bot API Base Url（*末尾にスラッシュを含めないでください）</label>
+            <input type="text" id="input1" name="discordbot_api_base" value="<?php echo get_post_meta(1, 'discordbot_api_base', true); ?>" placeholder="Discord Bot API Base Url">
+        </div>
+        <div class="submit">
+            <input type="hidden" name="submit_type" value="discordbot_api_base">
             <input type="submit" class="button button-primary" value="保存する">
         </div>
     </form>
@@ -1136,30 +1178,25 @@ function post_news()
 }
 
 function join_application_send_discord(
-    $user,
-    $grade,
-    $reason,
+    $application_user_name,
+    $from_discord_user_id,
     $to_discord_guild_id,
+    $to_discord_user_id,
+    $grade,
     $department,
+    $reason,
     $circle_name,
     $post_id
 ) {
-    // application_user_name: str = Form(..., description="申請ユーザー名"),
-    // application_user_id: int = Form(..., description="申請ユーザーID"),
-    // to_user_id: int = Form(..., description="対象ユーザーID"),
-    // grade: int = Form(..., description="学年"),
-    // department: str = Form(..., description="学科"),
-    // reason: str = Form(..., description="参加理由"),
-    // club_name: str = Form(..., description="対象のサークル名"),
-    // post_id: int = Form(
-    //     ..., description="対象のサークルのpost id（サークルID）"
+    if ($to_discord_guild_id === null && $to_discord_user_id === null) return;
 
-    $url = 'http://localhost:3333/circle/join';
+    $url = get_post_meta(1, 'discordbot_api_base', true) . '/circle/join';
 
     $data = array(
-        'application_user_name' => $user->display_name,
-        'application_user_id'   => $user->ID,
-        'to_discord_guild_id' => $to_discord_guild_id,
+        'application_user_name' => $application_user_name,
+        'from_discord_user_id'   => (int)$from_discord_user_id ?? 0,
+        'to_discord_guild_id' => (int)$to_discord_guild_id ?? 0,
+        'to_discord_user_id' => (int)$to_discord_user_id ?? 0,
         'grade'                 => (int)$grade,
         'department'            => $department,
         'reason'                => $reason,
@@ -1170,13 +1207,12 @@ function join_application_send_discord(
     $context = array(
         'http' => array(
             'method'  => 'POST',
-            'header'  => implode("\r\n", array('Content-Type: application/json',)),
+            'header'  => implode("\r\n", array('Content-Type: application/x-www-form-urlencoded',)),
             'content' => http_build_query($data)
         )
     );
 
-    $html = file_get_contents($url, false, stream_context_create($context));
-    echo $html;
+    file_get_contents($url, false, stream_context_create($context));
 }
 
 function participation_application()
@@ -1245,27 +1281,28 @@ iputone.staff@gmail.com
 ";
         my_sendmail($to, $subject, $message);
 
-        // application_user_name: str = Form(..., description="申請ユーザー名"),
-        // application_user_id: int = Form(..., description="申請ユーザーID"),
-        // to_user_id: int = Form(..., description="対象ユーザーID"),
-        // grade: int = Form(..., description="学年"),
-        // department: str = Form(..., description="学科"),
-        // reason: str = Form(..., description="参加理由"),
-        // club_name: str = Form(..., description="対象のサークル名"),
-        // post_id: int = Form(
-        //     ..., description="対象のサークルのpost id（サークルID）"
-
-        // TODO: author_idからDiscordユーザーIDを取得する
         $author_id = get_post_field('post_author', $_POST['postID']);
 
+        $application_user_name = $user->display_name;
+        $from_discord_user_id = get_user_meta($user->ID, 'discord_user_id', true) ?? null;
+        $to_discord_guild_id = get_post_custom($_POST['postID'])['discordGuildId'][0] ?? null;
+        $to_discord_user_id = get_user_meta($author_id, 'discord_user_id', true) ?? null;
+        $grade = $_POST['grade'] === '教授' ? 5 : (int)$_POST['grade'];
+        $department = $_POST['department'];
+        $reason = $_POST['reason'];
+        $circle_name = $circle_post->post_title;
+        $post_id = $_POST['postID'];
+
         join_application_send_discord(
-            user: $user,
-            grade: $_POST['grade'] === '教授' ? 5 : (int)$_POST['grade'],
-            reason: $_POST['reason'],
-            to_discord_guild_id: get_post_custom($_POST['postID'])['discordGuildId'][0],
-            circle_name: $circle_post->post_title,
-            post_id: $_POST['postID'],
-            department: $_POST['department']
+            application_user_name: $application_user_name,
+            from_discord_user_id: $from_discord_user_id,
+            to_discord_guild_id: $to_discord_guild_id,
+            to_discord_user_id: $to_discord_user_id,
+            grade: $grade,
+            department: $department,
+            reason: $reason,
+            circle_name: $circle_name,
+            post_id: $post_id,
         );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
@@ -1485,17 +1522,9 @@ add_action('after_setup_theme', function () {
     }
     // ダッシュボード - メール送信用GASデプロイID
     elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'gas_deploy_id') {
-        if (!isset($_POST['circle_contact_nonce'])) return;
-        if (!wp_verify_nonce($_POST['circle_contact_nonce'], 'Ujfsi4390k')) return;
-        $to = get_option('admin_email');
-        $subject = "{$_POST['your_name']} さんからお問い合わせを受け取っています。";
-        $message = "
-氏名：{$_POST['your_name']}
-メールアドレス：{$_POST['email']}
-内容：
-{$_POST['contact']}
-        ";
-        my_gas_sendmail($to, $subject, $message);
+        update_post_meta(1, 'gas_deploy_id', $_POST['gas_deploy_id']);
+    } elseif (isset($_POST['submit_type']) && $_POST['submit_type'] === 'discordbot_api_base') {
+        update_post_meta(1, 'discordbot_api_base', $_POST['discordbot_api_base']);
     }
     // Discord認証
     elseif (get_params('code')) {
