@@ -1444,9 +1444,9 @@ function my_sendmail($to, $subject, $message)
     // gasのidとurl
     // iputone.staff@gmai.comのGASにデータを送信します。
     // デプロイID
-    $id = 'AKfycbyT1dyHETFo9r4Z1SRsh23sa6hTTx-Vfs6bKmt0-xvCDURrubEVdAFSWhY4vSHvj4nN';
+    $gas_deploy_id = get_post_meta(1, 'gas_deploy_id', true);
     //POST送信先
-    $post_url = "https://script.google.com/macros/s/$id/exec";
+    $post_url = "https://script.google.com/macros/s/$gas_deploy_id/exec";
 
     // WordPressの管理者メールアドレスを取得
     $admin_email = get_option('admin_email');
