@@ -118,7 +118,6 @@ function is_localhost()
 
 /**
  * カスタム投稿タイプ サークル
- * 
  */
 function post_type_circle()
 {
@@ -131,6 +130,7 @@ function post_type_circle()
             ),
             'public' => true,
             'menu_position' => 5,
+            'show_in_rest' => true,
         )
     );
 }
@@ -1135,9 +1135,15 @@ function post_news()
     }
 }
 
-// TODO: 参加申請をdiscordに送信する実装を行う
-function join_application_send_discord($user, $grade, $reason)
-{
+function join_application_send_discord(
+    $user,
+    $grade,
+    $reason,
+    $to_discord_guild_id,
+    $department,
+    $circle_name,
+    $post_id
+) {
     // application_user_name: str = Form(..., description="申請ユーザー名"),
     // application_user_id: int = Form(..., description="申請ユーザーID"),
     // to_user_id: int = Form(..., description="対象ユーザーID"),
@@ -1148,24 +1154,28 @@ function join_application_send_discord($user, $grade, $reason)
     // post_id: int = Form(
     //     ..., description="対象のサークルのpost id（サークルID）"
 
-    $url = 'http://localhost:3333/circle/join/application';
+    $url = 'http://localhost:3333/circle/join';
 
     $data = array(
-        'application_user_name' => 'メッセージ',
+        'application_user_name' => $user->display_name,
+        'application_user_id'   => $user->ID,
+        'to_discord_guild_id' => $to_discord_guild_id,
+        'grade'                 => (int)$grade,
+        'department'            => $department,
+        'reason'                => $reason,
+        'club_name'             => $circle_name,
+        'post_id'              => $post_id,
     );
 
     $context = array(
         'http' => array(
             'method'  => 'POST',
-            'header'  => implode("\r\n", array('Content-Type: application/x-www-form-urlencoded',)),
+            'header'  => implode("\r\n", array('Content-Type: application/json',)),
             'content' => http_build_query($data)
         )
     );
 
     $html = file_get_contents($url, false, stream_context_create($context));
-
-    //var_dump($http_response_header);
-
     echo $html;
 }
 
@@ -1248,12 +1258,15 @@ iputone.staff@gmail.com
         // TODO: author_idからDiscordユーザーIDを取得する
         $author_id = get_post_field('post_author', $_POST['postID']);
 
-        // join_application_send_discord(
-        //     from_discord_user_id: $from_discord_user_id,
-        //     grade: $_POST['grade'],
-        //     reason: $_POST['reason'],
-        //     to_discord_user_id: $to_discord_user_id
-        // );
+        join_application_send_discord(
+            user: $user,
+            grade: $_POST['grade'] === '教授' ? 5 : (int)$_POST['grade'],
+            reason: $_POST['reason'],
+            to_discord_guild_id: get_post_custom($_POST['postID'])['discordGuildId'][0],
+            circle_name: $circle_post->post_title,
+            post_id: $_POST['postID'],
+            department: $_POST['department']
+        );
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
         return;
