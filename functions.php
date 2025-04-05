@@ -1293,17 +1293,19 @@ iputone.staff@gmail.com
         $circle_name = $circle_post->post_title;
         $post_id = $_POST['postID'];
 
-        join_application_send_discord(
-            application_user_name: $application_user_name,
-            from_discord_user_id: $from_discord_user_id,
-            to_discord_guild_id: $to_discord_guild_id,
-            to_discord_user_id: $to_discord_user_id,
-            grade: $grade,
-            department: $department,
-            reason: $reason,
-            circle_name: $circle_name,
-            post_id: $post_id,
-        );
+        if (get_post_meta(1, 'discordbot_api_base', true)) {
+            join_application_send_discord(
+                application_user_name: $application_user_name,
+                from_discord_user_id: $from_discord_user_id,
+                to_discord_guild_id: $to_discord_guild_id,
+                to_discord_user_id: $to_discord_user_id,
+                grade: $grade,
+                department: $department,
+                reason: $reason,
+                circle_name: $circle_name,
+                post_id: $post_id,
+            );
+        }
 
         modal('申請が完了しました', '参加完了メールをお待ちください。');
         return;
