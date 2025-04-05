@@ -324,8 +324,8 @@ function get_attachment_id_from_src($image_src)
 
 /**
  * Bootstrap モーダル テンプレート関数
- * 
- * modal(モーダルのタイトル, モーダルの本文)
+ * @param string $title モーダルのタイトル
+ * @param string $message モーダルの本文
  */
 function modal($title, $message)
 {
@@ -341,7 +341,7 @@ function modal($title, $message)
                     <?php echo $message; ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">わかりました</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">了解</button>
                 </div>
             </div>
         </div>
@@ -1343,6 +1343,63 @@ iputone.staff@gmail.com
     }
 }
 
+function discord_authentication()
+{
+    $param_code = get_params('code');
+
+    $url = 'https://discord.com/api/oauth2/token';
+
+    $data = array(
+        'client_id' => '1250622307618132019',
+        'client_secret' => '8RSjnPinR-4LGlPIMWd6bJimCS8ZJM85',
+        'grant_type' => 'authorization_code',
+        'code' => $param_code,
+        'redirect_uri' => 'https://iput-one.com/index.php/profile/',
+    );
+
+    $context = array(
+        'http' => array(
+            'method'  => 'POST',
+            'header'  => implode("\r\n", array('Content-Type: application/x-www-form-urlencoded',)),
+            'content' => http_build_query($data, "", "&")
+        )
+    );
+
+    try {
+        $oauthResponse = file_get_contents($url, false, stream_context_create($context));
+        $oauthResponse = json_decode($oauthResponse, true);
+    } catch (Exception $e) {
+        modal('認証に失敗しました。。', $e);
+        return;
+    }
+
+    // ユーザー情報を取得する
+    $url = 'https://discord.com/api/users/@me';
+    $access_token = $oauthResponse['access_token'];
+    $context = array(
+        'http' => array(
+            'method'  => 'GET',
+            'header'  => implode("\r\n", array("Authorization: Bearer $access_token",)),
+        )
+    );
+
+    try {
+        $userResponse = file_get_contents($url, false, stream_context_create($context));
+        $userResponse = json_decode($userResponse, true);
+    } catch (Exception $e) {
+        modal('ユーザーの取得に失敗しました。', $e);
+        return;
+    }
+
+    // Discord情報をDBに保存する
+    $user = wp_get_current_user();
+    add_user_meta($user->ID, 'discord_access_token', $oauthResponse['access_token'], true);
+    add_user_meta($user->ID, 'discord_refresh_token', $oauthResponse['refresh_token'], true);
+    add_user_meta($user->ID, 'discord_user_id', $userResponse['id'], true);
+    add_user_meta($user->ID, 'discord_avatar', $userResponse['avatar'], true);
+
+    modal('Discordの連携が正常に行われました。', 'IPUT ONEのアカウントをDiscordと連携させることで、さまざまなIPUT ONEの機能をDiscordで使うことができます。');
+}
 
 
 /**
@@ -1439,6 +1496,10 @@ add_action('after_setup_theme', function () {
 {$_POST['contact']}
         ";
         my_gas_sendmail($to, $subject, $message);
+    }
+    // Discord認証
+    elseif (get_params('code')) {
+        discord_authentication();
     }
 });
 

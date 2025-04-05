@@ -15,14 +15,13 @@ if (!is_user_logged_in()) {
 
 $param_t = get_params('t'); // パラメータ取得
 
-if (isset($param_t)) {
-    // ログアウト処理
-    if ($param_t == "logout") {
-        wp_logout();
-        wp_redirect(home_url());
-        exit;
-    }
+// ログアウト処理
+if (isset($param_t) && $param_t === "logout") {
+    wp_logout();
+    wp_redirect(home_url());
+    exit;
 }
+
 
 /* ユーザープロファイル情報取得 */
 $user_id = wp_get_current_user()->id;
@@ -43,16 +42,29 @@ $export_data = [
     'nonceHtml' => wp_nonce_field(action: 'vpd8NFzp', name: 'profile_nonce'),
     'themeFileUri' => get_theme_file_uri()
 ];
+
+$discord_user_id = get_user_meta($user_id, 'discord_user_id')[0] ?? "";
+$discord_avatar = get_user_meta($user_id, 'discord_avatar')[0] ?? "";
+$discord_avatar_url = $discord_user_id && $discord_avatar ? "https://cdn.discordapp.com/avatars/$discord_user_id/$discord_avatar.png?size=256" : "";
 ?>
 
 <?php get_header(); ?>
 
-<div id="profilePage"></div>
+<!-- <div id="profilePage"></div> -->
 
 <!-- コンテンツ -->
 <div class="main mx-2 mb-5">
     <h2 class="txt-subject text-center"><?php the_title(); ?></h2>
     <form id="profile" class="form-loading container row-cols-1 g-3 mb-5 max-width-sm" action="" method="post" novalidate style="padding: 30px 40px;">
+        <?php
+        if ($discord_avatar_url) {
+        ?>
+            <div class="mb-3 w-100 d-flex justify-content-center">
+                <img src="<?= $discord_avatar_url ?>" class="w-25 rounded-circle" />
+            </div>
+        <?php
+        }
+        ?>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="username" value="<?php echo $username; ?>" disabled>
             <label for="username">ユーザー名（変更できません）</label>
@@ -95,11 +107,11 @@ $export_data = [
 
         <div class="mb-5">
             <p class="mb-2 fw-bold">アカウント連携</p>
-            <a href="https://discord.com/oauth2/authorize?client_id=1250622307618132019" class="discord-button mb-2">
+            <a href="https://discord.com/oauth2/authorize?client_id=1250622307618132019&response_type=code&redirect_uri=https%3A%2F%2Fiput-one.com%2Findex.php%2Fprofile%2F&scope=identify" class="discord-button mb-2">
                 <img src="<?= get_theme_file_uri('src/Discord-Symbol-White.svg'); ?>" />
                 <p class="text-white">Discordと連携する</p>
             </a>
-            <small class="d-block">IPUT ONEのアカウントをDiscordアカウントと連携することで、IPUT ONEのさまざまな機能をDiscordで使うことができます。</small>
+            <small class="d-block">IPUT ONEのアカウントをDiscordと連携させることで、さまざまなIPUT ONEの機能をDiscordで使うことができます。</small>
         </div>
 
         <div class="d-flex justify-content-between">
