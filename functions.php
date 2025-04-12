@@ -1179,7 +1179,8 @@ function post_news()
 
 function join_application_send_discord(
     $application_user_name,
-    $from_discord_user_id,
+    $application_user_email,
+    $application_discord_user_id,
     $to_discord_guild_id,
     $to_discord_user_id,
     $grade,
@@ -1194,9 +1195,10 @@ function join_application_send_discord(
 
     $data = array(
         'application_user_name' => $application_user_name,
-        'from_discord_user_id'   => (int)$from_discord_user_id ?? 0,
+        'application_discord_user_id'   => (int)$application_discord_user_id ?? 0,
         'to_discord_guild_id' => (int)$to_discord_guild_id ?? 0,
         'to_discord_user_id' => (int)$to_discord_user_id ?? 0,
+        'application_user_email' => $application_user_email,
         'grade'                 => (int)$grade,
         'department'            => $department,
         'reason'                => $reason,
@@ -1284,7 +1286,8 @@ iputone.staff@gmail.com
         $author_id = get_post_field('post_author', $_POST['postID']);
 
         $application_user_name = $user->display_name;
-        $from_discord_user_id = get_user_meta($user->ID, 'discord_user_id', true) ?? null;
+        $application_user_email = $user->user_email;;
+        $application_discord_user_id = get_user_meta($user->ID, 'discord_user_id', true) ?? null;
         $to_discord_guild_id = get_post_custom($_POST['postID'])['discordGuildId'][0] ?? null;
         $to_discord_user_id = get_user_meta($author_id, 'discord_user_id', true) ?? null;
         $grade = $_POST['grade'] === '教授' ? 5 : (int)$_POST['grade'];
@@ -1296,7 +1299,8 @@ iputone.staff@gmail.com
         if (get_post_meta(1, 'discordbot_api_base', true)) {
             join_application_send_discord(
                 application_user_name: $application_user_name,
-                from_discord_user_id: $from_discord_user_id,
+                application_user_email: $application_user_email,
+                application_discord_user_id: $application_discord_user_id,
                 to_discord_guild_id: $to_discord_guild_id,
                 to_discord_user_id: $to_discord_user_id,
                 grade: $grade,
