@@ -8,6 +8,7 @@ require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 // wpmu_signup_user(), wpmu_signup_user_notification()
 require_once(ABSPATH . 'wp-includes/ms-functions.php');
 
+require_once(ABSPATH . 'wp-content/themes/iput-circle-hp/routes.php');
 
 
 /* * * * 変数の初期化 * * * */
@@ -1179,6 +1180,7 @@ function post_news()
 
 function join_application_send_discord(
     $application_user_name,
+    $application_user_display_name,
     $application_user_email,
     $application_discord_user_id,
     $to_discord_guild_id,
@@ -1195,6 +1197,7 @@ function join_application_send_discord(
 
     $data = array(
         'application_user_name' => $application_user_name,
+        'application_user_display_name' => $application_user_display_name,
         'application_discord_user_id'   => (int)$application_discord_user_id ?? 0,
         'to_discord_guild_id' => (int)$to_discord_guild_id ?? 0,
         'to_discord_user_id' => (int)$to_discord_user_id ?? 0,
@@ -1286,7 +1289,12 @@ iputone.staff@gmail.com
         $author_id = get_post_field('post_author', $_POST['postID']);
 
         $application_user_name = $user->display_name;
-        $application_user_email = $user->user_email;;
+
+        $first_name = get_user_option('first_name', $user_id);
+        $last_name = get_user_option('last_name', $user_id);
+        $application_user_display_name = "{$last_name} {$first_name}";
+
+        $application_user_email = $user->user_email;
         $application_discord_user_id = get_user_meta($user->ID, 'discord_user_id', true) ?? null;
         $to_discord_guild_id = get_post_custom($_POST['postID'])['discordGuildId'][0] ?? null;
         $to_discord_user_id = get_user_meta($author_id, 'discord_user_id', true) ?? null;
@@ -1299,6 +1307,7 @@ iputone.staff@gmail.com
         if (get_post_meta(1, 'discordbot_api_base', true)) {
             join_application_send_discord(
                 application_user_name: $application_user_name,
+                application_user_display_name: $application_user_display_name,
                 application_user_email: $application_user_email,
                 application_discord_user_id: $application_discord_user_id,
                 to_discord_guild_id: $to_discord_guild_id,
