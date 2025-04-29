@@ -8,7 +8,7 @@ require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 // wpmu_signup_user(), wpmu_signup_user_notification()
 require_once(ABSPATH . 'wp-includes/ms-functions.php');
 
-// require_once(ABSPATH . 'wp-content/themes/iput-circle-hp/routes.php');
+require_once(__DIR__ . '/routes.php');
 
 
 /* * * * 変数の初期化 * * * */
