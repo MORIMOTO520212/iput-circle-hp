@@ -114,7 +114,7 @@ get_header();
                     <div class="thumbnail col-4 col-lg-12">
                         <?php
                         // サムネイルURL
-                        $thumbnail_url = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png');
+                        $thumbnail_url = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('public/image/no_image_activity.png');
                         ?>
                         <img src="<?php echo $thumbnail_url; ?>"
                         class="card-img-top ratio h-100" alt="...">

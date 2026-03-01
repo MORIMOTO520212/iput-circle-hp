@@ -18,7 +18,7 @@ if ( isset( $param_token ) ) {
 <?php get_header(); ?>
 
 
-<main class="bg" style="background-image: url('<?php echo get_theme_file_uri('src/background/student-salon-blue.webp'); ?>');">
+<main class="bg" style="background-image: url('<?php echo get_theme_file_uri('public/image/background/student-salon-blue.webp'); ?>');">
     <div class="container pt-5 pb-5">
         <div class="d-flex justify-content-center align-items-center">
             <style>

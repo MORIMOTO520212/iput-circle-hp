@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main class="contents" style="background-image: url('<?php echo get_theme_file_uri('src/background/student-salon-blue.webp'); ?>')">
+<main class="contents" style="background-image: url('<?php echo get_theme_file_uri('public/image/background/student-salon-blue.webp'); ?>')">
     <!-- LOGIN FORM -->
     <div class="container max-width-md w-100 h-100 d-flex align-items-center justify-content-center p-5" id="form-login">
         <form class="form-loading row row-cols-1 g-3 p-4 pb-5 max-width-md needs-validation" id="form" action="" method="post" novalidate>

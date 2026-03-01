@@ -2,6 +2,40 @@
 
 記事のサークルタグは記事のカテゴリーに追加している。get_the_category()で取得可能。
 
+## 実行
+
+### 1. Docker で WordPress・MySQL・phpMyAdmin を起動する
+
+```bash
+docker compose -f docker/docker-compose.yml up -d
+```
+
+| サービス   | URL                    |
+| ---------- | ---------------------- |
+| WordPress  | http://localhost:10090 |
+| phpMyAdmin | http://localhost:10099 |
+
+停止するには：
+
+```bash
+docker compose -f docker/docker-compose.yml down
+```
+
+### 2. フロントエンドのビルド
+
+依存パッケージをインストールする（初回のみ）：
+
+```bash
+npm install
+```
+
+| コマンド          | 説明                                         |
+| ----------------- | -------------------------------------------- |
+| `npm run dev`     | Vite のウォッチビルド（開発時）              |
+| `npm run build`   | TypeScript 型チェック + プロダクションビルド |
+| `npm run start`   | Vite 開発サーバー起動                        |
+| `npm run preview` | ビルド成果物をローカルサーバーでプレビュー   |
+
 ## ディレクトリ構造
 
 ```

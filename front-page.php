@@ -10,7 +10,7 @@
 
 <main class="contents">
   <!-- ファーストビュー -->
-  <div class="top row row-cols-1 row-cols-md-2 g-0 overflow-hidden" style="background-image: url('<?php echo get_theme_file_uri('src/background/cocoon-tower2.webp'); ?>');">
+  <div class="top row row-cols-1 row-cols-md-2 g-0 overflow-hidden" style="background-image: url('<?php echo get_theme_file_uri('public/image/background/cocoon-tower2.webp'); ?>');">
     <div class="col"></div>
     <div class="col">
       <?php
@@ -459,7 +459,7 @@ function circle_card($circle_name, $thumbnail_image, $place_text, $members_text,
       </a>
       <div class="row g-0">
         <div class="col-4 col-lg-12">
-          <img src="<?php echo !empty($thumbnail_image) ? wp_get_attachment_image_src($thumbnail_image)[0] : get_theme_file_uri('src/no_image.png'); ?>" class="card-img-top ratio-3x2 h-100" alt="...">
+          <img src="<?php echo !empty($thumbnail_image) ? wp_get_attachment_image_src($thumbnail_image)[0] : get_theme_file_uri('public/image/no_image.png'); ?>" class="card-img-top ratio-3x2 h-100" alt="...">
         </div>
         <div class="col-8 col-lg-12">
           <div class="card-body h-100 d-flex flex-column">
@@ -583,7 +583,7 @@ function create_article_datas(WP_Post $post, ?array $article_tags_array): ?objec
   $article_id->date    = get_the_date();     // 投稿日
   $article_id->excerpt = get_the_excerpt();  // 本文
   $post_custom = get_post_custom(get_the_ID());
-  $article_id->img = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src($post_custom['topImage'][0])[0] : get_theme_file_uri('src/no_image_activity.png');
+  $article_id->img = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src($post_custom['topImage'][0])[0] : get_theme_file_uri('public/image/no_image_activity.png');
 
   if ($article_tags_array != null) :
     if (in_array('重要', $article_tags_array)) : // 重要タグの有無

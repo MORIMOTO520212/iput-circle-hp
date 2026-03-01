@@ -55,7 +55,7 @@ $faqData = array(
 <!-- faq -->
 <main class="container-fluid p-0" id="contents">
     <div class="position-relative" id="faq-top">
-        <img src="<?php echo get_theme_file_uri('src/background/room1.webp'); ?>" class="w-100">
+        <img src="<?php echo get_theme_file_uri('public/image/background/room1.webp'); ?>" class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="text-center text-white">
                 <h1>よくあるご質問</h1>
@@ -78,7 +78,7 @@ $faqData = array(
                         <?php
                         foreach ( $faqData as $i => $faq ): 
                         ?>
-                            <li class="pt-3"><img src="<?php echo get_theme_file_uri('src/chevron_right.svg'); ?>" class="pb-1 me-2"><a href="<?php echo"#category-{$i}" ?>" 
+                            <li class="pt-3"><img src="<?php echo get_theme_file_uri('public/image/chevron_right.svg'); ?>" class="pb-1 me-2"><a href="<?php echo"#category-{$i}" ?>" 
                                 class="text-decoration-none text-black fs-6"><?php echo $faq['cat_name'] ?></a></li>
                         <?php
                         endforeach;

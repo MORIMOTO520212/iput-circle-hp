@@ -108,7 +108,7 @@ $discord_avatar_url = $discord_user_id && $discord_avatar ? "https://cdn.discord
         <div class="mb-3">
             <p class="mb-2 fw-bold">アカウント連携</p>
             <a href="https://discord.com/oauth2/authorize?client_id=1250622307618132019&response_type=code&redirect_uri=https%3A%2F%2Fiput-one.com%2Findex.php%2Fprofile%2F&scope=identify" class="discord-button mb-2">
-                <img src="<?= get_theme_file_uri('src/Discord-Symbol-White.svg'); ?>" />
+                <img src="<?= get_theme_file_uri('public/image/Discord-Symbol-White.svg'); ?>" />
                 <p class="text-white">Discordと連携する</p>
             </a>
             <small class="d-block"><strong>STEP1:</strong> IPUT ONEのアカウントをDiscordと連携させることで、さまざまなIPUT ONEの機能をDiscordで使うことができます。</small>

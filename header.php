@@ -34,7 +34,7 @@ if (is_author()) { // is user page
     <meta name="Description" content="IPUT ONEは東京国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を発信しています。" />
 
     <!-- Icon -->
-    <link rel="shortcut icon" href="<?php echo get_theme_file_uri('src/iputone_logo.svg'); ?>" />
+    <link rel="shortcut icon" href="<?php echo get_theme_file_uri('public/image/iputone_logo.svg'); ?>" />
 
     <!-- OGP Settings -->
     <?php
@@ -45,18 +45,18 @@ if (is_author()) { // is user page
         if ($post_custom['permission'][0] === "true") {
             $ogp_title = "記事はログインすると閲覧できます。 - IPUT ONEサークルサイト";
             $ogp_description = "記事の本文はログインすると閲覧できます。";
-            $ogp_image = get_theme_file_uri('src/ogp.jpg');
+            $ogp_image = get_theme_file_uri('public/image/ogp.jpg');
             // 外部公開の場合
         } else {
             $ogp_title = get_the_title() . " - IPUT ONEサークルサイト";
             $ogp_description = get_the_excerpt();
-            $ogp_image = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src($post_custom['topImage'][0])[0] : get_theme_file_uri('src/no_image_activity.png');
+            $ogp_image = !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src($post_custom['topImage'][0])[0] : get_theme_file_uri('public/image/no_image_activity.png');
         }
         // その他のページのOGP
     } else {
         $ogp_title = "IPUT ONE サークルサイト";
         $ogp_description = "IPUT ONEは東京国際工科専門職大学のサークルサイトです。IPUTの学生たちの活動を発信しています。";
-        $ogp_image = get_theme_file_uri('src/ogp.jpg');
+        $ogp_image = get_theme_file_uri('public/image/ogp.jpg');
     }
     ?>
 
@@ -147,7 +147,7 @@ if (is_author()) { // is user page
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #99CD00;">
             <div class="container-fluid nav-padding">
                 <a class="navbar-brand" href="<?php echo home_url(); ?>">
-                    <img class="me-1" src="<?php echo get_theme_file_uri("src/iputone_logo_white.svg"); ?>" style="width:26px;">
+                    <img class="me-1" src="<?php echo get_theme_file_uri("public/image/iputone_logo_white.svg"); ?>" style="width:26px;">
                     IPUT ONE
                     <?php echo is_localhost() ? "（開発環境）" : "" ?>
                 </a>

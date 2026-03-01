@@ -16,7 +16,7 @@ global $post;
 $post_custom = get_post_custom($post->ID);
 
 // ヘッダー画像のURL取得（ない場合はダミー画像を使う）
-$headerImageUrl = !empty($post_custom['headerImage'][0]) ? wp_get_attachment_image_src($post_custom['headerImage'][0])[0] : get_theme_file_uri('src/no_image_circle_header.png');
+$headerImageUrl = !empty($post_custom['headerImage'][0]) ? wp_get_attachment_image_src($post_custom['headerImage'][0])[0] : get_theme_file_uri('public/image/no_image_circle_header.png');
 
 // サークルのカテゴリID取得
 $circle_cat_id = get_cat_ID($post->post_title);
@@ -198,7 +198,7 @@ $circle_cat_id = get_cat_ID($post->post_title);
                 <a href="<?php echo get_permalink($post->ID); ?>"></a>
                 <div class="row act-card">
                   <div class="col-4 col-sm-3 h-100 pe-0">
-                    <img src="<?php echo !empty($activity_post_custom['topImage'][0]) ? wp_get_attachment_image_src($activity_post_custom['topImage'][0])[0] : get_theme_file_uri('src/no_image_activity.png'); ?>" />
+                    <img src="<?php echo !empty($activity_post_custom['topImage'][0]) ? wp_get_attachment_image_src($activity_post_custom['topImage'][0])[0] : get_theme_file_uri('public/image/no_image_activity.png'); ?>" />
                   </div>
                   <div class="col-8 col-sm-9 p-0">
                     <div class="card-body">

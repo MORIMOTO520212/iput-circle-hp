@@ -111,7 +111,7 @@
 }
 
 .top-sub-text .line {
-    background: url("../src/line.png") no-repeat right 0;
+    background: url("../public/image/line.png") no-repeat right 0;
 }
 
 .top-sub-text h2 {
@@ -292,7 +292,7 @@ table tbody tr th {
     }
 
     .top-sub-text .line {
-        background: url("../src/line.png") no-repeat right 0;
+        background: url("../public/image/line.png") no-repeat right 0;
     }
 
     .top-sub-text h2 {

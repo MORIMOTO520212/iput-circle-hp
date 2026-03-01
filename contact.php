@@ -63,7 +63,7 @@ if( isset( $_POST['btn_sub'] ) ) {
 
     <!-- top -->
     <div class="position-relative" id="contact-top">
-        <img src="<?php echo get_theme_file_uri('src/background/room2.webp'); ?>" class="w-100">
+        <img src="<?php echo get_theme_file_uri('public/image/background/room2.webp'); ?>" class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="text-center text-white">
                 <h1>お問い合わせ</h1>
@@ -151,7 +151,7 @@ if( isset( $_POST['btn_sub'] ) ) {
                 後日、IPUTONE制作チームよりご連絡いたします。                    
             </span>
         </h6>
-        <img src="<?php echo get_theme_file_uri('src/thanks.png'); ?>" alt="Thank You!!">
+        <img src="<?php echo get_theme_file_uri('public/image/thanks.png'); ?>" alt="Thank You!!">
     </div>
 
     <?php endif; ?>

@@ -53,7 +53,7 @@ if ( $post_custom['permission'][0] === "true" && !is_user_logged_in() ) {
     <!-- title banner -->
     <div class="title d-flex flex-row">
         <!-- アイキャッチ画像 wider than -lg -->
-        <img class="thumb d-none d-lg-block" src="<?php echo !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('src/no_image_activity.png'); ?>" alt="...">
+        <img class="thumb d-none d-lg-block" src="<?php echo !empty($post_custom['topImage'][0]) ? wp_get_attachment_image_src( $post_custom['topImage'][0] )[0] : get_theme_file_uri('public/image/no_image_activity.png'); ?>" alt="...">
         <!-- 情報 -->
         <div class="d-flex flex-column w-100 m-3">
             <!-- top -->
