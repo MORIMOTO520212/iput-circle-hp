@@ -4,8 +4,8 @@
  * 仮登録に使用するsignupsテーブルの設定です。
  */
 
-// wp-db.php テーブルの追加
-require_once(ABSPATH . WPINC . '/wp-db.php');
+// WordPress 6.1+ では class-wpdb.php に移行済み
+require_once(ABSPATH . WPINC . '/class-wpdb.php');
 
 class my_wpdb extends wpdb {
     public $tables = array(
