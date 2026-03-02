@@ -53,6 +53,12 @@ function trix_file_upload_to_wordpress() {
                 var id = attachment.id;
                 console.log(attachment);
 
+                // クリップボード貼り付け時にファイル名が空・拡張子なしになる場合、適切な名前を付与する
+                if (file && !file.name.match(/\.(png|jpe?g)$/i)) {
+                    var ext = file.type === 'image/jpeg' ? 'jpg' : 'png';
+                    file = new File([file], 'clipboard_image.' + ext, { type: file.type });
+                }
+
                 // 画像ID格納
                 img_id_list.push(id);
 
