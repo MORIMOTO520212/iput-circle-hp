@@ -5,8 +5,6 @@
 ?>
 
 <?php
-require_once( get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php') );
-
 /* ログイン状態のチェック */
 if ( !is_user_logged_in() ) {
     echo "ログインしてください。";
@@ -96,7 +94,7 @@ if ( isset( $param__post ) ) {
 ?>
 
 <!-- 非対応のファイル添付時に表示するモーダル -->
-<?php require_once( get_theme_file_path("assets/components/trix_file_type_caution_modal.php") ); ?>
+<?php trix_file_type_caution_modal(); ?>
 
 <div class="main mx-2">
     <h2 class="txt-subject text-center">ニュースを投稿する</h2>

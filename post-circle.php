@@ -7,7 +7,6 @@
  */
 
 global $page_url;
-require_once(get_theme_file_path('assets/components/trix_file_upload_to_wordpress.php'));
 
 get_header();
 
@@ -164,7 +163,7 @@ if (isset($param__post)) {
 ?>
 
 <!-- 非対応のファイル添付時に表示 -->
-<?php require_once(get_theme_file_path("assets/components/trix_file_type_caution_modal.php")); ?>
+<?php trix_file_type_caution_modal(); ?>
 
 <form class="container mt-4 pb-4 mb-4 needs-validation form-loading" id="form" enctype="multipart/form-data" action="" method="post" novalidate>
   <div class="row">

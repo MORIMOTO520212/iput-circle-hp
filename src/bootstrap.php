@@ -42,6 +42,7 @@ spl_autoload_register(function ($class_name) {
 require_once __DIR__ . '/helpers/FunctionsHelper.php';
 require_once __DIR__ . '/helpers/ViewHelper.php';
 require_once __DIR__ . '/helpers/UrlHelper.php';
+require_once __DIR__ . '/helpers/TrixHelper.php';
 require_once __DIR__ . '/models/ImageModel.php';
 require_once __DIR__ . '/services/MailService.php';
 require_once __DIR__ . '/services/DiscordService.php';
