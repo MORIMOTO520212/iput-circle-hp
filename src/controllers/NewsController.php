@@ -64,7 +64,7 @@ class NewsController
         $this->newsModel->updateMeta($post_id, 'clip',       isset($_POST['clip']) ? $_POST['limit_date'] : 'false');
         $this->newsModel->updateMeta($post_id, 'permission', isset($_POST['permission']) ? 'true' : 'false');
 
-        $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
+        $pattern = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg|.webp)";
         preg_match("/{$pattern}/", $_POST['contents'], $matches);
 
         if (!empty($matches)) {

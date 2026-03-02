@@ -63,7 +63,7 @@ class ActivityController
 
         $this->activityModel->updateMeta($post_id, 'permission', isset($_POST['permission']) ? 'true' : 'false');
 
-        $pattern      = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg)";
+        $pattern      = (is_localhost() ? 'http:' : 'https:') . "\/\/(.*?)(.png|.jpg|.jpeg|.webp)";
         preg_match("/{$pattern}/", $_POST['contents'], $matches);
         $topImage_url = !empty($matches) ? esc_url($matches[0]) : '';
 
