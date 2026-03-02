@@ -21,7 +21,44 @@ docker compose -f docker/docker-compose.yml up -d
 docker compose -f docker/docker-compose.yml down
 ```
 
-### 2. フロントエンドのビルド
+### 2. WordPress セットアップ（初回のみ）
+
+WordPress のインストールと初期データの投入を一括で行う：
+
+```bash
+make setup
+```
+
+以下が自動で実行される：
+
+- WordPress コアのインストール（管理者: `admin` / パスワード: `password`）
+- サイト設定・パーマリンク・テーマ有効化
+- 固定ページ（ログイン・活動一覧・サークル作成など）の作成
+- サンプルサークル 10 件の作成
+- サンプル活動記録 5 件・ニュース 3 件の作成
+
+> **Note**
+> 各シーダーは冪等（何度実行しても重複しない）。既存データは "already exists (skipped)" と表示されスキップされる。
+
+#### シーダーだけ再実行する
+
+```bash
+make seed
+```
+
+#### 特定のシーダーだけ実行する
+
+```bash
+make seed-one SEEDER=CirclesSeeder
+# 指定できる値: SettingsSeeder / PagesSeeder / CirclesSeeder / ActivitiesSeeder / NewsSeeder
+```
+
+#### シーダーを追加する場合
+
+1. `docker/seeders/XxxSeeder.php` を作成
+2. `docker/seeders/run.sh` に `wp eval-file "$SEEDERS/XxxSeeder.php"` を追加
+
+### 3. フロントエンドのビルド
 
 依存パッケージをインストールする（初回のみ）：
 

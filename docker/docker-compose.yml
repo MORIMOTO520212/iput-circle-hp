@@ -11,6 +11,8 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wpuser
       MYSQL_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
+    volumes:
+      - ../db:/var/lib/mysql
 
   WordPress:
     image: wordpress:latest
@@ -30,6 +32,23 @@ services:
     volumes:
       - ../:/var/www/html/wp-content/themes/iput-circle-hp
       - ../db.php:/var/www/html/wp-content/db.php
+      - wp_data:/var/www/html
+
+  cli:
+    image: wordpress:cli
+    platform: linux/arm64
+    profiles: ["tools"]   # docker compose up では起動しない（make setup / make seed で on-demand 実行）
+    depends_on:
+      - db
+      - WordPress
+    volumes:
+      - wp_data:/var/www/html
+      - ../:/var/www/html/wp-content/themes/iput-circle-hp
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: yWcMY9GcwA972YiXEQCpTqid
+      WORDPRESS_DB_NAME: wordpress
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -39,3 +58,6 @@ services:
       - db
     ports:
       - 10099:80
+
+volumes:
+  wp_data:

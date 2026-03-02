@@ -4,3 +4,4 @@ sitemap.xml
 test.php
 node_modules/
 .claude/settings.local.json
+db/
